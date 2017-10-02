@@ -8,30 +8,28 @@
 3. Try Tutorials
 
 ### Tutorials
--[Image Classification GoogLnet v1 Demo][]
-
--[DeepDetect REST Tutorial][]
-
--[DeepDetect Webcam Tutorial][]
+- [Image Classification GoogLnet v1 Demo][]
+- [DeepDetect REST Tutorial][]
+- [DeepDetect Webcam Tutorial][]
 
 
 
-###Latest AMI Version
+### Latest AMI Version
 
 - xfDNN-Preview-0.2a
-	-Features:
-		-16bit GoogLeNet v1
-		-Caffe
-		-Image Classification
-		-DeepDetect REST Demo
-		-DeepDetect Webcam Demo
-	-Notes:
-		-Intial Release 9/29/17
+	- Features:
+		- 16bit GoogLeNet v1
+		- Caffe
+		- Image Classification
+		- DeepDetect REST Demo
+		- DeepDetect Webcam Demo
+	- Notes:
+		- Intial Release 9/29/17
 
-###Questions and Support
+### Questions and Support
 
-[AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
-[SDAccel Forums][]
+- [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
+- [SDAccel Forums][]
 
 
 

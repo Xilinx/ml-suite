@@ -2,47 +2,46 @@
 
 For launching and connecting to instances, [start here][].
 
-Start by launching Two Terminals
+Start by launching Two Terminals.
 
 **Terminal 1:**
 1. Connect to F1
 2. Navigate to `/xfdnn_testdrive/deepdetect/`
-```
+	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   test.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
 	demo                       run.sh   start_deepdetect_docker.sh    xfdnn_scheduler
 	exec_deepdetect_docker.sh  runtime  templates
-```
+	```
 2. Execute `./start_deepdetect_docker.sh` to enter application docker
 3. Navigate to `/deepdetect/`
 4. Execute `sudo ./run.sh` to start the DeepDetect Caffe REST Server
-```
+	```
 	$ ./start_deepdetect_docker.sh
 	# sudo ./run.sh
 	DeepDetect [ commit  ]
 
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
-```
+	```
 
 	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080" the scripted has started the webserver correctly.
-
 
 **Terminal 2:**
 1. Connect to F1
 2. Navigate to `/xfdnn_testdrive/deepdetect/`
-```
+	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   test.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
 	demo                       run.sh   start_deepdetect_docker.sh    xfdnn_scheduler
 	exec_deepdetect_docker.sh  runtime  templates
-```
+	```
 3. Execute `./createService.sh`
-   This initializes the DeepDetect server in Terminal 1
-   Wait for FPGA to load xclbin in Terminal 1
+   This initializes the DeepDetect server in Terminal 1. </br>
+   Wait for FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. To verify your service is working, execute `./test.sh`
@@ -92,7 +91,6 @@ Start by launching Two Terminals
 	```
 	$ cd demo/imgdetect/
 	$ ./run.sh
-
 	```
 	This starts the web server where you can submit URLs.
 6. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer

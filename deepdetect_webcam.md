@@ -44,24 +44,24 @@ Start by launching Two Terminals
 	demo                       run.sh   start_deepdetect_docker.sh    xfdnn_scheduler
 	exec_deepdetect_docker.sh  runtime  templates
 	```
-	
+
 3. Execute `./createService.sh`
-   This initializes the DeepDetect server in Terminal 1
-   Wait for FPGA to load xclbin in Terminal 1
+   This initializes the DeepDetect server in Terminal 1. </br>
+	 Wait for FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. Navigate to `/demo/webcam`
 5. Edit `index.html` (using text editor such as nano)
 	Find the section below:
-	```
+	```html
 	/*******************************************
 	* TODO: Please update the address below
 	* in 'url' to point to your public IP
 	*******************************************/
 	var url = "yourpublicdns.compute-1.amazonaws.com:8888";
-
-	Change yourpublicdns.compute-1.amazonaws.com with your instance public IP address.
 	```
+	Change yourpublicdns.compute-1.amazonaws.com with your instance public IP address.
+
 
    This is for client browser to upload image to server.py
 6. Navigate to `deepdetect/`
