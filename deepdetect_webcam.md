@@ -1,12 +1,13 @@
-#DeepDetect Webcam Tutorial
+# DeepDetect Webcam Tutorial
 
 For launching and connecting to instances, [start here][].
 
 Start by launching Two Terminals
 
 **Terminal 1**
-1. 1. Connect to F1
+1. Connect to F1
 2. Navigate to `/xfdnn_testdrive/deepdetect/`
+
 	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
@@ -14,10 +15,11 @@ Start by launching Two Terminals
 	dede                       models   sdaccel_profile_summary.html  xclbin
 	demo                       run.sh   start_deepdetect_docker.sh    xfdnn_scheduler
 	exec_deepdetect_docker.sh  runtime  templates
-```
+	```
 2. Execute `./start_deepdetect_docker.sh` to enter application docker
 3. Navigate to `/deepdetect/`
 4. Execute `./run.sh` to start the DeepDetect Caffe REST Server
+
 	```
 	$ ./start_deepdetect_docker.sh
 	# ./run.sh
@@ -33,6 +35,7 @@ Start by launching Two Terminals
 **Terminal 2:**
 1. Connect to F1
 2. Navigate to `/xfdnn_testdrive/deepdetect/`
+
 	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
@@ -83,6 +86,7 @@ Once you see "serving at port 8888" the application is running and ready.
 	Allow permissions for use of the Webcam and Adobe, if needed.
 
 	![](img/deepdetect_allow.png)
+
 	![](img/deepdetect_allow_a.png)
 
 	Now you should be able to classify images via your webcam
