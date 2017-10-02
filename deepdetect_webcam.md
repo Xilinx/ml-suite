@@ -43,7 +43,8 @@ Start by launching Two Terminals
 	dede                       models   sdaccel_profile_summary.html  xclbin
 	demo                       run.sh   start_deepdetect_docker.sh    xfdnn_scheduler
 	exec_deepdetect_docker.sh  runtime  templates
-```
+	```
+	
 3. Execute `./createService.sh`
    This initializes the DeepDetect server in Terminal 1
    Wait for FPGA to load xclbin in Terminal 1
@@ -77,7 +78,8 @@ Start by launching Two Terminals
 	# cd demo/webcam/
 	# python server.py
 	serving at port 8888
-```
+	```
+
 Once you see "serving at port 8888" the application is running and ready.
 
 
