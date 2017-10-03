@@ -14,6 +14,7 @@ Log into your ECs conscole and click on AMIs on the left hand side. Seclect
 ![](img/images_1.png)
 
 ![](img/ami.png)
+
 Select the "xfDNN-Preview-0.2a" from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
 
 ## Step 2: Choose an Instance Type
@@ -81,7 +82,7 @@ If you click on it, it will show you your public IP address you will need to kno
 ## Connecting to Your Instance
 **To access your instance:**
 1. Open an SSH client. (find out how to [connect using PuTTY][])
-2. Locate your private key file (yourkey.pem). 
+2. Locate your private key file (yourkey.pem).
 3. Your key must not be publicly viewable for SSH to work. Use this command if needed:
 
 	`chmod 400 yourkey.pem`
@@ -96,7 +97,7 @@ If you click on it, it will show you your public IP address you will need to kno
 
 
 Please note that in most cases the username above will be correct, however please ensure that you read your AMI usage instructions to ensure that the AMI owner has not changed the default AMI username.
-If you need any assistance connecting to your instance, please see our [connection documentation][].
+If you need any assistance connecting to your instance, please see the aws [connection documentation][].
 
 
 
