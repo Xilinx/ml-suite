@@ -1,5 +1,12 @@
 # DeepDetect REST Tutorial
 
+## Introduction
+This tutorial will help you get started with the xfDNN Test Drive and will prepare the test drive for the application tutorials. Here we will cover the following:
+- Launching an xfDNN Test Drive AMI instance on F1
+- Configuring instnace with correct settings and permissions
+- Starting xfDNN Test Drive instance
+- How to connect to the instance
+
 For launching and connecting to instances, [start here][].
 
 Start by launching Two Terminals.
@@ -87,13 +94,14 @@ Start by launching Two Terminals.
 	}
 	```
 
-5. Navigate to `demo/imgdetect`
+**Host PC:**
+1. Navigate to `demo/imgdetect`
 	```
 	$ cd demo/imgdetect/
 	$ ./run.sh
 	```
 	This starts the web server where you can submit URLs.
-6. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
+2. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
 
 	![](img/deepdetect_rest.png)
 
