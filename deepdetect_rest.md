@@ -1,11 +1,7 @@
 # DeepDetect REST Tutorial
 
 ## Introduction
-This tutorial will help you get started with the xfDNN Test Drive and will prepare the test drive for the application tutorials. Here we will cover the following:
-- Launching an xfDNN Test Drive AMI instance on F1
-- Configuring instnace with correct settings and permissions
-- Starting xfDNN Test Drive instance
-- How to connect to the instance
+This tutorial will describe how to launch the [Deep Detect][], a deep learning API and web server application, which has integrations for REST APIs and uses F1 for Image classification acceleration. The source for this project is availabe in the Test Drive here: `/xfdnn_testdrive/deepdetect/`
 
 For launching and connecting to instances, [start here][].
 
@@ -106,3 +102,4 @@ Start by launching Two Terminals.
 	![](img/deepdetect_rest.png)
 
 [start here]: launching_instance.md
+[Deep Detect]: https://github.com/beniz/deepdetect

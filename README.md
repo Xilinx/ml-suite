@@ -2,7 +2,7 @@
 
 ### Getting Started
 
-1. Get Access to [Xilinx AWS F1 xfDNN Test Drive here][]:
+1. Request Access to [Xilinx AWS F1 xfDNN Test Drive here][]
 2. Launch Test Drive Instance and connect to your instance
 	[Launching Instructions][]
 3. Try Tutorials
@@ -42,7 +42,7 @@
 
 [Xilinx AWS F1 xfDNN Test Drive here]: https://www.xilinx.com/applications/megatrends/machine-learning/aws-f1-test-drive.html
 [Launching Instructions]: launching_instance.md
-[Image Classification GoogLnet v1 Demo]:imageclassification.md
+[Image Classification GoogLnet v1 Demo]:image_classification.md
 [DeepDetect REST Tutorial]:deepdetect_rest.md
 [DeepDetect Webcam Tutorial]:deepdetect_webcam.md
 
