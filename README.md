@@ -31,18 +31,9 @@
 - [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
 - [SDAccel Forums][]
 
-
-
-
-
-
-
-
-
-
 [Xilinx AWS F1 xfDNN Test Drive here]: https://www.xilinx.com/applications/megatrends/machine-learning/aws-f1-test-drive.html
 [Launching Instructions]: launching_instance.md
-[Image Classification GoogLnet v1 Demo]:imageclassification.md
+[Image Classification GoogLnet v1 Demo]:image_classification.md
 [DeepDetect REST Tutorial]:deepdetect_rest.md
 [DeepDetect Webcam Tutorial]:deepdetect_webcam.md
 

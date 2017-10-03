@@ -18,7 +18,7 @@ You may select either the f1.2xlarge or f1.16xlarge instance for this test drive
 Click "Next: Configure Instance Details
 
 ## Step 3: Configure Instance Details
-\[](img/instance_details.png)
+![](img/instance_details.png)
 Leave the default settings, and click "Next: Add Storage"
 
 ## Step 4: Add Storage
