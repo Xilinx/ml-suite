@@ -1,4 +1,7 @@
-# Image Classification GoogLnet v1 Demo
+# Image Classification GoogLeNet v1 Demo
+
+## Introduction
+Image classification is one of the most common benchmarks for machine learning. This tutorial will show you how to launch image classification GoogLeNet v1 demo from the test drive. Once the demo is started, you will be able to view the demo and performance of the demo from any internet connected web broswer.
 
 For launching and connecting to instances, [start here][].
 
@@ -32,7 +35,7 @@ For launching and connecting to instances, [start here][].
 	```
 	Start up of the demo will take a few minutes, but once its complete, the console will start displaying numbers.
 
-5. The demo will display at the following web address:
+5. From your host machine: the demo will display at the following web address:
 	"http://yourpublicdns.compute-1.amazonaws.com:8998/static/www/xdnn1.html"
 
 	To get your 'yourpublicdns.compute-1.amazonaws.com' refer to the launching and connecting instructions

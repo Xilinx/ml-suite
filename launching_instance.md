@@ -1,11 +1,17 @@
-# Launching Test Drive
+# Launching the xfDNN Test Drive AMI on AWS F1
 
+## Introduction
+This tutorial will help you get started with the xfDNN Test Drive and will prepare the test drive for the application tutorials. Here we will cover the following:
+- Launching an xfDNN Test Drive AMI instance on F1
+- Configuring instnace with correct settings and permissions
+- Starting xfDNN Test Drive instance
+- How to connect to the instance
+
+## Step 1: Select AMI
 Log into your ECs conscole and click on AMIs on the left hand side. Seclect
 "Private Images" from the drop down box near te filter bar.
 
 ![](img/images_1.png)
-
-## Step 1: Select AMI
 
 ![](img/ami.png)
 Select the "xfDNN-Preview-0.2a" from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
@@ -18,7 +24,7 @@ You may select either the f1.2xlarge or f1.16xlarge instance for this test drive
 Click "Next: Configure Instance Details
 
 ## Step 3: Configure Instance Details
-\[](img/instance_details.png)
+![](img/instance_details.png)
 Leave the default settings, and click "Next: Add Storage"
 
 ## Step 4: Add Storage
@@ -75,7 +81,7 @@ If you click on it, it will show you your public IP address you will need to kno
 ## Connecting to Your Instance
 **To access your instance:**
 1. Open an SSH client. (find out how to [connect using PuTTY][])
-2. Locate your private key file (yourkey.pem). The wizard automatically detects the key you used to launch the instance.
+2. Locate your private key file (yourkey.pem). 
 3. Your key must not be publicly viewable for SSH to work. Use this command if needed:
 
 	`chmod 400 yourkey.pem`

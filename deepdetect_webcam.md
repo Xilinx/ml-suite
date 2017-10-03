@@ -1,5 +1,8 @@
 # DeepDetect Webcam Tutorial
 
+# Introduction
+This tutorial extends the [DeepDetect REST Tutorial][], using the [Deep Detect][] application and REST APIs to connect a webcam from a host machine to stream video to F1 and classify the images live. The full code of this project is in `/xfdnn_testdrive/deepdetect/`
+
 For launching and connecting to instances, [start here][].
 
 Start by launching Two Terminals
@@ -66,7 +69,7 @@ Start by launching Two Terminals
    This is for client browser to upload image to server.py
 6. Navigate to `deepdetect/`
 7. Execute ./exec_deepdetect_docker.sh
-8. python server.py
+8. Execute `python server.py`
    This starts the webcam demo webpage & server.
    ```
 	$ cd demo/webcam/
@@ -82,8 +85,8 @@ Start by launching Two Terminals
 
 Once you see "serving at port 8888" the application is running and ready.
 
-
-9. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
+**Host PC:**
+1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
 	Firefox browsers work the best for this.
 	Allow permissions for use of the Webcam and Adobe, if needed.
 
@@ -97,3 +100,5 @@ Once you see "serving at port 8888" the application is running and ready.
 
 
 [start here]: launching_instance.md
+[DeepDetect REST Tutorial]: deepdetect_rest.md
+[Deep Detect]: https://github.com/beniz/deepdetect
