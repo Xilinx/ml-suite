@@ -82,7 +82,9 @@ If you click on it, it will show you your public IP address you will need to kno
 ## Connecting to Your Instance
 **To access your instance:**
 1. Open an SSH client. (find out how to [connect using PuTTY][])
-2. Locate your private key file (yourkey.pem).
+
+2. Locate your private key file (yourkey.pem). 
+
 3. Your key must not be publicly viewable for SSH to work. Use this command if needed:
 
 	`chmod 400 yourkey.pem`
