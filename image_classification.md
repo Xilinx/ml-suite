@@ -20,10 +20,12 @@ For launching and connecting to instances, [start here][].
 	/opt/caffe_ristretto$
 	```
 	In this directory you will see:
-    - `classify_cat.sh` - Will send four cat images to the FPGA to classify.
-    - `caffe_test.sh`   - Will run a number of calls to xfDNN using Caffe.
+    - `classify_cat.sh` - Will send four cat images to the FPGA to classify.*
+    - `caffe_test.sh`   - Will run a number of calls to xfDNN using Caffe.*
     - `run _demo.sh`    - Will run a Image Classification Speed of GoogLeNet v1 demo.
     - `kill_demo.sh`    - Will kill the Image Classification .
+
+		\*Note: When running the test scripts, use sudo. AWS requires root privileges to program the fpga. For more details, [click here][].
 
 4. Execute the `./run_demo.sh` script to start the demo
 	```
@@ -45,3 +47,4 @@ For launching and connecting to instances, [start here][].
 
 
 [start here]: launching_instance.md
+[click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges
