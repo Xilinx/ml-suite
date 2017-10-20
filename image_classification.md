@@ -1,7 +1,7 @@
 # Image Classification GoogLeNet v1 Demo
 
 ## Introduction
-Image classification is one of the most common benchmarks for machine learning. This tutorial will show you how to launch image classification GoogLeNet v1 demo from the test drive. Once the demo is started, you will be able to view the demo and performance of the demo from any internet connected web broswer.
+Image classification is one of the most common benchmarks for machine learning. This tutorial will show you how to launch image classification 8 bit GoogLeNet v1 demo from the test drive. Once the demo is started, you will be able to view the demo and performance of the demo from any internet connected web broswer.
 
 For launching and connecting to instances, [start here][].
 

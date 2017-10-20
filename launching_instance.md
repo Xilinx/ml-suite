@@ -15,7 +15,7 @@ Log into your ECs conscole and click on AMIs on the left hand side. Seclect
 
 ![](img/ami.png)
 
-Select the "xfDNN-Preview-0.2a" from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
+Select the "xfDNN-Preview-0.3b" from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
 
 ## Step 2: Choose an Instance Type
 
@@ -83,7 +83,7 @@ If you click on it, it will show you your public IP address you will need to kno
 **To access your instance:**
 1. Open an SSH client. (find out how to [connect using PuTTY][])
 
-2. Locate your private key file (yourkey.pem). 
+2. Locate your private key file (yourkey.pem).
 
 3. Your key must not be publicly viewable for SSH to work. Use this command if needed:
 

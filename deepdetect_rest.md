@@ -90,14 +90,15 @@ Start by launching Two Terminals.
 	}
 	```
 
-**Host PC:**
-1. Navigate to `demo/imgdetect`
+5. Navigate to `demo/imgdetect`
 	```
 	$ cd demo/imgdetect/
 	$ ./run.sh
 	```
+**Host PC:**
+
 	This starts the web server where you can submit URLs.
-2. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
+1. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
 
 	![](img/deepdetect_rest.png)
 
