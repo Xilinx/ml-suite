@@ -25,7 +25,7 @@ Start by launching Two Terminals
 
 	```
 	$ ./start_deepdetect_docker.sh
-	# ./run.sh
+	# sudo ./run.sh
 	DeepDetect [ commit  ]
 
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
