@@ -16,6 +16,20 @@
 
 ### Latest AMI Version
 
+- xfDNN-Preview-0.3b
+	- Features:
+		- 8/16 bit GoogLeNet v1
+		- 8/16 bit ResNet50
+		- Caffe
+		- Image Classification
+		- DeepDetect REST Demo
+		- DeepDetect Webcam Demo
+		- Caffe Network Analyzer
+	- Notes:
+		- Release 10/23/17
+		- Known issues
+
+
 - xfDNN-Preview-0.2a
 	- Features:
 		- 16bit GoogLeNet v1
