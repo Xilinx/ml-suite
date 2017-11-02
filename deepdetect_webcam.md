@@ -1,9 +1,11 @@
 # DeepDetect Webcam Tutorial
 
 # Introduction
-This tutorial extends the [DeepDetect REST Tutorial][], using the [Deep Detect][] application and REST APIs to connect a webcam from a host machine to stream video to F1 and classify the images live. The full code of this project is in `/xfdnn_testdrive/deepdetect/`
+This tutorial expands on the [DeepDetect REST Tutorial][]. Here the [Deep Detect][] application and REST APIs are used to connect a webcam from a host machine and use it to stream video to F1, allowing for classification of live images.
 
-For launching and connecting to instances, [start here][].
+The full code of this project is in `/xfdnn_testdrive/deepdetect/`
+
+For instructions on launching and connecting to instances, see [here][].
 
 Start by launching Two Terminals
 
@@ -99,6 +101,6 @@ Once you see "serving at port 8888" the application is running and ready.
 	![](img/deepdetect_webcam.png)
 
 
-[start here]: launching_instance.md
+[here]: launching_instance.md
 [DeepDetect REST Tutorial]: deepdetect_rest.md
 [Deep Detect]: https://github.com/beniz/deepdetect

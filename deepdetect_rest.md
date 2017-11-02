@@ -1,9 +1,11 @@
 # DeepDetect REST Tutorial
 
 ## Introduction
-This tutorial will describe how to launch the [Deep Detect][], a deep learning API and web server application, which has integrations for REST APIs and uses F1 for Image classification acceleration. The source for this project is availabe in the Test Drive here: `/xfdnn_testdrive/deepdetect/`
+This tutorial describes how to launch [Deep Detect][], a deep learning API and web server application which has integrations for REST APIs and uses F1 for Image classification acceleration.
 
-For launching and connecting to instances, [start here][].
+The source for this project is available in the Test Drive at: `/xfdnn_testdrive/deepdetect/`
+
+For instructions on launching and connecting to instances, see [here][].
 
 Start by launching Two Terminals.
 
@@ -95,12 +97,14 @@ Start by launching Two Terminals.
 	$ cd demo/imgdetect/
 	$ ./run.sh
 	```
+
 **Host PC:**
 
-	This starts the web server where you can submit URLs.
+This starts the web server where you can submit URLs.
+
 1. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
 
 	![](img/deepdetect_rest.png)
 
-[start here]: launching_instance.md
+[here]: launching_instance.md
 [Deep Detect]: https://github.com/beniz/deepdetect

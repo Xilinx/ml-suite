@@ -11,6 +11,9 @@
 - [Image Classification GoogLeNet v1 Demo][]
 - [DeepDetect REST Tutorial][]
 - [DeepDetect Webcam Tutorial][]
+- Network Compiler / Anayzer
+	- Detailed Readme in the AMI:/`xfdnn_testdrive/xfdnn_compiler/README.rst`
+	- Refer to `xfdnn_testdrive/xfdnn_compiler/docs/` for more information
 
 
 
@@ -28,6 +31,7 @@
 	- Notes:
 		- Release 10/23/17
 		- Known issues
+			- Performance Limitation - Currently there is a reduction in throughput for classification. This will be update in a future release. 8bit GoogleNet is roughly 1300 img/sec.
 
 
 - xfDNN-Preview-0.2a

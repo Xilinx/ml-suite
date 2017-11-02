@@ -15,7 +15,7 @@ Log into your ECs conscole and click on AMIs on the left hand side. Seclect
 
 ![](img/ami.png)
 
-Select the "xfDNN-Preview-0.3b" from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
+Select the `xfDNN-Preview-0.3c` from the list and click "Launch" (above image shows xfDNN-Preview-0.1a)
 
 ## Step 2: Choose an Instance Type
 
