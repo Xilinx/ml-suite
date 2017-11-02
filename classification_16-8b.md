@@ -35,7 +35,7 @@ For instructions on launching and connecting to instances, see [here][].
 		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the fpga. For more details, [click here][].
 
 
-5. Choose a script to run. and execute with sudo:
+5. Choose a script to run and execute with sudo:
 	```
 	/opt/caffe$ sudo ./run_googlenet_8b.sh
 	[output truncated]
