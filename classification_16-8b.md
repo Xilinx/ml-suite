@@ -32,7 +32,7 @@ For instructions on launching and connecting to instances, see [here][].
     - `run _demo.sh`    - Will run an Image Classification Speed of GoogLeNet v1 demo.
     - `kill_demo.sh`    - Will kill the Image Classification .
 
-		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the fpga. For more details, [click here][].
+		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the FPGA. For more details, [click here][].
 
 
 5. Choose a script to run and execute with sudo:
