@@ -34,7 +34,7 @@ Start by launching Two Terminals
 
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080" the scripted has started the webserver correctly.
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080", this indicates  that the script has started the webserver correctly.
 
 
 **Terminal 2:**
@@ -85,7 +85,7 @@ Start by launching Two Terminals
 	serving at port 8888
 	```
 
-Once you see "serving at port 8888" the application is running and ready.
+Once you see "serving at port 8888", the application is running and ready.
 
 **Host PC:**
 1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
