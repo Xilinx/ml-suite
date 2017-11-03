@@ -21,8 +21,8 @@
 
 - xfDNN-Preview-0.3b
 	- Features:
-		- 8/16 bit GoogLeNet v1
-		- 8/16 bit ResNet50
+		- 8/16-bit GoogLeNet v1
+		- 8/16-bit ResNet50
 		- Caffe
 		- Image Classification
 		- DeepDetect REST Demo
