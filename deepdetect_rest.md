@@ -31,7 +31,7 @@ Start by launching Two Terminals.
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080" the scripted has started the webserver correctly.
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicate that the script has started the webserver correctly.
 
 **Terminal 2:**
 1. Connect to F1
@@ -46,7 +46,7 @@ Start by launching Two Terminals.
 	```
 3. Execute `./createService.sh`
    This initializes the DeepDetect server in Terminal 1. </br>
-   Wait for FPGA to load xclbin in Terminal 1. </br>
+   Wait for the FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. To verify your service is working, execute `./test.sh`
@@ -100,7 +100,7 @@ Start by launching Two Terminals.
 
 **Host PC:**
 
-This starts the web server where you can submit URLs.
+This starts the web server from where you can submit URLs.
 
 1. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
 
