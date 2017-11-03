@@ -34,7 +34,7 @@ Start by launching Two Terminals
 
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080" the scripted has started the webserver correctly.
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080", this indicates  that the script has started the webserver correctly.
 
 
 **Terminal 2:**
@@ -52,11 +52,11 @@ Start by launching Two Terminals
 
 3. Execute `./createService.sh`
    This initializes the DeepDetect server in Terminal 1. </br>
-	 Wait for FPGA to load xclbin in Terminal 1. </br>
+	 Wait for the FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. Navigate to `/demo/webcam`
-5. Edit `index.html` (using text editor such as nano)
+5. Edit `index.html` (using a text editor such as nano).
 	Find the section below:
 	```html
 	/*******************************************
@@ -65,14 +65,14 @@ Start by launching Two Terminals
 	*******************************************/
 	var url = "yourpublicdns.compute-1.amazonaws.com:8888";
 	```
-	Change yourpublicdns.compute-1.amazonaws.com with your instance public IP address.
+	Change yourpublicdns.compute-1.amazonaws.com to your instance's public IP address.
 
 
-   This is for client browser to upload image to server.py
+   This is for the client browser to upload image to server.py
 6. Navigate to `deepdetect/`
 7. Execute ./exec_deepdetect_docker.sh
 8. Execute `python server.py`
-   This starts the webcam demo webpage & server.
+   This starts the webcam demo webpage and server.
    ```
 	$ cd demo/webcam/
 	$ ls
@@ -85,12 +85,13 @@ Start by launching Two Terminals
 	serving at port 8888
 	```
 
-Once you see "serving at port 8888" the application is running and ready.
+Once you see "serving at port 8888", the application is running and ready.
 
 **Host PC:**
 1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
-	Firefox browsers work the best for this.
-	Allow permissions for use of the Webcam and Adobe, if needed.
+
+	**Note**: Firefox browser is recommended.
+	Allow browser permissions for use of the Webcam and Adobe, if needed.
 
 	![](img/deepdetect_allow.png)
 

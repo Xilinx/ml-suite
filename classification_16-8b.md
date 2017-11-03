@@ -1,7 +1,7 @@
-# Running 8/16 bit Networks
+# Running 8/16-bit Networks
 
 ## Introduction
-This tutorial shows how to execute 8/16 bit networks with the included GoogLeNet v1 and ResNet50 models. Each of mode of models has been put into a run script, that passes a few sample images, to show accuracy and measure performance.
+This tutorial shows how to execute 8/16-bit networks with the included GoogLeNet v1 and ResNet50 models. Each mode of the models has been embedded in a run script that passes a few sample images to show accuracy and measure performance.
 
 For instructions on launching and connecting to instances, see [here][].
 
@@ -29,10 +29,10 @@ For instructions on launching and connecting to instances, see [here][].
     - `run_googlenet_8b.sh`   - This will run GoogLeNet with a 8b model.*
 		- `run_resnet_16b.sh`   - This will run ResNet50 with a 16b model.*
 		- `run_resnet_8b.sh`   - This will run Resnet50 with a 8b model.*
-    - `run _demo.sh`    - Will run a Image Classification Speed of GoogLeNet v1 demo.
+    - `run _demo.sh`    - Will run an Image Classification Speed of GoogLeNet v1 demo.
     - `kill_demo.sh`    - Will kill the Image Classification .
 
-		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the fpga. For more details, [click here][].
+		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the FPGA. For more details, [click here][].
 
 
 5. Choose a script to run and execute with sudo:

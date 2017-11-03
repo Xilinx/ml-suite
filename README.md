@@ -21,8 +21,8 @@
 
 - xfDNN-Preview-0.3b
 	- Features:
-		- 8/16 bit GoogLeNet v1
-		- 8/16 bit ResNet50
+		- 8/16-bit GoogLeNet v1
+		- 8/16-bit ResNet50
 		- Caffe
 		- Image Classification
 		- DeepDetect REST Demo
@@ -31,12 +31,12 @@
 	- Notes:
 		- Release 10/23/17
 		- Known issues
-			- Performance Limitation - Currently there is a reduction in throughput for classification. This will be update in a future release. 8bit GoogleNet is roughly 1300 img/sec.
+			- Performance Limitation - Currently there is a reduction in throughput for classification. This will be updated in a future release. 8-bit GoogleNet runs at approximately 1300 img/sec.
 
 
 - xfDNN-Preview-0.2a
 	- Features:
-		- 16bit GoogLeNet v1
+		- 16-bit GoogLeNet v1
 		- Caffe
 		- Image Classification
 		- DeepDetect REST Demo
