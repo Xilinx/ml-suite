@@ -89,6 +89,7 @@ Once you see "serving at port 8888", the application is running and ready.
 
 **Host PC:**
 1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
+
 	**Note**: Firefox browser is recommended.
 	Allow browser permissions for use of the Webcam and Adobe, if needed.
 
