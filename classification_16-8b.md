@@ -1,7 +1,7 @@
 # Running 8/16-bit Networks
 
 ## Introduction
-This tutorial shows how to execute 8/16-bit networks with the included GoogLeNet v1 and ResNet50 models. Each mode of the models has been put into a run script that passes a few sample images to show accuracy and measure performance.
+This tutorial shows how to execute 8/16-bit networks with the included GoogLeNet v1 and ResNet50 models. Each mode of the models has been embedded in a run script that passes a few sample images to show accuracy and measure performance.
 
 For instructions on launching and connecting to instances, see [here][].
 
