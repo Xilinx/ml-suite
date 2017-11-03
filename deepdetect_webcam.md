@@ -56,7 +56,7 @@ Start by launching Two Terminals
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. Navigate to `/demo/webcam`
-5. Edit `index.html` (using text editor such as nano)
+5. Edit `index.html` (using a text editor such as nano).
 	Find the section below:
 	```html
 	/*******************************************
@@ -65,14 +65,14 @@ Start by launching Two Terminals
 	*******************************************/
 	var url = "yourpublicdns.compute-1.amazonaws.com:8888";
 	```
-	Change yourpublicdns.compute-1.amazonaws.com with your instance public IP address.
+	Change yourpublicdns.compute-1.amazonaws.com to your instance's public IP address.
 
 
-   This is for client browser to upload image to server.py
+   This is for the client browser to upload image to server.py
 6. Navigate to `deepdetect/`
 7. Execute ./exec_deepdetect_docker.sh
 8. Execute `python server.py`
-   This starts the webcam demo webpage & server.
+   This starts the webcam demo webpage and server.
    ```
 	$ cd demo/webcam/
 	$ ls
@@ -89,8 +89,8 @@ Once you see "serving at port 8888", the application is running and ready.
 
 **Host PC:**
 1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
-	Firefox browsers work the best for this.
-	Allow permissions for use of the Webcam and Adobe, if needed.
+	**Note**: Firefox browser is recommended.
+	Allow browser permissions for use of the Webcam and Adobe, if needed.
 
 	![](img/deepdetect_allow.png)
 
