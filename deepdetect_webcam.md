@@ -52,7 +52,7 @@ Start by launching Two Terminals
 
 3. Execute `./createService.sh`
    This initializes the DeepDetect server in Terminal 1. </br>
-	 Wait for FPGA to load xclbin in Terminal 1. </br>
+	 Wait for the FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
 4. Navigate to `/demo/webcam`
