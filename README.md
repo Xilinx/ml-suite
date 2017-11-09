@@ -14,8 +14,6 @@
 - [Caffe Tutorial][]
 - [MxNet Tutorial][]
 - Network Compiler / Anayzer
-	- Detailed Readme in the AMI:/`xfdnn_testdrive/xfdnn_compiler/README.rst`
-	- Refer to `xfdnn_testdrive/xfdnn_compiler/docs/` for more information
 - [Quantization Tutorial][]
 
 
@@ -62,9 +60,9 @@
 [Image Classification GoogLeNet v1 Demo]:image_classification.md
 [DeepDetect REST Tutorial]:deepdetect_rest.md
 [DeepDetect Webcam Tutorial]:deepdetect_webcam.md
-[Quantization Tutorial][quantize.md]
-[Caffe Tutorial][caffe.md]
-[MxNet Tutorial][mxnet.md]
+[Quantization Tutorial]:quantize.md
+[Caffe Tutorial]:caffe.md
+[MxNet Tutorial]:mxnet.md
 
 [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices]: https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md
 [SDAccel Forums]: https://forums.xilinx.com/t5/SDAccel/bd-p/SDx
