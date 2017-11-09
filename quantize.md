@@ -27,12 +27,12 @@ List of Arugments available:
 - `[--raw_scale RAW_SCALE] [--mean_value MEAN_VALUE]`
 
 Any argument that is not passed will be set with a default value.
-Default values are located here: `xfdnn_11_13_17/models/bvlc_googlenet_without_lrn/fp32`
+Default values are located here: `xfdnn_17_11_13/models/bvlc_googlenet_without_lrn/fp32`
 
 ## GoogLeNet v1 Example
 
 1. Connect to F1
-2. Navigate to `/xfdnn_11_13_17/frameworks/`
+2. Navigate to `/xfdnn_17_11_13/frameworks/`
 	```
 	$ ls
 	caffe_docker  docker_build_caffe.sh  docker_run_caffe.sh  xlnx_docker
@@ -66,7 +66,7 @@ Default values are located here: `xfdnn_11_13_17/models/bvlc_googlenet_without_l
 	[output truncated]
 	quantize.pyc --deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt --train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt --weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel --quantized_deploy_model /xlnx/models/bvlc_googlenet_without_lrn/bvlc_googlenet_without_lrn_quantized_deploy.prototxt --quantized_train_val_model /xlnx/models/bvlc_googlenet_without_lrn/bvlc_googlenet_without_lrn_quantized_train_val.prototxt --quantized_weights /xlnx/models/bvlc_googlenet_without_lrn/bvlc_googlenet_without_lrn_quantized.caffemodel --calibration_directory ../../imagenet_val/ --calibration_size 20 --calibration_indices 963,2945,6586,8120,9584,14051,14063,14915,21814,26904,27202,29626,30109,38218,38750,41186,45414,46803,48362,48412 --bitwidths 8,8,8 --dims 3,224,224 --transpose 2,0,1 --channel_swap 2,1,0 --raw_scale 255.0 --mean_value 104,117,123 --input_scale 1.0
 	```
-	
+
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges
 [MxNet]:https://github.com/apache/incubator-mxnet

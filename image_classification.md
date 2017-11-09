@@ -1,13 +1,13 @@
 # Image Classification GoogLeNet v1 Demo
 
 ## Introduction
-Image classification is one of the most common benchmarks for machine learning. This tutorial shows you how to launch the image classification GoogLeNet v1 demo from the Test Drive environment. Once the demo is started, you will be able to view the demo and monitor demo performance from any internet connected web browser.
+Image classification is one of the most common benchmarks for machine learning. This tutorial shows you how to launch the image classification GoogLeNet v1 8-bit demo from the Test Drive environment. Once the demo is started, you will be able to view the demo and monitor demo performance from any internet connected web browser.
 
 
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/caffe/`
+2. Navigate to `/xfdnn_17_11_13/caffe/`
 	```
 	$ ls
 	classification.bin            libs                  run_mp_conv_xdnn.sh           servergui
@@ -20,26 +20,18 @@ For instructions on launching and connecting to instances, see [here][].
 	kill_demo.sh                  run_googlenet_8b.sh   sdaccel_profile_summary.html
 	```
 
-3. Execute `./start_caffe_docker.sh` to enter application docker
+3. Execute `./startDocker.sh` to enter application docker and navigate to `/caffe/demo/`
 	```
-	$ ./start_caffe_docker.sh
-	/opt/caffe_ristretto$
+	$ ./startDocker.sh
+	# cd caffe/demo/
+	# ls
+	kill_demo.sh  run_demo_gui.sh      run_mp_fc_xdnn.sh  sdaccel.ini                  sdaccel_profile_summary.html
+	run_demo.sh   run_mp_conv_xdnn.sh  run_mp_fpga_flow   sdaccel_profile_summary.csv  servergui
 	```
-	In this directory you will see:
-    - `run_googlenet_16b.sh` - This will run GoogLeNet with a 16b model.*
-    - `run_googlenet_8b.sh`   - This will run GoogLeNet with a 8b model.*
-		- `run_resnet_16b.sh`   - This will run ResNet50 with a 16b model.*
-		- `run_resnet_8b.sh`   - This will run Resnet50 with a 8b model.*
-    - `run _demo.sh`    - Will run an Image Classification Speed of GoogLeNet v1 demo.
-    - `kill_demo.sh`    - Will kill the Image Classification .
-
-		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the FPGA. For more details, [click here][].
-
-		For more information on running the GoogLeNet/ResNet50 scripts view the [Running 8/16 bit Networks][] tutorial.
 
 4. Execute the `./run_demo.sh` script to start the demo
 	```
-	/opt/caffe_ristretto$ ./run_demo.sh
+	# ./run_demo.sh
 	Starting demo...
 	kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]
 	Starting producer...
@@ -55,6 +47,7 @@ For instructions on launching and connecting to instances, see [here][].
 
 	![](img/image_classification.png)
 
+6. To stop the demo, type `ctrl + c`
 
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges

@@ -6,60 +6,99 @@ This tutorial shows how to execute 8 bit networks through [MxNet][] with the inc
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/xfdnn_11_13_17/`
+2. Navigate to `/xfdnn_17_11_13/mxnet/`
 	```
+	$ cd /xfdnn_17_11_13/mxnet/
 	$ ls
-caffe       docker_run_f1_mxnet.sh  imagenet      models  mxnet_docker  xlnx_docker
-deepdetect  frameworks              imagenet_val  mxnet   xfdnn_tools
-
-
+	amalgamation     cpp-package             include                        MKL_README.md   ps-lite          tests
+	appveyor.yml     cub                     Jenkinsfile                    models          python           tools
+	benchmark        DISCLAIMER              KEYS                           mshadow         README.md        xclbin
+	bin              dlpack                  lib                            mxnet_docker    readthedocs.yml  xfdnn_env
+	build            dmlc-core               LICENSE                        NEWS.md         R-package        xlnx_docker
+	cmake            docker                  make                           nnvm            scala-package    xlnx_lib
+	CMakeLists.txt   docker_build_mxnet.sh   Makefile                       NOTICE          setup-utils      xlnx_rt_xdnn
+	CODEOWNERS       docker_run_f1_mxnet.sh  matlab                         perl-package    snapcraft.yaml
+	config.mk        docs                    mkl                            plugin          snap.python
+	CONTRIBUTORS.md  example                 mklml_lnx_2018.0.20170720.tgz  prepare_mkl.sh  src
 	```
 
-3. Execute `./docker_run_f1_mxnet.sh` to enter application docker
+3. Execute `./docker_run_f1_mxnet.sh` to enter application docker and navigate to `/mxnet/examples/xlnx/simiple-image-classify/`
 	```
 	$ ./docker_run_f1_mxnet.sh
-	# 
+	# cd example/xlnx/simple-image-classify/
+	$ ls
+	beagle.jpg  classify_fpga.sh  sdaccel_profile_summary.csv   synset.txt
+	cat.jpg     classify.py       sdaccel_profile_summary.html  wolf.jpg
 	```
 
-4. Navigate to
-
-5. Choose a script to run and execute with sudo:
+4. Here is a example of running a single image with the model GoogLeNet v1. Run the `./classify_fpga.sh` script and pass one of the example images here for it to classify.
 	```
-	/opt/caffe$ sudo ./run_googlenet_8b.sh
-	[output truncated]
-	ANDBG googlenet runFpgaOptimized time: 2.25977 ms start: prob(Softmax) end:
-	ANDBG googlenet runFpgaOptimized time: 62.4686 ms
-	ANDBG total Forward time: 835.881 ms
-	---------- Prediction 0 for examples/images/cat.jpg ----------
-	0.9593 - "n02123159 tiger cat"
-	0.0271 - "n02124075 Egyptian cat"
-	0.0039 - "n02123045 tabby, tabby cat"
-	0.0038 - "n02119789 kit fox, Vulpes macrotis"
-	0.0018 - "n02326432 hare"
-
-	---------- Prediction 1 for examples/images/cat_gray.jpg ----------
-	0.4355 - "n02123394 Persian cat"
-	0.1659 - "n02127052 lynx, catamount"
-	0.1579 - "n02120079 Arctic fox, white fox, Alopex lagopus"
-	0.0907 - "n02123159 tiger cat"
-	0.0879 - "n02326432 hare"
-
-	---------- Prediction 2 for examples/images/fish-bike.jpg ----------
-	0.6006 - "n02797295 barrow, garden cart, lawn cart, wheelbarrow"
-	0.3442 - "n04482393 tricycle, trike, velocipede"
-	0.0165 - "n03785016 moped"
-	0.0062 - "n03127747 crash helmet"
-	0.0040 - "n02835271 bicycle-built-for-two, tandem bicycle, tandem"
-
-	---------- Prediction 3 for examples/images/cat.jpg ----------
-	0.9593 - "n02123159 tiger cat"
-	0.0271 - "n02124075 Egyptian cat"
-	0.0039 - "n02123045 tabby, tabby cat"
-	0.0038 - "n02119789 kit fox, Vulpes macrotis"
-	0.0018 - "n02326432 hare"
+	# ./classify_fpga.sh beagle.jpg
+	XBLAS # FPGAs: 1
+	[XBLAS] # kernels: 1
+	[XDNN] using custom DDR banks 0,2,1,1
+	Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
+	xclProbe found 1 FPGA slots with XDMA driver running
+	CL_PLATFORM_VENDOR Xilinx
+	CL_PLATFORM_NAME Xilinx
+	CL_DEVICE_0: 0x3898a20
+	CL_DEVICES_FOUND 1, using 0
+	loading /opt/mxnet/xclbin/kernelSxdnn_hw_f1_16b.xclbin
+	[XBLAS] kernel0: kernelSxdnn_0
+	XBLAS online! (d=0)
+	WARNING: unaligned host pointer detected, this leads to extra memcpy
+	 -------------------
+	probability=0.805006, class=n02088364 beagle
+	probability=0.109553, class=n02089867 Walker hound, Walker foxhound
+	probability=0.054156, class=n02089973 English foxhound
+	probability=0.003512, class=n02101388 Brittany spaniel
+	probability=0.002501, class=n02088632 bluetick
 	```
 
-	At the end of the runs (output above), you can see the predictions of the four example images processed. The speed of each run is reported as `runFpgaOptimized time: 2.25977 ms`.
+5. To see the agreggated accuracy of GoogLeNet v1, navigate to `/mxnet/example/image-classification/`. Execute the example, `./score_fpga.sh`
+	```
+	# cd mxnet/example/image-classification/
+	# ls
+	README.md	    score.pyc			    symbol_inception-resnet-v1.R  test_score.py
+	__init__.py	    score_fpga.py		    symbol_inception-resnet-v2.R  train_cifar10.R
+	benchmark.py	    score_fpga.sh		    symbol_lenet.R		  train_cifar10.py
+	benchmark_score.py  sdaccel_profile_summary.csv     symbol_mlp.R		  train_imagenet.R
+	common		    sdaccel_profile_summary.html    symbol_resnet-28-small.R	  train_imagenet.py
+	data		    symbol_alexnet.R		    symbol_resnet-v2.R		  train_mnist.R
+	fine-tune.py	    symbol_googlenet.R		    symbol_resnet.R		  train_mnist.py
+	predict-cpp	    symbol_inception-bn-28-small.R  symbol_vgg.R		  train_model.R
+	score.py	    symbol_inception-bn.R	    symbols
+
+	# ./score_fpga.sh
+	Downloading dataset ...
+	INFO:root:data/val_256_q90.rec exists, skipping download
+	[06:17:30] src/io/iter_image_recordio_2.cc:153: ImageRecordIOParser2: data/val_256_q90.rec, use 3 threads for decoding..
+	XBLAS # FPGAs: 1
+	[XBLAS] # kernels: 1
+	[XDNN] using custom DDR banks 0,2,1,1
+	Device/Slot[0] (/dev/xdma0, 0:0:1d.0)
+	xclProbe found 1 FPGA slots with XDMA driver running
+	CL_PLATFORM_VENDOR Xilinx
+	CL_PLATFORM_NAME Xilinx
+	CL_DEVICE_0: 0x231a590
+	CL_DEVICES_FOUND 1, using 0
+	loading /opt/mxnet/xclbin/kernelSxdnn_hw_f1_16b.xclbin
+	[XBLAS] kernel0: kernelSxdnn_0
+	XBLAS online! (d=0)
+	WARNING: unaligned host pointer detected, this leads to extra memcpy
+	WARNING: unaligned host pointer detected, this leads to extra memcpy
+	WARNING: unaligned host pointer detected, this leads to extra memcpy
+	WARNING: unaligned host pointer detected, this leads to extra memcpy
+	INFO:root:('accuracy', 0.65239043824701193)
+	INFO:root:('top_k_accuracy_5', 0.8635458167330677)
+	```
+
+	At the end of the run, the top accuracy and top 5 accurary is listed:
+	```
+	INFO:root:('accuracy', 0.65239043824701193)
+	INFO:root:('top_k_accuracy_5', 0.8635458167330677)
+	```
+
 
 
 [here]: launching_instance.md

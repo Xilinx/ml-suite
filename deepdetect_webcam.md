@@ -3,7 +3,7 @@
 # Introduction
 This tutorial expands on the [DeepDetect REST Tutorial][]. Here the [Deep Detect][] application and REST APIs are used to connect a webcam from a host machine and use it to stream video to F1, allowing for classification of live images.
 
-The full code of this project is in `/xfdnn_testdrive/deepdetect/`
+The full code of this project is in `/xfdnn_17_11_13/deepdetect/`
 
 For instructions on launching and connecting to instances, see [here][].
 
@@ -11,10 +11,10 @@ Start by launching Two Terminals
 
 **Terminal 1**
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/deepdetect/`
+2. Navigate to `/xfdnn_17_11_13/deepdetect/`
 
 	```
-	$ cd xfdnn_testdrive/deepdetect/
+	$ cd xfdnn_17_11_13/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   test.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
@@ -39,10 +39,10 @@ Start by launching Two Terminals
 
 **Terminal 2:**
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/deepdetect/`
+2. Navigate to `/xfdnn_17_11_13/deepdetect/`
 
 	```
-	$ cd xfdnn_testdrive/deepdetect/
+	$ cd xfdnn_17_11_13/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   test.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin

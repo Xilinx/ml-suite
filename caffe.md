@@ -6,17 +6,14 @@ This tutorial shows how to execute 8/16 bit networks through [Caffe][] with the 
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/xfdnn_11_13_17/caffe/`
+2. Navigate to `/xfdnn_17_11_13/caffe/`
 	```
 	$ ls
-	classification.bin            libs                  run_mp_conv_xdnn.sh           servergui
-	data                          models                run_mp_fc_xdnn.sh             start_caffe_docker.sh
-	examples                      run_common.sh         run_mp_fpga_flow              xdnn_scheduler
-	exec_caffe_docker.sh          run_cpu_env.sh        run_resnet_16b.sh             xlnx-docker
-	imagenet                      run_demo_gui.sh       run_resnet_8b.sh              xlnx-xdnn-f1
-	kernelSxdnn_hw_f1_16b.xclbin  run_demo.sh           sdaccel.ini
-	kernelSxdnn_hw_f1_8b.xclbin   run_googlenet_16b.sh  sdaccel_profile_summary.csv
-	kill_demo.sh                  run_googlenet_8b.sh   sdaccel_profile_summary.html
+	classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
+	data                kernelSxdnn_hw_f1_8b.xclbin   run_cpu_env.sh        run_resnet_16b.sh  xlnx-docker
+	demo                libs                          run_flowers_16b.sh    run_resnet_8b.sh   xlnx-xdnn-f1
+	examples            models                        run_googlenet_16b.sh  sdaccel.ini
+	execDocker.sh       README                        run_googlenet_8b.sh   startDocker.sh
 	```
 
 3. Execute `./start_docker.sh` to enter application docker
@@ -25,17 +22,16 @@ For instructions on launching and connecting to instances, see [here][].
 	/opt/caffe_ristretto$
 	```
 	In this directory you will see:
-    - `run_googlenet_16b.sh` - This will run GoogLeNet with a 16b model.*
-    - `run_googlenet_8b.sh`   - This will run GoogLeNet with a 8b model.*
-		- `run_resnet_16b.sh`   - This will run ResNet50 with a 16b model.*
-		- `run_resnet_8b.sh`   - This will run Resnet50 with a 8b model.*
-    - `run _demo.sh`    - Will run an Image Classification Speed of GoogLeNet v1 demo.
-    - `kill_demo.sh`    - Will kill the Image Classification .
+	- `run_googlenet_16b.sh` - This will run GoogLeNet with a 16b model.*
+	- `run_googlenet_8b.sh`   - This will run GoogLeNet with a 8b model.*
+	- `run_resnet_16b.sh`   - This will run ResNet50 with a 16b model.*
+	- `run_resnet_8b.sh`   - This will run Resnet50 with a 8b model.*
+	- `run_flowers_16b.sh`    - This Will run Flowers102 with a 16b model.*
+	- `run_places_16b.sh`    - This will run Places365 with a 16b model.*
 
 		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the FPGA. For more details, [click here][].
 
-
-5. Choose a script to run and execute with sudo:
+4. Choose a script to run and execute with sudo:
 	```
 	/opt/caffe$ sudo ./run_googlenet_8b.sh
 	[output truncated]
@@ -72,6 +68,42 @@ For instructions on launching and connecting to instances, see [here][].
 	```
 
 	At the end of the runs (output above), you can see the predictions of the four example images processed. The speed of each run is reported as `runFpgaOptimized time: 2.25977 ms`.
+
+	Another Example:
+	```
+	# ./run_flowers_16b.sh
+	GoogleNet runFpgaOptimized time: 2.15285 ms start: prob(Softmax) end:
+	GoogleNet runFpgaOptimized time: 37.3193 ms
+	ANDBG total Forward time: 37.3817 ms
+	---------- Prediction 0 for examples/flowers/passion_00001.jpg ----------
+	0.9541 - "love in the mist"
+	0.0455 - "passion flower"
+	0.0004 - "alpine sea holly"
+	0.0000 - "spring crocus"
+	0.0000 - "pink primrose"
+
+	---------- Prediction 1 for examples/flowers/dahlia_03000.jpg ----------
+	1.0000 - "pink-yellow dahlia"
+	0.0000 - "bearded iris"
+	0.0000 - "thorn apple"
+	0.0000 - "rose"
+	0.0000 - "barbeton daisy"
+
+	---------- Prediction 2 for examples/flowers/windflower_06000.jpg ----------
+	0.9940 - "windflower"
+	0.0046 - "japanese anemone"
+	0.0009 - "mexican aster"
+	0.0004 - "bougainvillea"
+	0.0001 - "columbine"
+
+	---------- Prediction 3 for examples/flowers/lily_08000.jpg ----------
+	0.9999 - "blackberry lily"
+	0.0001 - "bird of paradise"
+	0.0000 - "anthurium"
+	0.0000 - "fritillary"
+	0.0000 - "tiger lily"
+	```
+
 
 
 [here]: launching_instance.md
