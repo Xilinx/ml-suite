@@ -1,39 +1,27 @@
-# Running 8/16-bit Networks
+# MxNet Tutorial
 
 ## Introduction
-This tutorial shows how to execute 8/16-bit networks with the included GoogLeNet v1 and ResNet50 models. Each mode of the models has been embedded in a run script that passes a few sample images to show accuracy and measure performance.
+This tutorial shows how to execute 8 bit networks through [MxNet][] with the included GoogLeNet v1 model. Each of mode of models has been put into a run script, that passes a few sample images, to show accuracy and measure performance.
 
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/caffe/`
+2. Navigate to `/xfdnn_11_13_17/`
 	```
 	$ ls
-	classification.bin            libs                  run_mp_conv_xdnn.sh           servergui
-	data                          models                run_mp_fc_xdnn.sh             start_caffe_docker.sh
-	examples                      run_common.sh         run_mp_fpga_flow              xdnn_scheduler
-	exec_caffe_docker.sh          run_cpu_env.sh        run_resnet_16b.sh             xlnx-docker
-	imagenet                      run_demo_gui.sh       run_resnet_8b.sh              xlnx-xdnn-f1
-	kernelSxdnn_hw_f1_16b.xclbin  run_demo.sh           sdaccel.ini
-	kernelSxdnn_hw_f1_8b.xclbin   run_googlenet_16b.sh  sdaccel_profile_summary.csv
-	kill_demo.sh                  run_googlenet_8b.sh   sdaccel_profile_summary.html
+caffe       docker_run_f1_mxnet.sh  imagenet      models  mxnet_docker  xlnx_docker
+deepdetect  frameworks              imagenet_val  mxnet   xfdnn_tools
+
+
 	```
 
-3. Execute `./start_caffe_docker.sh` to enter application docker
+3. Execute `./docker_run_f1_mxnet.sh` to enter application docker
 	```
-	$ ./start_caffe_docker.sh
-	/opt/caffe_ristretto$
+	$ ./docker_run_f1_mxnet.sh
+	# 
 	```
-	In this directory you will see:
-    - `run_googlenet_16b.sh` - This will run GoogLeNet with a 16b model.*
-    - `run_googlenet_8b.sh`   - This will run GoogLeNet with a 8b model.*
-		- `run_resnet_16b.sh`   - This will run ResNet50 with a 16b model.*
-		- `run_resnet_8b.sh`   - This will run Resnet50 with a 8b model.*
-    - `run _demo.sh`    - Will run an Image Classification Speed of GoogLeNet v1 demo.
-    - `kill_demo.sh`    - Will kill the Image Classification .
 
-		\*Note: When running the test scripts, use sudo. AWS requires root (sudo) privileges to program the FPGA. For more details, [click here][].
-
+4. Navigate to
 
 5. Choose a script to run and execute with sudo:
 	```
@@ -76,3 +64,4 @@ For instructions on launching and connecting to instances, see [here][].
 
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges
+[MxNet]:https://github.com/apache/incubator-mxnet
