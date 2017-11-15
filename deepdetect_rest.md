@@ -3,7 +3,7 @@
 ## Introduction
 This tutorial describes how to launch [Deep Detect][], a deep learning API and web server application which has integrations for REST APIs and uses F1 for Image classification acceleration.
 
-The source for this project is available in the Test Drive at: `/xfdnn_testdrive/deepdetect/`
+The source for this project is available in the Test Drive at: `/xfdnn_17_11_13/deepdetect/`
 
 For instructions on launching and connecting to instances, see [here][].
 
@@ -11,7 +11,7 @@ Start by launching Two Terminals.
 
 **Terminal 1:**
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/deepdetect/`
+2. Navigate to `/xfdnn_17_11_13/deepdetect/`
 	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
@@ -35,7 +35,7 @@ Start by launching Two Terminals.
 
 **Terminal 2:**
 1. Connect to F1
-2. Navigate to `/xfdnn_testdrive/deepdetect/`
+2. Navigate to `/xfdnn_17_11_13/deepdetect/`
 	```
 	$ cd xfdnn_testdrive/deepdetect/
 	$ ls
