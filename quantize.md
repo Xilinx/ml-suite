@@ -30,7 +30,7 @@ Any argument that is not passed will be set with a default value for the provide
 ## GoogLeNet v1 Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`.
         ```
         $ ls
         classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
@@ -56,7 +56,7 @@ Any argument that is not passed will be set with a default value for the provide
 	# cd /xlnx/xfdnn_tools/quantize/
 	```
 
-5. This next command will execute GoogleNet-v1 quantization using deploy and train/validation models provided in the /xlnx/models directory.  This quantization expects at least 8 images to be available in the /home/centos/xfdnn_17_12_15/imagenet_val directory.  Refer to http://www.image-net.org/download-imageurls for downloading ILSVRC files from ImageNet.  Other files may be used and do not require any special file naming convention.
+5. This next command will execute GoogleNet-v1 quantization using deploy and train/validation models provided in the /xlnx/models directory.  This quantization expects at least 8 images to be available in the `/home/centos/xfdnn_17_12_15/imagenet_val` directory.  Refer to http://www.image-net.org/download-imageurls for downloading ILSVRC files from ImageNet.  Other files may be used and do not require any special file naming convention.
 	```
 	# python quantize.py \
 	--deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \
@@ -90,7 +90,7 @@ Any argument that is not passed will be set with a default value for the provide
 	# ls -la ./q.train_val.json
 	q.train_val.json
 	```
-   This file contains calibration parameters used by XFDNN through the XFDNN_QUANTIZE_CFGFILE as see in the caffe examples
+   This file contains calibration parameters used by XFDNN through the XFDNN_QUANTIZE_CFGFILE as seen in the Caffe example scripts
 
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges

@@ -31,9 +31,7 @@ Start by launching Two Terminals.
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicate that the script has started the webserver correctly.
-
-        When the FPGA is ready you will see "XBLAS online! (d=0)"
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicate that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
 
 **Terminal 2:**
 1. Connect to F1
@@ -47,14 +45,14 @@ Start by launching Two Terminals.
 	exec_deepdetect_docker.sh  runtime  templates
 	```
 3. Execute `./createService.sh`
-   This initializes the DeepDetect server in Terminal 1 with GoogLeNet. </br>
+   This initializes the DeepDetect server in Terminal 1 with GoogLeNet-v1. </br>
    Wait for the FPGA to load xclbin in Terminal 1. </br>
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
    More service can be added for the following networks:
-     Flowers-102 : createServicesFlowers.sh
-     Places-365  : createServicePlaces.sh
-     Resnet-50   : createServiceResnet.h
+-     Flowers-102 : createServicesFlowers.sh
+-     Places-365  : createServicePlaces.sh
+-     Resnet-50   : createServiceResnet.h
 
 4. To verify your service is working, execute `./test.sh`
 	```
@@ -109,7 +107,7 @@ Start by launching Two Terminals.
 
 This starts the web server from where you can submit URLs.
 
-1. Visit `http://yourpublicdns.compute-1.amazonaws.com` from your broswer
+1. Visit `http://<yourpublicdns>.compute-1.amazonaws.com` from your broswer
 
 	![](img/deepdetect_rest.png)
 

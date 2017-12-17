@@ -28,7 +28,7 @@ Any argument that is not passed will be set with a default value.
 ## GoogLeNet v1 Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`.
         ```
         $ ls
         classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
@@ -80,7 +80,7 @@ Any argument that is not passed will be set with a default value.
         Trying strategy shuffle
         ```
 
-7. The output used by XFDNN is the network.cmd file located in the run directory.  The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
+7. The output that may be passed to XFDNN by the scripts as shown in the Caffe tutorial is the network.cmd file located in the run directory.  The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
 
         network.cmd
 	```

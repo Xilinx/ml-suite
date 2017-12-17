@@ -50,7 +50,7 @@
 [DeepDetect REST Tutorial]:deepdetect_rest.md
 [DeepDetect Webcam Tutorial]:deepdetect_webcam.md
 [Quantization Tutorial]:quantize.md
-[Compiler Tutorial]:compiler.md
+[Compiler Tutorial]:compile.md
 [End to End Tutorial]:endtoend.md
 [Caffe Tutorial]:caffe.md
 [MxNet Tutorial]:mxnet.md
