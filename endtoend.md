@@ -50,7 +50,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 8. The next step is running the quantizer on sample images from the network training or validation set
 
 	```
-	# python quantize.py \
+	# python quantize.pyc \
 	--deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \
 	--train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt \
 	--weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel \
