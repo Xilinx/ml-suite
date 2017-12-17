@@ -34,9 +34,7 @@ Start by launching Two Terminals
 
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080", this indicates  that the script has started the webserver correctly.
-
-        When the FPGA is ready you will see "XBLAS online! (d=0)"
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 			0.0.0.0:8080", this indicates  that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
 
 **Terminal 2:**
 1. Connect to F1
@@ -68,10 +66,11 @@ Start by launching Two Terminals
 	```
 	Change yourpublicdns.compute-1.amazonaws.com to your instance's public IP address from EC2.
 
-	var url = "yourpublicdns.compute-1.amazonaws.com:8888";
+        ```
+	var url = "<yourpublicdns>.compute-1.amazonaws.com:8888";
+        ```
 
-
-   This is for the client browser to upload image to server.py
+   This is for the client browser to upload webcam images to server.py
 6. Navigate to `/home/centos/xfdnn_17_12_15/deepdetect/`
 7. Execute ./exec_deepdetect_docker.sh
 8. Navigate to `/opt/deepdetect/demo/webcam/`
@@ -89,10 +88,10 @@ Start by launching Two Terminals
 	serving at port 8888
 	```
 
-Once you see "serving at port 8888", the application is running and ready.
+Once you see `serving at port 8888` the application is running and ready.
 
 **Host PC:**
-1. In Firefox visit http://yourpublicdns.compute-1.amazonaws.com:8888
+1. In Firefox visit http://<yourpublicdns>.compute-1.amazonaws.com:8888
 
 	**Note**: Firefox browser is recommended.
 	Allow browser permissions for use of the Webcam and Adobe, if needed.

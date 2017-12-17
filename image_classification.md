@@ -6,12 +6,12 @@ Image classification is one of the most common benchmarks for machine learning. 
 This demo is meant to use ImageNet ILSVRC2012 validation files.  Files should be located in /home/centos/xfdnn_17_12_15/imagenet_val with the following naming convention: ILSVRC2012_val_<IMAGE ID>.JPEG where <IMAGE_ID> starts at 00000000.  Instructions for downloading ILSVRC2012 files can be found here: http://www.image-net.org/download-imageurls
 
 If you just want to try it without downloading the dataset you can insert you own files and simply name them:
-ILSVRC2012_val_00000000.JPEG
-ILSVRC2012_val_00000001.JPEG
-ILSVRC2012_val_00000002.JPEG
-etc.
+- ILSVRC2012_val_00000000.JPEG
+- ILSVRC2012_val_00000001.JPEG
+- ILSVRC2012_val_00000002.JPEG
+- etc.
 
-Then the demo should start as long as there is at least one images to classify.  Note that the demo webpage shows the correct answer above each image and that is indexed by the ID of the ILSVRC2012 images so if the images proviced are not ILSVRC2012 dataset, there may be a mismatch in the reported labels.
+Then the demo should start as long as there is at least one images to classify.  Note that the demo webpage shows the correct answer above each image and that is indexed by the ID of the ILSVRC2012 images so if the images provided are not ILSVRC2012 dataset, there may be a mismatch in the reported labels.
 
 For instructions on launching and connecting to instances, see [here][].
 
@@ -48,9 +48,10 @@ For instructions on launching and connecting to instances, see [here][].
 	Start up of the demo will take a few minutes, but once it's complete, the console will start displaying numbers.
 
 5. From your host machine: the demo will display at the following web address:
-	"http://<yourpublicdns>.compute-1.amazonaws.com:8998/static/www/xdnn1.html"
+	`http://<yourpublicdns>.compute-1.amazonaws.com:8998/static/www/xdnn1.html`
 
-	To get your '<yourpublicdns>.compute-1.amazonaws.com', refer to the launching and connecting instructions.
+	To get your `<yourpublicdns>.compute-1.amazonaws.com` address refer to the launching and connecting instructions.
+
 	From your browser you will see the running Image Classification Demo:
 
 	![](img/image_classification.png)

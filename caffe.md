@@ -1,7 +1,7 @@
 # Caffe Tutorial
 
 ## Introduction
-This tutorial shows how to execute 8/16 bit networks through [Caffe][] with the included GoogLeNet-v1 and ResNet-50 models. Each of mode of models has been put into a run script that passes a few sample images to show accuracy and measure performance.
+This tutorial shows how to execute 8/16 bit networks through [Caffe][] with the included GoogLeNet-v1, ResNet-50, Flowers-102 and Places-365 models. Each of these models has been put into a run script that passes a few sample images to show accuracy and measure performance.
 
 For instructions on launching and connecting to instances, see [here][].
 
@@ -66,7 +66,7 @@ For instructions on launching and connecting to instances, see [here][].
 	0.0018 - "n02326432 hare"
 	```
 
-	At the end of the runs (output above), you can see the predictions of the four example images processed. The runtime from conv1/7x7_s2(Convolution) to pool5_7x7_s1 is reported for the batch of images however this is not the peak FPGA performance because this includes loading the weights and instructions ot the FPGA and this version of CAFFE does not have a multi-process pipeline to fully utilize the FPGA.  See the [Image Classification GoogLeNet-v1 Demo][] for a realistic performance demonstration.
+	At the end of the runs (output above), you can see the predictions of the four example images processed. The runtime from conv1/7x7_s2(Convolution) to pool5_7x7_s1 is reported for the batch of images however this is not the peak FPGA performance because this includes loading the weights and instructions ot the FPGA and this version of CAFFE does not have a multi-process pipeline to fully utilize the FPGA.  See the [Image Classification GoogLeNet-v1 Demo][] for a full performance demonstration.
 
 	Another Example:
 	```
@@ -100,6 +100,9 @@ For instructions on launching and connecting to instances, see [here][].
 	0.0000 - "tiger lily"
 	```
 
+Note: As used here, the prototxt batch size must match the number of input images, 4 in this example
+
+[Caffe]: http://caffe.berkeleyvision.org
 [Image Classification GoogLeNet-v1 Demo]:image_classification.md
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges

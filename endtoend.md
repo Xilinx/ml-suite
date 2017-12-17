@@ -7,7 +7,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 ## GoogLeNet-v1 Prototxt to FPGA Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`.
         ```
         $ ls
         classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
@@ -35,42 +35,48 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 
 6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the XFDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
 	```
-        # python tests/xfdnn_compiler.py -n /home/centos/googlenetv1.prototxt -s all -m 4 -i 28 -g /home/centos/network.cmd
+        # python tests/xfdnn_compiler.py -n /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt -s all -m 4 -i 28 -g /opt/caffe/network.cmd
 	```
 
-	When successful, the /home/centos/network.cmd and /home/centos/network.cmd.json will be created
+	When successful, the /opt/caffe/network.cmd will be created.
 
-	```
 
 7. Navigate to `/xlnx/xfdnn_tools/quantize/`
 	```
 	# cd /xlnx/xfdnn_tools/quantize/
 	```
 
-7. The next step is running the quantizer on sample images from the network training or validation set
+8. The next step is running the quantizer on sample images from the network training or validation set
 
-        network.cmd
-	```
-        # # SKIPPED data [u'Input'] ['layer'] data: type=Input, sizes=None, shapes=None, sched 0 Kernel None Strides None Padding None  NO VALID CODE
-        2 XNConv conv1/7x7_s2 7 2 16 26 2 1 1 0x0 224 3 0x70000 112 64
-        # FUSED "conv1/relu_7x7" [u'ReLU'] ['inplace_layer']
-        4 XNMaxPool pool1/3x3_s2 3 2 0 0x70000 112 64 0x0 56
-        5 XNConv conv2/3x3_reduce 1 1 16 26 2 1 1 0x0 56 64 0x70000 56 64
-        # FUSED "conv2/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
-        7 XNConv conv2/3x3 3 1 16 26 2 1 1 0x70000 56 64 0xe0000 56 192
-        # FUSED "conv2/relu_3x3" [u'ReLU'] ['inplace_layer']
-        9 XNMaxPool pool2/3x3_s2 3 2 0 0xe0000 56 192 0x0 28
+        ```
+	# python quantize.py \
+	--deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \
+	--train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt \
+	--weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel \
+	--quantized_train_val_model q.train_val.prototxt \
+	--calibration_directory ../../imagenet_val/ \
+	--calibration_size 8
+        ```
+
+	When successful, the /opt/caffe/q.tran_val.json will be created.
+
+9. Finally, navigate to the /opt/caffe directory and run the network on the FPGA through the run_network_8b.sh script:
+
+        ```
+        # cd /opt/caffe
+	#  run_network_8b.sh /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt models/bvlc_googlenet/GoogleNetWithOutLRN.caffemodel network.cmd q.train_val.json 
+	...
+	---------- Prediction 0 for examples/images/cat.jpg ----------
+        0.5036 - "n02123159 tiger cat"
+        0.1366 - "n02124075 Egyptian cat"
+        0.0581 - "n02123045 tabby, tabby cat"
+        0.0402 - "n02119789 kit fox, Vulpes macrotis"
+        0.0341 - "n02119022 red fox, Vulpes vulpes"
         ...
+        ```
 
+Note: As used here, the prototxt batch size must match the number of input images, 4 in this example
 
-8. Finally, navigate to the /opt/caffe directory and run the network through the run_network_8b.sh script:
-cd /opt/caffe
-
-# Works
-run_network_8b.sh models/bvlc_googlenet/bvlc_googlenet_noLRN.dummydata.txt.xdnn.quantize dmaimodels/bvlc_googlenet/GoogleNetWithOutLRN.caffemodel /home/centos/network.cmd ./xdnn_scheduler/googlenet_quantized.json
-
-# Segfault
-run_network_8b.sh /home/centos/googlenetv1.prototxt models/bvlc_googlenet/GoogleNetWithOutLRN.caffemodel /home/centos/network.cmd ./xdnn_scheduler/googlenet_quantized.json
 
 [here]: launching_instance.md
 [compile]: compile.md
