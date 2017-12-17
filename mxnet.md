@@ -6,9 +6,9 @@ This tutorial shows how to execute 8 bit networks through [MxNet][] with the inc
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/xfdnn_17_11_13/mxnet/`
+2. Navigate to `/home/centos/xfdnn_17_12_15/mxnet/`
 	```
-	$ cd /xfdnn_17_11_13/mxnet/
+	$ cd /home/centos/xfdnn_17_12_15/mxnet/
 	$ ls
 	amalgamation     cpp-package             include                        MKL_README.md   ps-lite          tests
 	appveyor.yml     cub                     Jenkinsfile                    models          python           tools
@@ -17,15 +17,16 @@ For instructions on launching and connecting to instances, see [here][].
 	build            dmlc-core               LICENSE                        NEWS.md         R-package        xlnx_docker
 	cmake            docker                  make                           nnvm            scala-package    xlnx_lib
 	CMakeLists.txt   docker_build_mxnet.sh   Makefile                       NOTICE          setup-utils      xlnx_rt_xdnn
-	CODEOWNERS       docker_run_f1_mxnet.sh  matlab                         perl-package    snapcraft.yaml
+	CODEOWNERS       start_docker.sh  matlab                         perl-package    snapcraft.yaml
 	config.mk        docs                    mkl                            plugin          snap.python
 	CONTRIBUTORS.md  example                 mklml_lnx_2018.0.20170720.tgz  prepare_mkl.sh  src
 	```
 
-3. Execute `./docker_run_f1_mxnet.sh` to enter application docker and navigate to `/mxnet/examples/xlnx/simiple-image-classify/`
+3. Execute `./start_docker.sh` to enter application docker and navigate to `/opt/mxnet/examples/xlnx/simple-image-classify/`
+
 	```
-	$ ./docker_run_f1_mxnet.sh
-	# cd example/xlnx/simple-image-classify/
+	$ ./start_docker.sh
+	# cd /opt/mxnet/example/xlnx/simple-image-classify/
 	$ ls
 	beagle.jpg  classify_fpga.sh  sdaccel_profile_summary.csv   synset.txt
 	cat.jpg     classify.py       sdaccel_profile_summary.html  wolf.jpg
@@ -55,9 +56,9 @@ For instructions on launching and connecting to instances, see [here][].
 	probability=0.002501, class=n02088632 bluetick
 	```
 
-5. To see the agreggated accuracy of GoogLeNet v1, navigate to `/mxnet/example/image-classification/`. Execute the example, `./score_fpga.sh`
+5. To see the agreggated accuracy of GoogLeNet v1, navigate to `/opt/mxnet/example/image-classification/`. Execute the example, `./score_fpga.sh`
 	```
-	# cd mxnet/example/image-classification/
+	# cd /opt/mxnet/example/image-classification/
 	# ls
 	README.md	    score.pyc			    symbol_inception-resnet-v1.R  test_score.py
 	__init__.py	    score_fpga.py		    symbol_inception-resnet-v2.R  train_cifar10.R
