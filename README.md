@@ -20,9 +20,8 @@
 	- Added Compiler Tutorial
 	- Added End to End Tutorial
 	- Known Issues:
-		-
 
-
+	
 - xfdnn_17_11_13.1
 	- Supported Frameworks:
 		- Caffe
