@@ -1,4 +1,4 @@
-# Machine Learning Development Stack From Xilinx, Preview Edition 17_12_15
+# Machine Learning Development Stack From Xilinx, Preview Edition
 
 ### Tutorials
 - [Image Classification GoogLeNet-v1 Demo][]
@@ -8,7 +8,7 @@
 - [MxNet Tutorial][]
 - [Quantization Tutorial][]
 - [Compiler Tutorial][]
-- [End to End Tutorial]
+- [Prototxt to FPGA Tutorial][]
 
 
 
@@ -17,9 +17,13 @@
 
 - xfdnn_17_12_15
 	- General script and documentation cleanup
+	- Added Compiler Tutorial
+	- Added End to End Tutorial
+	- Known Issues:
+		-
 
 
-- xfdnn_17_11_13
+- xfdnn_17_11_13.1
 	- Supported Frameworks:
 		- Caffe
 		- MxNet
@@ -51,7 +55,7 @@
 [DeepDetect Webcam Tutorial]:deepdetect_webcam.md
 [Quantization Tutorial]:quantize.md
 [Compiler Tutorial]:compile.md
-[End to End Tutorial]:endtoend.md
+[Prototxt to FPGA Tutorial]:endtoend.md
 [Caffe Tutorial]:caffe.md
 [MxNet Tutorial]:mxnet.md
 

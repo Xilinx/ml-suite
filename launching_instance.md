@@ -4,7 +4,7 @@
 
 1. Select Launch Instance
 
-2. From AWS Marketplace select the Machine Learning Development Stack from Xilinx, Preview Edition.
+2. From AWS Marketplace select the [Machine Learning Development Stack from Xilinx, Preview Edition][].
 
 3. Select instance type f1.2xlarge
 
@@ -15,3 +15,10 @@
 6. Launch selected instance
 
 7. For connecting via ssh and web based demos, use the Public DNS or Public IP shown in the EC2 dashboard to connect to your EC2 instance.
+
+
+
+
+
+
+[Machine Learning Development Stack from Xilinx, Preview Edition]: Edition]https://aws.amazon.com/marketplace/pp/B077FM2JNS
