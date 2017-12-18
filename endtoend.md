@@ -33,7 +33,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 	# cd /xlnx/xfdnn_tools/compile/
 	```
 
-6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the XFDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition.
+6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition.
 
 	```
 	# python tests/xfdnn_compiler.py -n /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt -s all -m 4 -i 28 -g /opt/caffe/network.cmd
@@ -65,7 +65,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 
 	```
 	# cd /opt/caffe
-	#  run_network_8b.sh /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt models/bvlc_googlenet/GoogleNetWithOutLRN.caffemodel network.cmd q.train_val.json 
+	#  run_network_8b.sh /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt models/bvlc_googlenet/GoogleNetWithOutLRN.caffemodel network.cmd q.train_val.json
 	...
 	---------- Prediction 0 for examples/images/cat.jpg ----------
 	0.5036 - "n02123159 tiger cat"

@@ -1,9 +1,9 @@
 # Compiler Tutorial
 
 ## Introduction
-The compiler script interfaces with CAFFE to read a deep learning model and generates a sequence of instructions for the XFDNN framework to execute on the FPGA.  This includes a computational graph traversal, node merging and optimization, memory allocation and finally instruction generation.
+The compiler script interfaces with CAFFE to read a deep learning model and generates a sequence of instructions for the xfDNN framework to execute on the FPGA.  This includes a computational graph traversal, node merging and optimization, memory allocation and, finally, instruction generation.
 
-For instructions on launching and connecting to instances, see [here][].
+For instructions on launching and connecting to aws instances, see [here][].
 
 ## Support Features
 
@@ -20,7 +20,7 @@ List of Arguments available:
 - `[-o,--pngfile FILENAME]` -  Output png file of graph read by compiler (optional)
 - `[-q,--quantization FILENAME]` -  Include quantizer output during compiler (optional)
 - `[--schedule FILENAME]` - Show layer by layer memory layout  (optional)
-- `[-i,--dsp DSP_DIMENSION]` - XFDNN kernel dimension (28 or 56, default: 28)
+- `[-i,--dsp DSP_DIMENSION]` - xfDNN kernel dimension (28 or 56, default: 28)
 - `[-p,--phase PHASE]` - Caffe prototxt phase (TRAIN, TEST, ALL default: TEST)
 
 Any argument that is not passed will be set with a default value.
@@ -51,12 +51,12 @@ Any argument that is not passed will be set with a default value.
 
 5. Navigate to `/xlnx/xfdnn_tools/compile/`
 	```
-	# cd /xlnx/xfdnn_tools/compile/
+	# cd /xlnx/xfdnn_tools/compile/ 	
 	```
 
 6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the XFDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
 	```
-        # python tests/xfdnn_compiler.py -n /xlnx/xfdnn_tools/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt -s all -m 4 -i 28 -g network.cmd
+  # python tests/xfdnn_compiler.py -n /xlnx/xfdnn_tools/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt -s all -m 4 -i 28 -g network.cmd
 	```
 
 	In the console output the compiler will try various strategies and when successful will report the minimum memory:
@@ -81,7 +81,7 @@ Any argument that is not passed will be set with a default value.
 	Trying strategy shuffle
 	```
 
-7. The output that may be passed to XFDNN by the scripts as shown in the Caffe tutorial is the network.cmd file located in the run directory.  The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
+7. The output that may be passed to xfDNN by the scripts as shown in the Caffe tutorial is the network.cmd file located in the run directory.  The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
 
 	network.cmd:
 	```

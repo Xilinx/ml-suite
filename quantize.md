@@ -31,14 +31,14 @@ Any argument that is not passed will be set with a default value for the provide
 
 1. Connect to F1
 2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`.</br>
-        ```
-        $ ls
-        classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
-        data                kernelSxdnn_hw_f1_8b.xclbin   run_cpu_env.sh        run_resnet_16b.sh  xlnx-docker
-        demo                libs                          run_flowers_16b.sh    run_resnet_8b.sh   xlnx-xdnn-f1
-        examples            models                        run_googlenet_16b.sh  sdaccel.ini
-        execDocker.sh       README                        run_googlenet_8b.sh   start_docker.sh
-        ```
+  ```
+  $ ls
+  classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
+  data                kernelSxdnn_hw_f1_8b.xclbin   run_cpu_env.sh        run_resnet_16b.sh  xlnx-docker
+  demo                libs                          run_flowers_16b.sh    run_resnet_8b.sh   xlnx-xdnn-f1
+  examples            models                        run_googlenet_16b.sh  sdaccel.ini
+  execDocker.sh       README                        run_googlenet_8b.sh   start_docker.sh
+  ```
 
 3. Execute `./start_docker.sh` to enter application docker
 	```
@@ -70,7 +70,7 @@ Any argument that is not passed will be set with a default value for the provide
         This translates into the following options:
 
 	```
-        # python quantize.pyc --deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt --train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt --weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel --quantized_train_val_model q.train_val.prototxt --calibration_directory ../../imagenet_val/ --calibration_size 8 --bitwidths 8,8,8 --dims 3,224,224 --transpose 2,0,1 --channel_swap 2,1,0 --raw_scale 255.0 --mean_value 104,117,123 --input_scale 1.0
+  # python quantize.pyc --deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt --train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt --weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel --quantized_train_val_model q.train_val.prototxt --calibration_directory ../../imagenet_val/ --calibration_size 8 --bitwidths 8,8,8 --dims 3,224,224 --transpose 2,0,1 --channel_swap 2,1,0 --raw_scale 255.0 --mean_value 104,117,123 --input_scale 1.0
 	 ```
 
 	To run on more than 8 images (recommended is at least 20), set the `--calibration_size` to the desired number of images.
@@ -85,7 +85,7 @@ Any argument that is not passed will be set with a default value for the provide
 	--calibration_size 20
 	```
 
-6. The output used by XFDNN is the JSON file located in the same directory as the --quantized_train_val_model argument:
+6. The output used by XFDNN is the JSON file located in the same directory as the `--quantized_train_val_model argument`:
 	```
 	# ls -la ./q.train_val.json
 	q.train_val.json
@@ -95,4 +95,3 @@ Any argument that is not passed will be set with a default value for the provide
 [here]: launching_instance.md
 [click here]: https://github.com/aws/aws-fpga/blob/master/sdk/userspace/fpga_mgmt_tools/README.md#sudo-or-root-privileges
 [MxNet]:https://github.com/apache/incubator-mxnet
-
