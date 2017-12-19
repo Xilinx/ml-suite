@@ -3,7 +3,7 @@
 ## Introduction
 This tutorial shows how to execute 8/16 bit networks through [Caffe][] with the included GoogLeNet-v1, ResNet-50, Flowers-102 and Places-365 models. Each of these models has been put into a run script that passes a few sample images to show accuracy and measure performance.
 
-For instructions on launching and connecting to instances, see [here][].
+For instructions on launching and connecting to aws instances, see [here][].
 
 1. Connect to F1
 2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
@@ -100,7 +100,7 @@ For instructions on launching and connecting to instances, see [here][].
 	0.0000 - "tiger lily"
 	```
 
-Note: As used here, the prototxt batch size must match the number of input images, 4 in this example
+Note: As used here, the prototxt batch size must match the number of input images, 4 in this example.
 
 [Caffe]: http://caffe.berkeleyvision.org
 [Image Classification GoogLeNet-v1 Demo]:image_classification.md

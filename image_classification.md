@@ -13,7 +13,7 @@ If you just want to try it without downloading the dataset you can insert you ow
 
 Then the demo should start as long as there is at least one images to classify.  Note that the demo webpage shows the correct answer above each image and that is indexed by the ID of the ILSVRC2012 images so if the images provided are not ILSVRC2012 dataset, there may be a mismatch in the reported labels.
 
-For instructions on launching and connecting to instances, see [here][].
+For instructions on launching and connecting to aws instances, see [here][].
 
 1. Connect to F1
 2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`

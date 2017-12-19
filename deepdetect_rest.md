@@ -5,7 +5,7 @@ This tutorial describes how to launch [Deep Detect][], a deep learning API and w
 
 The source for this project is available in the Test Drive at: `/home/centos/xfdnn_17_12_15/deepdetect/`
 
-For instructions on launching and connecting to instances, see [here][].
+For instructions on launching and connecting to aws instances, see [here][].
 
 Start by launching Two Terminals.
 
@@ -50,9 +50,9 @@ Start by launching Two Terminals.
    On success you will see `{"status":{"code":201,"msg":"Created"}}`
 
    More service can be added for the following networks:
--     Flowers-102 : createServicesFlowers.sh
--     Places-365  : createServicePlaces.sh
--     Resnet-50   : createServiceResnet.h
+ - Flowers-102 : createServicesFlowers.sh
+ - Places-365  : createServicePlaces.sh
+ - Resnet-50   : createServiceResnet.h
 
 4. To verify your service is working, execute `./test.sh`
 	```
