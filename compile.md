@@ -56,7 +56,7 @@ Any argument that is not passed will be set with a default value.
 
 6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
 	```
-  # python tests/xfdnn_compiler.py -n /xlnx/xfdnn_tools/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt -s all -m 4 -i 28 -g network.cmd
+	# python tests/xfdnn_compiler.py -n /xlnx/xfdnn_tools/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt -s all -m 4 -i 28 -g network.cmd
 	```
 
 	In the console output the compiler will try various strategies and when successful will report the minimum memory:
