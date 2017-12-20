@@ -67,11 +67,24 @@ Any argument that is not passed will be set with a default value for the provide
 	--calibration_size 8
 	```
 
-        This translates into the following options:
+	This translates into the following options:
 
 	```
-  # python quantize.pyc --deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt --train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt --weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel --quantized_train_val_model q.train_val.prototxt --calibration_directory ../../imagenet_val/ --calibration_size 8 --bitwidths 8,8,8 --dims 3,224,224 --transpose 2,0,1 --channel_swap 2,1,0 --raw_scale 255.0 --mean_value 104,117,123 --input_scale 1.0
-	 ```
+	# python quantize.pyc \
+	--deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt
+	--train_val_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_train_val.prototxt
+	--weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel
+	--quantized_train_val_model q.train_val.prototxt
+	--calibration_directory ../../imagenet_val/
+	--calibration_size 8
+	--bitwidths 8,8,8
+	--dims 3,224,224
+	--transpose 2,0,1
+	--channel_swap 2,1,0
+	--raw_scale 255.0
+	--mean_value 104,117,123
+	--input_scale 1.0
+	```
 
 	To run on more than 8 images (recommended is at least 20), set the `--calibration_size` to the desired number of images.
 
