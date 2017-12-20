@@ -76,7 +76,7 @@ Any argument that is not passed will be set with a default value for the provide
   --weights /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel
   --quantized_train_val_model q.train_val.prototxt
   --calibration_directory ../../imagenet_val/
-  --calibration_size 8 
+  --calibration_size 8
   --bitwidths 8,8,8
   --dims 3,224,224
   --transpose 2,0,1
