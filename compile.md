@@ -25,7 +25,7 @@ List of Arguments available:
 
 Any argument that is not passed will be set with a default value.
 
-## GoogLeNet v1 Example
+### GoogLeNet v1 Example
 
 1. Connect to F1
 2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
@@ -54,7 +54,7 @@ Any argument that is not passed will be set with a default value.
 	# cd /xlnx/xfdnn_tools/compile/ 	
 	```
 
-6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the XFDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
+6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
 	```
   # python tests/xfdnn_compiler.py -n /xlnx/xfdnn_tools/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt -s all -m 4 -i 28 -g network.cmd
 	```
