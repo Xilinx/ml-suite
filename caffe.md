@@ -6,7 +6,7 @@ This tutorial shows how to execute 8/16 bit networks through [Caffe][] with the 
 For instructions on launching and connecting to aws instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_18_03_15/caffe/`
 	```
 	$ ls
 	classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler

@@ -7,7 +7,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 ## GoogLeNet-v1 Prototxt to FPGA Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_18_03_15/caffe/`
 	```
 	$ ls
 	classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler

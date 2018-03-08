@@ -9,11 +9,15 @@
 - [Quantization Tutorial][]
 - [Compiler Tutorial][]
 - [Prototxt to FPGA Tutorial][]
+- [Pyhton API Tutorials][]
 
 
 
 
 ### Release Notes
+
+-xfdnn_18_03_15
+	-
 
 - xfdnn_17_12_15
 	- General script and documentation cleanup
@@ -21,7 +25,7 @@
 	- Added End to End Tutorial
 	- Known Issues:
 
-	
+
 - xfdnn_17_11_13.1
 	- Supported Frameworks:
 		- Caffe
@@ -57,6 +61,7 @@
 [Prototxt to FPGA Tutorial]:endtoend.md
 [Caffe Tutorial]:caffe.md
 [MxNet Tutorial]:mxnet.md
+[Pyhton API Tutorials]: pythonexample.md
 
 [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices]: https://github.com/aws/aws-fpga/blob/master/SDAccel/README.md
 [SDAccel Forums]: https://forums.xilinx.com/t5/SDAccel/bd-p/SDx
