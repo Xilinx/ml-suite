@@ -16,8 +16,8 @@
 
 ### Release Notes
 
--xfdnn_18_03_15
-	-
+- xfdnn_18_03_15
+	- Updates ...
 
 - xfdnn_17_12_15
 	- General script and documentation cleanup
