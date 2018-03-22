@@ -6,9 +6,9 @@ This tutorial shows how to execute 8 bit networks through [MxNet][] with the inc
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_18_03_15/mxnet/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/mxnet/`
 	```
-	$ cd /home/centos/xfdnn_18_03_15/mxnet/
+	$ cd /home/centos/xfdnn_18_03_19/mxnet/
 	$ ls
 	amalgamation     cpp-package             include                        MKL_README.md   ps-lite          tests
 	appveyor.yml     cub                     Jenkinsfile                    models          python           tools

@@ -6,7 +6,7 @@
 
 2. From AWS Marketplace select the [Machine Learning Development Stack from Xilinx, Preview Edition][].
 
-3. Select instance type f1.2xlarge or f1.16xlarge 
+3. Select instance type f1.2xlarge or f1.16xlarge
 
 4. Select Review and Launch
 

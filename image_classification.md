@@ -3,7 +3,7 @@
 ## Introduction
 Image classification is one of the most common benchmarks for machine learning. This tutorial shows you how to launch the image classification GoogLeNet v1 8-bit demo from the Test Drive environment.  Once the demo is started, you will be able to view the demo and monitor demo performance from any internet connected web browser.
 
-This demo is meant to use ImageNet ILSVRC2012 validation files.  Files should be located in /home/centos/xfdnn_18_03_15/imagenet_val with the following naming convention: ILSVRC2012_val_<IMAGE ID>.JPEG where <IMAGE_ID> starts at 00000000.  Instructions for downloading ILSVRC2012 files can be found here: http://www.image-net.org/download-imageurls
+This demo is meant to use ImageNet ILSVRC2012 validation files.  Files should be located in /home/centos/xfdnn_18_03_19/imagenet_val with the following naming convention: ILSVRC2012_val_<IMAGE ID>.JPEG where <IMAGE_ID> starts at 00000000.  Instructions for downloading ILSVRC2012 files can be found here: http://www.image-net.org/download-imageurls
 
 If you just want to try it without downloading the dataset you can insert you own files and simply name them:
 - ILSVRC2012_val_00000000.JPEG
@@ -16,7 +16,7 @@ Then the demo should start as long as there is at least one images to classify. 
 For instructions on launching and connecting to aws instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_18_03_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/caffe/`
 	```
 	$ ls
 	classification.bin            libs                  run_mp_conv_xdnn.sh           servergui

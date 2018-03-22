@@ -30,7 +30,7 @@ Any argument that is not passed will be set with a default value for the provide
 ## GoogLeNet v1 Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_18_03_15/caffe/`.</br>
+2. Navigate to `/home/centos/xfdnn_18_03_19/caffe/`.</br>
   ```
   $ ls
   classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
@@ -56,7 +56,7 @@ Any argument that is not passed will be set with a default value for the provide
 	# cd /xlnx/xfdnn_tools/quantize/
 	```
 
-5. This next command will execute GoogleNet-v1 quantization using deploy and train/validation models provided in the /xlnx/models directory.  This quantization expects at least 8 images to be available in the `/home/centos/xfdnn_18_03_15/imagenet_val` directory.  Refer to http://www.image-net.org/download-imageurls for downloading ILSVRC files from ImageNet.  Other files may be used and do not require any special file naming convention.
+5. This next command will execute GoogleNet-v1 quantization using deploy and train/validation models provided in the /xlnx/models directory.  This quantization expects at least 8 images to be available in the `/home/centos/xfdnn_18_03_19/imagenet_val` directory.  Refer to http://www.image-net.org/download-imageurls for downloading ILSVRC files from ImageNet.  Other files may be used and do not require any special file naming convention.
 	```
 	# python quantize.pyc \
 	--deploy_model /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \

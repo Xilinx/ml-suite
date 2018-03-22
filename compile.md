@@ -28,7 +28,7 @@ Any argument that is not passed will be set with a default value.
 ### GoogLeNet v1 Example
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_18_03_15/caffe/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/caffe/`
 	```
 	$ ls
 	classification.bin  kernelSxdnn_hw_f1_16b.xclbin  run_common.sh         run_places_16b.sh  xdnn_scheduler
