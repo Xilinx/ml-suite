@@ -3,7 +3,7 @@
 ## Introduction
 This tutorial describes how to launch [Deep Detect][], a deep learning API and web server application which has integrations for REST APIs and uses F1 for Image classification acceleration.
 
-The source for this project is available in the Test Drive at: `/home/centos/xfdnn_17_12_15/deepdetect/`
+The source for this project is available in the Test Drive at: `/home/centos/xfdnn_18_03_19/deepdetect/`
 
 For instructions on launching and connecting to aws instances, see [here][].
 
@@ -11,9 +11,9 @@ Start by launching Two Terminals.
 
 **Terminal 1:**
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/deepdetect/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/deepdetect/`
 	```
-	$ cd /home/centos/xfdnn_17_12_15/deepdetect/
+	$ cd /home/centos/xfdnn_18_03_19/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   testService.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
@@ -35,9 +35,9 @@ Start by launching Two Terminals.
 
 **Terminal 2:**
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/deepdetect/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/deepdetect/`
 	```
-	$ cd /home/centos/xfdnn_17_12_15/deepdetect/
+	$ cd /home/centos/xfdnn_18_03_19/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   testService.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
