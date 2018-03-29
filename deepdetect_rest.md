@@ -31,7 +31,7 @@ Start by launching Two Terminals.
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicate that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicates that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
 
 **Terminal 2:**
 1. Connect to F1

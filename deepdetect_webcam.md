@@ -7,7 +7,7 @@ The full code of this project is in `/home/centos/xfdnn_18_03_19/deepdetect/`
 
 For instructions on launching and connecting to instances, see [here][].
 
-Start by launching Two Terminals
+Start by launching two Terminals
 
 **Terminal 1**
 1. Connect to F1
