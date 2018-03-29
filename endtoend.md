@@ -1,7 +1,7 @@
 # Prototxt to FPGA Tutorial
 
 ## Introduction
-This example shows taking a single trained CAFFE model and prototxt for Googlenet-V1 and runs through all the steps to running it on the FPGA.  The first step is running the compiler to make sure the network is fully supported and fits in memory.  The second step is running the network on a calibration set for building the quantization data. For instructions on launching and connecting to instances, see [here][].  More in depth [compiler][] and [quantizer][] documentation is available.
+This example describes all the steps required to take a single trained CAFFE model and prototxt for GoogLeNet-V1 through to running it on the FPGA. The first step is running the compiler to make sure the network is fully supported and fits in memory. The second step is running the network on a calibration set for building the quantization data. For instructions on launching and connecting to instances, see [here][]. More in depth [compiler][] and [quantizer][] documentation is available.
 
 
 ## GoogLeNet-v1 Prototxt to FPGA Example
@@ -33,7 +33,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 	# cd /xlnx/xfdnn_tools/compile/
 	```
 
-6. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition.
+6. This next command will execute the GoogLeNet-v1 compiler using a prototxt for CAFFE. It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition.
 
 	```
 	# python tests/xfdnn_compiler.py -n /xlnx/models/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt -s all -m 4 -i 28 -g /opt/caffe/network.cmd
@@ -59,7 +59,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 	--calibration_size 8
 	```
 
-	When successful, the /opt/caffe/q.tran_val.json file will be created
+	When successful, the /opt/caffe/q.tran_val.json file will be created.
 
 9. Finally, navigate to the /opt/caffe directory and run the network on the FPGA through the run_network_8b.sh script:
 
@@ -76,7 +76,7 @@ This example shows taking a single trained CAFFE model and prototxt for Googlene
 	...
 	```
 
-Note: As used here, the prototxt batch size must match the number of input images, 4 in this example
+Note: As used here, the prototxt batch size must match the number of input images (four in this example).
 
 
 [here]: launching_instance.md

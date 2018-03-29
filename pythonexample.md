@@ -150,7 +150,7 @@ For instructions on launching and connecting to aws instances, see [here][].
 
 	[time] Total loop (21915.48 ms)
 	```
-	This example runs 8 images through the Python API in batch or streaming mode.
+	This example runs eight images through the Python API in batch or streaming mode.
 
 	The `run.sh` example calls the API, and takes the following parameters:
 	batch_classify.py
@@ -164,7 +164,7 @@ For instructions on launching and connecting to aws instances, see [here][].
 	- `--imagedir`	- Directory with image files to classify
 	- `--useblas`		- Use BLAS-optimized functions (requires xfDNN lib compiled with BLAS)
 
-4. You can try different networks and precision types and examples for these are in `run.sh`. By default, `Googlenet v1 16-bit` is executed, but you can comment out that option and uncomment the other options.
+4. You can try different networks and precision types; examples are given in `run.sh`. By default, `Googlenet v1 16-bit` is executed, but you can comment out that option and uncomment the other options.
 
 ```
 	# Run Googlenet v1 16-bit
@@ -288,7 +288,7 @@ For instructions on launching and connecting to aws instances, see [here][].
 
 		Success!
 	```
-	This example runs through two networks/models, GoogleNetv1 and ResNet50. The networks and parameters are defined in the json input file. This example uses `mytest.json`:
+	This example runs through two networks/models: GoogleNet v1 and ResNet50. The networks and parameters are defined in the json input file. This example uses `mytest.json`:
 	```
 	{
 		"confs":[
@@ -315,8 +315,8 @@ For instructions on launching and connecting to aws instances, see [here][].
 		]
 	}
 	```
-	The parameters are defined in a similar way to the batch example, but `PE: `defines which xDNN processing engine on the FPGA you would like to run this network. The number of xDNN processing engines available on the FPGA is dependent the xclbin selected, which can be 1, 2 and 4. The default xclbin used in these examples is4 xDNN processing engines.
-	This example runs Googlenetv1 on PE:0 and Resnet50 on PE:1.
+	The parameters are defined in a similar way to the batch example, but `PE: `defines which xDNN processing engine on the FPGA you would like to run this network. The number of xDNN processing engines available on the FPGA is dependent on the xclbin selected, which can be 1, 2 or 4. The default xclbin used in these examples is four xDNN processing engines.
+	This example runs Googlenet v1 on PE:0 and Resnet50 on PE:1.
 
 
 

@@ -17,7 +17,7 @@
 ### Release Notes
 
 - xfdnn_18_03_19
-	- Added Python Streaming and Multi-Process Apis and Tutorials
+	- Added Python Streaming and Multi-Process APIs and Tutorials
 	- Updates to Compiler and Quantizer
 
 - xfdnn_17_12_15
