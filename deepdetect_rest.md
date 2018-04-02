@@ -3,7 +3,7 @@
 ## Introduction
 This tutorial describes how to launch [Deep Detect][], a deep learning API and web server application which has integrations for REST APIs and uses F1 for Image classification acceleration.
 
-The source for this project is available in the Test Drive at: `/home/centos/xfdnn_17_12_15/deepdetect/`
+The source for this project is available in the Test Drive at: `/home/centos/xfdnn_18_03_19/deepdetect/`
 
 For instructions on launching and connecting to aws instances, see [here][].
 
@@ -11,9 +11,9 @@ Start by launching Two Terminals.
 
 **Terminal 1:**
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/deepdetect/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/deepdetect/`
 	```
-	$ cd /home/centos/xfdnn_17_12_15/deepdetect/
+	$ cd /home/centos/xfdnn_18_03_19/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   testService.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin
@@ -31,13 +31,13 @@ Start by launching Two Terminals.
 	INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080
 	```
 
-	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicate that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
+	When you see the message "INFO - 16:03:43 - Running DeepDetect HTTP server on 0.0.0.0:8080", this indicates that the script has started the webserver correctly.</br>When the FPGA is ready you will see `XBLAS online! (d=0)`
 
 **Terminal 2:**
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/deepdetect/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/deepdetect/`
 	```
-	$ cd /home/centos/xfdnn_17_12_15/deepdetect/
+	$ cd /home/centos/xfdnn_18_03_19/deepdetect/
 	$ ls
 	createService.sh           libs     sdaccel_profile_summary.csv   testService.sh
 	dede                       models   sdaccel_profile_summary.html  xclbin

@@ -1,14 +1,14 @@
 # MxNet Tutorial
 
 ## Introduction
-This tutorial shows how to execute 8 bit networks through [MxNet][] with the included GoogLeNet v1 model. Each of mode of models has been put into a run script, that passes a few sample images, to show accuracy and measure performance.
+This tutorial shows how to execute 8-bit networks through [MxNet][] with the included GoogLeNet v1 model. Each of mode of models has been put into a run script that passes a few sample images, to show accuracy and measure performance.
 
 For instructions on launching and connecting to instances, see [here][].
 
 1. Connect to F1
-2. Navigate to `/home/centos/xfdnn_17_12_15/mxnet/`
+2. Navigate to `/home/centos/xfdnn_18_03_19/mxnet/`
 	```
-	$ cd /home/centos/xfdnn_17_12_15/mxnet/
+	$ cd /home/centos/xfdnn_18_03_19/mxnet/
 	$ ls
 	amalgamation     cpp-package             include                        MKL_README.md   ps-lite          tests
 	appveyor.yml     cub                     Jenkinsfile                    models          python           tools
@@ -32,7 +32,7 @@ For instructions on launching and connecting to instances, see [here][].
 	cat.jpg     classify.py       sdaccel_profile_summary.html  wolf.jpg
 	```
 
-4. Here is a example of running a single image with the model GoogLeNet v1. Run the `./classify_fpga.sh` script and pass one of the example images here for it to classify.
+4. Following is an example of running a single image with the model GoogLeNet v1. Run the `./classify_fpga.sh` script and pass one of the example images here for it to classify.
 	```
 	# ./classify_fpga.sh beagle.jpg
 	XBLAS # FPGAs: 1
@@ -94,7 +94,7 @@ For instructions on launching and connecting to instances, see [here][].
 	INFO:root:('top_k_accuracy_5', 0.8635458167330677)
 	```
 
-	At the end of the run, the top accuracy and top 5 accurary is listed:
+	At the end of the run, both the top accuracy and the top five accuracies are listed:
 	```
 	INFO:root:('accuracy', 0.65239043824701193)
 	INFO:root:('top_k_accuracy_5', 0.8635458167330677)
