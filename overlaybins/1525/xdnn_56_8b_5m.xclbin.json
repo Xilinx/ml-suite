@@ -1,0 +1,5 @@
+{
+  "XDNN_DDR_BANK":"2,1",
+  "XDNN_CSR_BASE":"0x1800000,0x1810000",
+  "XDNN_SLR_IDX":"0,0"
+}
