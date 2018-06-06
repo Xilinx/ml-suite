@@ -1,0 +1,23 @@
+{
+"confs":[
+  {
+    "name":"googlenet_v1",
+    "net":"googlenet", 
+    "datadir":"data/googlenet_v1_data", 
+    "netcfg":"data/googlenet_v1_28.cmd", 
+    "quantizecfg":"data/googlenet_v1_16b.json", 
+    "PE":"0",
+    "firstfpgalayer":"conv1/7x7_s2",
+    "fpgaoutsz":"1024"
+    },
+  {
+    "name":"resnet50",
+    "net":"resnet",
+    "datadir":"data/resnet50_data",
+    "netcfg":"data/resnet50_28.cmd",
+    "PE":"1",
+    "firstfpgalayer":"conv1",
+    "fpgaoutsz":"2048"
+  }
+]
+}
