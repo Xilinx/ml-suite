@@ -91,4 +91,4 @@ Any argument that is not passed will be set with a default value.
 	...
 	```
 
-[here]: docs/tutorials/launching_instance.md
+[here]: aws-f1-launching.md
