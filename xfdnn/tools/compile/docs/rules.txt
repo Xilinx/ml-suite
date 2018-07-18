@@ -1,0 +1,26 @@
+o	DSP Array size is parametrized to be multiple of a base width up to 16
+o	224x224x3 image sizes commonly used with ImageNet will have a base width of 14 to support intermediate image sizes of 224x224, 112x112, 56x56, 28x28, 14x14, 7x7
+?	The supported DSP array sizes are 14x32, 28x32 and 56x32 
+o	256x256x3 image sizes will have a base width of 16 to support intermediate image sizes of 256x256, 128x128, 64x64, 32x32, 16x16, 8x8
+?	The supported DSP array sizes are 16x32, 32x32, 64x32
+o	Other image sizes that are multiples of the base size is supported but not tested
+o	Image sizes that do not fit within the internal Image Memory are not supported
+o	Size of Image Memory is dictated by the configuration parameter C_IMGMEM_TOTAL_BYTES_L/S.  Input and Output image sizes for each layer need to be carefully calculated to ensure they fit within the Image Memory throughout the network.
+o	Images need to be scaled to sizes that can be supported (e.g. 224x224x3) 
+o	Rectangular Image sizes are not supported
+o	Legal Image Depth range is 3 - 2048.
+o	Only supported Padding option is 'Same'
+o	'Valid' or no padding is not supported currently
+o	Square filter shapes are supported
+o	Rectangular filters (e.g. 1x7, 7x1) can be supported but not tested
+o	Strides of 1, 2, 4, 8 are supported
+o	Strides of 3,5,6,7 are not supported
+o	LRN is not supported (BN can be supported with SW assistance).
+o	FC and Softmax in FPGA are not supported by HW, but can be supported by SW.
+o	Activation functions other than ReLU are not supported.
+o	Max filter dimensions (Input_Depth*Kernel_Height*Kernel_Width) need to be set via configuration parameter (C_MAX_CNN_FILTER_DEPTH).
+o	Version1 kernel: Input_Depth * Kernel_Height * Kernel_Width <= 4608
+o	9x9 and greater convolutions are not supported
+o	Operations supported are: Convolution, Max/Avg Pooling, Elewise-Add.  Other operations are currently not supported.
+
+
