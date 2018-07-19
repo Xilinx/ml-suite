@@ -27,8 +27,6 @@ To run the tutorials you will need to download the trained [models].
 - OS: Ubuntu 16.04.2 LTS, CentOS
 - CPU: 4 Cores (Intel/AMD)
 - Memory: 8GB
-- VCU1525 DSA Vesion: 5.0
-
 
 ## Supported Platforms
 Cloud Services
