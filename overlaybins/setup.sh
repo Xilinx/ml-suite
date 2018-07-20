@@ -18,4 +18,7 @@ export SDACCEL_INI_PATH=${MLSUITE_ROOT}/overlaybins
 export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 
+# Build NMS for YOLOv2 Demos
+make -C ${MLSUITE_ROOT}/apps/yolo/nms
+
 #export XBLAS_EMIT_PROFILING_INFO=1

@@ -1,4 +1,4 @@
-# ML Suite Tutorials
+# Machine Learning Suite Tutorials
 
 ## Command Line Tutorials
 #### xfDNN Tools

@@ -93,7 +93,7 @@ def main():
     for netconf_args in args['jsoncfg']:
       confName = str(netconf_args['name'])
       xdnn.exec_async (netFiles [confName], weightsBlobs [confName], fpgaInputs [confName],
-        fpgaOutputs [confName], int(batch_sizes[confName]), 1, netconf_args['quantizecfg'], netconf_args['scaleB'], PEs [confName])
+        fpgaOutputs [confName], int(batch_sizes[confName]), netconf_args['quantizecfg'], netconf_args['scaleB'], PEs [confName])
     
     elapsedTime = timeit.default_timer() - startTime
     print "\nAfter Execonly (%f ms):" % (elapsedTime * 1000)

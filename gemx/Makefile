@@ -2,8 +2,8 @@ current_dir := $(shell pwd)
 BOOST_HOME=../ext/boost
 BOOST_LIB=.${BOOST_HOME}/libs
 GEMX_SRC := ./src/gemx_host_c_api.cpp
-OPENCL_LIB=${current_dir}/sdx/lib/x86_64
-OPENCL_INC=${current_dir}/sdx/include/1_2 
+OPENCL_LIB=${current_dir}/runtime/lib/x86_64
+OPENCL_INC=${current_dir}/runtime/include/1_2 
 GEMX_OUT := libgemxhost.so
 
 CXX := g++

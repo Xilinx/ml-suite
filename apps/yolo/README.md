@@ -5,7 +5,7 @@ You only look once (YOLO) is a state-of-the-art, real-time object detection algo
 The algorithm was published by Redmon et al. in 2016 via the following publications:
 [YOLOv1](https://arxiv.org/abs/1506.02640),
 [YOLOv2](https://arxiv.org/abs/1612.08242).  
-The same author has already released YOLOv3, and some experimental tiny YOLO networks. We focus on YOLOv2.
+The same author has already released YOLOv3, and some experimental tiny YOLO networks. This tutorial focuses on YOLOv2.
 This application requires more than just simple classification. The task here is to detect the presence of objects, and localize them within a frame. 
 Please refer to the papers for full algorithm details, and/or watch [this.](https://www.youtube.com/watch?v=9s_FpMpdYW8). 
 In this tutorial, the network was trained on the 80 class [COCO dataset.](http://cocodataset.org/#home)
