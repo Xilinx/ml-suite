@@ -25,6 +25,7 @@ If you are using the [AWS EC2 F1 FPGA DEVELOPER AMI](https://aws.amazon.com/mark
 1. `git clone https://github.com/aws/aws-fpga.git`
 2. `cd aws-fpga`
 3. `source sdaccel_setup.sh`   
+
 Once your environment is set up, take a look at some of the command line tutorials and Jupyter Notebooks here:
 - [Tutorials][]
 
