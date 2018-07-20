@@ -513,9 +513,9 @@ def prepareInputsForFpga(inputs, cfgFile, scale, PE=-1, layerName = ""):
 
 # TODO would like to use None as default. But it matches 0, a valid PE
 def execute(netFile, weightsBlob, inputs, output, numBatches, 
-  numImgPerBatch, cfgFile, scale, PE=-1):
+  cfgFile, scale, PE=-1):
   return _xdnnManager.execute(netFile, weightsBlob, inputs, output, 
-    numBatches, numImgPerBatch, cfgFile, scale, PE)
+    numBatches, cfgFile, scale, PE)
 
 def exec_async (netFile, weightsBlob, inputs, output, numBatches, 
   cfgFile, scale, PE=-1):
