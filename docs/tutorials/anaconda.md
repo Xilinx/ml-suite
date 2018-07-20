@@ -24,8 +24,10 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 `conda activate ml-suite`
 5.  Verify your environment by importing caffe in python  
 `python -c "import caffe"`
-6.  Install TensorFlow version 1.8
+6.  Install TensorFlow version 1.8  
 `pip install tensorflow==1.8 `
+7.  Install Jupyter to the ml-suite env  
+`pip install jupyter `
 
 ### Notes for running on AWS w/ Anaconda
 At the moment, AWS requires root priveleges to deploy on FPGAs. Follow the steps below as a work around:

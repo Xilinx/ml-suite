@@ -401,9 +401,9 @@ class XDNNManager:
       inputs, outputPtr, numFpgaBatches, blocking)
 
   def exec_async (self, netFile, weightsBlob, inputs, output, 
-    numBatches, numImgPerBatch, cfgFile, scale, PE):
+    numBatches, cfgFile, scale, PE):
     return self.execute(netFile, weightsBlob, inputs, output,
-      numBatches, numImgPerBatch, cfgFile, scale, PE, blocking=False)
+      numBatches, cfgFile, scale, PE, blocking=False)
 
   def get_result(self, PE):
     peMask = self.getMask(PE);
@@ -518,9 +518,9 @@ def execute(netFile, weightsBlob, inputs, output, numBatches,
     numBatches, numImgPerBatch, cfgFile, scale, PE)
 
 def exec_async (netFile, weightsBlob, inputs, output, numBatches, 
-  numImgPerBatch, cfgFile, scale, PE=-1):
+  cfgFile, scale, PE=-1):
   return _xdnnManager.exec_async (netFile, weightsBlob, inputs, output, 
-    numBatches, numImgPerBatch, cfgFile, scale, PE)
+    numBatches, cfgFile, scale, PE)
 
 def get_result(PE=-1):
   return _xdnnManager.get_result(PE)

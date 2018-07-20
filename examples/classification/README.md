@@ -1,25 +1,25 @@
 # Image Classification with Python APIs
 
 ## Introduction
-This example shows three examples of how to deploy Deep CNNs on FPGAs using our Python APIs.
+This tutorial shows three examples of how to deploy Deep CNNs on FPGAs using our Python APIs.
 
-Once a network has been compiled and quantized, this tutorial will walk you through deploying in a few mode/
+Once a network has been compiled and quantized, you will walk through deploying in different modes.
 
-We have included the (Compiler, Quantizer) outputs for both GoogLeNet-v1 and Resnet-50 in the "data" directory.
+The (Compiler, Quantizer) outputs for both GoogLeNet-v1 and Resnet-50 are included in the "data" directory.
 
-Compiler Outputs: Commands File (HW Instructions "cmds"), model_data directory w/ preprocessed floating point weights
-Quantizer Outputs: JSON FILE containing scaling factors for each layer in the corresponding network  
+**Compiler Outputs**: Commands File (HW Instructions "cmds"), model_data directory with preprocessed floating point weights.
+**Quantizer Outputs**: JSON FILE containing scaling factors for each layer in the corresponding network.  
 
 Notes:
  - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
  - The batch_classify example will require you to download the imagnet validation set, and place it in a local folder called `/imagenet_val/`
- - Amazon AWS EC2 F1 will require root privileges to load the FPGA, so use `sudo` to invoke run.sh
+ - Amazon AWS EC2 F1 requires root privileges to load the FPGA, so use `sudo` to invoke run.sh
 
-We provide three examples of applications using the Python xfDNN API:
+The following three examples of applications using the Python xfDNN API are provided:
 
-1. A Test Classification example that demonstrates how to run inference using GoogLeNet-v1 on a single image "dog.jpg"
-2. A Batch Classifcation example that streams images from disk through the FPGA for classification.
-3. A Multi-Process example that shows different DNNs running on different kernels on the FPGA.
+1. A **Test Classification** example that demonstrates how to run inference using GoogLeNet-v1 on a single image "dog.jpg"
+2. A **Batch Classifcation** example that streams images from disk through the FPGA for classification.
+3. A **Multi-Process** example that shows different DNNs running on different kernels on the FPGA.
 
 ## Directory overview
 
@@ -51,9 +51,9 @@ ml-suite/
 
 ## Running the Examples  
 
-To run any of the three examples, utilize the bash run.sh script we have provided  
+To run any of the three examples, use the provided bash run.sh script. 
 
-1. Start Anaconda
+1. Start Anaconda.
     ```sh
     $ conda activate ml-suite
     ```
@@ -63,7 +63,7 @@ To run any of the three examples, utilize the bash run.sh script we have provide
     $ cd ml-suite/examples/classification
     ```
 
-3. Run example by executing ` run.sh` followed by following parameters:
+3. Run the example by executing ` run.sh` followed by the following parameters:
     - `hardware` Valid values are `aws`, `nimbix` or `1525`
     - `example` - Valid values are `test_classify` or `batch_classify` or `multinet`
     - `kernel size` - Valid values are `med` or `large` - Used to select overlaybins
@@ -89,7 +89,7 @@ To run any of the three examples, utilize the bash run.sh script we have provide
 
 
 ## Example Script Switches
-Take a look at the following scripts to understand the examples here.
+Take a look at the following scripts to understand the examples:
 * run.sh
 * test_classify.py
 * batch_classify.py
@@ -110,7 +110,7 @@ The scripts use the arg parser defined in [xdnn_io.py](../../xfdnn/rt/xdnn_io.py
 - `--imagedir`	    - Directory with image files to classify (Only applicable to batch_classify)
 - `--jsoncfg`       - Path to json file used to define seperate networks (Only applicable to multinet)
 
-For Multinet deployments, the different models/networks are set in the `--jsoncfg` file. From the Multinet example from above, take a look on how to set the arugments here [multinet.json][]
+For Multinet deployments, the different models/networks are set in the `--jsoncfg` file. For the Multinet example given above, see how to set the arguments here [multinet.json][]
 
 ## Example Output From Single Image Classification
 

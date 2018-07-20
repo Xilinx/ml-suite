@@ -1,19 +1,19 @@
 # xfdnn Compiler Tutorial
 
 ## Introduction
-The compiler script interfaces with different ML Frameworks, such as, Caffe and Tensorflow, to read a deep learning networks and generates a sequence of instructions for the xfDNN framework to execute on the FPGA.  This includes a computational graph traversal, node merging and optimization, memory allocation and, finally, instruction generation.
+The compiler script interfaces with ML Frameworks such as Caffe and Tensorflow to read deep learning networks, and then generates a sequence of instructions for the xfDNN framework to execute on the FPGA. This includes a computational graph traversal, node merging and optimization, memory allocation and, finally, instruction generation.
 
 For instructions on launching and connecting to aws instances, see [here][].
 
 ## Support Features
 
-For Each ML Framework, there is a different version of the complier in the `ml-suite/xfdnn/tools/compile/bin/` directory.
+Each ML Framework has a different version of the compiler in the `ml-suite/xfdnn/tools/compile/bin/` directory:
 - Caffe - `xfdnn_compiler_caffe.pyc`
 - Keras - `xfdnn_compiler_keras.pyc`
 - MxNet - `xfdnn_compiler_mxnet.pyc`
 - Tensforflow - `xfdnn_compiler_tensorflow.pyc`
 
-Each of these tools have mostly the same arguments. As an example, `xfdnn_compiler_caffe` has the following arguments:
+Each of these tools contain largely the same arguments. For example, `xfdnn_compiler_caffe` has the following arguments:
 
 ```
 usage: xfdnn_compiler_caffe.py [-h] [-n NETWORKFILE] [-g GENERATEFILE]
@@ -41,9 +41,9 @@ Any argument that is not passed will be set with a default value.
 
 ### GoogLeNet v1 Example
 
-1. Connect to F1 or start your anaconda environment
-2. Navigate to `ml-suite/xfdnn/tools/compile/bin`
-3. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE.  It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition
+1. Connect to F1 or start your anaconda environment.
+2. Navigate to `ml-suite/xfdnn/tools/compile/bin`.
+3. This next command will execute GoogleNet-v1 compiler using a prototxt for CAFFE. It will generate code for the xfDNN configuration available on the Xilinx Machine Learning Development Stack, Preview Edition.
 	```
 	# python tests/xfdnn_compiler_caffe.py -n /ml-suite/models/caffe/bvlc_googlenet_quantized/GoogleNetWithOutLRN_dummydata_deploy.prototxt \
 	-s all \
@@ -75,7 +75,7 @@ Any argument that is not passed will be set with a default value.
 	Trying strategy shuffle
 	```
 
-4. The output that may be passed to xfDNN by the scripts as shown in the Caffe tutorial is the network.cmd file located in the run directory.  The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
+4. The output that may be passed to xfDNN by the scripts as shown in the Caffe tutorial is the network.cmd file located in the run directory. The network.cmd.json includes meta-data about the network as well as a list of unsupported layers which will not be run on the FPGA.
 
 	network.cmd:
 	```
