@@ -8,7 +8,7 @@ if [ -z "$MLSUITE_ROOT" ]; then
   export MLSUITE_ROOT=`python ${SCRIPT_DIR}/scripts/findRoot.py ${SCRIPT_DIR}`
 fi
 
-export LD_LIBRARY_PATH=${MLSUITE_ROOT}/overlaybins/${DEVICE}/runtime/lib/x86_64/:${MLSUITE_ROOT}/xfdnn/rt/xdnn_cpp/build/lib:${MLSUITE_ROOT}/xfdnn/rt/lib:${MLSUITE_ROOT}/ext/boost/lib:$PWD
+export LD_LIBRARY_PATH=${MLSUITE_ROOT}/overlaybins/${DEVICE}/runtime/lib/x86_64/:${MLSUITE_ROOT}/xfdnn/rt/xdnn_cpp/build/lib:${MLSUITE_ROOT}/xfdnn/rt/lib:${MLSUITE_ROOT}/ext/boost/lib:${MLSUITE_ROOT}/ext/zmq/libs:$PWD
 
 export XILINX_OPENCL=${MLSUITE_ROOT}/overlaybins/${DEVICE}
 export LIBXDNN_PATH=${MLSUITE_ROOT}/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so

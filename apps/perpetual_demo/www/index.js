@@ -550,7 +550,7 @@ function DeviceFpsChart(cfg) {
         verticalSections: 4 
       },
       labels: { disabled: true, fontSize: 12 },
-      maxValue: 1600,
+      maxValue: 2400,
       minValue: 1000
     });
     var options = {
