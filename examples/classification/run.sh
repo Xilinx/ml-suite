@@ -26,6 +26,10 @@ fi
 
 . ${MLSUITE_ROOT}/overlaybins/setup.sh $DEVICE
 
+# This variable is used for batch classify
+# You should put the imagenet validation set in the below folder
+IMAGEDIR=../../models/data/ilsvrc12/ilsvrc12_img_val
+
 echo "=============== pyXDNN ============================="
 
 if [ "$TEST_TO_RUN" == "test_classify" ]; then
@@ -50,7 +54,7 @@ elif [ "$TEST_TO_RUN" == "batch_classify" ]; then
   ############################
 
   export XBLAS_EMIT_PROFILING_INFO=1
-  python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/googlenet_v1_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/googlenet_v1_data --labels synset_words.txt --xlnxlib $LIBXDNN_PATH --imagedir my_imagenet_val/ --useblas --golden gold.txt --quantizecfg ./data/googlenet_v1_${BITWIDTH}b.json --firstfpgalayer conv1/7x7_s2 #--zmqpub True --perpetual True
+  python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/googlenet_v1_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/googlenet_v1_data --labels synset_words.txt --xlnxlib $LIBXDNN_PATH --imagedir $IMAGEDIR --useblas --golden gold.txt --quantizecfg ./data/googlenet_v1_${BITWIDTH}b.json --firstfpgalayer conv1/7x7_s2 #--zmqpub True --perpetual True
 
 elif [ "$TEST_TO_RUN" == "multinet" ]; then
 
