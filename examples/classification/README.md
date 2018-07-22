@@ -12,7 +12,7 @@ The (Compiler, Quantizer) outputs for both GoogLeNet-v1 and Resnet-50 are includ
 
 Notes:
  - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
- - The batch_classify example will require you to download the imagnet validation set, and place it in a local folder called `/imagenet_val/`
+ - The batch_classify example will require you to download the imagnet validation set, and place the images [here](../../models/data/ilsvrc12/ilsvrc12_img_val/replace_this_file_with_dataset.md)  
  - Amazon AWS EC2 F1 requires root privileges to load the FPGA, so use `sudo` to invoke run.sh
 
 The following three examples of applications using the Python xfDNN API are provided:
