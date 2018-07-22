@@ -62,5 +62,5 @@ The ML Suite supports the following Frameworks:
 With xfDNN you can connect to other Open Source frameworks and software easily with our Python APIs.
 For more information on this, please take a look at the xfDNN tool notebooks [here][].
 
-[Overlay Selector Guide]: ../../overlays/README.MD
+[Overlay Selector Guide]: ../../overlaybins/README.MD
 [here]: ../../docs/tutorials/README.md
