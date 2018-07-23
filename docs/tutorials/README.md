@@ -1,25 +1,5 @@
 # Machine Learning Suite Tutorials
 
-## Command Line Tutorials
-#### xfDNN Tools
- - [Compiling Networks with xfDNN Compiler][]
- - [Calibrate High Precision Models for INT16/8 Deployment][]
-
-#### Image Classification
- - [Image Classification GoogLeNet v1 Demo on AWS][]
- - [Image Classification GoogLeNet v1 Demo on VCU1525][]
- - [Image Classification with Python APIs][]
-
-#### Object Detection
- - [Object Detection with Yolo][]
-
-#### Web Services
- - [DeepDetect REST Tutorial][]
- - [DeepDetect Webcam Tutorial][]   
-
-
-
-
 ## Jupyter Notebook Tutorials
   - [Launching Jupyter Server][]
 #### xfDNN Tools
@@ -32,6 +12,22 @@
 #### Object Detection
   - [Object Detection w/ YOLOv2 (Darknet -> Caffe)][]
 
+## Command Line Tutorials
+#### xfDNN Tools
+ - [Compiling Networks with xfDNN Compiler][]
+ - [Calibrate High Precision Models for INT16/8 Deployment][]
+
+#### Object Detection
+ - [Object Detection with Yolo][]
+
+#### Web Services
+ - [DeepDetect REST Tutorial][]
+ - [DeepDetect Webcam Tutorial][]   
+
+#### Image Classification
+ - [Image Classification GoogLeNet v1 Demo on AWS][]
+ - [Image Classification GoogLeNet v1 Demo on VCU1525][]
+ - [Image Classification with Python APIs][]
 
 
 [Compiling Networks with xfDNN Compiler]: compile.md
