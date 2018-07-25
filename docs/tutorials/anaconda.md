@@ -33,7 +33,7 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 At the moment, AWS requires root priveleges to deploy on FPGAs. Follow the steps below as a work around:
  
 1)  Become root `sudo su` 
-2)  Set Environment Variables Required by runtime `source */overlaybins/setup.sh aws`
+2)  Set Environment Variables Required by runtime `source <MLSUITE_ROOT>/overlaybins/setup.sh aws`
 3)  Set User Environment Variables Required to run Anaconda `source ~centos/.bashrc`
 4)  Activate the users Anaconda Virtual Environment`source activate ml-suite` 
 5)  The environment is setup and ready to run applications and examples.    
