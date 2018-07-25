@@ -17,10 +17,12 @@ The ML Suite is composed of three basic parts:
 **Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]
 
 ## Getting Started
-1. [Install Anaconda2][].
-2. [Install git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
-3. Clone this repo  
-  `git clone https://github.com/Xilinx/ml-suite.git`  
+1. Clone ML Suite    
+  `git clone https://github.com/Xilinx/ml-suite.git` 
+2. [Install Anaconda2][].
+3. [Install git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
+
+   
   
 If you are using the [AWS EC2 F1 FPGA DEVELOPER AMI](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ) the following steps are necessary to setup the drivers:  
 1. `git clone https://github.com/aws/aws-fpga.git`
