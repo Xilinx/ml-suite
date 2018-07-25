@@ -13,7 +13,8 @@ The ML Suite is composed of three basic parts:
 2. **xfDNN Middleware** - Software Library and Tools to Interface with ML Frameworks and optimize them for Real-time Inference.
 3. **ML Framework and Open Source Support**  - Support for high level ML Frameworks and other open source projects.
 
-**Get familiar with the [ML Suite Here][]**
+**Learn More:** [ML Suite Overview][]  
+**Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]
 
 ## Getting Started
 1. [Install Anaconda2][].
@@ -67,4 +68,5 @@ Cloud Services
 [1.1]: docs/release-notes/1.1.md
 [UG1023]: https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_4/ug1023-sdaccel-user-guide.pdf
 [FAQ]: docs/tutorials/faq.md
-[ML Suite here]: docs/tutorials/ml-suite-overview.md
+[ML Suite Overview]: docs/tutorials/ml-suite-overview.md
+[Webinar on Xilinx FPGA Accelerated Inference]: https://event.on24.com/wcc/r/1625401/2D3B69878E21E0A3DA63B4CDB5531C23?partnerref=Mlsuite
