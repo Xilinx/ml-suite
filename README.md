@@ -23,13 +23,19 @@ The ML Suite is composed of three basic parts:
 3. [Install git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
 
    
-  
+**TEMPORARY NOTE:**  
+If you are evaluating on AWS, the binaries we have included support the latest Amazon Shell  
+`DSA name:       xilinx_aws-vu9p-f1-04261818_dynamic_5_0`  
+The Xilinx ml-suite AMI was bundled for an older shell  
+For this reason, if you are starting your evaluation today, it is best to begin from the FPGA Developer AMI:  
 If you are using the [AWS EC2 F1 FPGA DEVELOPER AMI](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ) the following steps are necessary to setup the drivers:  
 1. `git clone https://github.com/aws/aws-fpga.git`
 2. `cd aws-fpga`
 3. `source sdaccel_setup.sh`   
 
-Once your environment is set up, take a look at some of the command line tutorials and Jupyter Notebooks here:
+You can avoid disk space problems on the FPGA DEVELOPER AMI by creating an instance with more than the default 70G of storage, or by resizing the /swapfile to something less than 35G. 
+
+**Once your environment is set up, take a look at some of the command line tutorials and Jupyter Notebooks here:**
 - [Tutorials][]
 
 
