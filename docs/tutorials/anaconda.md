@@ -30,7 +30,7 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 `pip install jupyter `
 
 ### Notes for running on AWS w/ Anaconda
-At the moment, AWS requires root priveleges to deploy on FPGAs. Follow the steps below as a work around:
+At the moment, AWS requires root privileges to deploy on FPGAs. Follow the steps below as a work around:
  
 1)  Become root `sudo su` 
 2)  Set Environment Variables Required by runtime `source <MLSUITE_ROOT>/overlaybins/setup.sh aws`
