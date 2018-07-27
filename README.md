@@ -19,9 +19,11 @@ The ML Suite is composed of three basic parts:
 ## Getting Started
 1. Clone ML Suite    
   `git clone https://github.com/Xilinx/ml-suite.git` 
-2. [Install Anaconda2][].
+2. [Install Anaconda2][].  
+  `# Ensure that you ran the fix_caffe_opencv_symlink.sh script`  
 3. [Install git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
-
+4. Go into the ml-suite directory and pull down the models  
+  `cd ml-suite; git pull`
    
 **TEMPORARY NOTE:**  
 If you are evaluating on AWS, the binaries we have included support the latest Amazon Shell  
@@ -29,10 +31,18 @@ If you are evaluating on AWS, the binaries we have included support the latest A
 The Xilinx ml-suite AMI was bundled for an older shell  
 For this reason, if you are starting your evaluation today, it is best to begin from the FPGA Developer AMI:  
 If you are using the [AWS EC2 F1 FPGA DEVELOPER AMI](https://aws.amazon.com/marketplace/pp/B06VVYBLZZ) the following steps are necessary to setup the drivers:  
-1. `git clone https://github.com/aws/aws-fpga.git`
-2. `cd aws-fpga`
-3. `source sdaccel_setup.sh`   
+  
+5. `git clone https://github.com/aws/aws-fpga.git`  
+6. `cd aws-fpga`  
+7. `source sdaccel_setup.sh`   
+  
+Remember that AWS requires users to run as root to control the FPGA, so the following is necessary to use Anaconda as root:
 
+8. Become root `sudo su` 
+9. Set Environment Variables Required by runtime `source <MLSUITE_ROOT>/overlaybins/setup.sh aws`  
+10. Set User Environment Variables Required to run Anaconda `source ~centos/.bashrc`  
+11. Activate the users Anaconda Virtual Environment`source activate ml-suite`  
+  
 You can avoid disk space problems on the FPGA DEVELOPER AMI by creating an instance with more than the default 70G of storage, or by resizing the /swapfile to something less than 35G. 
 
 **Once your environment is set up, take a look at some of the command line tutorials and Jupyter Notebooks here:**
