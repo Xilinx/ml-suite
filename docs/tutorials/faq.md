@@ -5,7 +5,7 @@
 - [What frameworks are supported](#what-frameworks-are-supported)
 - [What batch sizes are supported](#what-batch-sizes-are-supported)
 - [How does FPGA compare to CPU and GPU acceleration](#how-does-fpga-compare-to-cpu-and-gpu-acceleration)
-- [I have a new trained model, where do I begin](i-have-a-new-trained-model,-where-do-i-begin)
+- [I have a new trained model, where do I begin](#i-have-a-new-trained-model,-where-do-i-begin)
 - [Why does ml suite need to compile a graph from my framework](#why-does-ml-suite-need-to-compile-a-graph-from-my-framework)
 - [What is quantization why needed does it impact accuracy](#what-is-quantization-why-needed-does-it-impact-accuracy)
 - [Why is the compiler and quantizer not needed in examples classification](#why-is-the-compiler-and-quantizer-not-needed-in-examples-classification)
