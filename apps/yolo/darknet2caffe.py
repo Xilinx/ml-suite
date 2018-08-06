@@ -33,8 +33,8 @@ DEBUG = True
 #log_handler = open('darknet2caffe_convert.log', 'w')
 #sys.stdout = log_handler
 
-def darknet2caffe(cfgfile, weightfile, protofile, caffemodel):
-    net_info = cfg2prototxt(cfgfile)
+def darknet2caffe(cfgfile, weightfile, protofile, caffemodel, arch=64, mergeBN=True):
+    net_info = cfg2prototxt(cfgfile, mergeBN)
     save_prototxt(net_info , protofile, region=False)
 
     #net = caffe.Net(protofile, caffe.TEST)
@@ -43,7 +43,14 @@ def darknet2caffe(cfgfile, weightfile, protofile, caffemodel):
 
     blocks = parse_cfg(cfgfile)
     fp = open(weightfile, 'rb')
-    header = np.fromfile(fp, count=4, dtype=np.int32)
+
+    assert arch == 32 or arch == 64, "Only recognize 32bit and 64bit architectures"
+    header = np.fromfile(fp, count=3, dtype=np.int32)
+    if arch == 32:
+        header = np.fromfile(fp, count=1, dtype=np.int32)
+    else:
+        header = np.fromfile(fp, count=1, dtype=np.int64)
+
     buf = np.fromfile(fp, dtype = np.float32)
     fp.close()
 
@@ -68,7 +75,11 @@ def darknet2caffe(cfgfile, weightfile, protofile, caffemodel):
                 scale_layer_name = 'layer%d-scale' % layer_id
 
             if batch_normalize:
-                start = load_conv_bn2caffe(buf, start, params[conv_layer_name], params[bn_layer_name], params[scale_layer_name])
+                if mergeBN:
+                    start = load_conv_mergebn2caffe(buf, start, params[conv_layer_name])
+                else:
+                    # Writing batchnorm...
+                    start = load_conv_bn2caffe(buf, start, params[conv_layer_name], params[bn_layer_name], params[scale_layer_name])
             else:
                 start = load_conv2caffe(buf, start, params[conv_layer_name])
             layer_id = layer_id+1
@@ -105,12 +116,8 @@ def darknet2caffe(cfgfile, weightfile, protofile, caffemodel):
 def load_conv2caffe(buf, start, conv_param):
     weight = conv_param[0].data
     bias = conv_param[1].data
-    #conv_param[1].data[...] = np.reshape(buf[start:start+bias.size], bias.shape);   start = start + bias.size - narenk
-    #conv_param[0].data[...] = np.reshape(buf[start:start+weight.size], weight.shape); start = start + weight.size - narenk
-
-    inter_val = buf[start+bias.size]
-    conv_param[1].data[...] = np.reshape(np.append(buf[start+1:start+bias.size], inter_val), bias.shape); start = start + bias.size
-    conv_param[0].data[...] = np.reshape(buf[start+1:start+weight.size+1], weight.shape); start = start + weight.size
+    conv_param[1].data[...] = np.reshape(buf[start:start+bias.size], bias.shape);   start = start + bias.size
+    conv_param[0].data[...] = np.reshape(buf[start:start+weight.size], weight.shape); start = start + weight.size
     return start
 
 def load_fc2caffe(buf, start, fc_param):
@@ -118,6 +125,25 @@ def load_fc2caffe(buf, start, fc_param):
     bias = fc_param[1].data
     fc_param[1].data[...] = np.reshape(buf[start:start+bias.size], bias.shape);   start = start + bias.size
     fc_param[0].data[...] = np.reshape(buf[start:start+weight.size], weight.shape); start = start + weight.size
+    return start
+
+def load_conv_mergebn2caffe(buf, start, conv_param):
+    weight = conv_param[0].data
+    bias = conv_param[1].data
+
+    bias_np = np.reshape(buf[start:start+bias.size], bias.shape); start = start + bias.size
+    scale_np = np.reshape(buf[start:start+bias.size], bias.shape); start = start + bias.size
+    mean_np = np.reshape(buf[start:start+bias.size], bias.shape); start = start + bias.size
+    var_np = np.reshape(buf[start:start+bias.size], bias.shape); start = start + bias.size
+    weights_np = np.reshape(buf[start:start+weight.size], weight.shape); start = start + weight.size
+
+    for j in range(weight.shape[0]):
+        bnScale = scale_np[j]/(np.sqrt(var_np[j]) + 0.000001)
+        weights_np[j,...] = bnScale * weights_np[j,...]
+        bias_np[j] = bias_np[j] - mean_np[j] * bnScale
+
+    conv_param[1].data[...] = bias_np
+    conv_param[0].data[...] = weights_np
     return start
 
 def load_conv_bn2caffe(buf, start, conv_param, bn_param, scale_param):
@@ -135,9 +161,8 @@ def load_conv_bn2caffe(buf, start, conv_param, bn_param, scale_param):
     conv_param[0].data[...] = np.reshape(buf[start:start+conv_weight.size], conv_weight.shape); start = start + conv_weight.size
     return start
 
-def cfg2prototxt(cfgfile):
+def cfg2prototxt(cfgfile, mergeBN=False):
     blocks = parse_cfg(cfgfile)
-
     layers = []
     props = OrderedDict() 
     bottom = 'data'
@@ -146,7 +171,7 @@ def cfg2prototxt(cfgfile):
     for bidx in xrange(len(blocks)):
         block = blocks[bidx]
         if block['type'] == 'net':
-            props['name'] = 'Darkent2Caffe'
+            props['name'] = 'Darknet2Caffe'
             props['input'] = 'data'
             props['input_dim'] = ['1']
             props['input_dim'].append(block['channels'])
@@ -171,15 +196,17 @@ def cfg2prototxt(cfgfile):
             if block['pad'] == '1':
                 convolution_param['pad'] = str(int(convolution_param['kernel_size'])/2)
             convolution_param['stride'] = block['stride']
-            if block['batch_normalize'] == '1':
+
+            if (not mergeBN) and block['batch_normalize'] == '1':
                 convolution_param['bias_term'] = 'false'
             else:
                 convolution_param['bias_term'] = 'true'
+
             conv_layer['convolution_param'] = convolution_param
             layers.append(conv_layer)
             bottom = conv_layer['top']
 
-            if block['batch_normalize'] == '1':
+            if not mergeBN and block['batch_normalize'] == '1':
                 bn_layer = OrderedDict()
                 if block.has_key('name'):
                     bn_layer['name'] = '%s-bn' % block['name']
@@ -453,19 +480,37 @@ def cfg2prototxt(cfgfile):
 
 if __name__ == '__main__':
     import sys
-    if len(sys.argv) != 5:
-        print('try:')
-        print('python darknet2caffe.py yolo.xdnn.nobn.cfg yolo.xdnn.nobn.weights yolo.xdnn.nobn.prototxt yolo.xdnn.nobn.caffemodel') 
-        print('')
-        print('please add name field for each block to avoid generated name')
-        exit()
+    import argparse
 
-    cfgfile = sys.argv[1]
-    #net_info = cfg2prototxt(cfgfile)
-    #print_prototxt(net_info)
-    #save_prototxt(net_info, 'tmp.prototxt')
-    weightfile = sys.argv[2]
-    protofile = sys.argv[3]
-    caffemodel = sys.argv[4]
-    darknet2caffe(cfgfile, weightfile, protofile, caffemodel)
-    #format_data_layer(sys.argv[3])
+    parser = argparse.ArgumentParser()
+
+    parameters = [("-d", "--cfgfile",    str,None,     'store',"Darknet cfg for conversion", True),
+                  ("-w", "--weights",    str,None,     'store',"Darknet weights for conversion", True),
+                  ("-p", "--prototxt",   str,None,     'store',"Output Caffe prototxt", True),
+                  ("-c", "--caffemodel", str,None,     'store',"Output Caffe caffemodel", True),
+                  ("-m", "--arch",       int,64,       'store',None, False),
+                  ("-b", "--keepbn",     bool,False,   'store_true',None, False)]
+
+    for x in parameters:
+        if x[2] is bool:
+            parser.add_argument(x[0], x[1], default=x[3], action=x[4], help=x[5], required=x[6])
+        elif x[0] is not None:
+            parser.add_argument(x[0], x[1], type=x[2], default=x[3], action=x[4], help=x[5], required=x[6])
+        else:
+            parser.add_argument(x[1], type=x[2], default=x[3], action=x[4], help=x[5], required=x[6])
+
+
+    args = parser.parse_args()
+
+    print "Input Config:",args.cfgfile
+    print "Input Weights:",args.weights
+    print "Output Prototxt:",args.prototxt
+    print "OutputInput Caffemodel:",args.caffemodel
+
+    cfgfile = args.cfgfile
+    weightfile = args.weights
+    protofile = args.prototxt
+    caffemodel = args.caffemodel
+    mergeBN = not args.keepbn
+    arch = args.arch
+    darknet2caffe(cfgfile, weightfile, protofile, caffemodel, arch, mergeBN)
