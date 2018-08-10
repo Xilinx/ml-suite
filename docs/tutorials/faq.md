@@ -64,7 +64,7 @@ FPGA accelerated networks can run up to 90x faster as compared to CPU.
 FPGA accelerated networks are on par with GPU accelerated networks for throughput critical applications, yet provide support for more custom applications.  
 FPGA accelerated networks are far superior to GPU accelerated networks for latency critical applications such as autonomous driving.
 
-[See white paper for benchmark](https://www.xilinx.com)
+[Coming Soon](https://www.xilinx.com)
 
 ## I have a new trained model, where do I begin
 1. Ensure the model is defined in a framework that is digestible by Xilinx ml-suite (Caffe, Tensorflow, Keras, MXNet, Darknet)

@@ -23,7 +23,7 @@ The ML Suite is composed of three basic parts:
   `# Ensure that you ran the fix_caffe_opencv_symlink.sh script`  
 3. [Install git lfs](https://github.com/git-lfs/git-lfs/wiki/Installation)
 4. Go into the ml-suite directory and pull down the models  
-  `cd ml-suite; git pull`
+  `cd ml-suite; git lfs pull`
    
 **TEMPORARY NOTE:**  
 If you are evaluating on AWS, the binaries we have included support the latest Amazon Shell  
