@@ -1,0 +1,142 @@
+# template id XNAvgPool name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template id XNGather  uram_dest ddr_src input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template id XNConv name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template id XNMaxPool name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template id XNScatter uram_src ddr_dest input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template id XNEltWise name add bn relu inaddrA inaddrB insize_w insize_h inchan outaddr slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset EWA_2nd-Src_AM 
+# template id XNConv name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template id XNUpload inaddr insize inchan
+11 XNConv conv2/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x3100 56 56 64 0x0 56 56 64 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "conv2/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+15 XNConv conv2/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 56 56 64 0xc40 56 56 192 0 1 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "conv2/relu_3x3" [u'ReLU'] ['inplace_layer']
+19 XNMaxPool pool2/3x3_s2 3 3 2 2 1 1 0xc40 56 56 192 0x0 28 28 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+21 XNConv inception_3a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 192 0x620 28 28 64 0 2 0 0 0 1 0 0 0 1 3 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_1x1" [u'ReLU'] ['inplace_layer']
+25 XNConv inception_3a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 192 0xf50 28 28 96 0 2 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+29 XNConv inception_3a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0xf50 28 28 96 0x620 28 28 128 0 1 0 0 0 2 0 0 0 1 3 0 0 0 64 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_3x3" [u'ReLU'] ['inplace_layer']
+33 XNConv inception_3a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 192 0xf50 28 28 16 0 2 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+37 XNConv inception_3a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0xf50 28 28 16 0xc40 28 28 32 0 1 0 0 0 1 0 0 0 1 3 0 0 0 192 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_5x5" [u'ReLU'] ['inplace_layer']
+41 XNMaxPool inception_3a/pool 3 3 1 1 1 1 0x0 28 28 192 0xf50 28 28 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+43 XNConv inception_3a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0xf50 28 28 192 0xc40 28 28 32 0 2 0 0 0 1 0 0 0 1 3 0 0 0 224 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3a/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 47 XNConcat inception_3a/output  0x620 0xf50 451584 
+49 XNConv inception_3b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x620 28 28 256 0xf50 28 28 128 0 3 0 0 0 2 0 0 0 1 5 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_1x1" [u'ReLU'] ['inplace_layer']
+53 XNConv inception_3b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x620 28 28 256 0x0 28 28 128 0 3 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+57 XNConv inception_3b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x1260 28 28 192 0 2 0 0 0 2 0 0 0 1 5 0 0 0 128 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_3x3" [u'ReLU'] ['inplace_layer']
+61 XNConv inception_3b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x620 28 28 256 0x0 28 28 32 0 3 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+65 XNConv inception_3b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 28 28 32 0x1880 28 28 96 0 1 0 0 0 1 0 0 0 1 5 0 0 0 320 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_5x5" [u'ReLU'] ['inplace_layer']
+69 XNMaxPool inception_3b/pool 3 3 1 1 1 1 0x620 28 28 256 0x1ea0 28 28 0 3 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+71 XNConv inception_3b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x1ea0 28 28 256 0x1b90 28 28 64 0 3 0 0 0 1 0 0 0 1 5 0 0 0 416 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_3b/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 75 XNConcat inception_3b/output  0xf50 0x1ea0 752640 
+77 XNMaxPool pool3/3x3_s2 3 3 2 2 1 1 0xf50 28 28 480 0x0 14 14 0 5 0 0 0 5 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+79 XNConv inception_4a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 480 0x3d4 14 14 192 0 5 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_1x1" [u'ReLU'] ['inplace_layer']
+83 XNConv inception_4a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 480 0x86c 14 14 96 0 5 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+87 XNConv inception_4a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 96 0x55c 14 14 208 0 1 0 0 0 3 0 0 0 1 6 0 0 0 192 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_3x3" [u'ReLU'] ['inplace_layer']
+91 XNConv inception_4a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 480 0x86c 14 14 16 0 5 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+95 XNConv inception_4a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x86c 14 14 16 0x6e4 14 14 48 0 1 0 0 0 1 0 0 0 1 6 0 0 0 400 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_5x5" [u'ReLU'] ['inplace_layer']
+99 XNMaxPool inception_4a/pool 3 3 1 1 1 1 0x0 14 14 480 0x86c 14 14 0 5 0 0 0 5 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+101 XNConv inception_4a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 14 14 480 0x6e4 14 14 64 0 5 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4a/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 105 XNConcat inception_4a/output  0x3d4 0x86c 225792 
+107 XNConv inception_4b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x3d4 14 14 512 0x86c 14 14 160 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_1x1" [u'ReLU'] ['inplace_layer']
+111 XNConv inception_4b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x3d4 14 14 512 0x0 14 14 112 0 6 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+115 XNConv inception_4b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 112 0x930 14 14 224 0 2 0 0 0 3 0 0 0 1 6 0 0 0 160 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_3x3" [u'ReLU'] ['inplace_layer']
+119 XNConv inception_4b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x3d4 14 14 512 0x0 14 14 24 0 6 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+123 XNConv inception_4b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 14 14 24 0xb7c 14 14 64 0 1 0 0 0 1 0 0 0 1 6 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_5x5" [u'ReLU'] ['inplace_layer']
+127 XNMaxPool inception_4b/pool 3 3 1 1 1 1 0x3d4 14 14 512 0xd04 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+129 XNConv inception_4b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0xd04 14 14 512 0xb7c 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4b/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 133 XNConcat inception_4b/output  0x86c 0xd04 225792 
+135 XNConv inception_4c/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 14 14 512 0x0 14 14 128 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_1x1" [u'ReLU'] ['inplace_layer']
+139 XNConv inception_4c/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 14 14 512 0x498 14 14 128 0 6 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+143 XNConv inception_4c/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x498 14 14 128 0xc4 14 14 256 0 2 0 0 0 3 0 0 0 1 6 0 0 0 128 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_3x3" [u'ReLU'] ['inplace_layer']
+147 XNConv inception_4c/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 14 14 512 0x498 14 14 24 0 6 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+151 XNConv inception_4c/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x498 14 14 24 0x310 14 14 64 0 1 0 0 0 1 0 0 0 1 6 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_5x5" [u'ReLU'] ['inplace_layer']
+155 XNMaxPool inception_4c/pool 3 3 1 1 1 1 0x86c 14 14 512 0xd04 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+157 XNConv inception_4c/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0xd04 14 14 512 0x310 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4c/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 161 XNConcat inception_4c/output  0x0 0x498 225792 
+163 XNConv inception_4d/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x498 14 14 112 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_1x1" [u'ReLU'] ['inplace_layer']
+167 XNConv inception_4d/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x930 14 14 144 0 6 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+171 XNConv inception_4d/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x930 14 14 144 0x55c 14 14 288 0 2 0 0 0 3 0 0 0 1 6 0 0 0 112 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_3x3" [u'ReLU'] ['inplace_layer']
+175 XNConv inception_4d/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x930 14 14 32 0 6 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+179 XNConv inception_4d/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x930 14 14 32 0x7a8 14 14 64 0 1 0 0 0 1 0 0 0 1 6 0 0 0 400 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_5x5" [u'ReLU'] ['inplace_layer']
+183 XNMaxPool inception_4d/pool 3 3 1 1 1 1 0x0 14 14 512 0x930 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+185 XNConv inception_4d/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x930 14 14 512 0x7a8 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 464 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4d/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 189 XNConcat inception_4d/output  0x498 0x930 225792 
+191 XNConv inception_4e/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x498 14 14 528 0x930 14 14 256 0 6 0 0 0 3 0 0 0 1 9 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_1x1" [u'ReLU'] ['inplace_layer']
+195 XNConv inception_4e/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x498 14 14 528 0x0 14 14 160 0 6 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+199 XNConv inception_4e/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 160 0xab8 14 14 320 0 2 0 0 0 4 0 0 0 1 9 0 0 0 256 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_3x3" [u'ReLU'] ['inplace_layer']
+203 XNConv inception_4e/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x498 14 14 528 0x0 14 14 32 0 6 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+207 XNConv inception_4e/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 14 14 32 0xdc8 14 14 128 0 1 0 0 0 2 0 0 0 1 9 0 0 0 576 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_5x5" [u'ReLU'] ['inplace_layer']
+211 XNMaxPool inception_4e/pool 3 3 1 1 1 1 0x498 14 14 528 0x0 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+213 XNConv inception_4e/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 528 0xe8c 14 14 128 0 6 0 0 0 2 0 0 0 1 9 0 0 0 704 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_4e/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 217 XNConcat inception_4e/output  0x930 0x1014 338688 
+219 XNMaxPool pool4/3x3_s2 3 3 2 2 1 1 0x930 14 14 832 0x0 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+221 XNConv inception_5a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 832 0x1b9 7 7 256 0 9 0 0 0 3 0 0 0 1 9 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_1x1" [u'ReLU'] ['inplace_layer']
+225 XNConv inception_5a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 832 0x372 7 7 160 0 9 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+229 XNConv inception_5a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x372 7 7 160 0x21b 7 7 320 0 2 0 0 0 4 0 0 0 1 9 0 0 0 256 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_3x3" [u'ReLU'] ['inplace_layer']
+233 XNConv inception_5a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 832 0x372 7 7 32 0 9 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+237 XNConv inception_5a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x372 7 7 32 0x2df 7 7 128 0 1 0 0 0 2 0 0 0 1 9 0 0 0 576 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_5x5" [u'ReLU'] ['inplace_layer']
+241 XNMaxPool inception_5a/pool 3 3 1 1 1 1 0x0 7 7 832 0x372 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+243 XNConv inception_5a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x372 7 7 832 0x310 7 7 128 0 9 0 0 0 2 0 0 0 1 9 0 0 0 704 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5a/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 247 XNConcat inception_5a/output  0x1b9 0x372 84672 
+249 XNConv inception_5b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x1b9 7 7 832 0x372 7 7 384 0 9 0 0 0 4 0 0 0 1 11 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_1x1" [u'ReLU'] ['inplace_layer']
+253 XNConv inception_5b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x1b9 7 7 832 0x0 7 7 192 0 9 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_3x3_reduce" [u'ReLU'] ['inplace_layer']
+257 XNConv inception_5b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 192 0x436 7 7 384 0 2 0 0 0 4 0 0 0 1 11 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_3x3" [u'ReLU'] ['inplace_layer']
+261 XNConv inception_5b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x1b9 7 7 832 0x0 7 7 48 0 9 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_5x5_reduce" [u'ReLU'] ['inplace_layer']
+265 XNConv inception_5b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 7 7 48 0x4fa 7 7 128 0 1 0 0 0 2 0 0 0 1 11 0 0 0 768 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_5x5" [u'ReLU'] ['inplace_layer']
+269 XNMaxPool inception_5b/pool 3 3 1 1 1 1 0x1b9 7 7 832 0x0 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+271 XNConv inception_5b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 832 0x52b 7 7 128 0 9 0 0 0 2 0 0 0 1 11 0 0 0 896 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# LAYER "inception_5b/relu_pool_proj" [u'ReLU'] ['inplace_layer']
+# 275 XNConcat inception_5b/output  0x372 0x58d 103488 
+277 XNAvgPool pool5/7x7_s1 7 7 1 1 0 0 0x372 7 7 1024 0x0 1 1 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
