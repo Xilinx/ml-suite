@@ -14,7 +14,7 @@ The ML Suite is composed of three basic parts:
 3. **ML Framework and Open Source Support**  - Support for high level ML Frameworks and other open source projects.
 
 **Learn More:** [ML Suite Overview][]  
-**Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]
+**Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]   
 **Forum:** [ML Suite Forum][]
 
 ## Getting Started
