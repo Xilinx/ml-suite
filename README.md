@@ -15,6 +15,7 @@ The ML Suite is composed of three basic parts:
 
 **Learn More:** [ML Suite Overview][]  
 **Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]
+**Forum:** [ML Suite Forum][]
 
 ## Getting Started
 1. Clone ML Suite    
@@ -72,7 +73,7 @@ Cloud Services
 
 - [FAQ][]
 - [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
-- [SDAccel Forums][]
+- [ML Suite Forum][]
 
 
 [install Anaconda2]: docs/tutorials/anaconda.md
@@ -88,3 +89,5 @@ Cloud Services
 [FAQ]: docs/tutorials/faq.md
 [ML Suite Overview]: docs/tutorials/ml-suite-overview.md
 [Webinar on Xilinx FPGA Accelerated Inference]: https://event.on24.com/wcc/r/1625401/2D3B69878E21E0A3DA63B4CDB5531C23?partnerref=Mlsuite
+[ML Suite Forum]: https://forums.xilinx.com/t5/Xilinx-ML-Suite/bd-p/ML 
+
