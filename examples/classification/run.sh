@@ -48,6 +48,14 @@ elif [ "$TEST_TO_RUN" == "test_classify_resnet" ]; then
   #python test_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/resnet50_${DSP_WIDTH}.cmd --fpgaoutsz 2048 --datadir ./data/resnet50_data --labels ./synset_words.txt --xlnxlib $LIBXDNN_PATH --quantizecfg ./data/resnet50_${BITWIDTH}b.json --firstfpgalayer conv1 --images dog.jpg --useblas
   python test_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/resnet50_${DSP_WIDTH}.cmd --fpgaoutsz 2048 --datadir ./data/resnet50_data --labels ./synset_words.txt --xlnxlib $LIBXDNN_PATH --images dog.jpg --useblas
 
+elif [ "$TEST_TO_RUN" == "test_classify_mobilenet" ]; then
+  #################
+  # single image
+  # mobilenet 16bit
+  #################
+  export XBLAS_EMIT_PROFILING_INFO=0
+  python test_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/mobilenet_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/mobilenet_data --labels ./synset_words.txt --xlnxlib $LIBXDNN_PATH --quantizecfg ./data/mobilenet_16b.json --firstfpgalayer conv1 --images dog.jpg --useblas --transform mobilenet
+
 elif [ "$TEST_TO_RUN" == "batch_classify" ]; then
   ############################
   # multi-process streaming 
@@ -55,6 +63,14 @@ elif [ "$TEST_TO_RUN" == "batch_classify" ]; then
 
   export XBLAS_EMIT_PROFILING_INFO=1
   python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/googlenet_v1_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/googlenet_v1_data --labels synset_words.txt --xlnxlib $LIBXDNN_PATH --imagedir $IMAGEDIR --useblas --golden gold.txt --quantizecfg ./data/googlenet_v1_${BITWIDTH}b.json --firstfpgalayer conv1/7x7_s2 #--zmqpub True --perpetual True
+
+elif [ "$TEST_TO_RUN" == "batch_classify_mobilenet" ]; then
+  ############################
+  # multi-process streaming 
+  ############################
+
+  export XBLAS_EMIT_PROFILING_INFO=0
+  python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/mobilenet_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/mobilenet_data --imagedir $IMAGEDIR --labels ./synset_words.txt --xlnxlib $LIBXDNN_PATH --quantizecfg ./data/mobilenet_16b.json --firstfpgalayer conv1 --golden gold.txt --useblas --transform mobilenet
 
 elif [ "$TEST_TO_RUN" == "multinet" ]; then
 
