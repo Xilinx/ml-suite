@@ -45,6 +45,15 @@ def main():
   (weightsBlob, fcWeight, fcBias ) = xdnn_io.loadWeights( args )
   (fpgaInputs, batch_sz) = xdnn_io.prepareInput( args )
   fpgaOutput = xdnn_io.prepareOutput(args['fpgaoutsz'], batch_sz)
+ 
+  # Dummy call (only necessary for reporting)
+  # This call will execute, and it will load the script to the FPGA command queue
+  # Subsequent calls will be much faster 
+  xdnn.execute(args['netcfg'], 
+    weightsBlob, fpgaInputs, fpgaOutput, 
+    batch_sz, # num batches
+    args['quantizecfg'], args['scaleB'], args['PE'])
+
   for i in range(1):
     startTime = timeit.default_timer()
     xdnn.execute(args['netcfg'], 
@@ -52,20 +61,18 @@ def main():
       batch_sz, # num batches
       args['quantizecfg'], args['scaleB'], args['PE'])
     elapsedTime = timeit.default_timer() - startTime
-    print "\nAfter FPGA (%f ms)" % (elapsedTime*1000)
+    print "\nFPGA Time (%f ms)" % (elapsedTime*1000)
 
   startTime = timeit.default_timer()
   fcOut = xdnn.computeFC(fcWeight, fcBias, fpgaOutput, 
     batch_sz, args['outsz'], args['fpgaoutsz'], args['useblas'])
   elapsedTime = timeit.default_timer() - startTime
-  print "\nAfter FC (%f ms)" % (elapsedTime*1000)
-  #for i in range(10):
-  #  print "%f" % fpgaOutput[i],
+  print "\nFC Time (%f ms)" % (elapsedTime*1000)
 
   startTime = timeit.default_timer()
   softmaxOut = xdnn.computeSoftmax(fcOut, batch_sz)
   elapsedTime = timeit.default_timer() - startTime
-  print "\nAfter Softmax (%f ms)" % (elapsedTime*1000)
+  print "\nSoftmax Time (%f ms)" % (elapsedTime*1000)
   
   #for i in range(10):
   #  print "%f" % fpgaOutput[i],

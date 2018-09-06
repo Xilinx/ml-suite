@@ -70,6 +70,8 @@ g_imgbuf = None
 g_useBlas = False
 g_zmqPub = False
 g_perpetual = False
+g_xdnnv3 = False
+g_transform = ""
 
 def processCommandLine():
   global g_xclbin
@@ -87,8 +89,15 @@ def processCommandLine():
   global g_useBlas
   global g_zmqPub
   global g_perpetual
+  global g_batchSize
+  global g_xdnnv3
+  global g_transform
 
   parser = argparse.ArgumentParser(description='pyXDNN')
+  parser.add_argument('--transform', 
+    help='pre processing to use')
+  parser.add_argument('--usexdnnv3', action='store_true',
+    help='version of xdnn')
   parser.add_argument('--xclbin',
     help='.xclbin file')
   parser.add_argument('--netcfg',
@@ -146,6 +155,8 @@ def processCommandLine():
     g_outputSize = int(args.outsz)
   if args.firstfpgalayer:
     g_firstFpgaLayerName = args.firstfpgalayer
+  if args.transform:
+    g_transform = args.transform
 
   if os.path.isdir(args.datadir) and os.access(args.datadir, os.R_OK):
     g_xdnnTestDataDir = args.datadir
@@ -167,6 +178,9 @@ def processCommandLine():
   else:
     sys.exit("ERROR: Specified imagedir directory does not exist or is not readable.")
 
+  if args.usexdnnv3:
+    g_batchSize = 1
+    g_xdnnv3 = True
   if args.useblas:
     g_useBlas = True
   if args.zmqpub:
@@ -179,15 +193,13 @@ def prep_process(q):
   if ret != True:
     sys.exit(1)
 
-  cInputBuffer = None
-  cFpgaInputBuffer = None
+  inputQuantizer = xdnn.XDNNInputQuantizer(g_fpgaCfgFile, g_scaleB)
   while True:
     (inputs, inputImageFiles) = prepareImages()
     if inputs is None:
       break
 
-    fpgaInputs = xdnn.quantizeInputs(g_firstFpgaLayerName, 
-      inputs, cInputBuffer, cFpgaInputBuffer, g_fpgaCfgFile, g_scaleB)
+    fpgaInputs = inputQuantizer.quantize(g_firstFpgaLayerName, inputs)
 
     q.put((fpgaInputs, inputImageFiles))
 
@@ -201,8 +213,12 @@ def xdnn_process (qFrom, qTo):
              'quantizecfg': g_fpgaCfgFile, 
              'scaleA': g_scaleA, 
              'scaleB': g_scaleB,
-             'PE': -1 }
-    weightsBlob = xdnn_io.loadWeightsBiasQuant(args)
+             'PE': -1, 
+             'netcfg': g_netFile }
+    if g_xdnnv3 == True:
+      weightsBlob = xdnn_io.loadWeightsBiasQuantv3(args)
+    else:
+      weightsBlob = xdnn_io.loadWeightsBiasQuant(args)
     fpgaOutput = prepareOutput(g_batchSize)
     while True:
         (inputs, inputImageFiles) = qFrom.get()
@@ -358,8 +374,12 @@ def prepareImages():
       inputImageFiles.append(fname)
 
       imgStartTime = timeit.default_timer()
-      g_inputs[img_num] \
-        = xdnn_io.loadImageBlobFromFile(fname, g_mean, img_h, img_w)
+      if g_transform != "mobilenet":
+        g_inputs[img_num] \
+          = xdnn_io.loadImageBlobFromFile(fname, g_mean, img_h, img_w)
+      else:
+        g_inputs[img_num] \
+          = xdnn_io.loadMobilenetImageBlobFromFile(fname, g_mean, img_h, img_w)
       imgElapsedTime = timeit.default_timer() - imgStartTime
       print "[time] loadImageBlobFromFile/OpenCV (%.2f ms)" \
         % (imgElapsedTime * 1000)

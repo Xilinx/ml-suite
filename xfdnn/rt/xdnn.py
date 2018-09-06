@@ -32,9 +32,13 @@ import os
 import timeit
 import numpy as np
 
+def _makeExecDataKey(peMask, streamId):
+  return "%d:%d" % (peMask, streamId)
+
 # Models a set of PEs, their buffers and ScriptExecutor.
 class XDNNExecData:
-  def __init__(self, peMask, peIdxList):
+  def __init__(self, peMask, peIdxList, key):
+    self._key = key
     self._peMask = peMask
     self._peIdxList = peIdxList
     self._networkId = None
@@ -67,6 +71,8 @@ class XDNNManager:
     self._execData = {}
 
     self._lib = cdll.LoadLibrary(libFile)
+    self._lib.xHostMalloc.argtypes = [c_size_t]
+    self._lib.xHostMalloc.restype = c_void_p 
     self._lib.xMalloc.argtypes \
       = [c_void_p , c_size_t, c_bool]
     self._lib.xMalloc.restype = c_void_p 
@@ -78,7 +84,8 @@ class XDNNManager:
          c_char_p, c_char_p,
          POINTER(c_float), c_uint, c_float,
          POINTER(c_float), c_uint, c_float,
-         c_ushort, c_ushort, c_uint, c_uint]
+         c_ushort, c_ushort, c_uint, c_uint,
+         c_int, c_int, c_int, c_int, c_bool]
     self._lib.XDNNFillWeightsBiasQuantBlob.argtypes \
       = [POINTER(c_short), c_int, 
          c_char_p, c_char_p,
@@ -88,7 +95,7 @@ class XDNNManager:
     self._lib.XDNNMakeWeightsBiasQuantBlob.restype = POINTER(c_short)
     self._lib.xblasLoadA.argtypes \
       = [c_void_p, c_int, 
-         c_void_p, c_void_p, c_int]
+         c_void_p, c_char_p, c_void_p, c_int]
     self._lib.XDNNPrepareInput.argtypes \
       = [c_char_p,
          POINTER(POINTER(c_float)), 
@@ -96,7 +103,7 @@ class XDNNManager:
          c_int, c_int, c_char_p,
          c_float]
     self._lib.XDNNPrepareInput.restype = c_int
-
+    #self._lib.XDNNReadHardwareCounter.restype = c_longlong
     self._lib.XDNNMakeScriptExecutor.argtypes \
       = [POINTER(c_void_p), c_int,
          POINTER(c_short), c_char_p, c_char_p, c_float,
@@ -107,16 +114,22 @@ class XDNNManager:
     self._lib.XDNNExecute.argtypes \
       = [c_void_p,
          POINTER(POINTER(c_short)), c_void_p,
-         c_int, c_bool]
-
+         c_int, c_int, c_bool]
+    self._lib.XDNNQuantizeAvgPool.argtypes = [c_float, c_float, c_int, c_int]
     self._lib.XDNNQuantizeTensor.argtypes = [c_float, c_int,
       np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"), c_int]
     self._lib.XDNNUnQuantizeTensor.argtypes = [c_float, c_int,
       np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"), c_int]
+    self._lib.XDNNV3QuantizeInterLayer.argtypes \
+      = [c_int, c_int, c_int, c_int, 
+         np.ctypeslib.ndpointer(c_longlong, flags="C_CONTIGUOUS"), c_int, c_int]
     self._lib.XDNNQuantizeInterLayer.argtypes \
       = [c_int, c_int, c_int, c_int, 
          np.ctypeslib.ndpointer(c_longlong, flags="C_CONTIGUOUS"), c_int]
     self._lib.XDNNQuantizeBias.argtypes = [c_float, c_int, c_float]
+
+    self._lib.XDNNV3QuantizeBias.argtypes = [c_float, c_float, c_int, c_float, c_bool]
+
     self._lib.XDNNQuantizeWeights.argtypes = [c_float, c_int, 
       np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"), c_int]
 
@@ -126,7 +139,7 @@ class XDNNManager:
          np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"),
          c_int, c_int, c_int, 
          np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS")]
-    self._lib.XDNNWaitForResults.argtypes = [c_void_p]
+    self._lib.XDNNWaitForResults.argtypes = [c_void_p, c_int]
 
     self._lib.XDNNReadWeightsFile.argtypes \
       = [c_char_p, POINTER(POINTER(c_char)), 
@@ -136,12 +149,14 @@ class XDNNManager:
 
   def createHandle(self, xclbin, kernel, numHandles):
     self._handles = []
-
     ret = 0
     for i in range(numHandles):
       self._handles.append(c_void_p())
-      ret |= self._lib.xblasCreate(pointer(self._handles[i]),
-        c_char_p(xclbin), c_char_p(kernel), i)
+      ret |= self._lib.xblasCreate(
+        pointer(self._handles[i]),
+        c_char_p(xclbin),
+        c_char_p(kernel),
+        i)
 
     return ret
 
@@ -167,26 +182,19 @@ class XDNNManager:
   # and raises AssertionError otherwise. 
   # Verifies that the PE is disjoint with all current executors.
   # returns a unique "execData" for the PE/PE-list
-  def getOrCreateExecData(self, PE):
+  def getOrCreateExecData(self, PE, streamId):
     if not isinstance (PE, list): PE = [PE]
     peMask = self.getMask(PE)
+    execDataKey = _makeExecDataKey(peMask, streamId)
 
-    if peMask in self._execData:
-      return self._execData[peMask]
+    if execDataKey in self._execData:
+      if self._execData[execDataKey]._pendingJob:
+        raise AssertionError("PE already in use")
+      return self._execData[execDataKey]
 
-    # check if any element of PE is already in a different executor. 
-    # Mask=0 => all PEs used
-    for key in self._execData.keys():
-      if (key & peMask) or (peMask == 0) or (key == 0):
-        if self._execData[key]._pendingJob:
-          raise AssertionError("PE is non-disjoint and is already in use")
-        else:
-          # delete old assignment
-          del self._execData[key]
-
-    # save new PE assignment
-    self._execData[peMask] = XDNNExecData(peMask, PE) 
-    return self._execData[peMask]
+    # save new PE/stream assignment
+    self._execData[execDataKey] = XDNNExecData(peMask, PE, execDataKey) 
+    return self._execData[execDataKey]
 
   def initScriptExecutor(self, weightsBlob, netFile, cfgFile, scale,
     numBatches, numImgPerBatch, execData):
@@ -216,8 +224,9 @@ class XDNNManager:
     execData._numImgPerBatch = numImgPerBatch
 
   def makeFPGAShortArray(self, n):
-    cp = np.ascontiguousarray(np.zeros(n), dtype=np.int16)
-    size = cp.nbytes
+    size = n*2 # 2 bytes for short
+    memAddr = self._lib.xHostMalloc(size)
+    cp = np.frombuffer((c_short*n).from_address(memAddr), np.int16)
     fps = []
     if self._handles:
       for h in self._handles:
@@ -228,8 +237,9 @@ class XDNNManager:
     return (cp, fps)
 
   def makeFPGAFloatArray(self, n):
-    cp = np.ascontiguousarray(np.zeros(n), dtype=np.float32)
-    size = cp.nbytes
+    size = n*4 # 4 bytes for float
+    memAddr = self._lib.xHostMalloc(size)
+    cp = np.frombuffer((c_float*n).from_address(memAddr), np.float32)
     fps = []
     if self._handles:
       for h in self._handles:
@@ -239,17 +249,17 @@ class XDNNManager:
         fps.append(fp)
     return (cp, fps)
 
-  def markDirty(self, peMask):
-    for i in range(len(self._execData[peMask]._fpgaInputPtrs)):
-      cp = self._execData[peMask]._fpgaInputPtrs[i]
-      fps = self._execData[peMask]._fpgaInputHandles[i]
-      size = self._execData[peMask]._fpgaInputs[i].nbytes
+  def markDirty(self, execDataKey):
+    for i in range(len(self._execData[execDataKey]._fpgaInputPtrs)):
+      cp = self._execData[execDataKey]._fpgaInputPtrs[i]
+      fps = self._execData[execDataKey]._fpgaInputHandles[i]
+      size = self._execData[execDataKey]._fpgaInputs[i].nbytes
       if self._handles:
         for hi, h in enumerate(self._handles):
           self._lib.xMemcpyHost2Device(h, cp, fps[hi], size)
 
   def v3fillWeightsBiasQuantBlob(self, blob, offset, 
-    cfgFile, weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, layerName = ""):
+    cfgFile, weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, srcFullSectNum, srcReplSectNum, srcReplunitNum, srcReplUnitWidth, convHalfRateMode, layerName = ""):
     cWeights = (c_float*len(weights))()
     for i in range(len(weights)):
       cWeights[i] = weights[i]
@@ -262,7 +272,7 @@ class XDNNManager:
       c_char_p(cfgFile), 
       cWeights, len(cWeights), scaleWeight,
       cBias, len(cBias), scaleBias,
-      c_ushort(kw), c_ushort(kh), inch, outch)
+      c_ushort(kw), c_ushort(kh), inch, outch, srcFullSectNum, srcReplSectNum, srcReplunitNum, srcReplUnitWidth, convHalfRateMode)
 
   def fillWeightsBiasQuantBlob(self, blob, offset, 
     cfgFile, weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, layerName = ""):
@@ -280,8 +290,8 @@ class XDNNManager:
       cBias, len(cBias), scaleBias,
       c_ushort(kw), c_ushort(kh), inch, outch)
 
-  def loadBlobToDdr(self, blob, size, PE):
-    execData = self.getOrCreateExecData(PE)
+  def loadBlobToDdr(self, blob, size, layer2OffsetMap, PE):
+    if not isinstance (PE, list): PE = [PE]
     
     numBytes = size * 2
     fps = []
@@ -290,16 +300,17 @@ class XDNNManager:
       self._lib.xMemcpyHost2Device(h, blob, fp, numBytes)
       fps.append(fp)
     
-    for peIdx in execData._peIdxList: 
+    for peIdx in PE: 
       for h in self._handles:
-        self._lib.xblasLoadA(h, size, blob, None, peIdx)
+        self._lib.xblasLoadA(h, size, blob, layer2OffsetMap, None, peIdx)
 
     return fps
 
-  def prepareInputsForFpga(self, inputs, cfgFile, scale, PE=-1, layerName=""):
+  def prepareInputsForFpga(self, inputs, cfgFile, scale, 
+    PE=-1, layerName="", streamId=0):
     startTime = timeit.default_timer()
 
-    execData = self.getOrCreateExecData(PE)
+    execData = self.getOrCreateExecData(PE, streamId)
     
     numBatches, imgSize = inputs.shape
     #print "imgSize: %s, numBatch: %s" % (imgSize, numBatches)
@@ -363,20 +374,60 @@ class XDNNManager:
         for i in range(actualNumFpgaInputs):
           truncatedArr[i] = execData._fpgaInputPtrs[i]
         execData._fpgaInputPtrs = truncatedArr
+    elif inputs.dtype == np.int16:
+       # already prepared, just populate fields 
+       for i in range(numBatches):
+         np.copyto(execData._fpgaInputs[i], inputs[i])
     else:
-      # already prepared, just populate fields 
-      for i in range(numBatches):
-        np.copyto(execData._fpgaInputs[i], inputs[i])
+      raise NotImplementedError("Only np.float32 input supported")
 
     # tell FPGA there's new data
-    self.markDirty(execData._peMask)
-    elapsedTime = timeit.default_timer() - startTime
-    #print "PrepareInputsForFpga elapsed (%f ms):" % (elapsedTime * 1000)
+    self.markDirty(execData._key)
       
     return execData._fpgaInputPtrs
 
+  def passThruInputsForFpga(self, ctypesArr, 
+    numBatches, imgSize, cfgFile, scale, PE=-1, layerName="", streamId=0):
+    execData = self.getOrCreateExecData(PE, streamId)
+
+    if type(execData._fpgaInputs) != type(None):
+      self.markDirty(execData._key)
+      return execData._fpgaInputPtrs
+
+    execData._fpgaInputPtrs = (POINTER(c_short)*numBatches)()
+    execData._fpgaInputs = []
+    execData._fpgaInputHandles = []
+    imgBytes = imgSize*2 # bytes
+    for i in range(numBatches):
+      for h in self._handles:
+        fp = self._lib.xMalloc(h, imgBytes, True)
+        ptr = cast(byref(ctypesArr, i*imgBytes), POINTER(c_short))
+        nparr = np.frombuffer(ptr, dtype=np.int16)
+        self._lib.xMemcpyHost2Device(h, ptr, fp, imgBytes)
+
+        execData._fpgaInputPtrs[i] = ptr
+        execData._fpgaInputHandles.append([fp])
+        execData._fpgaInputs.append(nparr)
+
+    self.markDirty(execData._key)
+    return execData._fpgaInputPtrs
+
+  def initScript(self, netFile, weightsBlob, 
+    numBatches, cfgFile, scale, PE, streamId=0):
+    
+    numImgPerBatch = 1 # Legacy Constant
+    
+    execData = self.getOrCreateExecData(PE, streamId)
+
+    # get/create script executor and reconfig it if necessary
+    self.initScriptExecutor(weightsBlob, netFile, cfgFile, 
+      scale, numBatches, numImgPerBatch, execData)
+
+  #def readHardwareCounter(self):
+  #  return self._lib.XDNNReadHardwareCounter()
+
   def execute(self, netFile, weightsBlob, inputs, output,
-    numBatches, cfgFile, scale, PE, blocking=True):
+    numBatches, cfgFile, scale, PE, streamId, blocking):
 
     numImgPerBatch = 1 # Constant, removing from execute API
 
@@ -386,7 +437,7 @@ class XDNNManager:
     else:
       outputPtr = output
 
-    execData = self.getOrCreateExecData(PE)
+    execData = self.getOrCreateExecData(PE, streamId)
 
     # get/create script executor and reconfig it if necessary
     self.initScriptExecutor(weightsBlob, netFile, cfgFile, 
@@ -397,23 +448,23 @@ class XDNNManager:
     if not blocking:
       execData._pendingJob = True
 
-    return self._lib.XDNNExecute(execData._executor, 
-      inputs, outputPtr, numFpgaBatches, blocking)
+    #startTime = timeit.default_timer()
+    result = self._lib.XDNNExecute(execData._executor, 
+      inputs, outputPtr, numFpgaBatches, streamId, blocking)
+    #endTime = timeit.default_timer()
+    #print("ANDBG py.xdnn.execute run " + str((endTime-startTime)*1000))
 
-  def exec_async (self, netFile, weightsBlob, inputs, output, 
-    numBatches, cfgFile, scale, PE):
-    return self.execute(netFile, weightsBlob, inputs, output,
-      numBatches, cfgFile, scale, PE, blocking=False)
+    return result
 
-  def get_result(self, PE):
+  def get_result(self, PE, streamId):
     peMask = self.getMask(PE);
+    execDataKey = _makeExecDataKey(peMask, streamId)
 
-    if peMask not in self._execData:
-      print 'peMask '+str(peMask)+' keys '+str (self._execData.keys())
-      raise AssertionError("ExecData not found for PE " + str(PE))
-    #print "waitForResults peMask %d\n" % peMask
-    ret = self._lib.XDNNWaitForResults(self._execData[peMask]._executor)
-    self._execData[peMask]._pendingJob = False
+    if execDataKey not in self._execData:
+      raise AssertionError("ExecData not found for key %s" % execDataKey)
+
+    ret = self._lib.XDNNWaitForResults(self._execData[execDataKey]._executor, streamId)
+    self._execData[execDataKey]._pendingJob = False
     return ret
 
   def readWeightsFile(self, fname):
@@ -446,6 +497,10 @@ class XDNNManager:
 
     return (layerName, kw, kh, ic, oc, vals)
 
+  def quantizev3InterLayer(self, preShift, scale, postShift, bitWidth, v, bias):
+    return self._lib.XDNNV3QuantizeInterLayer(\
+      preShift, scale, postShift, bitWidth, v, v.size, bias)
+
   def quantizeInterLayer(self, preShift, scale, postShift, bitWidth, v):
     return self._lib.XDNNQuantizeInterLayer(\
       preShift, scale, postShift, bitWidth, v, v.size)
@@ -456,8 +511,13 @@ class XDNNManager:
   def quantizeBias(self, threshOut, bitWidth, val):
     return self._lib.XDNNQuantizeBias(threshOut, bitWidth, val)
 
+  def quantizev3Bias(self, threshIn, threshParams, bitWidth, val, doRounding):
+    return self._lib.XDNNV3QuantizeBias(threshIn, threshParams, bitWidth, val, doRounding)
+
   def quantizeTensor(self, threshIn, bitWidth, v):
     return self._lib.XDNNQuantizeTensor(threshIn, bitWidth, v, v.size)
+  def quantizeAvgPool(self, sumQuantizedVal, scaleVal, postShiftVal, bitWidth):
+    return self._lib.XDNNQuantizeAvgPool(sumQuantizedVal, scaleVal, postShiftVal, bitWidth)
 
   def unquantizeTensor(self, threshOut, bitWidth, v):
     return self._lib.XDNNUnQuantizeTensor(threshOut, bitWidth, v, v.size)
@@ -470,11 +530,27 @@ def createManager ( libFile ):
     _xdnnManager = XDNNManager(libFile)
   return True
     
-def createHandle(xclbin, kernel, libFile, numHandles=1):
+def createHandle(xclbin, kernel="kernelSxdnn_0", libFile=None, numHandles=1):
+  """
+  Programs a hardware acceleration engine to the FPGA, and initializes communication.
+  
+  :param xclbin: Path to binary image (a.k.a. xclbin) to be loaded.
+  :type xclbin: str.
+  :param kernel: Name of kernel in xclbin. Always use "kernelSxdnn_0". To be deprecated.
+  :type kernel: str.
+  :param libFile: Path to libxfdnn.so shared library. This is the high performance middleware invoked by the Python APIs.
+  :type libFile: str.
+  :param numHandles: Number of handles to be created. This parameter is reserved for future development.
+  :type numHandles: int.
+  :returns: int -- Return Code. Expect 0 for success.
+  """
   createManager (libFile)
   return _xdnnManager.createHandle(xclbin, kernel, numHandles)
 
 def closeHandle():
+  """
+  Terminates communication by destroying handle. No return value.
+  """
   return _xdnnManager.closeHandle()
 
 def makeFPGAFloatArray(n):
@@ -492,10 +568,10 @@ def makeWeightsBiasQuantBlob(size):
 
 def v3fillWeightsBiasQuantBlob(blob, offset, cfgFile, 
   weights, scaleWeight, bias, scaleBias, 
-  kw, kh, inch, outch, layerName = ""):
+  kw, kh, inch, outch, srcFullSectNum, srcReplSectNum, srcReplUnitNum, srcReplUnitWidth, convHalfRateMode,  layerName = ""):
   return _xdnnManager.v3fillWeightsBiasQuantBlob(\
     blob, offset, cfgFile, 
-    weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, layerName)
+    weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, srcFullSectNum, srcReplSectNum, srcReplUnitNum, srcReplUnitWidth, convHalfRateMode, layerName)
 
 def fillWeightsBiasQuantBlob(blob, offset, cfgFile, 
   weights, scaleWeight, bias, scaleBias, 
@@ -504,40 +580,133 @@ def fillWeightsBiasQuantBlob(blob, offset, cfgFile,
     blob, offset, cfgFile, 
     weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, layerName)
 
-def loadBlobToDdr(blob, size, PE=-1):
-  return _xdnnManager.loadBlobToDdr(blob, size, PE)
+def loadBlobToDdr(blob, size, layer2OffsetMap, PE=-1):
+  return _xdnnManager.loadBlobToDdr(blob, size, layer2OffsetMap, PE)
 
 # this is typically the first method that is called.
 def prepareInputsForFpga(inputs, cfgFile, scale, PE=-1, layerName = ""):
   return _xdnnManager.prepareInputsForFpga( inputs, cfgFile, scale, PE, layerName)
 
-# TODO would like to use None as default. But it matches 0, a valid PE
+def passThruInputsForFpga(ctypesArr, batchSize, imgSize, cfgFile, scale, PE=-1, layerName = "", streamId=0):
+  return _xdnnManager.passThruInputsForFpga(ctypesArr, batchSize, imgSize, cfgFile, scale, PE, layerName, streamId)
+
+def initScript(netFile, weightsBlob, numBatches, cfgFile, scale, PE):
+  """
+  Loads the network schedule on the hardware accelerator. This API call is blocking.
+
+  :param netFile: Path to file which contains network specific instructions, this file should be generated by xfdnn compiler.
+  :type netFile: str.
+  :param weightsBlob: This is an object constructed by the xdnn_io.loadWeights API, which provides the address in memory where weights preside.
+  :type weightsBlob: <class 'xdnn.LP_c_short'>.  
+  :param numBatches: Number of images to process per execute call.
+  :type numBatches: int.
+  :param cfgFile: Path to file which contains network specific quantization parameters, this file should be generated by xfdnn quantizer.
+  :type cfgFile: str.
+  :param scale: Scale used for bias terms in global quantization mode, typically set to 30.
+  :type scale: int.
+  :param PE: Index used to target specific processing element. Use -1 for autoselect. There can be from 1 to 6 processing elements in a particular xclbin.
+  :type PE: int.
+  """
+  return _xdnnManager.initScript(netFile, weightsBlob, numBatches, cfgFile, scale, PE)
+
 def execute(netFile, weightsBlob, inputs, output, numBatches, 
-  cfgFile, scale, PE=-1):
+  cfgFile, scale, PE=-1, streamId=0):
+  """
+  Executes inference on the hardware accelerator. This API call is blocking.
+
+  :param netFile: Path to file which contains network specific instructions, this file should be generated by xfdnn compiler.
+  :type netFile: str.
+  :param weightsBlob: This is an object constructed by the xdnn_io.loadWeights API, which provides the address in memory where weights preside.
+  :type weightsBlob: <class 'xdnn.LP_c_short'>.  
+  :param inputs: Array holding the input volume for which to run inference. This object is constructed by the xdnn_io.prepareInput API.
+  :type inputs: <class 'xdnn.LP_c_short_Array_1'>.
+  :param outputs: Array holding the result of the inference ran on the hardware accelerator. Shape will be (fpgaoutsz,) where fpgaoutsz is the total number of elements in the final activation ran in HW.
+  :type outputs: numpy.ndarray.
+  :param numBatches: Number of images to process per execute call.
+  :type numBatches: int.
+  :param cfgFile: Path to file which contains network specific quantization parameters, this file should be generated by xfdnn quantizer.
+  :type cfgFile: str.
+  :param scale: Scale used for bias terms in global quantization mode, typically set to 30.
+  :type scale: int.
+  :param PE: Index used to target specific processing element. Use -1 for autoselect. There can be from 1 to 6 processing elements in a particular xclbin.
+  :type PE: int.
+  :param streamId: Argument not required. 
+  :type streamId: int.
+  :returns: int -- Return Code. Expect 0 for success.
+  """
   return _xdnnManager.execute(netFile, weightsBlob, inputs, output, 
-    numBatches, cfgFile, scale, PE)
+    numBatches, cfgFile, scale, PE, streamId, True)
 
 def exec_async (netFile, weightsBlob, inputs, output, numBatches, 
-  cfgFile, scale, PE=-1):
-  return _xdnnManager.exec_async (netFile, weightsBlob, inputs, output, 
-    numBatches, cfgFile, scale, PE)
+  cfgFile, scale, PE=-1, streamId=0):
+  """
+  Executes inference on the hardware accelerator. This API call is non-blocking. The result of execution can be fetched using xdnn.get_result.
 
-def get_result(PE=-1):
-  return _xdnnManager.get_result(PE)
+  :param netFile: Path to file which contains network specific instructions, this file should be generated by xfdnn compiler.
+  :type netFile: str.
+  :param weightsBlob: This is an object constructed by the xdnn_io.loadWeights API, which provides the address in memory where weights preside.
+  :type weightsBlob: <class 'xdnn.LP_c_short'>.  
+  :param inputs: Array holding the input volume for which to run inference. This object is constructed by the xdnn_io.prepareInput API.
+  :type inputs: <class 'xdnn.LP_c_short_Array_1'>.
+  :param outputs: Array holding the result of the inference ran on the hardware accelerator. Shape will be (fpgaoutsz,) where fpgaoutsz is the total number of elements in the final activation ran in HW.
+  :type outputs: numpy.ndarray.
+  :param numBatches: Number of images to process per execute call.
+  :type numBatches: int.
+  :param cfgFile: Path to file which contains network specific quantization parameters, this file should be generated by xfdnn quantizer.
+  :type cfgFile: str.
+  :param scale: Scale used for bias terms in global quantization mode, typically set to 30.
+  :type scale: int.
+  :param PE: Index used to target specific processing element. Use -1 for autoselect. There can be from 1 to 6 processing elements in a particular xclbin.
+  :type PE: int.
+  :param streamId: Stream ID used to recover result at a later time. 
+  :type streamId: int.
+  :returns: int -- Return Code. Expect 0 for success.
+  """
+  return _xdnnManager.execute (netFile, weightsBlob, inputs, output, 
+    numBatches, cfgFile, scale, PE, streamId, False)
 
-def softmax(data):
-  import math
-  maxVal = data.max()
-  for x in np.nditer(data, op_flags=['readwrite']):
-    x[...] = math.exp(x - maxVal)
+#def readHardwareCounter():
+#  return _xdnnManager.readHardwareCounter()
 
-  totalVal = np.sum(data)
-  for x in np.nditer(data, op_flags=['readwrite']):
-    x[...] = x / totalVal
+def get_result(PE=-1, streamId=0):
+  """
+  Get result of execution for a given PE, and a given stream. This API is used in conjuntion with xdnn.exec_async.
 
-  return data    
+  :param PE: Index used to target specific processing element. Use -1 for autoselect. There can be from 1 to 6 processing elements in a particular xclbin.
+  :type PE: int.
+  :param streamId: Stream ID to recover result from. 
+  :type streamId: int.
+  :returns: int -- Return Code. Expect 0 for success.
+  """
+  return _xdnnManager.get_result(PE, streamId)
+
+def softmax(x):
+  e_x = np.exp(x-np.max(x))
+  return (e_x)/(e_x.sum(keepdims=True))
+
+# Old Slow Softmax 
+#def softmax(data):
+#  import math
+#  maxVal = data.max()
+#  for x in np.nditer(data, op_flags=['readwrite']):
+#    x[...] = math.exp(x - maxVal)
+#
+#  totalVal = np.sum(data)
+#  for x in np.nditer(data, op_flags=['readwrite']):
+#    x[...] = x / totalVal
+#
+#  return data    
 
 def computeSoftmax(data, num):
+  """
+  Compute the softmax of a given activation or a set of activations.
+
+  :param data: Activation or a set of activations corresponding to multiple images stored as a 1D Array.
+  :type data: numpy.ndarray.
+  :param num: Number of images processed.
+  :type num: int.
+  :returns: numpy.ndarray -- Softmax Activation.
+  """
   outSize = len(data) / num
 
   i = 0
@@ -548,6 +717,25 @@ def computeSoftmax(data, num):
   return data
   
 def computeFC(weight, bias, data, M, N, K, useBlas):
+  """
+  Compute the inner product layer for a given activation or a set of activations. WX+B.
+  
+  :param weight: Weights corresponding to the inner product layer. These weights are extracted by the xdnn_io.loadWeights API.
+  :type weight: numpy.ndarray
+  :param bias: Biases corresponding to the inner product layer. These biases are extracted by the xdnn_io.loadWeights API.
+  :type bias: numpy.ndarray
+  :param data: Activation or a set of activations corresponding to multiple images stored as a 1D Array.
+  :type data: numpy.ndarray.
+  :param M: Number of inferences being ran in parallel. i.e. # of images. 
+  :type M: int.
+  :param N: Number of elements in the output volume returned by Inner Product for a single inference. This is specific to the network. 
+  :type N: int.
+  :param K: Number of elements in the output volume returned by FPGA for a single inference. This is specific to the network. 
+  :type K: int.
+  :param useBlas: Use CBLAS to accelerate arithmetic in CPU.
+  :type useBlas: bool.
+  :returns: numpy.ndarray -- Inner Product result.
+  """
   M = int(M)
   N = int(N)
   K = int(K)
@@ -579,35 +767,63 @@ def computeFC(weight, bias, data, M, N, K, useBlas):
 
   return output
 
-def quantizeInputs(layerName, 
-  inputs, inputsPtr, fpgaInputsPtr, cfgFile, scale):
-  numBatches, imgSize = inputs.shape
+class XDNNInputQuantizer:
+  def __init__(self, cfgFile, scale):
+    self._cfgFile = cfgFile
+    self._scale = scale
+    self._fpgaInputsBlob = None
+    self._inputsPtr = None
+    self._fpgaInputsPtr = None
 
-  if type(inputsPtr) == type(None):
-    # first time -- allocate ctypes mem
-    inputsPtr = (POINTER(c_float)*numBatches)()
-    fpgaInputsPtr = (POINTER(c_short)*numBatches)()
+  def quantize(self, layerName, inputs):
+    numBatches, imgSize = inputs.shape
+    totalSize = imgSize * numBatches
+
+    if type(self._inputsPtr) == type(None):
+      # first time -- allocate ctypes mem
+      self._inputsPtr = (POINTER(c_float)*numBatches)()
+      self._fpgaInputsBlob = (c_short*totalSize)() # buf for whole batch
+      self._fpgaInputsPtr = (POINTER(c_short)*numBatches)()
+      for i in range(numBatches):
+        self._inputsPtr[i] = (c_float*imgSize)()
+        self._fpgaInputsPtr[i] \
+          = cast(byref(self._fpgaInputsBlob, i*imgSize*2), POINTER(c_short))
+
+    # set this batch's data as input
     for i in range(numBatches):
-      inputsPtr[i] = (c_float*imgSize)()
-      fpgaInputsPtr[i] = (c_short*imgSize)()
+      self._inputsPtr[i] = inputs[i].ctypes.data_as(POINTER(c_float))
+    
+    numFpgaInputs = _xdnnManager._lib.XDNNPrepareInput(\
+      layerName, self._inputsPtr, self._fpgaInputsPtr,
+      numBatches, imgSize, self._cfgFile, self._scale)
 
-  for i in range(numBatches):
-    inputsPtr[i] = inputs[i].ctypes.data_as(POINTER(c_float))
-  
-  numFpgaInputs = _xdnnManager._lib.XDNNPrepareInput(\
-    layerName, inputsPtr, fpgaInputsPtr,
-    numBatches, imgSize, cfgFile, scale)
-
-  # make numpy arrays from ctypes arrays
-  blobs = []
-  for i in range(numFpgaInputs):
-    arr = np.frombuffer(\
-      (c_short*imgSize).from_address(\
-          addressof(fpgaInputsPtr[i].contents)), np.int16)
-    blobs.append(arr)
-
-  result = np.vstack(blobs)
-  return result
+    # make result numpy array 
+    result = np.frombuffer(\
+        (c_short*totalSize).from_address(\
+          addressof(self._fpgaInputsBlob)), np.int16)
+    result = result.reshape(numBatches, imgSize)
+    return result
 
 def readWeightsFile(fname):
   return _xdnnManager.readWeightsFile(fname)
+
+#from multiprocessing import sharedctypes, Manager
+#g_sharedMemManager = Manager()
+#g_sharedMemDict = g_sharedMemManager.dict()
+#
+#def getOrCreateNumpyCtypesArr(key, n, dtype):
+#  arr = None 
+#
+#  if key in g_sharedMemDict:
+#    arr = g_sharedMemDict[key]
+#  else:
+#    ct = None
+#    if dtype == np.int16:
+#      ct = c_short
+#
+#    arr = sharedctypes.RawArray(ct, n)
+#    g_sharedMemDict[key] = arr
+#
+#  nparr = np.frombuffer(arr, dtype)
+#
+#  return (nparr, arr)
