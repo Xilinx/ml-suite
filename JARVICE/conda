@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec /opt/anaconda2/bin/conda "$@"
+
