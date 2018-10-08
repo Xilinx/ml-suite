@@ -6,7 +6,7 @@
 
 The Xilinx Machine Learning (ML) Suite provides users with the tools to develop and deploy Machine Learning applications for Real-time Inference. It provides support for many common machine learning frameworks such as Caffe, MxNet and Tensorflow as well as Python and RESTful APIs.  
 
-#### The Xilinx ML Suite currently features xDNNv2. xDNNv3 will be available in November 2018. xDNNv3 will bring higher throughput, at lower latency. For more information on the benefits of xDNNv3, please see the [whitepaper here][]. 
+#### The Xilinx ML Suite currently features xDNNv2. xDNNv3 will be available in November 2018. xDNNv3 will bring higher throughput, at lower latency. For more information on the benefits of xDNNv3, please see the [whitepaper here][].   
 
 ![](docs/tutorials/img/stack.png)
 
