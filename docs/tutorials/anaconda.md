@@ -16,7 +16,7 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 1.  Invoke bash (if you aren't already in bash)  
 `bash`
 2.  Create Virtual Environment  
-`conda create --name ml-suite python=2.7 numpy=1.14.5 x264=20131218 caffe pydot pydot-ng graphviz keras scikit-learn -c conda-forge`   
+`conda create --name ml-suite python=2.7 numpy=1.14.5 x264=20131218 caffe pydot pydot-ng graphviz keras scikit-learn tqdm -c conda-forge`   
 3.  Fix symbolic links between pre-compiled Caffe (libcaffe.so), and OpenCV   
       - Note: If you installed anaconda in a custom location, you will need to modify the first line of this script  
       `bash fix_caffe_opencv_symlink.sh`
@@ -24,10 +24,8 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 `conda activate ml-suite`
 5.  Verify your environment by importing caffe in python  
 `python -c "import caffe"`
-6.  Install TensorFlow version 1.8  
-`pip install tensorflow==1.8 `
-7.  Install Jupyter to the ml-suite env  
-`pip install jupyter `
+6.  Install other required python packages
+`pip install jupyter tensorflow==1.8 zmq`
 
 ### Notes for running on AWS w/ Anaconda
 At the moment, AWS requires root privileges to deploy on FPGAs. Follow the steps below as a work around:

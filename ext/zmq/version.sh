@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 #!/bin/sh
 #
 # This script extracts the 0MQ version from include/zmq.h, which is the master

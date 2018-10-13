@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 import datetime, getopt, json, os, socket, sys, time, zmq
 from multiprocessing.pool import ThreadPool
 

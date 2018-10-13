@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 
 # If you call your environment something else, need to edit the below line
 cd ~/anaconda2/envs/ml-suite/lib/

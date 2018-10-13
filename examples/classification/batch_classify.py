@@ -1,34 +1,9 @@
-##################################################################################
-# Copyright (c) 2017, Xilinx, Inc.
-# All rights reserved.
-# 
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
+#!/usr/bin/env python
 #
-# 1. Redistributions of source code must retain the above copyright notice,
-# this list of conditions and the following disclaimer.
-# 
-# 2. Redistributions in binary form must reproduce the above copyright notice,
-# this list of conditions and the following disclaimer in the documentation
-# and/or other materials provided with the distribution.
+# // SPDX-License-Identifier: BSD-3-CLAUSE
 #
-# 3. Neither the name of the copyright holder nor the names of its contributors
-# may be used to endorse or promote products derived from this software
-# without specific prior written permission.
+# (C) Copyright 2018, Xilinx, Inc.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-# THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-# IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-# EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-##################################################################################
-
-
-#!/usr/bin/python
 
 import argparse
 import collections
@@ -47,7 +22,9 @@ g_doQuant = False
 g_fpgaCfgFile = ""
 g_scaleA = 10000
 g_scaleB = 30
+g_raw_scale = 255.0
 g_mean = [104.007, 116.669, 122.679] # BGR for Caffe
+g_input_scale = 1.0 # 1.0 for GoogLeNet and ResNet, 0.017 for MobileNet
 g_img_shape = [3, 224, 224]
 
 g_xdnnTestDataDir = "data/googlenet_v1"
@@ -62,7 +39,7 @@ g_xdnnLib = "libxblas.so"
 g_inputImageDir = None
 g_allInputImageFiles = None
 g_allInputImageFilesReadIdx = 0
-g_batchSize = 4
+g_batchSize = 8
 g_numDevices = 1
 g_inputs = None
 g_inputbuf = None
@@ -70,6 +47,7 @@ g_imgbuf = None
 g_useBlas = False
 g_zmqPub = False
 g_perpetual = False
+g_xdnnv3 = False
 
 def processCommandLine():
   global g_xclbin
@@ -87,8 +65,17 @@ def processCommandLine():
   global g_useBlas
   global g_zmqPub
   global g_perpetual
+  global g_batchSize
+  global g_xdnnv3
+  global g_raw_scale
+  global g_mean
+  global g_input_scale
+  global g_PE
+  global g_batchSize
 
   parser = argparse.ArgumentParser(description='pyXDNN')
+  parser.add_argument('--usexdnnv3', action='store_true',
+    help='version of xdnn')
   parser.add_argument('--xclbin',
     help='.xclbin file')
   parser.add_argument('--netcfg',
@@ -107,6 +94,12 @@ def processCommandLine():
     help='path to data files to run for the network')
   parser.add_argument('--labels',
     help='result -> labels translation file')
+  parser.add_argument('--img_raw_scale', type=float, default=255.0,
+    help='image raw scale value ')
+  parser.add_argument('--img_mean', type=tuple, default=[104.007, 116.669, 122.679],  # BGR for Caffe
+    help='image mean values ')
+  parser.add_argument('--img_input_scale', type=float, default=1.0,
+    help='image input scale value ')
   parser.add_argument('--golden',
     help='file idx -> expected label file')
   parser.add_argument('--imagedir',
@@ -117,6 +110,9 @@ def processCommandLine():
     help='publish predictions to zmq port 5555')
   parser.add_argument('--perpetual', 
     help='loop over input images forever')
+  parser.add_argument('--batchSize', 
+    help='Images to process in parallel')
+  parser.add_argument('--PE', help='PE')  
   args = parser.parse_args()
 
   if os.path.isfile(args.xclbin) and os.access(args.xclbin, os.R_OK):
@@ -166,29 +162,39 @@ def processCommandLine():
     g_inputImageDir = args.imagedir
   else:
     sys.exit("ERROR: Specified imagedir directory does not exist or is not readable.")
-
+  if args.batchSize:
+    g_batchSize = int(args.batchSize)
+    print ("Running w/ BatchSize %d" % g_batchSize)
+  if args.usexdnnv3:
+    g_batchSize = 1
+    g_xdnnv3 = True
   if args.useblas:
     g_useBlas = True
   if args.zmqpub:
     g_zmqPub = True
   if args.perpetual:
     g_perpetual = True
-
+  if args.img_raw_scale:
+    g_raw_scale = float(args.img_raw_scale)
+  if args.img_mean:
+    g_mean = args.img_mean
+  if args.img_input_scale:
+    g_input_scale = float(args.img_input_scale)
+  if args.PE:
+    g_PE = int ( args.PE)
+  else:
+    g_PE = -1
+  
 def prep_process(q):
   ret = xdnn.createManager(g_xdnnLib)
   if ret != True:
     sys.exit(1)
 
-  cInputBuffer = None
-  cFpgaInputBuffer = None
   while True:
     (inputs, inputImageFiles) = prepareImages()
     if inputs is None:
       break
-
-    fpgaInputs = xdnn.quantizeInputs(g_firstFpgaLayerName, 
-      inputs, cInputBuffer, cFpgaInputBuffer, g_fpgaCfgFile, g_scaleB)
-
+    fpgaInputs = xdnn.quantizeInputs(g_firstFpgaLayerName, g_fpgaCfgFile, g_scaleB, inputs)
     q.put((fpgaInputs, inputImageFiles))
 
   q.put((None, None))
@@ -201,8 +207,12 @@ def xdnn_process (qFrom, qTo):
              'quantizecfg': g_fpgaCfgFile, 
              'scaleA': g_scaleA, 
              'scaleB': g_scaleB,
-             'PE': -1 }
-    weightsBlob = xdnn_io.loadWeightsBiasQuant(args)
+             'PE': -1, 
+             'netcfg': g_netFile }
+    if g_xdnnv3 == True:
+      weightsBlob = xdnn_io.loadWeightsBiasQuantv3(args)
+    else:
+      weightsBlob = xdnn_io.loadWeightsBiasQuant(args)
     fpgaOutput = prepareOutput(g_batchSize)
     while True:
         (inputs, inputImageFiles) = qFrom.get()
@@ -217,7 +227,7 @@ def xdnn_process (qFrom, qTo):
         xdnn.execute(g_netFile,
           weightsBlob, fpgaInputs, fpgaOutput,
           g_batchSize,  # num batches
-          g_fpgaCfgFile, g_scaleB)
+          g_fpgaCfgFile, g_scaleB, g_PE)
         
         qTo.put((fpgaOutput, inputImageFiles))
         
@@ -345,7 +355,7 @@ def prepareImages():
   img_h = 224
   img_w = 224
   if g_inputs is None:
-    g_inputs = np.zeros((g_batchSize, img_c*img_h*img_w), dtype=np.float32)
+    g_inputs = np.zeros((g_batchSize, img_c,img_h,img_w), dtype=np.float32)
     g_inputbuf = np.zeros((g_batchSize, img_c, img_h, img_w), dtype=np.float32)
 
   inputImageFiles = []
@@ -359,7 +369,7 @@ def prepareImages():
 
       imgStartTime = timeit.default_timer()
       g_inputs[img_num] \
-        = xdnn_io.loadImageBlobFromFile(fname, g_mean, img_h, img_w)
+        = xdnn_io.loadImageBlobFromFile(fname, g_raw_scale, g_mean, g_input_scale, img_h, img_w)
       imgElapsedTime = timeit.default_timer() - imgStartTime
       print "[time] loadImageBlobFromFile/OpenCV (%.2f ms)" \
         % (imgElapsedTime * 1000)
@@ -414,18 +424,17 @@ def printClassification(output, outputSize, inputImageFiles, labelFile, goldenMa
     for line in f:
       labels.append(line.strip())
 
-  idxArr = []
-  for i in range(outputSize):
-    idxArr.append(i)
+  idxArr = [i for i in range(outputSize)]
 
   top1count = 0
   top5count = 0
 
   print "\n"
   zmqMessage = ""
-  for i in range(len(inputImageFiles)):
-    print "---------- Prediction %d for %s ----------" \
-      % (i, inputImageFiles[i])
+  batch_size = len(inputImageFiles)
+  for i in range(batch_size):
+    print "---------- Prediction %d/%d for %s ----------" \
+      % (i, batch_size-1, inputImageFiles[i])
     if zmqPub:
       zmqMessage += "%s\n" % inputImageFiles[i]
     startIdx = i * outputSize

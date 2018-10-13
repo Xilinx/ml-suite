@@ -1,4 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 import os, sys
 
 if len(sys.argv) <= 1:

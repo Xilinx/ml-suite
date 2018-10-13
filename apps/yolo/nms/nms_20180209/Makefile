@@ -1,3 +1,9 @@
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+
 DEBUG=0
 
 VPATH=./src/:./examples
