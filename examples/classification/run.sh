@@ -92,6 +92,9 @@ elif [ "$MODEL" == "mobilenet" ]; then
 elif [ "$MODEL" == "resnet50" ]; then
   FPGAOUTSZ=2048
   FLAYER="conv1"
+elif [ "$MODEL" == "resnet101" ]; then
+  FPGAOUTSZ=2048
+  FLAYER="conv1"
 fi
 
 echo -e "\nRunning:\n Test: $TEST\n Model: $MODEL\n Fpgaoutsz: $FPGAOUTSZ\n Platform: $PLATFORM\n Xclbin: $XCLBIN\n Kernel Config: $KCFG\n Precision: $BITWIDTH\n Accelerator: $ACCELERATOR\n"
