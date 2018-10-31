@@ -1,6 +1,12 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 import os
 
-def select_config(selection):
+def select_config(selection,platform="alveo-u200"):
   # User can choose to run YOLO at different input sizes
   # - 608x608
   # - 224x224
@@ -15,9 +21,9 @@ def select_config(selection):
                {'dims': [3, 608, 608], 
                 'bitwidths': [16, 16, 16], 
                 'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_608.prototxt', 
-                'netcfg': 'yolov2.caffemodel_data/yolo.cmds', 
-                'quantizecfg': 'yolov2.caffemodel_data/yolo_deploy_608_16b.json',
-                'datadir': 'yolov2.caffemodel_data',
+                'netcfg': 'work/yolo.cmds', 
+                'quantizecfg': 'work/yolo_deploy_608_16b.json',
+                'datadir': 'work/yolov2.caffemodel_data',
                 'firstfpgalayer': 'conv0',
                 'classes': 80,
                 'memory' : 5,
@@ -27,9 +33,35 @@ def select_config(selection):
      '608_8b': {'dims': [3, 608, 608], 
                 'bitwidths': [8, 8, 8], 
                 'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_608.prototxt', 
-                'netcfg': 'yolov2.caffemodel_data/yolo.cmds', 
-                'quantizecfg': 'yolov2.caffemodel_data/yolo_deploy_608_8b.json',
-                'datadir': 'yolov2.caffemodel_data',
+                'netcfg': 'work/yolo.cmds', 
+                'quantizecfg': 'work/yolo_deploy_608_8b.json',
+                'datadir': 'work/yolov2.caffemodel_data',
+                'firstfpgalayer': 'conv0',
+                'classes': 80,
+                'memory' : 5,
+                'dsp' : 56,
+                'ddr' : 256,
+                'weights': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolov2.caffemodel'},
+     '416_16b': 
+               {'dims': [3, 416, 416], 
+                'bitwidths': [16, 16, 16], 
+                'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_416.prototxt', 
+                'netcfg': 'work/yolo.cmds', 
+                'quantizecfg': 'work/yolo_deploy_416_16b.json',
+                'datadir': 'work/yolov2.caffemodel_data',
+                'firstfpgalayer': 'conv0',
+                'classes': 80,
+                'memory' : 5,
+                'dsp' : 56,
+                'ddr' : 256,
+                'weights': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolov2.caffemodel'},
+     '416_8b': 
+               {'dims': [3, 416, 416], 
+                'bitwidths': [8, 8, 8], 
+                'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_416.prototxt', 
+                'netcfg': 'work/yolo.cmds', 
+                'quantizecfg': 'work/yolo_deploy_416_8b.json',
+                'datadir': 'work/yolov2.caffemodel_data',
                 'firstfpgalayer': 'conv0',
                 'classes': 80,
                 'memory' : 5,
@@ -39,9 +71,9 @@ def select_config(selection):
      '224_16b': {'dims': [3, 224, 224], 
                 'bitwidths': [16, 16, 16], 
                 'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_224.prototxt', 
-                'netcfg': 'yolov2.caffemodel_data/yolo.cmds', 
-                'quantizecfg': 'yolov2.caffemodel_data/yolo_deploy_224_16b.json',
-                'datadir': 'yolov2.caffemodel_data',
+                'netcfg': 'work/yolo.cmds', 
+                'quantizecfg': 'work/yolo_deploy_224_16b.json',
+                'datadir': 'work/yolov2.caffemodel_data',
                 'firstfpgalayer': 'conv0',
                 'classes': 80,
                 'memory' : 5,
@@ -51,9 +83,9 @@ def select_config(selection):
       '224_8b': {'dims': [3, 224, 224], 
                  'bitwidths': [8, 8, 8], 
                  'network_file': mlsuiteRoot+'/models/yolov2/caffe/fp32/yolo_deploy_224.prototxt', 
-                 'netcfg': 'yolov2.caffemodel_data/yolo.cmds', 
-                 'quantizecfg': 'yolov2.caffemodel_data/yolo_deploy_224_8b.json',
-                 'datadir': 'yolov2.caffemodel_data',
+                 'netcfg': 'work/yolo.cmds', 
+                 'quantizecfg': 'work/yolo_deploy_224_8b.json',
+                 'datadir': 'work/yolov2.caffemodel_data',
                  'firstfpgalayer': 'conv0',
                  'classes': 80,
                  'memory' : 5,
@@ -104,9 +136,9 @@ def select_config(selection):
             config["xclbin"] = mlsuiteRoot+'/overlaybins/aws/overlay_3.xclbin'
     if not aws:
       if eb:
-        config["xclbin"] = mlsuiteRoot+'/overlaybins/1525/overlay_2.xclbin'
+        config["xclbin"] = mlsuiteRoot+'/overlaybins/' + platform + '/overlay_2.xclbin'
       else:
-        config["xclbin"] = mlsuiteRoot+'/overlaybins/1525/overlay_3.xclbin'
+        config["xclbin"] = mlsuiteRoot+'/overlaybins/' + platform + '/overlay_3.xclbin'
     return config
   else:
     print("Error: You chose an invalid configuration")

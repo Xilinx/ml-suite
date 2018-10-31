@@ -1,0 +1,1455 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    UPLOAD
+    COMMAND
+
+Grammar
+
+Rule 0     S' -> schedules
+Rule 1     schedules -> instruction schedules
+Rule 2     schedules -> instruction
+Rule 3     instruction -> PNUM basicinstruction NLINE
+Rule 4     instruction -> PNUM basicinstruction COMMENT NLINE
+Rule 5     instruction -> COMMENT NLINE
+Rule 6     basicinstruction -> convolution
+Rule 7     basicinstruction -> pool
+Rule 8     basicinstruction -> eltwise
+Rule 9     basicinstruction -> gather
+Rule 10    basicinstruction -> scatter
+Rule 11    convolution -> basicconvolution
+Rule 12    convolution -> deconvolution
+Rule 13    convolution -> depthconvolution
+Rule 14    convolution -> groupconvolution
+Rule 15    basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+Rule 16    deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+Rule 17    depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+Rule 18    groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+Rule 19    pool -> avgpool
+Rule 20    pool -> maxpool
+Rule 21    avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+Rule 22    maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+Rule 23    eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+Rule 24    gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+Rule 25    scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+Terminals, with rules where they appear
+
+ADDR                 : 15 15 16 16 17 17 18 18 21 21 22 22 23 23 23 24 24 25 25
+AVGPOOL              : 21
+COMMAND              : 
+COMMENT              : 4 5
+CONV                 : 15
+CONVDEPTH            : 17
+CONVGROUP            : 18
+DECONV               : 16
+ELTWISE              : 23
+GATHER               : 24
+MAXPOOL              : 22
+NAME                 : 15 16 17 18 21 22 23
+NLINE                : 3 4 5
+PNUM                 : 3 4 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 21 21 21 21 21 21 21 21 21 21 21 21 21 22 22 22 22 22 22 22 22 22 22 22 22 23 23 23 23 23 23 23 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25
+SCATTER              : 25
+UPLOAD               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+avgpool              : 19
+basicconvolution     : 11
+basicinstruction     : 3 4
+convolution          : 6
+deconvolution        : 12
+depthconvolution     : 13
+eltwise              : 8
+gather               : 9
+groupconvolution     : 14
+instruction          : 1 2
+maxpool              : 20
+pool                 : 7
+scatter              : 10
+schedules            : 1 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . schedules
+    (1) schedules -> . instruction schedules
+    (2) schedules -> . instruction
+    (3) instruction -> . PNUM basicinstruction NLINE
+    (4) instruction -> . PNUM basicinstruction COMMENT NLINE
+    (5) instruction -> . COMMENT NLINE
+
+    PNUM            shift and go to state 2
+    COMMENT         shift and go to state 1
+
+    instruction                    shift and go to state 3
+    schedules                      shift and go to state 4
+
+state 1
+
+    (5) instruction -> COMMENT . NLINE
+
+    NLINE           shift and go to state 5
+
+
+state 2
+
+    (3) instruction -> PNUM . basicinstruction NLINE
+    (4) instruction -> PNUM . basicinstruction COMMENT NLINE
+    (6) basicinstruction -> . convolution
+    (7) basicinstruction -> . pool
+    (8) basicinstruction -> . eltwise
+    (9) basicinstruction -> . gather
+    (10) basicinstruction -> . scatter
+    (11) convolution -> . basicconvolution
+    (12) convolution -> . deconvolution
+    (13) convolution -> . depthconvolution
+    (14) convolution -> . groupconvolution
+    (19) pool -> . avgpool
+    (20) pool -> . maxpool
+    (23) eltwise -> . ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+    (24) gather -> . GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+    (25) scatter -> . SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+    (15) basicconvolution -> . CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+    (16) deconvolution -> . DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+    (17) depthconvolution -> . CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+    (18) groupconvolution -> . CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+    (21) avgpool -> . AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+    (22) maxpool -> . MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    ELTWISE         shift and go to state 11
+    GATHER          shift and go to state 23
+    SCATTER         shift and go to state 13
+    CONV            shift and go to state 8
+    DECONV          shift and go to state 16
+    CONVDEPTH       shift and go to state 12
+    CONVGROUP       shift and go to state 20
+    AVGPOOL         shift and go to state 15
+    MAXPOOL         shift and go to state 19
+
+    maxpool                        shift and go to state 22
+    convolution                    shift and go to state 7
+    depthconvolution               shift and go to state 17
+    groupconvolution               shift and go to state 18
+    gather                         shift and go to state 6
+    deconvolution                  shift and go to state 9
+    basicinstruction               shift and go to state 26
+    basicconvolution               shift and go to state 10
+    eltwise                        shift and go to state 24
+    scatter                        shift and go to state 25
+    pool                           shift and go to state 21
+    avgpool                        shift and go to state 14
+
+state 3
+
+    (1) schedules -> instruction . schedules
+    (2) schedules -> instruction .
+    (1) schedules -> . instruction schedules
+    (2) schedules -> . instruction
+    (3) instruction -> . PNUM basicinstruction NLINE
+    (4) instruction -> . PNUM basicinstruction COMMENT NLINE
+    (5) instruction -> . COMMENT NLINE
+
+    $end            reduce using rule 2 (schedules -> instruction .)
+    PNUM            shift and go to state 2
+    COMMENT         shift and go to state 1
+
+    instruction                    shift and go to state 3
+    schedules                      shift and go to state 27
+
+state 4
+
+    (0) S' -> schedules .
+
+
+
+state 5
+
+    (5) instruction -> COMMENT NLINE .
+
+    PNUM            reduce using rule 5 (instruction -> COMMENT NLINE .)
+    COMMENT         reduce using rule 5 (instruction -> COMMENT NLINE .)
+    $end            reduce using rule 5 (instruction -> COMMENT NLINE .)
+
+
+state 6
+
+    (9) basicinstruction -> gather .
+
+    NLINE           reduce using rule 9 (basicinstruction -> gather .)
+    COMMENT         reduce using rule 9 (basicinstruction -> gather .)
+
+
+state 7
+
+    (6) basicinstruction -> convolution .
+
+    NLINE           reduce using rule 6 (basicinstruction -> convolution .)
+    COMMENT         reduce using rule 6 (basicinstruction -> convolution .)
+
+
+state 8
+
+    (15) basicconvolution -> CONV . NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    NAME            shift and go to state 28
+
+
+state 9
+
+    (12) convolution -> deconvolution .
+
+    NLINE           reduce using rule 12 (convolution -> deconvolution .)
+    COMMENT         reduce using rule 12 (convolution -> deconvolution .)
+
+
+state 10
+
+    (11) convolution -> basicconvolution .
+
+    NLINE           reduce using rule 11 (convolution -> basicconvolution .)
+    COMMENT         reduce using rule 11 (convolution -> basicconvolution .)
+
+
+state 11
+
+    (23) eltwise -> ELTWISE . NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+
+    NAME            shift and go to state 29
+
+
+state 12
+
+    (17) depthconvolution -> CONVDEPTH . NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    NAME            shift and go to state 30
+
+
+state 13
+
+    (25) scatter -> SCATTER . ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 31
+
+
+state 14
+
+    (19) pool -> avgpool .
+
+    NLINE           reduce using rule 19 (pool -> avgpool .)
+    COMMENT         reduce using rule 19 (pool -> avgpool .)
+
+
+state 15
+
+    (21) avgpool -> AVGPOOL . NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    NAME            shift and go to state 32
+
+
+state 16
+
+    (16) deconvolution -> DECONV . NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    NAME            shift and go to state 33
+
+
+state 17
+
+    (13) convolution -> depthconvolution .
+
+    NLINE           reduce using rule 13 (convolution -> depthconvolution .)
+    COMMENT         reduce using rule 13 (convolution -> depthconvolution .)
+
+
+state 18
+
+    (14) convolution -> groupconvolution .
+
+    NLINE           reduce using rule 14 (convolution -> groupconvolution .)
+    COMMENT         reduce using rule 14 (convolution -> groupconvolution .)
+
+
+state 19
+
+    (22) maxpool -> MAXPOOL . NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    NAME            shift and go to state 34
+
+
+state 20
+
+    (18) groupconvolution -> CONVGROUP . NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    NAME            shift and go to state 35
+
+
+state 21
+
+    (7) basicinstruction -> pool .
+
+    NLINE           reduce using rule 7 (basicinstruction -> pool .)
+    COMMENT         reduce using rule 7 (basicinstruction -> pool .)
+
+
+state 22
+
+    (20) pool -> maxpool .
+
+    NLINE           reduce using rule 20 (pool -> maxpool .)
+    COMMENT         reduce using rule 20 (pool -> maxpool .)
+
+
+state 23
+
+    (24) gather -> GATHER . ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 36
+
+
+state 24
+
+    (8) basicinstruction -> eltwise .
+
+    NLINE           reduce using rule 8 (basicinstruction -> eltwise .)
+    COMMENT         reduce using rule 8 (basicinstruction -> eltwise .)
+
+
+state 25
+
+    (10) basicinstruction -> scatter .
+
+    NLINE           reduce using rule 10 (basicinstruction -> scatter .)
+    COMMENT         reduce using rule 10 (basicinstruction -> scatter .)
+
+
+state 26
+
+    (3) instruction -> PNUM basicinstruction . NLINE
+    (4) instruction -> PNUM basicinstruction . COMMENT NLINE
+
+    NLINE           shift and go to state 38
+    COMMENT         shift and go to state 37
+
+
+state 27
+
+    (1) schedules -> instruction schedules .
+
+    $end            reduce using rule 1 (schedules -> instruction schedules .)
+
+
+state 28
+
+    (15) basicconvolution -> CONV NAME . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 39
+
+
+state 29
+
+    (23) eltwise -> ELTWISE NAME . PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+
+    PNUM            shift and go to state 40
+
+
+state 30
+
+    (17) depthconvolution -> CONVDEPTH NAME . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 41
+
+
+state 31
+
+    (25) scatter -> SCATTER ADDR . ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 42
+
+
+state 32
+
+    (21) avgpool -> AVGPOOL NAME . PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 43
+
+
+state 33
+
+    (16) deconvolution -> DECONV NAME . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 44
+
+
+state 34
+
+    (22) maxpool -> MAXPOOL NAME . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 45
+
+
+state 35
+
+    (18) groupconvolution -> CONVGROUP NAME . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 46
+
+
+state 36
+
+    (24) gather -> GATHER ADDR . ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 47
+
+
+state 37
+
+    (4) instruction -> PNUM basicinstruction COMMENT . NLINE
+
+    NLINE           shift and go to state 48
+
+
+state 38
+
+    (3) instruction -> PNUM basicinstruction NLINE .
+
+    PNUM            reduce using rule 3 (instruction -> PNUM basicinstruction NLINE .)
+    COMMENT         reduce using rule 3 (instruction -> PNUM basicinstruction NLINE .)
+    $end            reduce using rule 3 (instruction -> PNUM basicinstruction NLINE .)
+
+
+state 39
+
+    (15) basicconvolution -> CONV NAME PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 49
+
+
+state 40
+
+    (23) eltwise -> ELTWISE NAME PNUM . PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+
+    PNUM            shift and go to state 50
+
+
+state 41
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 51
+
+
+state 42
+
+    (25) scatter -> SCATTER ADDR ADDR . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 52
+
+
+state 43
+
+    (21) avgpool -> AVGPOOL NAME PNUM . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 53
+
+
+state 44
+
+    (16) deconvolution -> DECONV NAME PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 54
+
+
+state 45
+
+    (22) maxpool -> MAXPOOL NAME PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 55
+
+
+state 46
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 56
+
+
+state 47
+
+    (24) gather -> GATHER ADDR ADDR . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 57
+
+
+state 48
+
+    (4) instruction -> PNUM basicinstruction COMMENT NLINE .
+
+    PNUM            reduce using rule 4 (instruction -> PNUM basicinstruction COMMENT NLINE .)
+    COMMENT         reduce using rule 4 (instruction -> PNUM basicinstruction COMMENT NLINE .)
+    $end            reduce using rule 4 (instruction -> PNUM basicinstruction COMMENT NLINE .)
+
+
+state 49
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 58
+
+
+state 50
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM . PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+
+    PNUM            shift and go to state 59
+
+
+state 51
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 60
+
+
+state 52
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 61
+
+
+state 53
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 62
+
+
+state 54
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 63
+
+
+state 55
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 64
+
+
+state 56
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 65
+
+
+state 57
+
+    (24) gather -> GATHER ADDR ADDR PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 66
+
+
+state 58
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 67
+
+
+state 59
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM . ADDR ADDR PNUM PNUM PNUM ADDR PNUM
+
+    ADDR            shift and go to state 68
+
+
+state 60
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 69
+
+
+state 61
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 70
+
+
+state 62
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 71
+
+
+state 63
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 72
+
+
+state 64
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 73
+
+
+state 65
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 74
+
+
+state 66
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 75
+
+
+state 67
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 76
+
+
+state 68
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR . ADDR PNUM PNUM PNUM ADDR PNUM
+
+    ADDR            shift and go to state 77
+
+
+state 69
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 78
+
+
+state 70
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 79
+
+
+state 71
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 80
+
+
+state 72
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 81
+
+
+state 73
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 82
+
+
+state 74
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 83
+
+
+state 75
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 84
+
+
+state 76
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 85
+
+
+state 77
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR . PNUM PNUM PNUM ADDR PNUM
+
+    PNUM            shift and go to state 86
+
+
+state 78
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 87
+
+
+state 79
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 88
+
+
+state 80
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 89
+
+
+state 81
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 90
+
+
+state 82
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 91
+
+
+state 83
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 92
+
+
+state 84
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 93
+
+
+state 85
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 94
+
+
+state 86
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM . PNUM PNUM ADDR PNUM
+
+    PNUM            shift and go to state 95
+
+
+state 87
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 96
+
+
+state 88
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 97
+
+
+state 89
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 98
+
+
+state 90
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 99
+
+
+state 91
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    ADDR            shift and go to state 100
+
+
+state 92
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 101
+
+
+state 93
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 102
+
+
+state 94
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 103
+
+
+state 95
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM . PNUM ADDR PNUM
+
+    PNUM            shift and go to state 104
+
+
+state 96
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 105
+
+
+state 97
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 106
+
+
+state 98
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    ADDR            shift and go to state 107
+
+
+state 99
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 108
+
+
+state 100
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 109
+
+
+state 101
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 110
+
+
+state 102
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 111
+
+
+state 103
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 112
+
+
+state 104
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM . ADDR PNUM
+
+    ADDR            shift and go to state 113
+
+
+state 105
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 114
+
+
+state 106
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 115
+
+
+state 107
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 116
+
+
+state 108
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 117
+
+
+state 109
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 118
+
+
+state 110
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 119
+
+
+state 111
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 120
+
+
+state 112
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 121
+
+
+state 113
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR . PNUM
+
+    PNUM            shift and go to state 122
+
+
+state 114
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 123
+
+
+state 115
+
+    (25) scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 25 (scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 25 (scatter -> SCATTER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .)
+
+
+state 116
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 124
+
+
+state 117
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 125
+
+
+state 118
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 126
+
+
+state 119
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 127
+
+
+state 120
+
+    (24) gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 24 (gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 24 (gather -> GATHER ADDR ADDR PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM .)
+
+
+state 121
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 128
+
+
+state 122
+
+    (23) eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM .
+
+    NLINE           reduce using rule 23 (eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM .)
+    COMMENT         reduce using rule 23 (eltwise -> ELTWISE NAME PNUM PNUM PNUM ADDR ADDR PNUM PNUM PNUM ADDR PNUM .)
+
+
+state 123
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 129
+
+
+state 124
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM
+
+    PNUM            shift and go to state 130
+
+
+state 125
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 131
+
+
+state 126
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM
+
+    ADDR            shift and go to state 132
+
+
+state 127
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 133
+
+
+state 128
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 134
+
+
+state 129
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 135
+
+
+state 130
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM
+
+    ADDR            shift and go to state 136
+
+
+state 131
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 137
+
+
+state 132
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 138
+
+
+state 133
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 139
+
+
+state 134
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 140
+
+
+state 135
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 141
+
+
+state 136
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 142
+
+
+state 137
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 143
+
+
+state 138
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 144
+
+
+state 139
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 145
+
+
+state 140
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 146
+
+
+state 141
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 147
+
+
+state 142
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 148
+
+
+state 143
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 149
+
+
+state 144
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 150
+
+
+state 145
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM . ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 151
+
+
+state 146
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 152
+
+
+state 147
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 153
+
+
+state 148
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 154
+
+
+state 149
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 155
+
+
+state 150
+
+    (22) maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 22 (maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 22 (maxpool -> MAXPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .)
+
+
+state 151
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR . PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 156
+
+
+state 152
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 157
+
+
+state 153
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 158
+
+
+state 154
+
+    (21) avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 21 (avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 21 (avgpool -> AVGPOOL NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM .)
+
+
+state 155
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 159
+
+
+state 156
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM . PNUM PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 160
+
+
+state 157
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 161
+
+
+state 158
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 162
+
+
+state 159
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 163
+
+
+state 160
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM . PNUM ADDR PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 164
+
+
+state 161
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 165
+
+
+state 162
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 166
+
+
+state 163
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 167
+
+
+state 164
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM . ADDR PNUM PNUM PNUM PNUM
+
+    ADDR            shift and go to state 168
+
+
+state 165
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 169
+
+
+state 166
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 170
+
+
+state 167
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 171
+
+
+state 168
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR . PNUM PNUM PNUM PNUM
+
+    PNUM            shift and go to state 172
+
+
+state 169
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 173
+
+
+state 170
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 174
+
+
+state 171
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 175
+
+
+state 172
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM . PNUM PNUM PNUM
+
+    PNUM            shift and go to state 176
+
+
+state 173
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 177
+
+
+state 174
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 178
+
+
+state 175
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 179
+
+
+state 176
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM . PNUM PNUM
+
+    PNUM            shift and go to state 180
+
+
+state 177
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 181
+
+
+state 178
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 182
+
+
+state 179
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 183
+
+
+state 180
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM . PNUM
+
+    PNUM            shift and go to state 184
+
+
+state 181
+
+    (15) basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 15 (basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 15 (basicconvolution -> CONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+
+
+state 182
+
+    (17) depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 17 (depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 17 (depthconvolution -> CONVDEPTH NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+
+
+state 183
+
+    (16) deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 16 (deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 16 (deconvolution -> DECONV NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+
+
+state 184
+
+    (18) groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .
+
+    NLINE           reduce using rule 18 (groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+    COMMENT         reduce using rule 18 (groupconvolution -> CONVGROUP NAME PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM PNUM ADDR PNUM PNUM PNUM ADDR PNUM PNUM PNUM PNUM .)
+

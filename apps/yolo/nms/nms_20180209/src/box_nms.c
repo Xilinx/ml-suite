@@ -1,3 +1,10 @@
+/*
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+# (C) Copyright 2017, Joseph Redmon
+# (C) Copyright 2018, Xilinx, Inc.
+#
+*/
 #include "box_nms.h"
 #include <stdlib.h>
 

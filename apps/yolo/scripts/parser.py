@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 # Parser darknet .cfg file into caffe prototxt and array for input into batch_norm merging
 # Issue 1: %s/\'\([^']*\)\'/"\1"/g Changes single to double quotes
 # Issue 2: DEBUG - 1x1 Convs should have 0 padding, but darknet cfg has them listed as padding 1. This is because darknet handles this as a special case.

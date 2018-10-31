@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 
 DEVICE=$1
 TEST_TO_RUN=$2
@@ -36,7 +42,7 @@ if [ "$TEST_TO_RUN" == "e2e" ]; then
   # Modify configs.py if you want to run a different end to end
   #################
 
-  python yolo.py
+  python yolo.py $DEVICE
 
 ## Note: The xyolo module was written to support being called directly at the CLI
 ##       yolo.py supports running the offline steps (Compile,Quantize, and bringing in xyolo as a class object)

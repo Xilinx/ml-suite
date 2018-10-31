@@ -1,3 +1,11 @@
+/*
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+*/
+
 body {
   font-family: arial, sans-serif;
   margin: 0px;
@@ -32,18 +40,17 @@ body {
 }
 #model {
   /* aspect ratio: w/h = 1.5544 */
-  background-image: url(media/ku115card90.png);
+  background-image: url(media/alveo-u200.png);
   background-size: cover;
   background-position: center;
   height: 395px;
-  width: calc(365px / 1.5544);
+  width: calc(365px * 1.28);
   z-index: 10;
   position: absolute;
   top: -2px;
-  left: 0px;
+  left: -100px;
 }
-#device {
-  /* aspect ratio: w/h = 0.349 */
+/*#device {
   background-image: url(media/f1card.jpg);
   background-size: cover;
   background-position: center;
@@ -53,7 +60,7 @@ body {
   position: absolute;
   top: 0px;
   left: 233px;
-}
+}*/
 
 #left-bar {
   position: relative;
@@ -135,7 +142,7 @@ body {
 
   position: absolute;
   top: 245px;
-  left: -315px;
+  left: -150px;
   z-index: 20;
 }
 .img-spinner {

@@ -1,53 +1,25 @@
 # Image Classification with Python APIs
 
 ## Introduction
-This tutorial shows three examples of how to deploy Deep CNNs on FPGAs using our Python APIs.
+This directory provides examples of how to deploy Deep CNNs on FPGAs using Xilinx Python APIs.
 
-Once a network has been compiled and quantized, you will walk through deploying in different modes.
+All examples provided within this directory exercise precompiled models whose components are stored in the local ./data directory.  
 
-The (Compiler, Quantizer) outputs for both GoogLeNet-v1 and Resnet-50 are included in the "data" directory.
+A "compiled model" consists of low level HW instructions, and quantization parameters. 
 
-**Compiler Outputs**: Commands File (HW Instructions "cmds"), model_data directory with preprocessed floating point weights.
-**Quantizer Outputs**: JSON FILE containing scaling factors for each layer in the corresponding network.  
+**Compiler Outputs**:  JSON FILE (HW Instructions *_56.json or *_28.json), model_data directory with preprocessed floating point weights.  
+**Quantizer Outputs**: JSON FILE containing scaling factors for each layer in the corresponding network. (*_8b.json or *_16b.json)  
 
-Notes:
+Important Notes:
  - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
  - The batch_classify example will require you to download the imagnet validation set, and place the images [here](../../models/data/ilsvrc12/ilsvrc12_img_val/replace_this_file_with_dataset.md)  
- - Amazon AWS EC2 F1 requires root privileges to load the FPGA, so use `sudo` to invoke run.sh
+ - Amazon AWS EC2 F1 requires root privileges to load the FPGA, use the documented workaround
 
 The following three examples of applications using the Python xfDNN API are provided:
 
-1. A **Test Classification** example that demonstrates how to run inference using GoogLeNet-v1 on a single image "dog.jpg"
+1. A **Test Classification** example that demonstrates how to run inference on a single image "dog.jpg"
 2. A **Batch Classifcation** example that streams images from disk through the FPGA for classification.
-3. A **Multi-Process** example that shows different DNNs running on different kernels on the FPGA.
-
-## Directory overview
-
-```
-ml-suite/
-└── examples
-    └── classification
-        ├── README.md
-        ├── run.sh ## IMPORTANT
-        ├── test_classify.py
-        ├── batch_classify.py
-        ├── test_classify_async_multinet.py
-        ├── imagenet_val
-        ├── dog.jpg
-        ├── gold.txt
-        ├── synset_words.txt
-        └── data                                                                                           
-            ├── googlenet_v1_16b.json                                                                      
-            ├── googlenet_v1_28.cmd                                                                        
-            ├── googlenet_v1_56.cmd                                                                        
-            ├── googlenet_v1_8b.json                                                                       
-            ├── googlenet_v1_data                                                                          
-            ├── multinet.json                                                                              
-            ├── resnet50_16b.json                                                                          
-            ├── resnet50_28.cmd                                                                            
-            └── resnet50_data                                                                              
-
-```
+3. A **Multi-Process** example that shows different DNNs running on different processing elements on the FPGA.  
 
 ## Running the Examples  
 
@@ -63,30 +35,28 @@ To run any of the three examples, use the provided bash run.sh script.
     $ cd ml-suite/examples/classification
     ```
 
-3. Run the example by executing ` run.sh` followed by the following parameters:
-    - `hardware` Valid values are `aws`, `nimbix` or `1525`
-    - `example` - Valid values are `test_classify` or `batch_classify` or `multinet`
-    - `kernel size` - Valid values are `med` or `large` - Used to select overlaybins
-    - `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8
+3. Familiarize yourself with the script usage by:  
+  `./run.sh -h`  
+  The key parameters are:
+    - -p `platform` Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, '1525-ml`
+    - -t `test` - Valid values are `test_classify` or `batch_classify` or `multinet`
+    - -k `kernel config` - Valid values are `med` or `large` - Used to select overlaybins
+    - -b `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8  
 
-    Usage: `./run.sh` `hardware` `example` `kernel size` `quantization precision`
-
-    Note: `Sudo` is required to run any of the scripts in AWS.
-
-4. Single Image Classification on AWS, with medium kernels:
+## Example Invocations
+1. Single Image Classification on AWS, with medium kernels:
     ```sh
-    $ sudo ./run.sh aws test_classify med 16
+    $ ./run.sh -p aws -t test_classify -k med -b 16
     ```
 
-5. Streaming Image Classification on VCU1525 with large kernels:
+5. Streaming Image Classification on alveo-u200 with large kernels:
     ```sh
-    $ ./run.sh 1525 batch_classify large 8
+    $ ./run.sh -p alveo-u200 -t batch_classify -k large -b 8
     ```
 6. Multinet Image Classification on Nimbix (Currently, for Multinet only the med size kernel and 16b precision are supported)
     ```sh
-    sudo ./run.sh nimbix multinet
+    ./run.sh -p nimbix -t multinet -k med -b 16
     ```
-
 
 ## Example Script Switches
 Take a look at the following scripts to understand the examples:
@@ -114,9 +84,8 @@ For Multinet deployments, the different models/networks are set in the `--jsoncf
 
 ## Example Output From Single Image Classification
 
-
   ```sh
-  $ ./run.sh 1525 test_classify med 16
+  $ ./run.sh -p 1525 -t test_classify -k med -b 16
   =============== pyXDNN =============================
   [XBLAS] # kernels: 1
   Linux:4.4.0-121-generic:#145-Ubuntu SMP Fri Apr 13 13:47:23 UTC 2018:x86_64
@@ -163,4 +132,3 @@ For Multinet deployments, the different models/networks are set in the `--jsoncf
   Success!
   ```
 
-  [multinet.json]: data/multinet.json

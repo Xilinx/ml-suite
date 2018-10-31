@@ -4,7 +4,7 @@
 This tutorial shows you how to launch an image classification GoogLeNet-v1 demo in a web browser.  
 Once the demo is started, you will be able to view the demo and monitor performance from any web browser.
  
-This demo can be run on AWS or a local machine with a VCU1525 card.
+This demo can be ran on any hardware platform.
 
 For instructions on launching and connecting to an aws instances, see [here][].
   
@@ -48,23 +48,10 @@ For instructions on launching and connecting to an aws instances, see [here][].
     $ conda activate ml-suite
     $ cd ml-suite/examples/classification
     ```
-
-6. Edit `run.sh` script to include zmq and perpetual flags
-    Uncomment `--zmqpub True --perpetual True` from the batch_classify section of the script.   
-    Original:
+    
+6. Execute `run.sh` script with the following arguments
     ```
-    export XBLAS_EMIT_PROFILING_INFO=1
-    python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/googlenet_v1_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/googlenet_v1_data --labels synset_words.txt --xlnxlib $LIBXDNN_PATH --imagedir my_imagenet_val/ --useblas --golden gold.txt --quantizecfg ./data/googlenet_v1_${BITWIDTH}b.json --firstfpgalayer conv1/7x7_s2 #--zmqpub True --perpetual True
-    ```
-    Updated:
-    ```
-    export XBLAS_EMIT_PROFILING_INFO=1
-    python batch_classify.py --xclbin $XCLBIN_PATH/$XCLBIN --netcfg ./data/googlenet_v1_${DSP_WIDTH}.cmd --fpgaoutsz 1024 --datadir ./data/googlenet_v1_data --labels synset_words.txt --xlnxlib $LIBXDNN_PATH --imagedir my_imagenet_val/ --useblas --golden gold.txt --quantizecfg ./data/googlenet_v1_${BITWIDTH}b.json --firstfpgalayer conv1/7x7_s2 --zmqpub True --perpetual True
-    ```
-
-7. Execute `run.sh` script with the following arguments
-    ```
-    $ ./run.sh aws batch_classify large 8 
+    $ ./run.sh -p alveo-u200 -t perpetual
     
     # Remember the first argument can be aws, nimbix, 1525, etc... refer to documentation in /examples/classification
     ```

@@ -1,3 +1,10 @@
+/*
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+*/
 #include <stdio.h>
 
 void do_nms(float *arr, int cnt, int im_w, int im_h, int net_w, int net_h, float threshold) {
