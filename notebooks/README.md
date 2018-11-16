@@ -31,6 +31,6 @@ The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tool
 1. Launch the jupyter notebook server  
   `jupyter notebook --no-browser --allow-root --ip=*`
   
-2. On local machine, open a broswer and navigate to `http://localhost:8888` or `youripaddress>:8888`
+2. On local machine, open a browser and navigate to `http://localhost:8888` or `youripaddress>:8888`
 
-3. On a remote machine, open a broswer on your local machine navigate to `yourpublicipaddress>:8888`
+3. On a remote machine, open a browser on your local machine navigate to `yourpublicipaddress>:8888`
