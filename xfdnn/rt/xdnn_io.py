@@ -12,7 +12,7 @@ import os
 import json
 import math
 import cv2
-import PyTurboJPEG
+#import PyTurboJPEG
 
 def default_parser_args():
     parser = argparse.ArgumentParser(description='pyXDNN')
@@ -118,7 +118,8 @@ def processCommandLine(argv=None):
 
 def loadImageBlobFromFile(imgFile, raw_scale, mean, input_scale, img_h, img_w):
     if isinstance(imgFile,str):
-        img = PyTurboJPEG.imread  ( imgFile)
+        #img = PyTurboJPEG.imread  ( imgFile)
+        img = cv2.imread  ( imgFile)
     
     height, width, _ = img.shape
     if height != img_h or width != img_w:
