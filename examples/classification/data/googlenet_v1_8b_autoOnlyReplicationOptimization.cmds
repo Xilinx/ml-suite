@@ -1,0 +1,90 @@
+# template id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template id XNOp uram_dest ddr_src input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template id XNOp name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template id XNOp uram_src ddr_dest input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template id XNOp name add bn relu inaddrA inaddrB insize_w insize_h inchan outaddr slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset EWA_2nd-Src_AM 
+# template id XNOp name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template id XNOp inaddr insize inchan
+# 1 Input download not possible
+2 XNConv conv1/7x7_s2 7 7 2 2 3 3 1 1 16 26 2 1 1 0x0 224 224 3 0xc400 112 112 64 0 0 1 12 8 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+3 XNMaxPool pool1/3x3_s2 3 3 2 2 0 0 0xc400 112 112 64 0xf500 56 56 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+4 XNConv conv2/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0xf500 56 56 64 0x10140 56 56 64 0 1 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+5 XNConv conv2/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10140 56 56 64 0x0 56 56 192 0 0 2 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+6 XNMaxPool pool2/3x3_s2 3 3 2 2 0 0 0x0 56 56 192 0x12600 28 28 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+7 XNConv inception_3a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x12600 28 28 192 0x176d0 28 28 64 0 2 0 0 0 1 0 0 0 1 3 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+8 XNConv inception_3a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x12600 28 28 192 0x12c20 28 28 96 0 2 0 0 0 1 0 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+9 XNConv inception_3a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x12c20 28 28 96 0x176d0 28 28 128 0 1 0 3 32 2 0 0 0 1 3 0 0 0 64 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+10 XNConv inception_3a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x12600 28 28 192 0x12c20 28 28 16 0 2 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+11 XNConv inception_3a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x12c20 28 28 16 0x17cf0 28 28 32 0 0 1 3 32 1 0 0 0 1 3 0 0 0 192 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+12 XNMaxPool inception_3a/pool 3 3 1 1 1 1 0x12600 28 28 192 0x12c20 28 28 0 2 0 0 0 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+13 XNConv inception_3a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x12c20 28 28 192 0x17cf0 28 28 32 0 2 0 0 0 1 0 0 0 1 3 0 0 0 224 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 14 XNConcat inception_3a/output  0x176d0 0x18000 225792 
+15 XNConv inception_3b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 28 28 256 0x16780 28 28 128 0 3 0 0 0 2 0 0 0 1 5 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+16 XNConv inception_3b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 28 28 256 0x0 28 28 128 0 3 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+17 XNConv inception_3b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x16a90 28 28 192 0 1 1 3 32 2 0 0 0 1 5 0 0 0 128 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+18 XNConv inception_3b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 28 28 256 0x0 28 28 32 0 3 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+19 XNConv inception_3b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 28 28 32 0x170b0 28 28 96 0 0 1 3 32 1 0 0 0 1 5 0 0 0 320 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+20 XNMaxPool inception_3b/pool 3 3 1 1 1 1 0x176d0 28 28 256 0x0 28 28 0 3 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+21 XNConv inception_3b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 256 0x173c0 28 28 64 0 3 0 0 0 1 0 0 0 1 5 0 0 0 416 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 22 XNConcat inception_3b/output  0x16780 0x176d0 376320 
+23 XNMaxPool pool3/3x3_s2 3 3 2 2 0 0 0x16780 28 28 480 0x176d0 14 14 0 5 0 0 0 5 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+24 XNConv inception_4a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 480 0x17b68 14 14 192 0 5 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+25 XNConv inception_4a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 480 0x17aa4 14 14 96 0 5 0 0 0 1 0 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+26 XNConv inception_4a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x17aa4 14 14 96 0x17cf0 14 14 208 0 1 0 3 32 3 0 0 0 1 6 0 0 0 192 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+27 XNConv inception_4a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 480 0x17aa4 14 14 16 0 5 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+28 XNConv inception_4a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x17aa4 14 14 16 0x17e78 14 14 48 0 0 1 3 32 1 0 0 0 1 6 0 0 0 400 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+29 XNMaxPool inception_4a/pool 3 3 1 1 1 1 0x176d0 14 14 480 0x0 14 14 0 5 0 0 0 5 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+30 XNConv inception_4a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 480 0x17e78 14 14 64 0 5 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 31 XNConcat inception_4a/output  0x17b68 0x18000 112896 
+32 XNConv inception_4b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x176d0 14 14 160 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+33 XNConv inception_4b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x0 14 14 112 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+34 XNConv inception_4b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 112 0x17794 14 14 224 0 1 1 3 32 3 0 0 0 1 6 0 0 0 160 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+35 XNConv inception_4b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x0 14 14 24 0 6 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+36 XNConv inception_4b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 14 14 24 0x179e0 14 14 64 0 0 1 3 32 1 0 0 0 1 6 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+37 XNMaxPool inception_4b/pool 3 3 1 1 1 1 0x17b68 14 14 512 0x0 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+38 XNConv inception_4b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x179e0 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 39 XNConcat inception_4b/output  0x176d0 0x17b68 112896 
+40 XNConv inception_4c/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 512 0x17b68 14 14 128 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+41 XNConv inception_4c/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 512 0x0 14 14 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+42 XNConv inception_4c/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 128 0x17c2c 14 14 256 0 1 1 3 32 3 0 0 0 1 6 0 0 0 128 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+43 XNConv inception_4c/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 512 0x0 14 14 24 0 6 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+44 XNConv inception_4c/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 14 14 24 0x17e78 14 14 64 0 0 1 3 32 1 0 0 0 1 6 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+45 XNMaxPool inception_4c/pool 3 3 1 1 1 1 0x176d0 14 14 512 0x0 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+46 XNConv inception_4c/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x17e78 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 448 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 47 XNConcat inception_4c/output  0x17b68 0x18000 112896 
+48 XNConv inception_4d/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x176d0 14 14 112 0 6 0 0 0 2 0 0 0 1 6 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+49 XNConv inception_4d/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x0 14 14 144 0 6 0 0 0 1 1 2 48 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+50 XNConv inception_4d/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 144 0x17794 14 14 288 0 1 1 2 48 3 0 0 0 1 6 0 0 0 112 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+51 XNConv inception_4d/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 512 0x0 14 14 32 0 6 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+52 XNConv inception_4d/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 14 14 32 0x179e0 14 14 64 0 0 1 3 32 1 0 0 0 1 6 0 0 0 400 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+53 XNMaxPool inception_4d/pool 3 3 1 1 1 1 0x17b68 14 14 512 0x0 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+54 XNConv inception_4d/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x179e0 14 14 64 0 6 0 0 0 1 0 0 0 1 6 0 0 0 464 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 55 XNConcat inception_4d/output  0x176d0 0x17b68 112896 
+56 XNConv inception_4e/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 528 0x16fec 14 14 256 0 6 0 0 0 3 0 0 0 1 9 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+57 XNConv inception_4e/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 528 0x17b68 14 14 160 0 6 0 0 0 1 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+58 XNConv inception_4e/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x17b68 14 14 160 0x17174 14 14 320 0 1 2 3 32 4 0 0 0 1 9 0 0 0 256 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+59 XNConv inception_4e/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 14 14 528 0x17b68 14 14 32 0 6 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+60 XNConv inception_4e/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x17b68 14 14 32 0x17484 14 14 128 0 0 1 3 32 2 0 0 0 1 9 0 0 0 576 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+61 XNMaxPool inception_4e/pool 3 3 1 1 1 1 0x176d0 14 14 528 0x17b68 14 14 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+62 XNConv inception_4e/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17b68 14 14 528 0x17548 14 14 128 0 6 0 0 0 2 0 0 0 1 9 0 0 0 704 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 63 XNConcat inception_4e/output  0x16fec 0x176d0 169344 
+64 XNMaxPool pool4/3x3_s2 3 3 2 2 0 0 0x16fec 14 14 832 0x176d0 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+65 XNConv inception_5a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 7 7 832 0x17e47 7 7 256 0 9 0 0 0 3 0 0 0 1 9 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+66 XNConv inception_5a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 7 7 832 0x17889 7 7 160 0 9 0 0 0 1 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+67 XNConv inception_5a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x17889 7 7 160 0x17ea9 7 7 320 0 1 2 3 32 4 0 0 0 1 9 0 0 0 256 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+68 XNConv inception_5a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x176d0 7 7 832 0x17889 7 7 32 0 9 0 0 0 0 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+69 XNConv inception_5a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x17889 7 7 32 0x17f6d 7 7 128 0 0 1 3 32 2 0 0 0 1 9 0 0 0 576 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+70 XNMaxPool inception_5a/pool 3 3 1 1 1 1 0x176d0 7 7 832 0x17889 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+71 XNConv inception_5a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17889 7 7 832 0x17f9e 7 7 128 0 9 0 0 0 2 0 0 0 1 9 0 0 0 704 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 72 XNConcat inception_5a/output  0x17e47 0x18000 42336 
+73 XNConv inception_5b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17e47 7 7 832 0x17c2c 7 7 384 0 9 0 0 0 4 0 0 0 1 11 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+74 XNConv inception_5b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17e47 7 7 832 0x0 7 7 192 0 9 0 0 0 2 0 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+75 XNConv inception_5b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 192 0x17cf0 7 7 384 0 2 0 3 32 4 0 0 0 1 11 0 0 0 384 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+76 XNConv inception_5b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 1 0x17e47 7 7 832 0x0 7 7 48 0 9 0 0 0 0 1 2 48 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+77 XNConv inception_5b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 1 0x0 7 7 48 0x17db4 7 7 128 0 0 1 2 48 2 0 0 0 1 11 0 0 0 768 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+78 XNMaxPool inception_5b/pool 3 3 1 1 1 1 0x17e47 7 7 832 0x0 7 7 0 9 0 0 0 9 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+79 XNConv inception_5b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 832 0x17de5 7 7 128 0 9 0 0 0 2 0 0 0 1 11 0 0 0 896 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# 80 XNConcat inception_5b/output  0x17c2c 0x17e47 51744 
+81 XNAvgPool pool5/7x7_s1 7 7 1 1 0 0 0x17c2c 7 7 1024 0x17e47 1 1 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+# # ## 82 XNInner loss3/classifier 16 26 2 0x17e47 1 1024 0x17e52 1 1000 loss3/classifier: type=InnerProduct, sizes=None, shapes=SizeType(batches=[1000, 1024], channels=[1000], height=1, width=1), sched 81 Kernel None Strides None Padding None  NO VALID CODE  

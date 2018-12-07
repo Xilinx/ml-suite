@@ -8,8 +8,19 @@ import xdnn
 import json
 import os, sys
 
-class xdnn_env(object):
+def _fixQuantJsonLayerNames(quantFile):
+  obj = None
+  with open(quantFile) as data:
+      obj = json.load(data)
 
+  for l in obj['network']:
+    if "/Conv2D" not in l['name']:
+      l['name'] = l['name']+"/Conv2D"
+
+  with open(quantFile + "_fixed", "w") as outfile:
+    json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+class xdnn_env(object):
     def __init__(self):
         self._xdnnParams = {}
         self._xdnnParams['lib_path'] = os.environ["LIBXDNN_PATH"]
@@ -24,29 +35,34 @@ class xdnn_env(object):
             self._xdnnParams['quantize_json'] = quantFile
             with open(quantFile) as data:
                 obj = json.load(data)
+
                 # make a map of { layerName -> data }
                 self._xdnnParams['quantDB'] = {}
                 for l in obj['network']:
-                    self._xdnnParams['quantDB'][l['name']] = l
+                  layerName = l['name']
+                  self._xdnnParams['quantDB'][layerName] = l
         else:
             self._xdnnParams['useGlobalScale'] = True
 
-    def get_params(self): 
+    def get_params(self):
         return self._xdnnParams
 
 
 class xdnn_fpga_env(xdnn_env):
-
     def __init__(self, xclbin, isxdnnv3=False):
         xdnn_env.__init__(self)
         self._xdnnParams['xclbin'] = xclbin
+
+        if isxdnnv3 and 'v3' not in os.environ['LIBXDNN_PATH']:
+          os.environ['LIBXDNN_PATH'] += '.v3'
+
         self._xdnnParams['isXdnnv3'] = isxdnnv3
-        self._xdnnParams['compiler_file'] = os.environ["XDNN_COMPILER_FILE"]
-        ret = xdnn.createHandle(self._xdnnParams['xclbin'],
-                                                        "kernelSxdnn_0",
-                                                        self._xdnnParams['lib_path'])
+
+        if "XDNN_COMPILER_FILE" in os.environ:
+          self._xdnnParams['compiler_file'] = os.environ["XDNN_COMPILER_FILE"]
+        (ret, handles) = xdnn.createHandle(self._xdnnParams['xclbin'])
+        self._xdnnParams['handles'] = handles
 
         if ret != 0:
             raise RuntimeError("Could not init FPGA %s %s" % (xclbin, self._xdnnParams['lib_path']))
             sys.exit(1)
-

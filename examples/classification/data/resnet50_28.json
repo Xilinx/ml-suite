@@ -1,23 +1,67 @@
 {
-    "cmd": "/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py -n /home/ssettle/gitenterprise/MLsuite/models/caffe/resnet/fp32/resnet50_without_bn_deploy.prototxt -g /home/ssettle/gitenterprise/MLsuite/examples/compile/work/caffe/resnet/fp32/resnet50_without_bn_deploy_28.cmds -w /wrk/acceleration/MLsuite/master/models/caffe/resnet/int8/resnet50_without_bn.caffemodel -s all -i 28 -m 4 -d 256", 
-    "env": "{'HDI_PROCESSOR': 'x86_64', 'http_proxy': 'http://proxy:8080', 'RUBY_HOME': '/tools/batonroot/rodin/devkits/lnx24/ruby-1.8.6-p111', 'GCC_HOME': '/tools/batonroot/rodin/devkits/lnx64/gcc-6.2.0', 'SHELL': '/bin/bash', 'PYYAML_HOME': '/tools/batonroot/rodin/devkits/python/pyyaml-3.10', 'PERFORCE_HOME': '/tools/batonroot/rodin/devkits/lnx24/perforce-2013.1', 'RSYNC_HOME': '/tools/batonroot/rodin/devkits/lnx24/rsync-2.6.9', 'MANPATH': '/group/xsjfarm/lsf/10.1/man:.:/usr/local/man:/usr/man', 'DOXYGEN_HOME': '/tools/batonroot/rodin/devkits/lnx24/doxygen-1.8.3', 'XDG_RUNTIME_DIR': '/run/user/17766', 'PYTHONPATH': '/home/ssettle/gitenterprise/MLsuite:/home/ssettle/gitenterprise/MLsuite/ext:/home/ssettle/gitenterprise/MLsuite/apps/yolo:/home/ssettle/gitenterprise/MLsuite/apps/yolo/nms:/home/ssettle/gitenterprise/MLsuite/xfdnn/rt:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/emu:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/network:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/graph:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/optimizations:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/codegeneration:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/memory:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/version:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/memory:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/weights:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/bin:/home/ssettle/gitenterprise/MLsuite/xfdnn/tools/compile/parallel:/home/ssettle/gitenterprise/MLsuite/xfmlp/python', 'X11HOME': '/tools/x11r5/sun4', 'CONDA_PROMPT_MODIFIER': '(ml-suite) ', 'TOTALVIEW_HOME': '/tools/baton/totalview/toolworks/totalview.2016.07.22', 'FIREFOX_HOME': '/tools/batonroot/rodin/devkits/lnx64/firefox-17.0.3esr', 'P4CONFIG': '.p4config', 'XDG_SESSION_ID': '1', 'LIBYAML_HOME': '/tools/batonroot/rodin/devkits/python/libyaml-0.1.4', 'LSF_LIBDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/lib', 'PYPARSING_HOME': '/tools/batonroot/rodin/devkits/python/pyparsing-1.5.6', 'XILINXD_LICENSE_FILE': '/proj/rdi-xsj/public/licenses', 'XCLBIN_PATH': '/home/ssettle/gitenterprise/MLsuite/overlaybins/1525', 'XiGROUPS': 'hd users fisdev ghe_users', 'SPHINX_HOME': '/tools/batonroot/rodin/devkits/python/sphinx-1.1.3', 'MAIL': '/home/ssettle/mail/inbox', 'SSH_CONNECTION': '172.19.5.2 44379 10.22.64.112 22', 'CONDA_PYTHON_EXE': '/home/ssettle/nobkup/anaconda2/bin/python', 'MODULES_DEFVER': '3.2.10', 'P4PYTHON_HOME': '/tools/batonroot/rodin/devkits/lnx64/p4python-2014.2/lib/python2.7/site-packages', 'LSF_BINDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/bin', 'USER': 'ssettle', 'LSF_ENVDIR': '/group/xsjfarm/lsf/conf', 'HOME': '/home/ssettle', 'JDK_HOME': '/tools/batonroot/rodin/devkits/lnx24/jdk1.8.0_112', 'SHLVL': '2', 'EDITOR': 'vi', 'M4_HOME': '/tools/batonroot/rodin/devkits/lnx24/m4-1.4.10', 'PYTHON_DATEUTIL_HOME': '/tools/batonroot/rodin/devkits/python/python-dateutil-1.5', 'MOD_RELEASE': '4.4.0-134-generic', 'ENVROOT': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/hierdesign', 'JINJA_HOME': '/tools/batonroot/rodin/devkits/python/jinja2-2.5.5', 'P4PORT': 'perforce:1666', '_': '/home/ssettle/nobkup/anaconda2/envs/ml-suite/bin/python', 'MODULEPATH': '/tools/packages/infra/release/modulefiles/xsj:/tools/packages/infra/release/modulefiles/xsj/tools/sourceforge', 'MOD_SYSNAME': 'Linux', 'RDI_PLATFORM': 'lnx64', 'FLEX_HOME': '/tools/batonroot/rodin/devkits/lnx24/flex-2.5.4a-33', 'LIBXDNN_PATH': '/home/ssettle/gitenterprise/MLsuite/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so', 'OMP_NUM_THREADS': '4', 'SIMPLEJSON_HOME': '/tools/batonroot/rodin/devkits/python/simplejson-2.1.6', 'HTTP_PROXY': 'http://proxy:8080', 'VALGRIND_HOME': '/tools/baton/valgrind/3.12.0', 'RDI_SITE': 'XSJ', 'DOCUTILS_HOME': '/tools/batonroot/rodin/devkits/python/docutils-0.8', 'HDI_ALL_PLATFORMS': 'lnx24 win32 lnx64', 'DDD_HOME': '/tools/batonroot/rodin/devkits/lnx24/ddd-3.3.14', 'RDI_DEVKIT': '/tools/batonroot/rodin/devkits', 'SW_TESTS': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/regression', 'PYTZ_HOME': '/tools/batonroot/rodin/devkits/python/pytz-2012d', 'GDB_HOME': '/tools/batonroot/rodin/devkits/lnx64/gdb-8.0.1', 'MOD_MACHINE': 'x86_64', 'LC_ALL': 'C', 'MLSUITE_ROOT': '/home/ssettle/gitenterprise/MLsuite', 'SETUPTOOLS_HOME': '/tools/batonroot/rodin/devkits/python/setuptools-0.6c11', 'LD_LIBRARY_PATH': '/home/ssettle/gitenterprise/MLsuite/overlaybins/1525/runtime/lib:/home/ssettle/gitenterprise/MLsuite/overlaybins/1525/runtime/lib/x86_64/:/opt/xilinx/xrt/lib:/home/ssettle/gitenterprise/MLsuite/xfdnn/rt/xdnn_cpp/build/lib:/home/ssettle/gitenterprise/MLsuite/xfdnn/rt/lib:/home/ssettle/gitenterprise/MLsuite/ext/boost/lib:/home/ssettle/gitenterprise/MLsuite/ext/zmq/libs:/home/ssettle', 'RDI_ROOT': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD', 'LANG': 'C', 'LSF_SERVERDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc', 'CONDA_SHLVL': '1', 'ARGPARSE_HOME': '/tools/batonroot/rodin/devkits/python/argparse-1.2.1', 'CONDA_PREFIX': '/home/ssettle/nobkup/anaconda2/envs/ml-suite', 'XiWINMGR': 'olwm', 'https_proxy': 'http://proxy:8080', 'CONDA_DEFAULT_ENV': 'ml-suite', 'MKL_NUM_THREADS': '4', 'RDI_MAKEROOT': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/rdi/makefiles', 'RDI_SRCROOT': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/src', 'SSH_TTY': '/dev/pts/0', 'HTTPS_PROXY': 'http://proxy:8080', 'XILINX_XRT': '/opt/xilinx/xrt', 'SEVENZIP_HOME': '/tools/batonroot/rodin/devkits/lnx24/7z-4.65', 'PERL_HOME': '/tools/batonroot/rodin/devkits/lnx24/perl-5.8.8', 'MAKE_HOME': '/tools/batonroot/rodin/devkits/lnx24/make-4.1', 'KSH_HOME': '/tools/batonroot/rodin/devkits/lnx24/ksh-93t', 'SPARK_HOME': '/tools/batonroot/rodin/devkits/lnx64/spark-1.5.0', 'XiOSREL': 'Linux4.4.0-134-generic', 'SSH_CLIENT': '172.19.5.2 44379 22', 'RDI_REGR_SCRIPTS': '/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/rdi/util/regression', 'LOGNAME': 'ssettle', 'SDACCEL_INI_PATH': '/home/ssettle/gitenterprise/MLsuite/overlaybins', 'BINUTILS_HOME': '/tools/batonroot/rodin/devkits/lnx64/binutils-2.26', 'OPENWINHOME': '/usr/openwin', 'PATH': '/home/ssettle/nobkup/anaconda2/envs/ml-suite/bin:/proj/rdi-xsj/builds/HEAD/nightly/RUNNING_BUILD/hierdesign/util::/tools/batonroot/rodin/devkits/lnx24/rsync-2.6.9/bin:/tools/batonroot/rodin/devkits/lnx24/make-4.1/bin:/tools/batonroot/rodin/devkits/lnx24/swig-3.0.10/bin:/tools/batonroot/rodin/devkits/lnx64/binutils-2.26/bin:/tools/batonroot/rodin/devkits/lnx64/python-2.7.5/bin:/tools/batonroot/rodin/devkits/lnx24/7z-4.65/bin:/tools/batonroot/rodin/devkits/lnx24/bison-2.3/bin:/tools/batonroot/rodin/devkits/lnx64/gcc-6.2.0/bin:/tools/batonroot/rodin/devkits/lnx24/perl-5.8.8/bin:/tools/batonroot/rodin/devkits/lnx24/m4-1.4.10/bin:/tools/batonroot/rodin/devkits/lnx24/flex-2.5.4a-33/bin:/tools/batonroot/rodin/devkits/lnx24/ruby-1.8.6-p111/bin:/tools/batonroot/rodin/devkits/lnx64/gdb-8.0.1/bin:/tools/batonroot/rodin/devkits/lnx24/perforce-2013.2/bin:/tools/batonroot/rodin/devkits/lnx24/perforce-2013.1/bin:/tools/batonroot/rodin/devkits/lnx24/jdk1.8.0_112/bin:/tools/batonroot/rodin/devkits/lnx24/doxygen-1.8.3/bin:/tools/batonroot/rodin/devkits/lnx24/ddd-3.3.14/bin:/tools/batonroot/rodin/devkits/lnx24/ksh-93t/bin:/tools/baton/totalview/toolworks/totalview.2016.07.22/bin:/tools/baton/valgrind/3.12.0/bin:/tools/batonroot/rodin/devkits/python/docutils-0.8/bin:/tools/batonroot/rodin/devkits/python/sphinx-1.1.3/bin:/tools/batonroot/rodin/devkits/python/pygments-1.4/bin:.:/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc:/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/bin:/home/ssettle/bin:/usr/local/bin:/mis/TREE/bin:/usr/bin:/bin', 'SWIG_LIB': '/tools/batonroot/rodin/devkits/lnx24/swig-3.0.10/share/swig/3.0.7', 'SUNSTUDIO_HOME': '/group/hd/gold/tools/linux/sunstudio-12m1-200709/sunstudio12/prod', 'TEXTTABLE_HOME': '/tools/batonroot/rodin/devkits/python/texttable-0.7.0', 'TERM': 'xterm', 'PYGMENTS_HOME': '/tools/batonroot/rodin/devkits/python/pygments-1.4', 'BISON_HOME': '/tools/batonroot/rodin/devkits/lnx24/bison-2.3', 'PLY_HOME': '/tools/batonroot/rodin/devkits/python/ply-3.4', 'XiSUEHOME': '/tools/sue', 'RDI_REGR_ROOT': '/proj/testcases', 'MODULES_PLATFORM': 'x86_64/Linux4.4.0-134-generic', 'PYSPARK_HOME': '/tools/batonroot/rodin/devkits/lnx64/spark-1.5.0/python', 'RDI_RHEL_MAJOR_VER': '0', 'REQUESTS_HOME': '/tools/batonroot/rodin/devkits/python/requests-0.10.0', 'XiSUE': 'true', 'REL_MODE': 'release', 'BISON_PKGDATADIR': '/tools/batonroot/rodin/devkits/lnx24/bison-2.3/share/bison', 'P4V_HOME': '/tools/batonroot/rodin/devkits/lnx24/perforce-2013.2', 'HDI_PLATFORM': 'lnx24', 'XILINX_OPENCL': '/home/ssettle/gitenterprise/MLsuite/overlaybins/1525', 'PWD': '/home/ssettle/gitenterprise/MLsuite/examples/compile', 'SWIG_HOME': '/tools/batonroot/rodin/devkits/lnx24/swig-3.0.10', 'CONDA_EXE': '/home/ssettle/nobkup/anaconda2/bin/conda', 'BINARY_TYPE_HPC': ''}", 
+    "arguments": {
+        "anew": null, 
+        "approximate": false, 
+        "banditpre": null, 
+        "barrier": false, 
+        "bridges": null, 
+        "bytesperpixels": 2, 
+        "concatstrategy": null, 
+        "conv_1x1_s2": true, 
+        "cpulayermustgo": false, 
+        "ddr": 256, 
+        "dedicateddsp": null, 
+        "dsp": 28, 
+        "finalnode": [
+            "prob"
+        ], 
+        "forceweights": null, 
+        "fromtensorflow": true, 
+        "generatefile": "resnet50.2.28.6.conv", 
+        "godreplication": null, 
+        "lasttensorbyname": "prob", 
+        "loadpickle": null, 
+        "manasadebugmode": false, 
+        "manualbatch": false, 
+        "manualdeconv": false, 
+        "memory": 6.0, 
+        "networkfile": "/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/src/DeepLearning/xilinx/git-version/MLsuite//models/tensorflow/resnet/fp32/resnet50_without_bn_test.pb", 
+        "nodynamicscaling": false, 
+        "noreplication": false, 
+        "parallelism": false, 
+        "parallelismstrategy": "['bottom', 'tops']", 
+        "parallelread": null, 
+        "pipelineconvmaxpool": false, 
+        "placeholdershape": null, 
+        "pngfile": null, 
+        "poolingaround": false, 
+        "rankdir": "BT", 
+        "savepickle": null, 
+        "schedulefile": null, 
+        "strategy": "all", 
+        "verbose": false, 
+        "versionjson": null, 
+        "weights": false
+    }, 
+    "cmd": "bin/xfdnn_compiler_tensorflow.py -n /wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/src/DeepLearning/xilinx/git-version/MLsuite//models/tensorflow/resnet/fp32/resnet50_without_bn_test.pb --dsp 28 -m 6 -s all --conv_1x1_s2 -g resnet50.2.28.6.conv", 
+    "env": "{'HDI_PROCESSOR': 'x86_64', 'LC_CTYPE': 'en_US.UTF-8', 'RUBY_HOME': '/tools/batonroot/rodin/devkits/lnx24/ruby-1.8.6-p111', 'GCC_HOME': '/tools/batonroot/rodin/devkits/lnx64/gcc-6.2.0', 'SSH_CONNECTION': '172.19.222.0 50190 10.22.64.112 22', 'SHELL': '/bin/csh', 'PYYAML_HOME': '/tools/batonroot/rodin/devkits/python/pyyaml-3.10', 'PERFORCE_HOME': '/tools/batonroot/rodin/devkits/lnx24/perforce-2013.1', 'RSYNC_HOME': '/tools/batonroot/rodin/devkits/lnx24/rsync-2.6.9', 'MANPATH': '.:/usr/local/man:/usr/man', 'DOXYGEN_HOME': '/tools/batonroot/rodin/devkits/lnx24/doxygen-1.8.3', 'VENDOR': 'unknown', 'XDG_RUNTIME_DIR': '/run/user/18716', 'PYTHONPATH': '/tools/batonroot/rodin/devkits/python/libyaml-0.1.4/lib:/tools/batonroot/rodin/devkits/python/texttable-0.7.0/lib:/tools/batonroot/rodin/devkits/python/simplejson-2.1.6/lib:/tools/batonroot/rodin/devkits/python/setuptools-0.6c11/lib:/tools/batonroot/rodin/devkits/python/pyyaml-3.10/lib:/tools/batonroot/rodin/devkits/python/pyparsing-1.5.6/lib:/tools/batonroot/rodin/devkits/python/ply-3.4/lib:/tools/batonroot/rodin/devkits/python/jinja2-2.5.5/lib:/tools/batonroot/rodin/devkits/python/docutils-0.8/lib:/tools/batonroot/rodin/devkits/python/sphinx-1.1.3/lib:/tools/batonroot/rodin/devkits/python/pygments-1.4/lib:/tools/batonroot/rodin/devkits/python/argparse-1.2.1/lib:/tools/batonroot/rodin/devkits/python/requests-0.10.0/lib:/tools/batonroot/rodin/devkits/python/python-dateutil-1.5/lib:/tools/batonroot/rodin/devkits/python/pytz-2012d/lib:/tools/batonroot/rodin/devkits/lnx64/p4python-2014.2/lib/python2.7/site-packages:/tools/batonroot/rodin/devkits/lnx64/spark-1.5.0/python', 'X11HOME': '/tools/x11r5/sun4', 'BISON_PKGDATADIR': '/tools/batonroot/rodin/devkits/lnx24/bison-2.3/share/bison', 'TOTALVIEW_HOME': '/tools/baton/totalview/toolworks/totalview.2016.07.22', 'FIREFOX_HOME': '/tools/batonroot/rodin/devkits/lnx64/firefox-17.0.3esr', 'P4CONFIG': '.p4config', 'XDG_SESSION_ID': '5', 'LIBYAML_HOME': '/tools/batonroot/rodin/devkits/python/libyaml-0.1.4', 'LSF_LIBDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/lib', 'PYPARSING_HOME': '/tools/batonroot/rodin/devkits/python/pyparsing-1.5.6', 'XILINXD_LICENSE_FILE': '/proj/rdi-xsj/public/licenses', 'XiGROUPS': 'hd ghe_users docker', 'SPHINX_HOME': '/tools/batonroot/rodin/devkits/python/sphinx-1.1.3', 'MAIL': '/home/paolod/mail/inbox', 'MACHTYPE': 'x86_64', 'LC_NUMERIC': 'en_US.UTF-8', 'CONDA_PYTHON_EXE': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/bin/python', 'GROUP': 'hd', 'P4PYTHON_HOME': '/tools/batonroot/rodin/devkits/lnx64/p4python-2014.2/lib/python2.7/site-packages', 'LSF_BINDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/bin', 'USER': 'paolod', 'LSF_ENVDIR': '/group/xsjfarm/lsf/conf', 'XFDNN_ROOT': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/src/DeepLearning/xilinx/git-version/MLsuite/', 'JDK_HOME': '/tools/batonroot/rodin/devkits/lnx24/jdk1.8.0_112', 'SHLVL': '3', 'DISPLAY': 'localhost:10.0', 'EDITOR': 'vi', 'M4_HOME': '/tools/batonroot/rodin/devkits/lnx24/m4-1.4.10', 'PYTHON_DATEUTIL_HOME': '/tools/batonroot/rodin/devkits/python/python-dateutil-1.5', 'ENVROOT': '/proj/rdi/env/stable/hierdesign', 'JINJA_HOME': '/tools/batonroot/rodin/devkits/python/jinja2-2.5.5', 'P4PORT': 'perforce:1666', '_': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/envs/ml-suite/bin/python', 'SEVENZIP_HOME': '/tools/batonroot/rodin/devkits/lnx24/7z-4.65', 'FLEX_HOME': '/tools/batonroot/rodin/devkits/lnx24/flex-2.5.4a-33', 'SIMPLEJSON_HOME': '/tools/batonroot/rodin/devkits/python/simplejson-2.1.6', 'VALGRIND_HOME': '/tools/baton/valgrind/3.12.0', 'RDI_SITE': 'XSJ', 'DOCUTILS_HOME': '/tools/batonroot/rodin/devkits/python/docutils-0.8', 'LC_TIME': 'en_US.UTF-8', 'HDI_ALL_PLATFORMS': 'lnx24 win32 lnx64', 'DDD_HOME': '/tools/batonroot/rodin/devkits/lnx24/ddd-3.3.14', 'RDI_DEVKIT': '/tools/batonroot/rodin/devkits', 'SW_TESTS': '/proj/rdi/env/stable/regression', 'PYTZ_HOME': '/tools/batonroot/rodin/devkits/python/pytz-2012d', 'GDB_HOME': '/tools/batonroot/rodin/devkits/lnx64/gdb-8.0.1', 'REMOTEHOST': '172.19.222.0', 'SETUPTOOLS_HOME': '/tools/batonroot/rodin/devkits/python/setuptools-0.6c11', 'LD_LIBRARY_PATH': '/usr/local/lib:/usr/lib', 'RDI_ROOT': '/proj/rdi/env/stable', 'LANG': 'C', 'LSF_SERVERDIR': '/group/xsjfarm/lsf/10.1/linux3.10-glibc2.17-x86_64/etc', 'CONDA_SHLVL': '1', 'ARGPARSE_HOME': '/tools/batonroot/rodin/devkits/python/argparse-1.2.1', 'LC_MONETARY': 'en_US.UTF-8', 'CONDA_PREFIX': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/envs/ml-suite', 'SUNSTUDIO_HOME': '/group/hd/gold/tools/linux/sunstudio-12m1-200709/sunstudio12/prod', 'CONDA_DEFAULT_ENV': 'ml-suite', 'OSTYPE': 'linux', 'RDI_MAKEROOT': '/proj/rdi/env/stable/rdi/makefiles', 'RDI_SRCROOT': '/proj/rdi/env/stable/src', 'HOST': 'xsjmanasab4-vcu1525', 'LC_MESSAGES': 'en_US.UTF-8', 'SSH_TTY': '/dev/pts/2', 'LC_COLLATE': 'en_US.UTF-8', 'PYTHON_HOME': '/tools/batonroot/rodin/devkits/lnx64/python-2.7.5', 'RDI_PLATFORM': 'lnx64', 'PERL_HOME': '/tools/batonroot/rodin/devkits/lnx24/perl-5.8.8', 'MAKE_HOME': '/tools/batonroot/rodin/devkits/lnx24/make-4.1', 'KSH_HOME': '/tools/batonroot/rodin/devkits/lnx24/ksh-93t', 'SPARK_HOME': '/tools/batonroot/rodin/devkits/lnx64/spark-1.5.0', 'XiOSREL': 'Linux4.4.0-138-generic', 'HOSTTYPE': 'x86_64-linux', 'SSH_CLIENT': '172.19.222.0 50190 22', 'RDI_REGR_SCRIPTS': '/proj/rdi/env/stable/rdi/util/regression', 'LOGNAME': 'paolod', 'XiWINMGR': 'olwm', 'BINUTILS_HOME': '/tools/batonroot/rodin/devkits/lnx64/binutils-2.26', 'OPENWINHOME': '/usr/openwin', 'PATH': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/envs/ml-suite/bin:/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/bin:/home/paolod/bin:/usr/local/bin:/mis/TREE/bin:/usr/bin:/bin:/usr/ucb', 'SWIG_LIB': '/tools/batonroot/rodin/devkits/lnx24/swig-3.0.10/share/swig/3.0.7', 'TEXTTABLE_HOME': '/tools/batonroot/rodin/devkits/python/texttable-0.7.0', 'TERM': 'xterm', 'PYGMENTS_HOME': '/tools/batonroot/rodin/devkits/python/pygments-1.4', 'BISON_HOME': '/tools/batonroot/rodin/devkits/lnx24/bison-2.3', 'PLY_HOME': '/tools/batonroot/rodin/devkits/python/ply-3.4', 'XiSUEHOME': '/tools/sue', 'RDI_REGR_ROOT': '/proj/testcases', 'HOME': '/home/paolod', 'PYSPARK_HOME': '/tools/batonroot/rodin/devkits/lnx64/spark-1.5.0/python', 'RDI_RHEL_MAJOR_VER': '0', 'REQUESTS_HOME': '/tools/batonroot/rodin/devkits/python/requests-0.10.0', 'XiSUE': 'true', 'LC_ALL': 'C', 'CONDA_PROMPT_MODIFIER': '(ml-suite) ', 'P4V_HOME': '/tools/batonroot/rodin/devkits/lnx24/perforce-2013.2', 'XiSET': 'true', 'HDI_PLATFORM': 'lnx24', 'PWD': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/src/DeepLearning/xilinx/git-version/MLsuite/xfdnn/tools/compile', 'SWIG_HOME': '/tools/batonroot/rodin/devkits/lnx24/swig-3.0.10', 'CONDA_EXE': '/wrk/hdstaff/paolod/perforce/RDI_paolod_Dev_work/temp/anaconda2/bin/conda'}", 
     "first_layer": 0, 
-    "last_layer": 73, 
+    "last_layer": 80, 
     "moveops": 0, 
     "network": [
         {
-            "layer": "data: type=Input, sizes=None, shapes=None, sched 0 Kernel None Strides None Padding None", 
+            "layer": "data: type=Placeholder, sizes=None, shapes=None, sched 0 Kernel None Strides None Padding None  NO VALID CODE  ", 
             "name": "data", 
             "ops": 0, 
             "schedule": 1, 
-            "xdnn_instr": "# 1 Input download not possible", 
+            "xdnn_instr": "# # LAYER data [u'Placeholder'] ['layer']", 
             "xdnn_kv": {}, 
             "xdnn_list": []
         }, 
         {
-            "layer": "conv1: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=3, height=7, width=7), sched 1 Kernel [7L] Strides [2L] Padding [3L]", 
+            "layer": "conv1: type=Convolution, sizes=None, shapes=None, sched 1 Kernel SizeType(batches=64, channels=3, height=7, width=7) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [3, 3]", 
             "name": "conv1", 
-            "ops": 236027904, 
+            "ops": 314703872, 
             "schedule": 2, 
             "xdnn_instr": "2 XNConv conv1 7 7 2 2 3 3 1 1 16 26 2 1 1 0x0 224 224 3 0x70000 112 112 64 0", 
             "xdnn_kv": {
@@ -151,7 +195,7 @@
             ]
         }, 
         {
-            "layer": "pool1: type=Pooling, sizes=None, shapes=None, sched 2 Kernel [3] Strides [2] Padding [0]", 
+            "layer": "pool1: type=Pooling, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
             "name": "pool1", 
             "ops": 1806336, 
             "schedule": 3, 
@@ -247,11 +291,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch1: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=64, height=1, width=1), sched 3 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2a_branch1: type=Convolution, sizes=None, shapes=None, sched 3 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2a_branch1", 
-            "ops": 102760448, 
+            "ops": 104366080, 
             "schedule": 4, 
-            "xdnn_instr": "4 XNConv res2a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 56 56 64 0x240000 56 56 256 0", 
+            "xdnn_instr": "4 XNConv res2a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 56 56 64 0x70000 56 56 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -266,7 +310,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res2a_branch1", 
-                "outaddr": "0x240000", 
+                "outaddr": "0x70000", 
                 "outchan": "256", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -362,7 +406,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -383,11 +427,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=64, height=1, width=1), sched 4 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2a_branch2a: type=Convolution, sizes=None, shapes=None, sched 4 Kernel SizeType(batches=64, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2a_branch2a", 
-            "ops": 25690112, 
+            "ops": 26091520, 
             "schedule": 5, 
-            "xdnn_instr": "5 XNConv res2a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 64 0x70000 56 56 64 0", 
+            "xdnn_instr": "5 XNConv res2a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 64 0x230000 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -402,7 +446,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res2a_branch2a", 
-                "outaddr": "0x70000", 
+                "outaddr": "0x230000", 
                 "outchan": "64", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -498,7 +542,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x70000"
+                    "0x230000"
                 ], 
                 [
                     "outsize_w", 
@@ -519,11 +563,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=64, height=3, width=3), sched 5 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res2a_branch2b: type=Convolution, sizes=None, shapes=None, sched 5 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res2a_branch2b", 
-            "ops": 231211008, 
+            "ops": 234823680, 
             "schedule": 6, 
-            "xdnn_instr": "6 XNConv res2a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x70000 56 56 64 0x1d0000 56 56 64 0", 
+            "xdnn_instr": "6 XNConv res2a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x230000 56 56 64 0x0 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -531,14 +575,14 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "6", 
-                "inaddr": "0x70000", 
+                "inaddr": "0x230000", 
                 "inchan": "64", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res2a_branch2b", 
-                "outaddr": "0x1d0000", 
+                "outaddr": "0x0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -618,7 +662,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x70000"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -634,7 +678,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1d0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -655,11 +699,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=64, height=1, width=1), sched 6 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2a_branch2c: type=Convolution, sizes=None, shapes=None, sched 6 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2a_branch2c", 
-            "ops": 102760448, 
+            "ops": 104366080, 
             "schedule": 7, 
-            "xdnn_instr": "7 XNConv res2a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x1d0000 56 56 64 0x10000 56 56 256 0", 
+            "xdnn_instr": "7 XNConv res2a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 56 56 64 0x230000 56 56 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -667,14 +711,14 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "7", 
-                "inaddr": "0x1d0000", 
+                "inaddr": "0x0", 
                 "inchan": "64", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res2a_branch2c", 
-                "outaddr": "0x10000", 
+                "outaddr": "0x230000", 
                 "outchan": "256", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -754,7 +798,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x1d0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -770,7 +814,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x10000"
+                    "0x230000"
                 ], 
                 [
                     "outsize_w", 
@@ -795,20 +839,20 @@
             "name": "res2a", 
             "ops": 802816, 
             "schedule": 8, 
-            "xdnn_instr": "8 XNEltwise res2a 1 0 1 0x240000 0x10000 56 56 256 0x240000 0", 
+            "xdnn_instr": "8 XNEltwise res2a 1 0 1 0x70000 0x230000 56 56 256 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
                 "id": "8", 
-                "inaddrA": "0x240000", 
-                "inaddrB": "0x10000", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x230000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "name": "res2a", 
-                "outaddr": "0x240000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
@@ -838,11 +882,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x10000"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -858,7 +902,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -867,11 +911,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=256, height=1, width=1), sched 8 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2b_branch2a: type=Convolution, sizes=None, shapes=None, sched 8 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2b_branch2a", 
-            "ops": 102760448, 
+            "ops": 103161856, 
             "schedule": 9, 
-            "xdnn_instr": "9 XNConv res2b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x240000 56 56 256 0x0 56 56 64 0", 
+            "xdnn_instr": "9 XNConv res2b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 56 56 256 0x0 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -879,7 +923,7 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "9", 
-                "inaddr": "0x240000", 
+                "inaddr": "0x70000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
@@ -966,7 +1010,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -1003,11 +1047,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=64, height=3, width=3), sched 9 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res2b_branch2b: type=Convolution, sizes=None, shapes=None, sched 9 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res2b_branch2b", 
-            "ops": 231211008, 
+            "ops": 234823680, 
             "schedule": 10, 
-            "xdnn_instr": "10 XNConv res2b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 56 56 64 0x1d0000 56 56 64 0", 
+            "xdnn_instr": "10 XNConv res2b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 56 56 64 0x230000 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -1022,7 +1066,7 @@
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res2b_branch2b", 
-                "outaddr": "0x1d0000", 
+                "outaddr": "0x230000", 
                 "outchan": "64", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -1118,7 +1162,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1d0000"
+                    "0x230000"
                 ], 
                 [
                     "outsize_w", 
@@ -1139,11 +1183,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=64, height=1, width=1), sched 10 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2b_branch2c: type=Convolution, sizes=None, shapes=None, sched 10 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2b_branch2c", 
-            "ops": 102760448, 
+            "ops": 104366080, 
             "schedule": 11, 
-            "xdnn_instr": "11 XNConv res2b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x1d0000 56 56 64 0x10000 56 56 256 0", 
+            "xdnn_instr": "11 XNConv res2b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x230000 56 56 64 0x2a0000 56 56 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -1151,14 +1195,14 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "11", 
-                "inaddr": "0x1d0000", 
+                "inaddr": "0x230000", 
                 "inchan": "64", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res2b_branch2c", 
-                "outaddr": "0x10000", 
+                "outaddr": "0x2a0000", 
                 "outchan": "256", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -1238,7 +1282,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x1d0000"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -1254,7 +1298,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x10000"
+                    "0x2a0000"
                 ], 
                 [
                     "outsize_w", 
@@ -1279,20 +1323,20 @@
             "name": "res2b", 
             "ops": 802816, 
             "schedule": 12, 
-            "xdnn_instr": "12 XNEltwise res2b 1 0 1 0x240000 0x10000 56 56 256 0x240000 0", 
+            "xdnn_instr": "12 XNEltwise res2b 1 0 1 0x70000 0x2a0000 56 56 256 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
                 "id": "12", 
-                "inaddrA": "0x240000", 
-                "inaddrB": "0x10000", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x2a0000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "name": "res2b", 
-                "outaddr": "0x240000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
@@ -1322,11 +1366,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x10000"
+                    "0x2a0000"
                 ], 
                 [
                     "insize_w", 
@@ -1342,7 +1386,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -1351,11 +1395,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=256, height=1, width=1), sched 12 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2c_branch2a: type=Convolution, sizes=None, shapes=None, sched 12 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2c_branch2a", 
-            "ops": 102760448, 
+            "ops": 103161856, 
             "schedule": 13, 
-            "xdnn_instr": "13 XNConv res2c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x240000 56 56 256 0x0 56 56 64 0", 
+            "xdnn_instr": "13 XNConv res2c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 56 56 256 0x0 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -1363,7 +1407,7 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "13", 
-                "inaddr": "0x240000", 
+                "inaddr": "0x70000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
@@ -1450,7 +1494,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -1487,11 +1531,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=64, channels=64, height=3, width=3), sched 13 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res2c_branch2b: type=Convolution, sizes=None, shapes=None, sched 13 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res2c_branch2b", 
-            "ops": 231211008, 
+            "ops": 234823680, 
             "schedule": 14, 
-            "xdnn_instr": "14 XNConv res2c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 56 56 64 0x1d0000 56 56 64 0", 
+            "xdnn_instr": "14 XNConv res2c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 56 56 64 0x230000 56 56 64 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -1506,7 +1550,7 @@
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res2c_branch2b", 
-                "outaddr": "0x1d0000", 
+                "outaddr": "0x230000", 
                 "outchan": "64", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -1602,7 +1646,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1d0000"
+                    "0x230000"
                 ], 
                 [
                     "outsize_w", 
@@ -1623,11 +1667,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=64, height=1, width=1), sched 14 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res2c_branch2c: type=Convolution, sizes=None, shapes=None, sched 14 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res2c_branch2c", 
-            "ops": 102760448, 
+            "ops": 104366080, 
             "schedule": 15, 
-            "xdnn_instr": "15 XNConv res2c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x1d0000 56 56 64 0x10000 56 56 256 0", 
+            "xdnn_instr": "15 XNConv res2c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x230000 56 56 64 0x2a0000 56 56 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
@@ -1635,14 +1679,14 @@
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "id": "15", 
-                "inaddr": "0x1d0000", 
+                "inaddr": "0x230000", 
                 "inchan": "64", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res2c_branch2c", 
-                "outaddr": "0x10000", 
+                "outaddr": "0x2a0000", 
                 "outchan": "256", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -1722,7 +1766,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x1d0000"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -1738,7 +1782,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x10000"
+                    "0x2a0000"
                 ], 
                 [
                     "outsize_w", 
@@ -1763,20 +1807,20 @@
             "name": "res2c", 
             "ops": 802816, 
             "schedule": 16, 
-            "xdnn_instr": "16 XNEltwise res2c 1 0 1 0x240000 0x10000 56 56 256 0x240000 0", 
+            "xdnn_instr": "16 XNEltwise res2c 1 0 1 0x70000 0x2a0000 56 56 256 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
                 "id": "16", 
-                "inaddrA": "0x240000", 
-                "inaddrB": "0x10000", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x2a0000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "name": "res2c", 
-                "outaddr": "0x240000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
@@ -1806,11 +1850,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x10000"
+                    "0x2a0000"
                 ], 
                 [
                     "insize_w", 
@@ -1826,7 +1870,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -1835,35 +1879,27 @@
             ]
         }, 
         {
-            "layer": "res3a_branch1: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=256, height=1, width=1), sched 16 Kernel [1L] Strides [2L] Padding [0L]", 
-            "name": "res3a_branch1", 
-            "ops": 205520896, 
+            "layer": "maxpool_res3a_branch1: type=Pooling, sizes=None, shapes=None, sched 16 Kernel SizeType(batches=512, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res3a_branch1", 
+            "ops": 200704, 
             "schedule": 17, 
-            "xdnn_instr": "17 XNConv res3a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x240000 56 56 256 0x0 28 28 512 0", 
+            "xdnn_instr": "17 XNMaxPool maxpool_res3a_branch1 1 1 2 2 0 0 0x70000 56 56 256 0x0 28 28 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
-                "XNOp": "XNConv", 
-                "bias": "1", 
-                "dilation_h": "1", 
-                "dilation_w": "1", 
+                "XNOp": "XNMaxPool", 
                 "id": "17", 
-                "inaddr": "0x240000", 
+                "inaddr": "0x70000", 
                 "inchan": "256", 
                 "insize_h": "56", 
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3a_branch1", 
+                "name": "maxpool_res3a_branch1", 
                 "outaddr": "0x0", 
-                "outchan": "512", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
-                "padding_h": "0", 
-                "padding_w": "0", 
-                "postshift": "2", 
-                "preshift": "16", 
-                "relu": "0", 
-                "scale": "26", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
                 "strides_h": "2", 
                 "strides_w": "2"
             }, 
@@ -1874,11 +1910,11 @@
                 ], 
                 [
                     "XNOp", 
-                    "XNConv"
+                    "XNMaxPool"
                 ], 
                 [
                     "name", 
-                    "res3a_branch1"
+                    "maxpool_res3a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -1897,44 +1933,16 @@
                     "2"
                 ], 
                 [
-                    "padding_w", 
+                    "paddings_w", 
                     "0"
                 ], 
                 [
-                    "padding_h", 
+                    "paddings_h", 
                     "0"
-                ], 
-                [
-                    "dilation_w", 
-                    "1"
-                ], 
-                [
-                    "dilation_h", 
-                    "1"
-                ], 
-                [
-                    "preshift", 
-                    "16"
-                ], 
-                [
-                    "scale", 
-                    "26"
-                ], 
-                [
-                    "postshift", 
-                    "2"
-                ], 
-                [
-                    "relu", 
-                    "0"
-                ], 
-                [
-                    "bias", 
-                    "1"
                 ], 
                 [
                     "inaddr", 
-                    "0x240000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -1961,6 +1969,138 @@
                     "28"
                 ], 
                 [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "res3a_branch1: type=Convolution, sizes=None, shapes=None, sched 17 Kernel SizeType(batches=512, channels=256, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3a_branch1", 
+            "ops": 206323712, 
+            "schedule": 18, 
+            "xdnn_instr": "18 XNConv res3a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 28 28 256 0x230000 28 28 512 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNConv", 
+                "bias": "1", 
+                "dilation_h": "1", 
+                "dilation_w": "1", 
+                "id": "18", 
+                "inaddr": "0x0", 
+                "inchan": "256", 
+                "insize_h": "28", 
+                "insize_w": "28", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "res3a_branch1", 
+                "outaddr": "0x230000", 
+                "outchan": "512", 
+                "outsize_h": "28", 
+                "outsize_w": "28", 
+                "padding_h": "0", 
+                "padding_w": "0", 
+                "postshift": "2", 
+                "preshift": "16", 
+                "relu": "0", 
+                "scale": "26", 
+                "strides_h": "1", 
+                "strides_w": "1"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "18"
+                ], 
+                [
+                    "XNOp", 
+                    "XNConv"
+                ], 
+                [
+                    "name", 
+                    "res3a_branch1"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "1"
+                ], 
+                [
+                    "strides_h", 
+                    "1"
+                ], 
+                [
+                    "padding_w", 
+                    "0"
+                ], 
+                [
+                    "padding_h", 
+                    "0"
+                ], 
+                [
+                    "dilation_w", 
+                    "1"
+                ], 
+                [
+                    "dilation_h", 
+                    "1"
+                ], 
+                [
+                    "preshift", 
+                    "16"
+                ], 
+                [
+                    "scale", 
+                    "26"
+                ], 
+                [
+                    "postshift", 
+                    "2"
+                ], 
+                [
+                    "relu", 
+                    "0"
+                ], 
+                [
+                    "bias", 
+                    "1"
+                ], 
+                [
+                    "inaddr", 
+                    "0x0"
+                ], 
+                [
+                    "insize_w", 
+                    "28"
+                ], 
+                [
+                    "insize_h", 
+                    "28"
+                ], 
+                [
+                    "inchan", 
+                    "256"
+                ], 
+                [
+                    "outaddr", 
+                    "0x230000"
+                ], 
+                [
+                    "outsize_w", 
+                    "28"
+                ], 
+                [
+                    "outsize_h", 
+                    "28"
+                ], 
+                [
                     "outchan", 
                     "512"
                 ], 
@@ -1971,26 +2111,122 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=256, height=1, width=1), sched 17 Kernel [1L] Strides [2L] Padding [0L]", 
+            "layer": "maxpool_res3a_branch2a: type=Pooling, sizes=None, shapes=None, sched 18 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res3a_branch2a", 
+            "ops": 200704, 
+            "schedule": 19, 
+            "xdnn_instr": "19 XNMaxPool maxpool_res3a_branch2a 1 1 2 2 0 0 0x70000 56 56 256 0x0 28 28 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNMaxPool", 
+                "id": "19", 
+                "inaddr": "0x70000", 
+                "inchan": "256", 
+                "insize_h": "56", 
+                "insize_w": "56", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "maxpool_res3a_branch2a", 
+                "outaddr": "0x0", 
+                "outsize_h": "28", 
+                "outsize_w": "28", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
+                "strides_h": "2", 
+                "strides_w": "2"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "19"
+                ], 
+                [
+                    "XNOp", 
+                    "XNMaxPool"
+                ], 
+                [
+                    "name", 
+                    "maxpool_res3a_branch2a"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "2"
+                ], 
+                [
+                    "strides_h", 
+                    "2"
+                ], 
+                [
+                    "paddings_w", 
+                    "0"
+                ], 
+                [
+                    "paddings_h", 
+                    "0"
+                ], 
+                [
+                    "inaddr", 
+                    "0x70000"
+                ], 
+                [
+                    "insize_w", 
+                    "56"
+                ], 
+                [
+                    "insize_h", 
+                    "56"
+                ], 
+                [
+                    "inchan", 
+                    "256"
+                ], 
+                [
+                    "outaddr", 
+                    "0x0"
+                ], 
+                [
+                    "outsize_w", 
+                    "28"
+                ], 
+                [
+                    "outsize_h", 
+                    "28"
+                ], 
+                [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "res3a_branch2a: type=Convolution, sizes=None, shapes=None, sched 19 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3a_branch2a", 
-            "ops": 51380224, 
-            "schedule": 18, 
-            "xdnn_instr": "18 XNConv res3a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x240000 56 56 256 0xe0000 28 28 128 0", 
+            "ops": 51580928, 
+            "schedule": 20, 
+            "xdnn_instr": "20 XNConv res3a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 256 0x70000 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "18", 
-                "inaddr": "0x240000", 
+                "id": "20", 
+                "inaddr": "0x0", 
                 "inchan": "256", 
-                "insize_h": "56", 
-                "insize_w": "56", 
+                "insize_h": "28", 
+                "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3a_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2000,13 +2236,13 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "strides_h": "2", 
-                "strides_w": "2"
+                "strides_h": "1", 
+                "strides_w": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "18"
+                    "20"
                 ], 
                 [
                     "XNOp", 
@@ -2026,11 +2262,11 @@
                 ], 
                 [
                     "strides_w", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "strides_h", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "padding_w", 
@@ -2070,15 +2306,15 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x240000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
-                    "56"
+                    "28"
                 ], 
                 [
                     "insize_h", 
-                    "56"
+                    "28"
                 ], 
                 [
                     "inchan", 
@@ -2086,7 +2322,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -2107,26 +2343,26 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=128, height=3, width=3), sched 18 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res3a_branch2b: type=Convolution, sizes=None, shapes=None, sched 20 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res3a_branch2b", 
-            "ops": 231211008, 
-            "schedule": 19, 
-            "xdnn_instr": "19 XNConv res3a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 28 28 128 0x118000 28 28 128 0", 
+            "ops": 233017344, 
+            "schedule": 21, 
+            "xdnn_instr": "21 XNConv res3a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x70000 28 28 128 0x0 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "19", 
-                "inaddr": "0xe0000", 
+                "id": "21", 
+                "inaddr": "0x70000", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res3a_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2142,7 +2378,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "19"
+                    "21"
                 ], 
                 [
                     "XNOp", 
@@ -2206,7 +2442,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -2222,7 +2458,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -2243,26 +2479,26 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=128, height=1, width=1), sched 19 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3a_branch2c: type=Convolution, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3a_branch2c", 
-            "ops": 102760448, 
-            "schedule": 20, 
-            "xdnn_instr": "20 XNConv res3a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 28 28 128 0x150000 28 28 512 0", 
+            "ops": 103563264, 
+            "schedule": 22, 
+            "xdnn_instr": "22 XNConv res3a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 28 28 128 0x38000 28 28 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "20", 
-                "inaddr": "0x118000", 
+                "id": "22", 
+                "inaddr": "0x0", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3a_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x38000", 
                 "outchan": "512", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2278,7 +2514,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "20"
+                    "22"
                 ], 
                 [
                     "XNOp", 
@@ -2342,7 +2578,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -2358,7 +2594,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -2379,30 +2615,30 @@
             ]
         }, 
         {
-            "layer": "res3a: type=Eltwise, sizes=None, shapes=None, sched 20 Kernel None Strides None Padding None", 
+            "layer": "res3a: type=Eltwise, sizes=None, shapes=None, sched 22 Kernel None Strides None Padding None", 
             "name": "res3a", 
             "ops": 401408, 
-            "schedule": 21, 
-            "xdnn_instr": "21 XNEltwise res3a 1 0 1 0x0 0x150000 28 28 512 0x0 0", 
+            "schedule": 23, 
+            "xdnn_instr": "23 XNEltwise res3a 1 0 1 0x230000 0x38000 28 28 512 0x230000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "21", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "23", 
+                "inaddrA": "0x230000", 
+                "inaddrB": "0x38000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "name": "res3a", 
-                "outaddr": "0x0", 
+                "outaddr": "0x230000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "21"
+                    "23"
                 ], 
                 [
                     "XNOp", 
@@ -2426,11 +2662,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -2446,7 +2682,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -2455,26 +2691,26 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=512, height=1, width=1), sched 21 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3b_branch2a: type=Convolution, sizes=None, shapes=None, sched 23 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3b_branch2a", 
-            "ops": 102760448, 
-            "schedule": 22, 
-            "xdnn_instr": "22 XNConv res3b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 512 0xe0000 28 28 128 0", 
+            "ops": 102961152, 
+            "schedule": 24, 
+            "xdnn_instr": "24 XNConv res3b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x230000 28 28 512 0x0 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "22", 
-                "inaddr": "0x0", 
+                "id": "24", 
+                "inaddr": "0x230000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3b_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2490,7 +2726,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "22"
+                    "24"
                 ], 
                 [
                     "XNOp", 
@@ -2554,7 +2790,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -2570,7 +2806,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -2591,26 +2827,26 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=128, height=3, width=3), sched 22 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res3b_branch2b: type=Convolution, sizes=None, shapes=None, sched 24 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res3b_branch2b", 
-            "ops": 231211008, 
-            "schedule": 23, 
-            "xdnn_instr": "23 XNConv res3b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 28 28 128 0x118000 28 28 128 0", 
+            "ops": 233017344, 
+            "schedule": 25, 
+            "xdnn_instr": "25 XNConv res3b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x38000 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "23", 
-                "inaddr": "0xe0000", 
+                "id": "25", 
+                "inaddr": "0x0", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res3b_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2626,7 +2862,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "23"
+                    "25"
                 ], 
                 [
                     "XNOp", 
@@ -2690,7 +2926,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -2706,7 +2942,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -2727,26 +2963,26 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=128, height=1, width=1), sched 23 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3b_branch2c: type=Convolution, sizes=None, shapes=None, sched 25 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3b_branch2c", 
-            "ops": 102760448, 
-            "schedule": 24, 
-            "xdnn_instr": "24 XNConv res3b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 28 28 128 0x150000 28 28 512 0", 
+            "ops": 103563264, 
+            "schedule": 26, 
+            "xdnn_instr": "26 XNConv res3b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 28 28 128 0x70000 28 28 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "24", 
-                "inaddr": "0x118000", 
+                "id": "26", 
+                "inaddr": "0x38000", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3b_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x70000", 
                 "outchan": "512", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2762,7 +2998,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "24"
+                    "26"
                 ], 
                 [
                     "XNOp", 
@@ -2826,7 +3062,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -2842,7 +3078,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -2863,30 +3099,30 @@
             ]
         }, 
         {
-            "layer": "res3b: type=Eltwise, sizes=None, shapes=None, sched 24 Kernel None Strides None Padding None", 
+            "layer": "res3b: type=Eltwise, sizes=None, shapes=None, sched 26 Kernel None Strides None Padding None", 
             "name": "res3b", 
             "ops": 401408, 
-            "schedule": 25, 
-            "xdnn_instr": "25 XNEltwise res3b 1 0 1 0x0 0x150000 28 28 512 0x0 0", 
+            "schedule": 27, 
+            "xdnn_instr": "27 XNEltwise res3b 1 0 1 0x230000 0x70000 28 28 512 0x230000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "25", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "27", 
+                "inaddrA": "0x230000", 
+                "inaddrB": "0x70000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "name": "res3b", 
-                "outaddr": "0x0", 
+                "outaddr": "0x230000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "25"
+                    "27"
                 ], 
                 [
                     "XNOp", 
@@ -2910,11 +3146,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -2930,7 +3166,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -2939,26 +3175,26 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=512, height=1, width=1), sched 25 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3c_branch2a: type=Convolution, sizes=None, shapes=None, sched 27 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3c_branch2a", 
-            "ops": 102760448, 
-            "schedule": 26, 
-            "xdnn_instr": "26 XNConv res3c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 512 0xe0000 28 28 128 0", 
+            "ops": 102961152, 
+            "schedule": 28, 
+            "xdnn_instr": "28 XNConv res3c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x230000 28 28 512 0x0 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "26", 
-                "inaddr": "0x0", 
+                "id": "28", 
+                "inaddr": "0x230000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3c_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -2974,7 +3210,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "26"
+                    "28"
                 ], 
                 [
                     "XNOp", 
@@ -3038,7 +3274,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -3054,7 +3290,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -3075,26 +3311,26 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=128, height=3, width=3), sched 26 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res3c_branch2b: type=Convolution, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res3c_branch2b", 
-            "ops": 231211008, 
-            "schedule": 27, 
-            "xdnn_instr": "27 XNConv res3c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 28 28 128 0x118000 28 28 128 0", 
+            "ops": 233017344, 
+            "schedule": 29, 
+            "xdnn_instr": "29 XNConv res3c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x38000 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "27", 
-                "inaddr": "0xe0000", 
+                "id": "29", 
+                "inaddr": "0x0", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res3c_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -3110,7 +3346,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "27"
+                    "29"
                 ], 
                 [
                     "XNOp", 
@@ -3174,7 +3410,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -3190,7 +3426,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -3211,26 +3447,26 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=128, height=1, width=1), sched 27 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3c_branch2c: type=Convolution, sizes=None, shapes=None, sched 29 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3c_branch2c", 
-            "ops": 102760448, 
-            "schedule": 28, 
-            "xdnn_instr": "28 XNConv res3c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 28 28 128 0x150000 28 28 512 0", 
+            "ops": 103563264, 
+            "schedule": 30, 
+            "xdnn_instr": "30 XNConv res3c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 28 28 128 0x70000 28 28 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "28", 
-                "inaddr": "0x118000", 
+                "id": "30", 
+                "inaddr": "0x38000", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3c_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x70000", 
                 "outchan": "512", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -3246,7 +3482,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "28"
+                    "30"
                 ], 
                 [
                     "XNOp", 
@@ -3310,7 +3546,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -3326,7 +3562,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -3347,30 +3583,30 @@
             ]
         }, 
         {
-            "layer": "res3c: type=Eltwise, sizes=None, shapes=None, sched 28 Kernel None Strides None Padding None", 
+            "layer": "res3c: type=Eltwise, sizes=None, shapes=None, sched 30 Kernel None Strides None Padding None", 
             "name": "res3c", 
             "ops": 401408, 
-            "schedule": 29, 
-            "xdnn_instr": "29 XNEltwise res3c 1 0 1 0x0 0x150000 28 28 512 0x0 0", 
+            "schedule": 31, 
+            "xdnn_instr": "31 XNEltwise res3c 1 0 1 0x230000 0x70000 28 28 512 0x230000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "29", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "31", 
+                "inaddrA": "0x230000", 
+                "inaddrB": "0x70000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "name": "res3c", 
-                "outaddr": "0x0", 
+                "outaddr": "0x230000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "29"
+                    "31"
                 ], 
                 [
                     "XNOp", 
@@ -3394,11 +3630,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -3414,7 +3650,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -3423,26 +3659,26 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=512, height=1, width=1), sched 29 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3d_branch2a: type=Convolution, sizes=None, shapes=None, sched 31 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3d_branch2a", 
-            "ops": 102760448, 
-            "schedule": 30, 
-            "xdnn_instr": "30 XNConv res3d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 28 28 512 0xe0000 28 28 128 0", 
+            "ops": 102961152, 
+            "schedule": 32, 
+            "xdnn_instr": "32 XNConv res3d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x230000 28 28 512 0x0 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "30", 
-                "inaddr": "0x0", 
+                "id": "32", 
+                "inaddr": "0x230000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3d_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -3458,7 +3694,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "30"
+                    "32"
                 ], 
                 [
                     "XNOp", 
@@ -3522,7 +3758,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -3538,7 +3774,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -3559,26 +3795,26 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=128, channels=128, height=3, width=3), sched 30 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res3d_branch2b: type=Convolution, sizes=None, shapes=None, sched 32 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res3d_branch2b", 
-            "ops": 231211008, 
-            "schedule": 31, 
-            "xdnn_instr": "31 XNConv res3d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 28 28 128 0x118000 28 28 128 0", 
+            "ops": 233017344, 
+            "schedule": 33, 
+            "xdnn_instr": "33 XNConv res3d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x38000 28 28 128 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "31", 
-                "inaddr": "0xe0000", 
+                "id": "33", 
+                "inaddr": "0x0", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res3d_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "128", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -3594,7 +3830,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "31"
+                    "33"
                 ], 
                 [
                     "XNOp", 
@@ -3658,7 +3894,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -3674,7 +3910,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -3695,26 +3931,26 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=128, height=1, width=1), sched 31 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res3d_branch2c: type=Convolution, sizes=None, shapes=None, sched 33 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res3d_branch2c", 
-            "ops": 102760448, 
-            "schedule": 32, 
-            "xdnn_instr": "32 XNConv res3d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 28 28 128 0x150000 28 28 512 0", 
+            "ops": 103563264, 
+            "schedule": 34, 
+            "xdnn_instr": "34 XNConv res3d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 28 28 128 0x70000 28 28 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "32", 
-                "inaddr": "0x118000", 
+                "id": "34", 
+                "inaddr": "0x38000", 
                 "inchan": "128", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res3d_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x70000", 
                 "outchan": "512", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -3730,7 +3966,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "32"
+                    "34"
                 ], 
                 [
                     "XNOp", 
@@ -3794,7 +4030,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -3810,7 +4046,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -3831,30 +4067,30 @@
             ]
         }, 
         {
-            "layer": "res3d: type=Eltwise, sizes=None, shapes=None, sched 32 Kernel None Strides None Padding None", 
+            "layer": "res3d: type=Eltwise, sizes=None, shapes=None, sched 34 Kernel None Strides None Padding None", 
             "name": "res3d", 
             "ops": 401408, 
-            "schedule": 33, 
-            "xdnn_instr": "33 XNEltwise res3d 1 0 1 0x0 0x150000 28 28 512 0x0 0", 
+            "schedule": 35, 
+            "xdnn_instr": "35 XNEltwise res3d 1 0 1 0x230000 0x70000 28 28 512 0x230000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "33", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "35", 
+                "inaddrA": "0x230000", 
+                "inaddrB": "0x70000", 
                 "inchan": "512", 
                 "insize_h": "28", 
                 "insize_w": "28", 
                 "name": "res3d", 
-                "outaddr": "0x0", 
+                "outaddr": "0x230000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "33"
+                    "35"
                 ], 
                 [
                     "XNOp", 
@@ -3878,11 +4114,99 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x230000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x70000"
+                ], 
+                [
+                    "insize_w", 
+                    "28"
+                ], 
+                [
+                    "insize_h", 
+                    "28"
+                ], 
+                [
+                    "inchan", 
+                    "512"
+                ], 
+                [
+                    "outaddr", 
+                    "0x230000"
+                ], 
+                [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "maxpool_res4a_branch1: type=Pooling, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=1024, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res4a_branch1", 
+            "ops": 100352, 
+            "schedule": 36, 
+            "xdnn_instr": "36 XNMaxPool maxpool_res4a_branch1 1 1 2 2 0 0 0x230000 28 28 512 0x0 14 14 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNMaxPool", 
+                "id": "36", 
+                "inaddr": "0x230000", 
+                "inchan": "512", 
+                "insize_h": "28", 
+                "insize_w": "28", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "maxpool_res4a_branch1", 
+                "outaddr": "0x0", 
+                "outsize_h": "14", 
+                "outsize_w": "14", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
+                "strides_h": "2", 
+                "strides_w": "2"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "36"
+                ], 
+                [
+                    "XNOp", 
+                    "XNMaxPool"
+                ], 
+                [
+                    "name", 
+                    "maxpool_res4a_branch1"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "2"
+                ], 
+                [
+                    "strides_h", 
+                    "2"
+                ], 
+                [
+                    "paddings_w", 
+                    "0"
+                ], 
+                [
+                    "paddings_h", 
+                    "0"
+                ], 
+                [
+                    "inaddr", 
+                    "0x230000"
                 ], 
                 [
                     "insize_w", 
@@ -3901,32 +4225,40 @@
                     "0x0"
                 ], 
                 [
+                    "outsize_w", 
+                    "14"
+                ], 
+                [
+                    "outsize_h", 
+                    "14"
+                ], 
+                [
                     "Bypass_Perf_Opt", 
                     "0"
                 ]
             ]
         }, 
         {
-            "layer": "res4a_branch1: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=512, height=1, width=1), sched 33 Kernel [1L] Strides [2L] Padding [0L]", 
+            "layer": "res4a_branch1: type=Convolution, sizes=None, shapes=None, sched 36 Kernel SizeType(batches=1024, channels=512, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4a_branch1", 
-            "ops": 205520896, 
-            "schedule": 34, 
-            "xdnn_instr": "34 XNConv res4a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x0 28 28 512 0xe0000 14 14 1024 0", 
+            "ops": 205922304, 
+            "schedule": 37, 
+            "xdnn_instr": "37 XNConv res4a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 14 14 512 0x70000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "34", 
+                "id": "37", 
                 "inaddr": "0x0", 
                 "inchan": "512", 
-                "insize_h": "28", 
-                "insize_w": "28", 
+                "insize_h": "14", 
+                "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4a_branch1", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -3936,13 +4268,13 @@
                 "preshift": "16", 
                 "relu": "0", 
                 "scale": "26", 
-                "strides_h": "2", 
-                "strides_w": "2"
+                "strides_h": "1", 
+                "strides_w": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "34"
+                    "37"
                 ], 
                 [
                     "XNOp", 
@@ -3962,11 +4294,11 @@
                 ], 
                 [
                     "strides_w", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "strides_h", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "padding_w", 
@@ -4010,11 +4342,11 @@
                 ], 
                 [
                     "insize_w", 
-                    "28"
+                    "14"
                 ], 
                 [
                     "insize_h", 
-                    "28"
+                    "14"
                 ], 
                 [
                     "inchan", 
@@ -4022,7 +4354,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -4043,26 +4375,122 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=512, height=1, width=1), sched 34 Kernel [1L] Strides [2L] Padding [0L]", 
+            "layer": "maxpool_res4a_branch2a: type=Pooling, sizes=None, shapes=None, sched 37 Kernel SizeType(batches=256, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res4a_branch2a", 
+            "ops": 100352, 
+            "schedule": 38, 
+            "xdnn_instr": "38 XNMaxPool maxpool_res4a_branch2a 1 1 2 2 0 0 0x230000 28 28 512 0x0 14 14 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNMaxPool", 
+                "id": "38", 
+                "inaddr": "0x230000", 
+                "inchan": "512", 
+                "insize_h": "28", 
+                "insize_w": "28", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "maxpool_res4a_branch2a", 
+                "outaddr": "0x0", 
+                "outsize_h": "14", 
+                "outsize_w": "14", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
+                "strides_h": "2", 
+                "strides_w": "2"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "38"
+                ], 
+                [
+                    "XNOp", 
+                    "XNMaxPool"
+                ], 
+                [
+                    "name", 
+                    "maxpool_res4a_branch2a"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "2"
+                ], 
+                [
+                    "strides_h", 
+                    "2"
+                ], 
+                [
+                    "paddings_w", 
+                    "0"
+                ], 
+                [
+                    "paddings_h", 
+                    "0"
+                ], 
+                [
+                    "inaddr", 
+                    "0x230000"
+                ], 
+                [
+                    "insize_w", 
+                    "28"
+                ], 
+                [
+                    "insize_h", 
+                    "28"
+                ], 
+                [
+                    "inchan", 
+                    "512"
+                ], 
+                [
+                    "outaddr", 
+                    "0x0"
+                ], 
+                [
+                    "outsize_w", 
+                    "14"
+                ], 
+                [
+                    "outsize_h", 
+                    "14"
+                ], 
+                [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "res4a_branch2a: type=Convolution, sizes=None, shapes=None, sched 38 Kernel SizeType(batches=256, channels=512, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4a_branch2a", 
-            "ops": 51380224, 
-            "schedule": 35, 
-            "xdnn_instr": "35 XNConv res4a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x0 28 28 512 0x1c0000 14 14 256 0", 
+            "ops": 51480576, 
+            "schedule": 39, 
+            "xdnn_instr": "39 XNConv res4a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 512 0x150000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "35", 
+                "id": "39", 
                 "inaddr": "0x0", 
                 "inchan": "512", 
-                "insize_h": "28", 
-                "insize_w": "28", 
+                "insize_h": "14", 
+                "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4a_branch2a", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "256", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -4072,13 +4500,13 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "strides_h": "2", 
-                "strides_w": "2"
+                "strides_h": "1", 
+                "strides_w": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "35"
+                    "39"
                 ], 
                 [
                     "XNOp", 
@@ -4098,11 +4526,11 @@
                 ], 
                 [
                     "strides_w", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "strides_h", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "padding_w", 
@@ -4146,11 +4574,11 @@
                 ], 
                 [
                     "insize_w", 
-                    "28"
+                    "14"
                 ], 
                 [
                     "insize_h", 
-                    "28"
+                    "14"
                 ], 
                 [
                     "inchan", 
@@ -4158,7 +4586,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -4179,19 +4607,19 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 35 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4a_branch2b: type=Convolution, sizes=None, shapes=None, sched 39 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4a_branch2b", 
-            "ops": 231211008, 
-            "schedule": 36, 
-            "xdnn_instr": "36 XNConv res4a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x1c0000 14 14 256 0x0 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 40, 
+            "xdnn_instr": "40 XNConv res4a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x150000 14 14 256 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "36", 
-                "inaddr": "0x1c0000", 
+                "id": "40", 
+                "inaddr": "0x150000", 
                 "inchan": "256", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -4214,7 +4642,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "36"
+                    "40"
                 ], 
                 [
                     "XNOp", 
@@ -4278,7 +4706,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -4315,18 +4743,18 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 36 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4a_branch2c: type=Convolution, sizes=None, shapes=None, sched 40 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4a_branch2c", 
-            "ops": 102760448, 
-            "schedule": 37, 
-            "xdnn_instr": "37 XNConv res4a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 41, 
+            "xdnn_instr": "41 XNConv res4a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "37", 
+                "id": "41", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -4334,7 +4762,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4a_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -4350,7 +4778,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "37"
+                    "41"
                 ], 
                 [
                     "XNOp", 
@@ -4430,7 +4858,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -4451,30 +4879,30 @@
             ]
         }, 
         {
-            "layer": "res4a: type=Eltwise, sizes=None, shapes=None, sched 37 Kernel None Strides None Padding None", 
+            "layer": "res4a: type=Eltwise, sizes=None, shapes=None, sched 41 Kernel None Strides None Padding None", 
             "name": "res4a", 
             "ops": 200704, 
-            "schedule": 38, 
-            "xdnn_instr": "38 XNEltwise res4a 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 42, 
+            "xdnn_instr": "42 XNEltwise res4a 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "38", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "42", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "38"
+                    "42"
                 ], 
                 [
                     "XNOp", 
@@ -4498,11 +4926,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -4518,7 +4946,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -4527,19 +4955,19 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=1024, height=1, width=1), sched 38 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4b_branch2a: type=Convolution, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4b_branch2a", 
-            "ops": 102760448, 
-            "schedule": 39, 
-            "xdnn_instr": "39 XNConv res4b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x0 14 14 256 0", 
+            "ops": 102860800, 
+            "schedule": 43, 
+            "xdnn_instr": "43 XNConv res4b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 14 14 1024 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "39", 
-                "inaddr": "0xe0000", 
+                "id": "43", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -4562,7 +4990,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "39"
+                    "43"
                 ], 
                 [
                     "XNOp", 
@@ -4626,7 +5054,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -4663,18 +5091,18 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 39 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4b_branch2b: type=Convolution, sizes=None, shapes=None, sched 43 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4b_branch2b", 
-            "ops": 231211008, 
-            "schedule": 40, 
-            "xdnn_instr": "40 XNConv res4b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 44, 
+            "xdnn_instr": "44 XNConv res4b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "40", 
+                "id": "44", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -4698,7 +5126,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "40"
+                    "44"
                 ], 
                 [
                     "XNOp", 
@@ -4799,18 +5227,18 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 40 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4b_branch2c: type=Convolution, sizes=None, shapes=None, sched 44 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4b_branch2c", 
-            "ops": 102760448, 
-            "schedule": 41, 
-            "xdnn_instr": "41 XNConv res4b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 45, 
+            "xdnn_instr": "45 XNConv res4b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "41", 
+                "id": "45", 
                 "inaddr": "0x38000", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -4818,7 +5246,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4b_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -4834,7 +5262,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "41"
+                    "45"
                 ], 
                 [
                     "XNOp", 
@@ -4914,7 +5342,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -4935,30 +5363,30 @@
             ]
         }, 
         {
-            "layer": "res4b: type=Eltwise, sizes=None, shapes=None, sched 41 Kernel None Strides None Padding None", 
+            "layer": "res4b: type=Eltwise, sizes=None, shapes=None, sched 45 Kernel None Strides None Padding None", 
             "name": "res4b", 
             "ops": 200704, 
-            "schedule": 42, 
-            "xdnn_instr": "42 XNEltwise res4b 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 46, 
+            "xdnn_instr": "46 XNEltwise res4b 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "42", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "46", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4b", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "42"
+                    "46"
                 ], 
                 [
                     "XNOp", 
@@ -4982,11 +5410,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -5002,7 +5430,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -5011,19 +5439,19 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=1024, height=1, width=1), sched 42 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4c_branch2a: type=Convolution, sizes=None, shapes=None, sched 46 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4c_branch2a", 
-            "ops": 102760448, 
-            "schedule": 43, 
-            "xdnn_instr": "43 XNConv res4c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x0 14 14 256 0", 
+            "ops": 102860800, 
+            "schedule": 47, 
+            "xdnn_instr": "47 XNConv res4c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 14 14 1024 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "43", 
-                "inaddr": "0xe0000", 
+                "id": "47", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -5046,7 +5474,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "43"
+                    "47"
                 ], 
                 [
                     "XNOp", 
@@ -5110,7 +5538,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -5147,18 +5575,18 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 43 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4c_branch2b: type=Convolution, sizes=None, shapes=None, sched 47 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4c_branch2b", 
-            "ops": 231211008, 
-            "schedule": 44, 
-            "xdnn_instr": "44 XNConv res4c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 48, 
+            "xdnn_instr": "48 XNConv res4c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "44", 
+                "id": "48", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -5182,7 +5610,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "44"
+                    "48"
                 ], 
                 [
                     "XNOp", 
@@ -5283,18 +5711,18 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 44 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4c_branch2c: type=Convolution, sizes=None, shapes=None, sched 48 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4c_branch2c", 
-            "ops": 102760448, 
-            "schedule": 45, 
-            "xdnn_instr": "45 XNConv res4c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 49, 
+            "xdnn_instr": "49 XNConv res4c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "45", 
+                "id": "49", 
                 "inaddr": "0x38000", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -5302,7 +5730,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4c_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -5318,7 +5746,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "45"
+                    "49"
                 ], 
                 [
                     "XNOp", 
@@ -5398,7 +5826,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -5419,30 +5847,30 @@
             ]
         }, 
         {
-            "layer": "res4c: type=Eltwise, sizes=None, shapes=None, sched 45 Kernel None Strides None Padding None", 
+            "layer": "res4c: type=Eltwise, sizes=None, shapes=None, sched 49 Kernel None Strides None Padding None", 
             "name": "res4c", 
             "ops": 200704, 
-            "schedule": 46, 
-            "xdnn_instr": "46 XNEltwise res4c 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 50, 
+            "xdnn_instr": "50 XNEltwise res4c 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "46", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "50", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4c", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "46"
+                    "50"
                 ], 
                 [
                     "XNOp", 
@@ -5466,11 +5894,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -5486,7 +5914,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -5495,19 +5923,19 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=1024, height=1, width=1), sched 46 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4d_branch2a: type=Convolution, sizes=None, shapes=None, sched 50 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4d_branch2a", 
-            "ops": 102760448, 
-            "schedule": 47, 
-            "xdnn_instr": "47 XNConv res4d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x0 14 14 256 0", 
+            "ops": 102860800, 
+            "schedule": 51, 
+            "xdnn_instr": "51 XNConv res4d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 14 14 1024 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "47", 
-                "inaddr": "0xe0000", 
+                "id": "51", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -5530,7 +5958,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "47"
+                    "51"
                 ], 
                 [
                     "XNOp", 
@@ -5594,7 +6022,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -5631,18 +6059,18 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 47 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4d_branch2b: type=Convolution, sizes=None, shapes=None, sched 51 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4d_branch2b", 
-            "ops": 231211008, 
-            "schedule": 48, 
-            "xdnn_instr": "48 XNConv res4d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 52, 
+            "xdnn_instr": "52 XNConv res4d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "48", 
+                "id": "52", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -5666,7 +6094,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "48"
+                    "52"
                 ], 
                 [
                     "XNOp", 
@@ -5767,18 +6195,18 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 48 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4d_branch2c: type=Convolution, sizes=None, shapes=None, sched 52 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4d_branch2c", 
-            "ops": 102760448, 
-            "schedule": 49, 
-            "xdnn_instr": "49 XNConv res4d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 53, 
+            "xdnn_instr": "53 XNConv res4d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "49", 
+                "id": "53", 
                 "inaddr": "0x38000", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -5786,7 +6214,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4d_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -5802,7 +6230,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "49"
+                    "53"
                 ], 
                 [
                     "XNOp", 
@@ -5882,7 +6310,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -5903,30 +6331,30 @@
             ]
         }, 
         {
-            "layer": "res4d: type=Eltwise, sizes=None, shapes=None, sched 49 Kernel None Strides None Padding None", 
+            "layer": "res4d: type=Eltwise, sizes=None, shapes=None, sched 53 Kernel None Strides None Padding None", 
             "name": "res4d", 
             "ops": 200704, 
-            "schedule": 50, 
-            "xdnn_instr": "50 XNEltwise res4d 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 54, 
+            "xdnn_instr": "54 XNEltwise res4d 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "50", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "54", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4d", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "50"
+                    "54"
                 ], 
                 [
                     "XNOp", 
@@ -5950,11 +6378,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -5970,7 +6398,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -5979,19 +6407,19 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=1024, height=1, width=1), sched 50 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4e_branch2a: type=Convolution, sizes=None, shapes=None, sched 54 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4e_branch2a", 
-            "ops": 102760448, 
-            "schedule": 51, 
-            "xdnn_instr": "51 XNConv res4e_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x0 14 14 256 0", 
+            "ops": 102860800, 
+            "schedule": 55, 
+            "xdnn_instr": "55 XNConv res4e_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 14 14 1024 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "51", 
-                "inaddr": "0xe0000", 
+                "id": "55", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -6014,7 +6442,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "51"
+                    "55"
                 ], 
                 [
                     "XNOp", 
@@ -6078,7 +6506,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -6115,18 +6543,18 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 51 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4e_branch2b: type=Convolution, sizes=None, shapes=None, sched 55 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4e_branch2b", 
-            "ops": 231211008, 
-            "schedule": 52, 
-            "xdnn_instr": "52 XNConv res4e_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 56, 
+            "xdnn_instr": "56 XNConv res4e_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "52", 
+                "id": "56", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -6150,7 +6578,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "52"
+                    "56"
                 ], 
                 [
                     "XNOp", 
@@ -6251,18 +6679,18 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 52 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4e_branch2c: type=Convolution, sizes=None, shapes=None, sched 56 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4e_branch2c", 
-            "ops": 102760448, 
-            "schedule": 53, 
-            "xdnn_instr": "53 XNConv res4e_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 57, 
+            "xdnn_instr": "57 XNConv res4e_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "53", 
+                "id": "57", 
                 "inaddr": "0x38000", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -6270,7 +6698,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4e_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -6286,7 +6714,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "53"
+                    "57"
                 ], 
                 [
                     "XNOp", 
@@ -6366,7 +6794,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -6387,30 +6815,30 @@
             ]
         }, 
         {
-            "layer": "res4e: type=Eltwise, sizes=None, shapes=None, sched 53 Kernel None Strides None Padding None", 
+            "layer": "res4e: type=Eltwise, sizes=None, shapes=None, sched 57 Kernel None Strides None Padding None", 
             "name": "res4e", 
             "ops": 200704, 
-            "schedule": 54, 
-            "xdnn_instr": "54 XNEltwise res4e 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 58, 
+            "xdnn_instr": "58 XNEltwise res4e 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "54", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "58", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4e", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "54"
+                    "58"
                 ], 
                 [
                     "XNOp", 
@@ -6434,11 +6862,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -6454,7 +6882,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -6463,19 +6891,19 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=1024, height=1, width=1), sched 54 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4f_branch2a: type=Convolution, sizes=None, shapes=None, sched 58 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4f_branch2a", 
-            "ops": 102760448, 
-            "schedule": 55, 
-            "xdnn_instr": "55 XNConv res4f_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x0 14 14 256 0", 
+            "ops": 102860800, 
+            "schedule": 59, 
+            "xdnn_instr": "59 XNConv res4f_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x70000 14 14 1024 0x0 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "55", 
-                "inaddr": "0xe0000", 
+                "id": "59", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
@@ -6498,7 +6926,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "55"
+                    "59"
                 ], 
                 [
                     "XNOp", 
@@ -6562,7 +6990,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -6599,18 +7027,18 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=256, channels=256, height=3, width=3), sched 55 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res4f_branch2b: type=Convolution, sizes=None, shapes=None, sched 59 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res4f_branch2b", 
-            "ops": 231211008, 
-            "schedule": 56, 
-            "xdnn_instr": "56 XNConv res4f_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
+            "ops": 232114176, 
+            "schedule": 60, 
+            "xdnn_instr": "60 XNConv res4f_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 14 14 256 0x38000 14 14 256 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "56", 
+                "id": "60", 
                 "inaddr": "0x0", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -6634,7 +7062,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "56"
+                    "60"
                 ], 
                 [
                     "XNOp", 
@@ -6735,18 +7163,18 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=1024, channels=256, height=1, width=1), sched 56 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res4f_branch2c: type=Convolution, sizes=None, shapes=None, sched 60 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res4f_branch2c", 
-            "ops": 102760448, 
-            "schedule": 57, 
-            "xdnn_instr": "57 XNConv res4f_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x1c0000 14 14 1024 0", 
+            "ops": 103161856, 
+            "schedule": 61, 
+            "xdnn_instr": "61 XNConv res4f_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 14 14 256 0x150000 14 14 1024 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "57", 
+                "id": "61", 
                 "inaddr": "0x38000", 
                 "inchan": "256", 
                 "insize_h": "14", 
@@ -6754,7 +7182,7 @@
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res4f_branch2c", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x150000", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -6770,7 +7198,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "57"
+                    "61"
                 ], 
                 [
                     "XNOp", 
@@ -6850,7 +7278,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "outsize_w", 
@@ -6871,30 +7299,30 @@
             ]
         }, 
         {
-            "layer": "res4f: type=Eltwise, sizes=None, shapes=None, sched 57 Kernel None Strides None Padding None", 
+            "layer": "res4f: type=Eltwise, sizes=None, shapes=None, sched 61 Kernel None Strides None Padding None", 
             "name": "res4f", 
             "ops": 200704, 
-            "schedule": 58, 
-            "xdnn_instr": "58 XNEltwise res4f 1 0 1 0xe0000 0x1c0000 14 14 1024 0xe0000 0", 
+            "schedule": 62, 
+            "xdnn_instr": "62 XNEltwise res4f 1 0 1 0x70000 0x150000 14 14 1024 0x70000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "58", 
-                "inaddrA": "0xe0000", 
-                "inaddrB": "0x1c0000", 
+                "id": "62", 
+                "inaddrA": "0x70000", 
+                "inaddrB": "0x150000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "name": "res4f", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x70000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "58"
+                    "62"
                 ], 
                 [
                     "XNOp", 
@@ -6918,11 +7346,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x1c0000"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -6938,7 +7366,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -6947,50 +7375,42 @@
             ]
         }, 
         {
-            "layer": "res5a_branch1: type=Convolution, sizes=None, shapes=SizeType(batches=2048, channels=1024, height=1, width=1), sched 58 Kernel [1L] Strides [2L] Padding [0L]", 
-            "name": "res5a_branch1", 
-            "ops": 205520896, 
-            "schedule": 59, 
-            "xdnn_instr": "59 XNConv res5a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0xe0000 14 14 1024 0x0 7 7 2048 0", 
+            "layer": "maxpool_res5a_branch1: type=Pooling, sizes=None, shapes=None, sched 62 Kernel SizeType(batches=2048, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res5a_branch1", 
+            "ops": 50176, 
+            "schedule": 63, 
+            "xdnn_instr": "63 XNMaxPool maxpool_res5a_branch1 1 1 2 2 0 0 0x70000 14 14 1024 0x0 7 7 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
-                "XNOp": "XNConv", 
-                "bias": "1", 
-                "dilation_h": "1", 
-                "dilation_w": "1", 
-                "id": "59", 
-                "inaddr": "0xe0000", 
+                "XNOp": "XNMaxPool", 
+                "id": "63", 
+                "inaddr": "0x70000", 
                 "inchan": "1024", 
                 "insize_h": "14", 
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5a_branch1", 
+                "name": "maxpool_res5a_branch1", 
                 "outaddr": "0x0", 
-                "outchan": "2048", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
-                "padding_h": "0", 
-                "padding_w": "0", 
-                "postshift": "2", 
-                "preshift": "16", 
-                "relu": "0", 
-                "scale": "26", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
                 "strides_h": "2", 
                 "strides_w": "2"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "59"
+                    "63"
                 ], 
                 [
                     "XNOp", 
-                    "XNConv"
+                    "XNMaxPool"
                 ], 
                 [
                     "name", 
-                    "res5a_branch1"
+                    "maxpool_res5a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -7009,44 +7429,16 @@
                     "2"
                 ], 
                 [
-                    "padding_w", 
+                    "paddings_w", 
                     "0"
                 ], 
                 [
-                    "padding_h", 
+                    "paddings_h", 
                     "0"
-                ], 
-                [
-                    "dilation_w", 
-                    "1"
-                ], 
-                [
-                    "dilation_h", 
-                    "1"
-                ], 
-                [
-                    "preshift", 
-                    "16"
-                ], 
-                [
-                    "scale", 
-                    "26"
-                ], 
-                [
-                    "postshift", 
-                    "2"
-                ], 
-                [
-                    "relu", 
-                    "0"
-                ], 
-                [
-                    "bias", 
-                    "1"
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -7073,6 +7465,138 @@
                     "7"
                 ], 
                 [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "res5a_branch1: type=Convolution, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=2048, channels=1024, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5a_branch1", 
+            "ops": 205721600, 
+            "schedule": 64, 
+            "xdnn_instr": "64 XNConv res5a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 7 7 1024 0x150000 7 7 2048 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNConv", 
+                "bias": "1", 
+                "dilation_h": "1", 
+                "dilation_w": "1", 
+                "id": "64", 
+                "inaddr": "0x0", 
+                "inchan": "1024", 
+                "insize_h": "7", 
+                "insize_w": "7", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "res5a_branch1", 
+                "outaddr": "0x150000", 
+                "outchan": "2048", 
+                "outsize_h": "7", 
+                "outsize_w": "7", 
+                "padding_h": "0", 
+                "padding_w": "0", 
+                "postshift": "2", 
+                "preshift": "16", 
+                "relu": "0", 
+                "scale": "26", 
+                "strides_h": "1", 
+                "strides_w": "1"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "64"
+                ], 
+                [
+                    "XNOp", 
+                    "XNConv"
+                ], 
+                [
+                    "name", 
+                    "res5a_branch1"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "1"
+                ], 
+                [
+                    "strides_h", 
+                    "1"
+                ], 
+                [
+                    "padding_w", 
+                    "0"
+                ], 
+                [
+                    "padding_h", 
+                    "0"
+                ], 
+                [
+                    "dilation_w", 
+                    "1"
+                ], 
+                [
+                    "dilation_h", 
+                    "1"
+                ], 
+                [
+                    "preshift", 
+                    "16"
+                ], 
+                [
+                    "scale", 
+                    "26"
+                ], 
+                [
+                    "postshift", 
+                    "2"
+                ], 
+                [
+                    "relu", 
+                    "0"
+                ], 
+                [
+                    "bias", 
+                    "1"
+                ], 
+                [
+                    "inaddr", 
+                    "0x0"
+                ], 
+                [
+                    "insize_w", 
+                    "7"
+                ], 
+                [
+                    "insize_h", 
+                    "7"
+                ], 
+                [
+                    "inchan", 
+                    "1024"
+                ], 
+                [
+                    "outaddr", 
+                    "0x150000"
+                ], 
+                [
+                    "outsize_w", 
+                    "7"
+                ], 
+                [
+                    "outsize_h", 
+                    "7"
+                ], 
+                [
                     "outchan", 
                     "2048"
                 ], 
@@ -7083,26 +7607,122 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=1024, height=1, width=1), sched 59 Kernel [1L] Strides [2L] Padding [0L]", 
+            "layer": "maxpool_res5a_branch2a: type=Pooling, sizes=None, shapes=None, sched 64 Kernel SizeType(batches=512, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "maxpool_res5a_branch2a", 
+            "ops": 50176, 
+            "schedule": 65, 
+            "xdnn_instr": "65 XNMaxPool maxpool_res5a_branch2a 1 1 2 2 0 0 0x70000 14 14 1024 0x0 7 7 0", 
+            "xdnn_kv": {
+                "Bypass_Perf_Opt": "0", 
+                "XNOp": "XNMaxPool", 
+                "id": "65", 
+                "inaddr": "0x70000", 
+                "inchan": "1024", 
+                "insize_h": "14", 
+                "insize_w": "14", 
+                "kernel_h": "1", 
+                "kernel_w": "1", 
+                "name": "maxpool_res5a_branch2a", 
+                "outaddr": "0x0", 
+                "outsize_h": "7", 
+                "outsize_w": "7", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
+                "strides_h": "2", 
+                "strides_w": "2"
+            }, 
+            "xdnn_list": [
+                [
+                    "id", 
+                    "65"
+                ], 
+                [
+                    "XNOp", 
+                    "XNMaxPool"
+                ], 
+                [
+                    "name", 
+                    "maxpool_res5a_branch2a"
+                ], 
+                [
+                    "kernel_w", 
+                    "1"
+                ], 
+                [
+                    "kernel_h", 
+                    "1"
+                ], 
+                [
+                    "strides_w", 
+                    "2"
+                ], 
+                [
+                    "strides_h", 
+                    "2"
+                ], 
+                [
+                    "paddings_w", 
+                    "0"
+                ], 
+                [
+                    "paddings_h", 
+                    "0"
+                ], 
+                [
+                    "inaddr", 
+                    "0x70000"
+                ], 
+                [
+                    "insize_w", 
+                    "14"
+                ], 
+                [
+                    "insize_h", 
+                    "14"
+                ], 
+                [
+                    "inchan", 
+                    "1024"
+                ], 
+                [
+                    "outaddr", 
+                    "0x0"
+                ], 
+                [
+                    "outsize_w", 
+                    "7"
+                ], 
+                [
+                    "outsize_h", 
+                    "7"
+                ], 
+                [
+                    "Bypass_Perf_Opt", 
+                    "0"
+                ]
+            ]
+        }, 
+        {
+            "layer": "res5a_branch2a: type=Convolution, sizes=None, shapes=None, sched 65 Kernel SizeType(batches=512, channels=1024, height=1, width=1) Strides SizeType(batches=1, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5a_branch2a", 
-            "ops": 51380224, 
-            "schedule": 60, 
-            "xdnn_instr": "60 XNConv res5a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0xe0000 14 14 1024 0x1c0000 7 7 512 0", 
+            "ops": 51430400, 
+            "schedule": 66, 
+            "xdnn_instr": "66 XNConv res5a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 1024 0x70000 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "60", 
-                "inaddr": "0xe0000", 
+                "id": "66", 
+                "inaddr": "0x0", 
                 "inchan": "1024", 
-                "insize_h": "14", 
-                "insize_w": "14", 
+                "insize_h": "7", 
+                "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5a_branch2a", 
-                "outaddr": "0x1c0000", 
+                "outaddr": "0x70000", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7112,13 +7732,13 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "strides_h": "2", 
-                "strides_w": "2"
+                "strides_h": "1", 
+                "strides_w": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "60"
+                    "66"
                 ], 
                 [
                     "XNOp", 
@@ -7138,11 +7758,11 @@
                 ], 
                 [
                     "strides_w", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "strides_h", 
-                    "2"
+                    "1"
                 ], 
                 [
                     "padding_w", 
@@ -7182,15 +7802,15 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
-                    "14"
+                    "7"
                 ], 
                 [
                     "insize_h", 
-                    "14"
+                    "7"
                 ], 
                 [
                     "inchan", 
@@ -7198,7 +7818,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x1c0000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -7219,26 +7839,26 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=512, height=3, width=3), sched 60 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res5a_branch2b: type=Convolution, sizes=None, shapes=None, sched 66 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res5a_branch2b", 
-            "ops": 231211008, 
-            "schedule": 61, 
-            "xdnn_instr": "61 XNConv res5a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x1c0000 7 7 512 0xe0000 7 7 512 0", 
+            "ops": 231662592, 
+            "schedule": 67, 
+            "xdnn_instr": "67 XNConv res5a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x70000 7 7 512 0x0 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "61", 
-                "inaddr": "0x1c0000", 
+                "id": "67", 
+                "inaddr": "0x70000", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res5a_branch2b", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7254,7 +7874,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "61"
+                    "67"
                 ], 
                 [
                     "XNOp", 
@@ -7318,7 +7938,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x1c0000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -7334,7 +7954,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -7355,26 +7975,26 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=2048, channels=512, height=1, width=1), sched 61 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res5a_branch2c: type=Convolution, sizes=None, shapes=None, sched 67 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5a_branch2c", 
-            "ops": 102760448, 
-            "schedule": 62, 
-            "xdnn_instr": "62 XNConv res5a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xe0000 7 7 512 0x118000 7 7 2048 0", 
+            "ops": 102961152, 
+            "schedule": 68, 
+            "xdnn_instr": "68 XNConv res5a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 7 7 512 0x38000 7 7 2048 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "62", 
-                "inaddr": "0xe0000", 
+                "id": "68", 
+                "inaddr": "0x0", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5a_branch2c", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7390,7 +8010,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "62"
+                    "68"
                 ], 
                 [
                     "XNOp", 
@@ -7454,7 +8074,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -7470,7 +8090,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -7491,30 +8111,30 @@
             ]
         }, 
         {
-            "layer": "res5a: type=Eltwise, sizes=None, shapes=None, sched 62 Kernel None Strides None Padding None", 
+            "layer": "res5a: type=Eltwise, sizes=None, shapes=None, sched 68 Kernel None Strides None Padding None", 
             "name": "res5a", 
             "ops": 100352, 
-            "schedule": 63, 
-            "xdnn_instr": "63 XNEltwise res5a 1 0 1 0x0 0x118000 7 7 2048 0x0 0", 
+            "schedule": 69, 
+            "xdnn_instr": "69 XNEltwise res5a 1 0 1 0x150000 0x38000 7 7 2048 0x150000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "63", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x118000", 
+                "id": "69", 
+                "inaddrA": "0x150000", 
+                "inaddrB": "0x38000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "name": "res5a", 
-                "outaddr": "0x0", 
+                "outaddr": "0x150000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "63"
+                    "69"
                 ], 
                 [
                     "XNOp", 
@@ -7538,11 +8158,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -7558,7 +8178,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -7567,26 +8187,26 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=2048, height=1, width=1), sched 63 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res5b_branch2a: type=Convolution, sizes=None, shapes=None, sched 69 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5b_branch2a", 
-            "ops": 102760448, 
-            "schedule": 64, 
-            "xdnn_instr": "64 XNConv res5b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 2048 0xe0000 7 7 512 0", 
+            "ops": 102810624, 
+            "schedule": 70, 
+            "xdnn_instr": "70 XNConv res5b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x150000 7 7 2048 0x0 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "64", 
-                "inaddr": "0x0", 
+                "id": "70", 
+                "inaddr": "0x150000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5b_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7602,7 +8222,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "64"
+                    "70"
                 ], 
                 [
                     "XNOp", 
@@ -7666,7 +8286,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -7682,7 +8302,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -7703,26 +8323,26 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=512, height=3, width=3), sched 64 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res5b_branch2b: type=Convolution, sizes=None, shapes=None, sched 70 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res5b_branch2b", 
-            "ops": 231211008, 
-            "schedule": 65, 
-            "xdnn_instr": "65 XNConv res5b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 7 7 512 0x118000 7 7 512 0", 
+            "ops": 231662592, 
+            "schedule": 71, 
+            "xdnn_instr": "71 XNConv res5b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x38000 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "65", 
-                "inaddr": "0xe0000", 
+                "id": "71", 
+                "inaddr": "0x0", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res5b_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7738,7 +8358,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "65"
+                    "71"
                 ], 
                 [
                     "XNOp", 
@@ -7802,7 +8422,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -7818,7 +8438,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -7839,26 +8459,26 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=2048, channels=512, height=1, width=1), sched 65 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res5b_branch2c: type=Convolution, sizes=None, shapes=None, sched 71 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5b_branch2c", 
-            "ops": 102760448, 
-            "schedule": 66, 
-            "xdnn_instr": "66 XNConv res5b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 7 7 512 0x150000 7 7 2048 0", 
+            "ops": 102961152, 
+            "schedule": 72, 
+            "xdnn_instr": "72 XNConv res5b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 7 7 512 0x70000 7 7 2048 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "66", 
-                "inaddr": "0x118000", 
+                "id": "72", 
+                "inaddr": "0x38000", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5b_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x70000", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -7874,7 +8494,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "66"
+                    "72"
                 ], 
                 [
                     "XNOp", 
@@ -7938,7 +8558,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -7954,7 +8574,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -7975,30 +8595,30 @@
             ]
         }, 
         {
-            "layer": "res5b: type=Eltwise, sizes=None, shapes=None, sched 66 Kernel None Strides None Padding None", 
+            "layer": "res5b: type=Eltwise, sizes=None, shapes=None, sched 72 Kernel None Strides None Padding None", 
             "name": "res5b", 
             "ops": 100352, 
-            "schedule": 67, 
-            "xdnn_instr": "67 XNEltwise res5b 1 0 1 0x0 0x150000 7 7 2048 0x0 0", 
+            "schedule": 73, 
+            "xdnn_instr": "73 XNEltwise res5b 1 0 1 0x150000 0x70000 7 7 2048 0x150000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "67", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "73", 
+                "inaddrA": "0x150000", 
+                "inaddrB": "0x70000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "name": "res5b", 
-                "outaddr": "0x0", 
+                "outaddr": "0x150000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "67"
+                    "73"
                 ], 
                 [
                     "XNOp", 
@@ -8022,11 +8642,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -8042,7 +8662,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -8051,26 +8671,26 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2a: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=2048, height=1, width=1), sched 67 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res5c_branch2a: type=Convolution, sizes=None, shapes=None, sched 73 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5c_branch2a", 
-            "ops": 102760448, 
-            "schedule": 68, 
-            "xdnn_instr": "68 XNConv res5c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 7 7 2048 0xe0000 7 7 512 0", 
+            "ops": 102810624, 
+            "schedule": 74, 
+            "xdnn_instr": "74 XNConv res5c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x150000 7 7 2048 0x0 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "68", 
-                "inaddr": "0x0", 
+                "id": "74", 
+                "inaddr": "0x150000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5c_branch2a", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -8086,7 +8706,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "68"
+                    "74"
                 ], 
                 [
                     "XNOp", 
@@ -8150,7 +8770,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -8166,7 +8786,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -8187,26 +8807,26 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2b: type=Convolution, sizes=None, shapes=SizeType(batches=512, channels=512, height=3, width=3), sched 68 Kernel [3L] Strides [1L] Padding [1L]", 
+            "layer": "res5c_branch2b: type=Convolution, sizes=None, shapes=None, sched 74 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "name": "res5c_branch2b", 
-            "ops": 231211008, 
-            "schedule": 69, 
-            "xdnn_instr": "69 XNConv res5c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xe0000 7 7 512 0x118000 7 7 512 0", 
+            "ops": 231662592, 
+            "schedule": 75, 
+            "xdnn_instr": "75 XNConv res5c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x38000 7 7 512 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "69", 
-                "inaddr": "0xe0000", 
+                "id": "75", 
+                "inaddr": "0x0", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
                 "name": "res5c_branch2b", 
-                "outaddr": "0x118000", 
+                "outaddr": "0x38000", 
                 "outchan": "512", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -8222,7 +8842,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "69"
+                    "75"
                 ], 
                 [
                     "XNOp", 
@@ -8286,7 +8906,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "insize_w", 
@@ -8302,7 +8922,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "outsize_w", 
@@ -8323,26 +8943,26 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2c: type=Convolution, sizes=None, shapes=SizeType(batches=2048, channels=512, height=1, width=1), sched 69 Kernel [1L] Strides [1L] Padding [0L]", 
+            "layer": "res5c_branch2c: type=Convolution, sizes=None, shapes=None, sched 75 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "res5c_branch2c", 
-            "ops": 102760448, 
-            "schedule": 70, 
-            "xdnn_instr": "70 XNConv res5c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x118000 7 7 512 0x150000 7 7 2048 0", 
+            "ops": 102961152, 
+            "schedule": 76, 
+            "xdnn_instr": "76 XNConv res5c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x38000 7 7 512 0x70000 7 7 2048 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNConv", 
                 "bias": "1", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
-                "id": "70", 
-                "inaddr": "0x118000", 
+                "id": "76", 
+                "inaddr": "0x38000", 
                 "inchan": "512", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
                 "name": "res5c_branch2c", 
-                "outaddr": "0x150000", 
+                "outaddr": "0x70000", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -8358,7 +8978,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "70"
+                    "76"
                 ], 
                 [
                     "XNOp", 
@@ -8422,7 +9042,7 @@
                 ], 
                 [
                     "inaddr", 
-                    "0x118000"
+                    "0x38000"
                 ], 
                 [
                     "insize_w", 
@@ -8438,7 +9058,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "outsize_w", 
@@ -8459,30 +9079,30 @@
             ]
         }, 
         {
-            "layer": "res5c: type=Eltwise, sizes=None, shapes=None, sched 70 Kernel None Strides None Padding None", 
+            "layer": "res5c: type=Eltwise, sizes=None, shapes=None, sched 76 Kernel None Strides None Padding None", 
             "name": "res5c", 
             "ops": 100352, 
-            "schedule": 71, 
-            "xdnn_instr": "71 XNEltwise res5c 1 0 1 0x0 0x150000 7 7 2048 0x0 0", 
+            "schedule": 77, 
+            "xdnn_instr": "77 XNEltwise res5c 1 0 1 0x150000 0x70000 7 7 2048 0x150000 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNEltwise", 
                 "add": "1", 
                 "bn": "0", 
-                "id": "71", 
-                "inaddrA": "0x0", 
-                "inaddrB": "0x150000", 
+                "id": "77", 
+                "inaddrA": "0x150000", 
+                "inaddrB": "0x70000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "name": "res5c", 
-                "outaddr": "0x0", 
+                "outaddr": "0x150000", 
                 "relu": "1"
             }, 
             "xdnn_list": [
                 [
                     "id", 
-                    "71"
+                    "77"
                 ], 
                 [
                     "XNOp", 
@@ -8506,11 +9126,11 @@
                 ], 
                 [
                     "inaddrA", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "inaddrB", 
-                    "0x150000"
+                    "0x70000"
                 ], 
                 [
                     "insize_w", 
@@ -8526,7 +9146,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "Bypass_Perf_Opt", 
@@ -8535,24 +9155,24 @@
             ]
         }, 
         {
-            "layer": "pool5: type=Pooling, sizes=None, shapes=None, sched 71 Kernel [7] Strides [1] Padding [0]", 
+            "layer": "pool5: type=Pooling, sizes=None, shapes=None, sched 77 Kernel SizeType(batches=1L, channels=1, height=7, width=7) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "name": "pool5", 
             "ops": 100352, 
-            "schedule": 72, 
-            "xdnn_instr": "72 XNAvgPool pool5 7 7 1 1 0 0 1 0x0 7 7 2048 0xe0000 1 1 0", 
+            "schedule": 78, 
+            "xdnn_instr": "78 XNAvgPool pool5 7 7 1 1 0 0 0 0x150000 7 7 2048 0x0 1 1 0", 
             "xdnn_kv": {
                 "Bypass_Perf_Opt": "0", 
                 "XNOp": "XNAvgPool", 
-                "fcmode": "1", 
-                "id": "72", 
-                "inaddr": "0x0", 
+                "fcmode": "0", 
+                "id": "78", 
+                "inaddr": "0x150000", 
                 "inchan": "2048", 
                 "insize_h": "7", 
                 "insize_w": "7", 
                 "kernel_h": "7", 
                 "kernel_w": "7", 
                 "name": "pool5", 
-                "outaddr": "0xe0000", 
+                "outaddr": "0x0", 
                 "outsize_h": "1", 
                 "outsize_w": "1", 
                 "paddings_h": "0", 
@@ -8563,7 +9183,7 @@
             "xdnn_list": [
                 [
                     "id", 
-                    "72"
+                    "78"
                 ], 
                 [
                     "XNOp", 
@@ -8599,11 +9219,11 @@
                 ], 
                 [
                     "fcmode", 
-                    "1"
+                    "0"
                 ], 
                 [
                     "inaddr", 
-                    "0x0"
+                    "0x150000"
                 ], 
                 [
                     "insize_w", 
@@ -8619,7 +9239,7 @@
                 ], 
                 [
                     "outaddr", 
-                    "0xe0000"
+                    "0x0"
                 ], 
                 [
                     "outsize_w", 
@@ -8636,35 +9256,52 @@
             ]
         }, 
         {
-            "layer": "fc1000: type=InnerProduct, sizes=None, shapes=SizeType(batches=1, channels=1, height=[1000, 2048], width=[1000]), sched 72 Kernel None Strides None Padding None  NO VALID CODE  ", 
-            "name": "fc1000", 
+            "layer": "fc1000/Reshape: type=Reshape, sizes=None, shapes=None, sched 78 Kernel None Strides None Padding None  NO VALID CODE  ", 
+            "name": "fc1000/Reshape", 
             "ops": 0, 
-            "schedule": 73, 
-            "xdnn_instr": "# ## 73 XNInner fc1000 16 26 2 0xe0000 1 2048 0x0 1 1000", 
+            "schedule": 79, 
+            "xdnn_instr": "# # LAYER \"fc1000/Reshape\" ['Reshape'] ['layer']", 
             "xdnn_kv": {}, 
             "xdnn_list": []
         }, 
         {
-            "layer": "prob: type=Softmax, sizes=None, shapes=None, sched 73 Kernel None Strides None Padding None  NO VALID CODE  ", 
+            "layer": "fc1000/fc1000/MatMul: type=InnerProduct, sizes=None, shapes=None, sched 79 Kernel None Strides None Padding None  NO VALID CODE  ", 
+            "name": "fc1000/fc1000/MatMul", 
+            "ops": 0, 
+            "schedule": 80, 
+            "xdnn_instr": "# ## 80 XNInner fc1000/fc1000/MatMul 16 26 2 0x20000 1 1 0x0 1 1", 
+            "xdnn_kv": {}, 
+            "xdnn_list": []
+        }, 
+        {
+            "layer": "prob: type=Softmax, sizes=None, shapes=None, sched 80 Kernel None Strides None Padding None  NO VALID CODE  ", 
             "name": "prob", 
             "ops": 0, 
-            "schedule": 74, 
+            "schedule": 81, 
             "xdnn_instr": "# # LAYER prob [u'Softmax'] ['layer']", 
             "xdnn_kv": {}, 
             "xdnn_list": []
         }
     ], 
-    "ops": 7719276544, 
+    "ops": 7840301056, 
     "unsupported": {
-        "count": 2, 
+        "count": 4, 
         "list": {
-            "fc1000": [
-                "## 73 XNInner fc1000 16 26 2 0xe0000 1 2048 0x0 1 1000", 
-                "fc1000: type=InnerProduct, sizes=None, shapes=SizeType(batches=1, channels=1, height=[1000, 2048], width=[1000]), sched 72 Kernel None Strides None Padding None  NO VALID CODE  "
+            "data": [
+                "# LAYER data [u'Placeholder'] ['layer']", 
+                "data: type=Placeholder, sizes=None, shapes=None, sched 0 Kernel None Strides None Padding None  NO VALID CODE  "
+            ], 
+            "fc1000/Reshape": [
+                "# LAYER \"fc1000/Reshape\" ['Reshape'] ['layer']", 
+                "fc1000/Reshape: type=Reshape, sizes=None, shapes=None, sched 78 Kernel None Strides None Padding None  NO VALID CODE  "
+            ], 
+            "fc1000/fc1000/MatMul": [
+                "## 80 XNInner fc1000/fc1000/MatMul 16 26 2 0x20000 1 1 0x0 1 1", 
+                "fc1000/fc1000/MatMul: type=InnerProduct, sizes=None, shapes=None, sched 79 Kernel None Strides None Padding None  NO VALID CODE  "
             ], 
             "prob": [
                 "# LAYER prob [u'Softmax'] ['layer']", 
-                "prob: type=Softmax, sizes=None, shapes=None, sched 73 Kernel None Strides None Padding None  NO VALID CODE  "
+                "prob: type=Softmax, sizes=None, shapes=None, sched 80 Kernel None Strides None Padding None  NO VALID CODE  "
             ]
         }
     }, 

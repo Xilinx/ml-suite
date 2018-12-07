@@ -17,85 +17,57 @@ import numpy as np
 # example for multiple executors
 def main(argv):
     args = xdnn_io.processCommandLine(argv)
-    
-    # processCommandLine()
-    startTime = timeit.default_timer()
-    ret = xdnn.createHandle(args['xclbin'], "kernelSxdnn_0", args['xlnxlib'])
+    ret, handles = xdnn.createHandle(args['xclbin'], "kernelSxdnn_0")
     # ret = xdnn.createHandle(g_xclbin, "kernelSxdnn_0", g_xdnnLib)
     if ret != 0:
       sys.exit(1)
-    elapsedTime = timeit.default_timer() - startTime
-    print "\nAfter createHandle (%f ms):" % (elapsedTime * 1000)
-    startTime = timeit.default_timer()
-    
-    # TODO dict of tuples instead?
-    fpgaInputs = {}
-    fpgaOutputs = {}
-    weightsBlobs = {}
-    fcWeights = {}
-    fcBiases = {}
-    batch_sizes = {}
-    fpgaOutputSizes = {}
-    PEs = {}
-    netFiles = {}
-    confNames = []
-    
-    for netconf_args in args['jsoncfg']:
-      confName = str(netconf_args['name'])
-      confNames.append (confName)
-      # make a tuple instead
-      PE = [int(x) for x in str(netconf_args['PE']).split()]
-      # if cuMask in cuMaskList:
-      #  raise Exception('cuMasks are non-disjoint')
-      datadir = str(netconf_args['datadir'])
-      fpgaoutsz = int(netconf_args['fpgaoutsz'])
-      netfile = str(netconf_args['netcfg'])
-    
-      PEs [confName] = PE
-      (weightsBlobs[confName], fcWeights [confName], fcBiases [confName] ) = xdnn_io.loadWeights( netconf_args )
-      fpgaOutputSizes[confName] = fpgaoutsz
-      (fpgaInputs[confName], batch_sz) = xdnn_io.prepareInput(netconf_args, PE)
-      batch_sizes[confName] = batch_sz
-      fpgaOutputs [confName] = xdnn_io.prepareOutput(int(netconf_args['fpgaoutsz']) , batch_sz)
-      netFiles [confName] = netfile
-    
-    elapsedTime = timeit.default_timer() - startTime
-    print "\nAfter init (%f ms):" % (elapsedTime * 1000)
-    startTime = timeit.default_timer()
+    labels = xdnn_io.get_labels(args['labels'])
 
-    for streamId, netconf_args in enumerate(args['jsoncfg']):
-      confName = str(netconf_args['name'])
-      xdnn.exec_async (netFiles [confName], weightsBlobs [confName], fpgaInputs [confName],
-        fpgaOutputs [confName], int(batch_sizes[confName]), netconf_args['quantizecfg'], netconf_args['scaleB'], PEs [confName], streamId)
+    # TODO dict of tuples instead?
+    fpgaRT          = {}
+    fpgaOutputs     = {}
+    fcWeights       = {}
+    fcBiases        = {}
+    netFiles        = {}
+    confNames       = []
+
+    args = args['jsoncfg']      # we do not use other args' keys
+    for netconf_args in args:
+      confName   = str(netconf_args['name'])
+      confNames += [confName]
+      netconf_args['netcfg'] = './data/{}_{}.json'.format(netconf_args['net'], netconf_args['dsp'])
+      fpgaRT[confName] = xdnn.XDNNFPGAOp(handles, netconf_args)
+      (fcWeights[confName],
+        fcBiases[confName]) = xdnn_io.loadFCWeightsBias(netconf_args)
+      fpgaOutputs[confName]             = np.empty ((netconf_args['batch_sz'], int(netconf_args['fpgaoutsz']),), dtype=np.float32, order='C')
+      netFiles[confName]                = str(netconf_args['netcfg'])
     
-    elapsedTime = timeit.default_timer() - startTime
-    print "\nAfter Execonly (%f ms):" % (elapsedTime * 1000)
-    startTime = timeit.default_timer()
+    for streamId, netconf_args in enumerate(args):
+      batch_array = np.empty((( netconf_args['batch_sz'],) + netconf_args['in_shape']), dtype=np.float32, order='C')
+      pl = []
+      img_paths = xdnn_io.getFilePaths(netconf_args['images'])
+      for j, p in enumerate(img_paths[:netconf_args['batch_sz']]):
+        batch_array[j, ...], _ = xdnn_io.loadImageBlobFromFile(p, netconf_args['img_raw_scale'], 
+                                                                  netconf_args['img_mean'],
+                                                                  netconf_args['img_input_scale'], 
+                                                                  netconf_args['in_shape'][1], 
+                                                                  netconf_args['in_shape'][2])
+        pl.append(p)
+          
+      confName = str(netconf_args['name'])
+      fpgaRT[confName].exec_async(batch_array, fpgaOutputs[confName], streamId)
     
     for streamId, confName in enumerate(confNames):
-      xdnn.get_result (PEs [confName], streamId)
+      fpgaRT[confName].get_result (streamId)
     
-    elapsedTime = timeit.default_timer() - startTime
-    print "\nAfter wait (%f ms):" % (elapsedTime * 1000)
-    startTime = timeit.default_timer()
-    
-    for netconf_args in args['jsoncfg']:
+    for netconf_args in args:
       confName = str(netconf_args['name'])
-      fcOut = xdnn.computeFC (fcWeights[confName], fcBiases[confName], fpgaOutputs[confName],
-                              batch_sizes[confName], netconf_args['outsz'], netconf_args['fpgaoutsz'], netconf_args['useblas'])
+      fcOut = np.empty( (netconf_args['batch_sz'], netconf_args['outsz']), dtype=np.float32, order = 'C')
+      xdnn.computeFC (fcWeights[confName], fcBiases[confName], fpgaOutputs[confName],
+                              netconf_args['batch_sz'], netconf_args['outsz'], netconf_args['fpgaoutsz'], fcOut)
     
-      elapsedTime = timeit.default_timer() - startTime
-      print "\nAfter FC (%f ms):" % (elapsedTime * 1000)
-      startTime = timeit.default_timer()
-    
-      softmaxOut = xdnn.computeSoftmax(fcOut, batch_sizes[confName])
-    
-      elapsedTime = timeit.default_timer() - startTime
-      print "\nAfter Softmax (%f ms):" % (elapsedTime * 1000)
-    
-      xdnn_io.printClassification(softmaxOut, netconf_args);
-
-    print "\nSuccess!\n"
+      softmaxOut = xdnn.computeSoftmax(fcOut)
+      xdnn_io.printClassification(softmaxOut, netconf_args['images'], labels);
 
     xdnn.closeHandle()
 
@@ -106,11 +78,11 @@ if __name__ == '__main__':
   import os
   import re
 
-  XCLBIN_PATH = os.environ['XCLBIN_PATH']
-  LIBXDNN_PATH = os.environ['LIBXDNN_PATH']
-  DSP_WIDTH = 56
-  BITWIDTH  = 16
-  MLSUITE_ROOT = os.environ['MLSUITE_ROOT']
+  XCLBIN_PATH   = os.environ['XCLBIN_PATH']
+  LIBXDNN_PATH  = os.environ['LIBXDNN_PATH']
+  DSP_WIDTH     = 56
+  BITWIDTH      = 8
+  MLSUITE_ROOT  = os.environ['MLSUITE_ROOT']
 
   argv =   "--xclbin {0}/xdnn_v2_32x{1}_{2}pe_{3}b_{4}mb_bank21.xclbin \
             --labels synset_words.txt \
@@ -121,3 +93,4 @@ if __name__ == '__main__':
   '''
 
   main(argv)
+

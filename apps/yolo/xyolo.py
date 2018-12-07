@@ -13,6 +13,7 @@ import logging as log
 
 # Bring in some utility functions from local file
 from yolo_utils import cornersToxywh,sigmoid,softmax,generate_colors,draw_boxes
+import numpy as np
 
 # Bring in a C implementation of non-max suppression
 sys.path.append('nms')
@@ -20,7 +21,6 @@ import nms
 
 # Bring in Xilinx Caffe Compiler, and Quantizer
 # We directly compile the entire graph to minimize data movement between host, and card
-sys.path.insert(0, os.path.abspath("../../"))
 from xfdnn.tools.compile.frontends.frontend_caffe  import CaffeFrontend as xfdnnCompiler
 from xfdnn.tools.quantize.frontends.frontend_caffe import CaffeFrontend as xfdnnQuantizer
 
@@ -79,11 +79,13 @@ class xyolo():
     self.scaleA         = 10000
     self.scaleB         = 30
     self.PE             = -1
-    self.transform          = "yolo" # XDNN_IO will scale/letterbox the image for YOLO network
+    self.transform      = "yolo" # XDNN_IO will scale/letterbox the image for YOLO network
     self.img_mean       = "0,0,0"
     self.net_w          = self.in_shape[1]
     self.net_h          = self.in_shape[2]
-    self.out_w = self.out_h = (self.net_w / 32)
+    import math
+    self.out_w = int(math.ceil(self.net_w / 32.0))
+    self.out_h = int(math.ceil(self.net_h / 32.0))
     self.bboxplanes = 5
     #self.classes = 80
     self.scorethresh = 0.24
@@ -100,10 +102,15 @@ class xyolo():
 
     self.q_fpga = Queue(maxsize=1)
     self.q_bbox = Queue(maxsize=1)
-    self.proc_fpga = Process(target=self.fpga_stage, args=(config, self.q_fpga, self.q_bbox))  
-    self.proc_bbox = Process(target=self.bbox_stage, args=(config, self.q_bbox))  
-    self.proc_fpga.start()
-    self.proc_bbox.start()
+
+    if "single_proc_mode" in config:
+      self.proc_fpga = None
+      self.proc_bbox = None
+    else:
+      self.proc_fpga = Process(target=self.fpga_stage, args=(config, self.q_fpga, self.q_bbox))  
+      self.proc_bbox = Process(target=self.bbox_stage, args=(config, self.q_bbox))  
+      self.proc_fpga.start()
+      self.proc_bbox.start()
 
     log.info("Running network input %dx%d and output %dx%d"%(self.net_w,self.net_h,self.out_w,self.out_h))
 
@@ -113,28 +120,32 @@ class xyolo():
 
   def __exit__(self,*a):
     self.stop()
-    self.proc_fpga.join()
-    self.proc_bbox.join()
 
     if self.xdnn_handle:
       xdnn.closeHandle()
 
   @staticmethod
-  def fpga_stage(config, q_fpga, q_bbox):
-    config['xdnn_handle'] = xdnn.createHandle(\
-      config['xclbin'], "kernelSxdnn_0", config['xlnxlib'])
+  def fpga_stage(config, q_fpga, q_bbox, maxNumIters=-1):
+    config['xdnn_handle'], handles = xdnn.createHandle(config['xclbin'], "kernelSxdnn_0")
     if config['xdnn_handle'] != 0:
       log.error("Failed to start FPGA process ",
         " - could not open xclbin %s %s!" \
         % (config['xclbin'], config['xlnxlib']))
       sys.exit(1)
 
-    # Load Weights
-    config['weightsBlob'] = xdnn_io.loadWeightsBiasQuant(config)
-    # Allocate FPGA Outputs 
-    fpgaOutput = xdnn_io.prepareOutput(config['out_w']*config['out_h']*config['bboxplanes']*(config['classes']+config['coords']+1), config['batch_sz'])
+    fpgaRT = xdnn.XDNNFPGAOp(handles, config)
 
+    # Allocate FPGA Outputs 
+    fpgaOutSize = config['out_w']*config['out_h']*config['bboxplanes']*(config['classes']+config['coords']+1)
+    fpgaOutput = np.empty((config['batch_sz'], fpgaOutSize,), dtype=np.float32, order='C')
+    raw_img = np.empty(((config['batch_sz'],) + config['in_shape']), dtype=np.float32, order='C')
+
+    numIters = 0
     while True:
+      numIters += 1
+      if maxNumIters > 0 and numIters > maxNumIters:
+        break
+      
       job = q_fpga.get()
       if job == None:
         q_bbox.put(None) # propagate 'stop' signal downstream
@@ -153,16 +164,17 @@ class xyolo():
         continue
 
       log.info("Preparing Input...")
-      (fpgaInputs, shapes, _ ) = xdnn_io.prepareInput( config )
+      shapes = []
+      for i,img in enumerate(images):
+        raw_img[i,...], s = xdnn_io.loadYoloImageBlobFromFile(img,  config['in_shape'][1], config['in_shape'][2])
+        shapes.append(s)
+
       job['shapes'] = shapes # pass shapes to next stage
 
       # EXECUTE XDNN
       log.info("Running %s image(s)"%(config['batch_sz']))
       startTime = timeit.default_timer()
-      xdnn.execute(config['netcfg'], 
-                   config['weightsBlob'], fpgaInputs, fpgaOutput, 
-                   config['batch_sz'], # num batches
-                   config['quantizecfg'], config['scaleB'], config['PE'])
+      fpgaRT.execute(raw_img, fpgaOutput, config['PE'])
       elapsedTime = timeit.default_timer() - startTime
 
       # Only showing time for second run because first is loading script
@@ -172,14 +184,20 @@ class xyolo():
       q_bbox.put((job, fpgaOutput))
 
   @staticmethod
-  def bbox_stage(config, q_bbox):
+  def bbox_stage(config, q_bbox, maxNumIters=-1):
     results = []
 
+    numIters = 0
     while True:
+      numIters += 1
+      if maxNumIters > 0 and numIters > maxNumIters:
+        break
+
       payload = q_bbox.get()
       if payload == None:
         break
       (job, fpgaOutput) = payload
+      fpgaOutput = fpgaOutput.flatten()
 
       images = job['images']
       display = job['display']
@@ -236,8 +254,22 @@ class xyolo():
       'coco': coco
     })
 
+    config = vars(self)
+
+    if not self.proc_fpga:
+      # single proc mode, no background procs, execute explicitly
+      self.fpga_stage(config, self.q_fpga, self.q_bbox, 1)
+      self.bbox_stage(config, self.q_bbox, 1)
+
   def stop(self):
+    if not self.proc_fpga:
+      return
+
     self.q_fpga.put(None)
+    self.proc_fpga.join()
+    self.proc_bbox.join()
+    self.proc_fpga = None
+    self.proc_bbox = None
   
 if __name__ == '__main__':
 

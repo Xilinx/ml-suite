@@ -6,6 +6,13 @@
 #
 #!/bin/bash
 
+# Set Platform Environment Variables
+if [ -z $MLSUITE_ROOT ]; then
+  MLSUITE_ROOT=../..
+fi
+
+. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+
 for BITWIDTH in 16 8; do
     python $MLSUITE_ROOT/xfdnn/tools/quantize/quantize.py \
         --deploy_model $MLSUITE_ROOT/models/caffe/inception_v3/fp32/inception_v3_without_bn_deploy.prototxt \

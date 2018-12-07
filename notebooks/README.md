@@ -1,5 +1,7 @@
 # Jupyter Notebooks
-The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tools and deploy models within the Xilinx ML Suite.
+The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tools and deploy models within the Xilinx ML Suite.  
+
+Note for AWS users: The ml-suite AMI on the AWS marketplace already has Jupyter installed, and it will auto-start the notebooks shortly after you launch the EC2 instance. You just need to navigate via a web-browser to \<public-dns\>:8888
 
 ## Installation 
 1. Install Jupyter on the remote system (We recommend doing this inside your Anaconda environment). 
@@ -15,7 +17,7 @@ The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tool
   $ cd /ml-suite/
   $ source ./overlaybins/setup.sh <platform>
   ```
-  Options for `<platform>`: `aws` `nimbix` `1525`
+  Options for `<platform>`: `aws` `nimbix` `1525` `alveo-u200` `alveo-u250` `alveo-u200-ml` `alveo-u250-ml`
 
 3. Set initial Password for Jupyter Server 
   ```
@@ -29,8 +31,8 @@ The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tool
 ## Launching Notebook Server 
 
 1. Launch the jupyter notebook server  
-  `jupyter notebook --no-browser --allow-root --ip=*`
+  `jupyter notebook --no-browser --ip=*`
   
-2. On local machine, open a browser and navigate to `http://localhost:8888` or `youripaddress>:8888`
+2. On local machine, open a broswer and navigate to `http://localhost:8888` or `youripaddress>:8888`
 
-3. On a remote machine, open a browser on your local machine navigate to `yourpublicipaddress>:8888`
+3. On a remote machine, open a broswer on your local machine navigate to `yourpublicipaddress>:8888`

@@ -19,19 +19,20 @@ body {
   margin-right: auto;
 }
 #header .title {
-  font-size: 41px;
+  font-size: 60px;
   color: #bbb;
-  padding: 0px 35px;
+  padding: 0px 60px;
 }
 #header img, #header .title {
   display: inline-block;
+  margin-left: 30px;
   vertical-align: middle;
 }
 
 #canvas {
   margin-top: 30px;
   position: relative;
-  width: 1230px;
+  width: 1400px;
   margin-left: auto;
   margin-right: auto;
   /*
@@ -39,18 +40,18 @@ body {
   */
 }
 #model {
-  /* aspect ratio: w/h = 1.5544 */
   background-image: url(media/alveo-u200.png);
   background-size: cover;
   background-position: center;
-  height: 395px;
-  width: calc(365px * 1.28);
+  height: 350px;
+  width: 395px;
   z-index: 10;
   position: absolute;
   top: -2px;
-  left: -100px;
+  left: 0px;
 }
-/*#device {
+#device {
+  /* aspect ratio: w/h = 0.349 */
   background-image: url(media/f1card.jpg);
   background-size: cover;
   background-position: center;
@@ -60,14 +61,14 @@ body {
   position: absolute;
   top: 0px;
   left: 233px;
-}*/
+}
 
 #left-bar {
   position: relative;
   display: inline-block;
   vertical-align: top;
   margin-top: 400px;
-  width: 330px;
+  width: 360px;
   padding: 15px 25px;
   font-size: 18px;
   text-align: center;
@@ -77,6 +78,15 @@ body {
   margin-bottom: 20px;
   font-weight: bold;
   color: #ccc;
+  text-align: right;
+}
+#left-bar .title1 {
+  font-size: 35px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #ccc;
+  text-align: right;
 }
 #left-bar .metrics-val, 
 #left-bar .metrics-label
@@ -86,22 +96,23 @@ body {
 }
 #left-bar .metrics-label
 {
-  width: 170px;
+  width: 190px;
   text-align: right;
-  font-size: 26px;
+  font-size: 24px;
 }
 #left-bar .metrics-val
 {
-  font-size: 38px;
+  font-size: 36px;
   text-align: right;
-  width: 110px;
+  width: 160px;
 }
 
 #left-bar .network {
   /*display: none;*/
   margin-top: 40px;
-  font-size: 50px;
+  font-size: 35px;
   color: #ddd;
+  text-align: right;
 }
 #left-bar .network .c1 {
   color: #4885ed
@@ -115,7 +126,12 @@ body {
 #left-bar .network .c4 {
   color: #3cba54
 }
-
+#left-bar .asterisk-label
+{
+  font-size: 15px;
+  margin-top: 40px;
+  color: #bbb;
+}
 #stage {
   position: relative;
   display: inline-block;
@@ -141,8 +157,8 @@ body {
   color: #aaa;
 
   position: absolute;
-  top: 245px;
-  left: -150px;
+  top: 270px;
+  left: -175px;
   z-index: 20;
 }
 .img-spinner {

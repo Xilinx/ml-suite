@@ -4,6 +4,7 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
+import json
 import tensorflow as tf
 import numpy as np
 from xfdnn_compiler_tensorflow import TFFrontend
@@ -15,17 +16,22 @@ class xdnnRT:
     def __init__(self, compiler, rtargs):
         #print ("compiler args", cargs)
         self._inputs = self.list_inputs_of_graph()
-        pydotGraph, schedule, self._out, _ = compiler.compile()
-        
+        pydotGraph, schedule, self._out, ssize, compilerJson \
+          = compiler.compile()
+        with open('xdlfCompiler.json', 'w') as outfile:
+             json.dump(compilerJson, outfile, sort_keys = True, indent = 4,
+                            ensure_ascii = False)
 #        print ("compiled pydot graph", pydotGraph)
-#        print ("compiled schedule", schedule)   
+#        print ("compiled schedule", schedule)
 
         opt = None
-        if rtargs.device == "CPU":   
-            opt = xdnn_opt.CPUTransform( self._inputs, pydotGraph, schedule)
+        if rtargs.device == "CPU":
+            opt = xdnn_opt.CPUTransform( self._inputs, pydotGraph, schedule, rtargs)
+        elif rtargs.device == "HWEmu":
+            opt = xdnn_opt.HWEmuTransform( self._inputs, pydotGraph, schedule, rtargs)
         elif rtargs.device == "FPGA":
             if rtargs.xclbin:
-                opt = xdnn_opt.FPGATransform( self._inputs, pydotGraph, schedule, rtargs.xclbin)
+                opt = xdnn_opt.FPGATransform( self._inputs, pydotGraph, schedule, compilerJson, rtargs)
             else:
                 raise AttributeError("Must specify path to xclbin when device = FPGA")
         else:
@@ -35,20 +41,20 @@ class xdnnRT:
         self._layers = opt.getLayers()
         for l in self._layers:
             l.setup()
-            
+
     def list_inputs_of_graph(self):
-        pass 
-    
+        pass
+
     def preprocess(self,inputs):
         pass
-    
+
     def batch_classify(self, img_list, batch, preprocess) :
         bctr = 0
         ictr = 0
         pred = None
         prepdata = {}
         prep = self._inputs[0]
-        print(len(img_list))
+        #print(len(img_list))
         ctr = 0
         pred = []
         while ctr < len(img_list) :
@@ -60,24 +66,23 @@ class xdnnRT:
             return pred[0]
         return np.concatenate(pred)
 
-    def feed_forward(self, inputs, out=None, preprocess = None):
-        inp_dict = {}
+    def feed_forward(self, inputs, out=None, preprocess=None):
+        if not out:
+            out = self._out[0]
         if not preprocess:
             preprocess = self.preprocess
-        inp_dict[self._inputs[0]] = preprocess(inputs)
-        for k, v in inp_dict.items():
-            self._variables[k] = v
-            
+
+        # Add network input to variables list
+        self._variables[self._inputs[0]] = preprocess(inputs)
+
         for layer in self._layers:
-            layer_inputs = []
+            #print "CDBG :", layer.output, type(layer)
             layer_inputs = [self._variables[inp] for inp in layer.inputs]
             self._variables[layer.output] = layer.forward_exec( layer_inputs )
-            
-        if out is None:
-            return self._variables[self._out]
-        
+            #print self._variables[layer.output].shape
+
         return self._variables[out]
-    
+
 class TFxdnnRT(xdnnRT):
     def __init__ ( self, cargs):
         self._tfGraph = tf.GraphDef()
@@ -88,18 +93,18 @@ class TFxdnnRT(xdnnRT):
 
         xdnnRT.__init__(self, compiler, cargs)
 
-    
+
     def list_inputs_of_graph(self) :
         res = []
         for node in self._tfGraph.node :
             if node.op == 'Placeholder' :
                 res.append(node.name)
-        return res    
-        
+        return res
+
     def preprocess(self, inputs):
         if type(inputs) is not np.ndarray:
             inputs = np.transpose(self.read_tensor_from_image_file(inputs), [0,3,1,2])  # assuming that there is only one input
-        return inputs   
+        return inputs
 
     def read_tensor_from_image_file(self, file_name,
                                     input_height=299,

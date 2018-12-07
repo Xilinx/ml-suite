@@ -7,8 +7,6 @@
 
 The Xilinx Machine Learning (ML) Suite provides users with the tools to develop and deploy Machine Learning applications for Real-time Inference. It provides support for many common machine learning frameworks such as Caffe, Tensorflow, and MXNet.  
 
-**The Xilinx ML Suite currently features xDNNv2. xDNNv3 will be available in November 2018. xDNNv3 will bring higher throughput, at lower latency. For more information on the benefits of xDNNv3, please see the [whitepaper here][].**
-
 ![](docs/tutorials/img/stack.png)
 
 The ML Suite is composed of three basic parts:
@@ -41,8 +39,8 @@ The ML Suite is composed of three basic parts:
   - [Precompiled Examples](examples/classification/README.md)  
 
 ## Recommended System Requirements
-- OS: Ubuntu 16.04.2 LTS, CentOS 7.4
-- CPU: 4 Cores (Intel/AMD)
+- OS: Ubuntu 16.04.2 LTS, Ubunto 18.04 LTS, CentOS 7.4
+- CPU: 6 Cores (Intel/AMD/Power9)
 - Memory: 8 GB
 
 ## Supported Platforms

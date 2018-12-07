@@ -13,7 +13,7 @@ else:
 
 origPath = path
 
-words2LookFor = ["MLsuite", "suite", "ML", "ml"]
+words2LookFor = ["overlaybins"]
 for word2LookFor in words2LookFor:
   path = origPath
   while True:
@@ -26,6 +26,7 @@ for word2LookFor in words2LookFor:
     leaf = words[-1]
     if word2LookFor in leaf:
       # found root
+      path = os.path.dirname(path)
       print(path)
       sys.exit(0)
 
