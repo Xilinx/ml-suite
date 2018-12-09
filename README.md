@@ -1,6 +1,6 @@
 <table style="width:100%">
 <tr>
-<th width="100%" colspan="6"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Xilinx ML Suite</h2>
+<th width="100%" colspan="6"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Xilinx ML Suite v1.3</h2>
 </th>
 </table>
   
@@ -18,6 +18,9 @@ The ML Suite is composed of three basic parts:
 **Watch:** [Webinar on Xilinx FPGA Accelerated Inference][]   
 **Forum:** [ML Suite Forum][]
 
+## [See What's New](docs/release-notes/1.x.md)
+ - [Release Notes][]
+ 
 ## Getting Started
 1. Clone ML Suite    
   `git clone https://github.com/Xilinx/ml-suite.git` 
@@ -39,7 +42,7 @@ The ML Suite is composed of three basic parts:
   - [Precompiled Examples](examples/classification/README.md)  
 
 ## Recommended System Requirements
-- OS: Ubuntu 16.04.2 LTS, Ubunto 18.04 LTS, CentOS 7.4
+- OS: Ubuntu 16.04.2 LTS, Ubuntu 18.04 LTS, CentOS 7.4
 - CPU: 6 Cores (Intel/AMD/Power9)
 - Memory: 8 GB
 
