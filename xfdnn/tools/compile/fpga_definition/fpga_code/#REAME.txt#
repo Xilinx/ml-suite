@@ -1,3 +1,0 @@
-
-python fpga_parsing_example.py -f   ../../models/tensor/model/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_32output.json.out
-

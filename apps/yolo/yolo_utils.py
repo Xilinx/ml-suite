@@ -4,6 +4,8 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
+from __future__ import print_function
+
 import colorsys
 import os
 import random
@@ -26,9 +28,9 @@ def cornersToxywh(llx,lly,urx,ury):
     # Assumes (0,0) is upper left corner, and lly always greater than ury
     h = lly - ury
     y = ury
-    #print "llx: %d, lly: %d, urx %d, ury %d"%(llx,lly,urx,ury)
-    #print "Becomes:"
-    #print "x: %d, y: %d, w %d, h %d"%(x,y,w,h)
+    #print("llx: %d, lly: %d, urx %d, ury %d"%(llx,lly,urx,ury))
+    #print("Becomes:")
+    #print("x: %d, y: %d, w %d, h %d"%(x,y,w,h))
     return x,y,w,h
     
 def softmax(startidx, inputarr, outputarr, n, stride):
@@ -52,9 +54,9 @@ def softmax(startidx, inputarr, outputarr, n, stride):
         
 def sigmoid(x):
     import math
-    #print "Sigmoid called on:"
-    #print x
-    #print ""
+    #print("Sigmoid called on:")
+    #print(x)
+    #print("")
     if x > 0 :
         return (1 / (1 + math.exp(-x)))
     else:
@@ -79,7 +81,7 @@ def generate_colors(classes):
         random.seed(None)  # Reset seed to default.
         cf = open("color_file.txt", "w")
         for i in range(classes):
-            print >>cf, "(%d,%d,%d)"%(colors[i][0],colors[i][1],colors[i][2])
+            print("(%d,%d,%d)"%(colors[i][0],colors[i][1],colors[i][2]), file=cf)
         cf.close
 
     return colors
@@ -119,9 +121,9 @@ def draw_boxes(iimage,bboxes,names,colors,outpath="out",fontpath="font",display=
     del draw 
 
     oimage = iimage.split("/")[-1]
-    print "oimage =",oimage
+    print("oimage =",oimage)
     image.save(os.path.join(outpath,oimage),quality=90)
-    print "Saving new image with bounding boxes drawn as %s" % (os.path.join(outpath,oimage))
+    print("Saving new image with bounding boxes drawn as %s" % (os.path.join(outpath,oimage)))
     
     # DISPLAY BOXES
     if os.getenv('DISPLAY') is not None and display:

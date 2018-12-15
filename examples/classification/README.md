@@ -1,5 +1,7 @@
 # Image Classification with Python APIs
 
+- [Introducing XDNNv3](#example-invocations) 
+
 ## Introduction
 This directory provides examples of how to deploy Deep CNNs on FPGAs using Xilinx Python APIs.
 
@@ -12,14 +14,22 @@ A "compiled model" consists of low level HW instructions, and quantization param
 
 Important Notes:
  - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
- - The batch_classify example will require you to download the imagnet validation set, and place the images [here](../../models/data/ilsvrc12/ilsvrc12_img_val/replace_this_file_with_dataset.md)  
+ - The streaming_classify example will require you to download the imagnet validation set, and place the images [here](../../models/data/ilsvrc12/ilsvrc12_img_val/replace_this_file_with_dataset.md)  
  - Amazon AWS EC2 F1 requires root privileges to load the FPGA, use the documented workaround
 
 The following three examples of applications using the Python xfDNN API are provided:
 
 1. A **Test Classification** example that demonstrates how to run inference on a single image "dog.jpg"
-2. A **Batch Classifcation** example that streams images from disk through the FPGA for classification.
-3. A **Multi-Process** example that shows different DNNs running on different processing elements on the FPGA.  
+2. A **Streaming Classifcation** example that streams images from disk through the FPGA for classification.
+3. A **Multi-Network** example that shows different DNNs running independently on multiple processing elements on the FPGA.  
+
+## Kernel Configurations
+The provided examples can target a few different hardware overlays. For more detail on the various configurations see [here.](../../overlaybins/README.md)  
+  
+As of ml-suite 1.3 release you can target the latest generation of the accelerator "XDNNv3" by using `-k v3`.  
+Note that XDNNv3 only supports 8b precision at this time.  
+
+"XDNNv2" is invoked using the `-k med` and `-k large` flags.  
 
 ## Running the Examples  
 
@@ -38,20 +48,36 @@ To run any of the three examples, use the provided bash run.sh script.
 3. Familiarize yourself with the script usage by:  
   `./run.sh -h`  
   The key parameters are:
-    - -p `platform` Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, '1525-ml`
-    - -t `test` - Valid values are `test_classify` or `batch_classify` or `multinet`
-    - -k `kernel config` - Valid values are `med` or `large` - Used to select overlaybins
-    - -b `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8  
+    - -p `platform` Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, `1525-ml`
+      - Note: If the platform flag is omitted software will try to auto-detect the platform, but the -ml shells will always need to be specified
+    - -t `test` - Valid values are `test_classify` or `streaming_classify` or `multinet`
+    - -k `kernel config` - Valid values are `med`, `large` or `v3` - Used to select overlaybins
+    - -b `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8
+      - Note: XDNNv3 only supports 8 which is also the default precision (INT8)
+    - -c `compiler optimized` - This flag runs the network with a compiler optimization for max throughput
+      - Note: XDNNv3 only
+    - -g `check golden` - This flag enables accuracy checking given a golden result text file.   
 
 ## Example Invocations
-1. Single Image Classification on AWS, with medium kernels:
+1. Single Image Classification on alveo-u200, ResNet50 v1, with XDNNv3:
+    ```sh
+    $ ./run.sh -p alveo-u200 -t test_classify -k v3 -b 8 -m resnet50
+    ```
+2. Single Image Classification on AWS, with medium kernels:
     ```sh
     $ ./run.sh -p aws -t test_classify -k med -b 16
     ```
-
-5. Streaming Image Classification on alveo-u200 with large kernels:
+3. Streaming Image Classification on alveo-u200 with large kernels:
     ```sh
-    $ ./run.sh -p alveo-u200 -t batch_classify -k large -b 8
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k large -b 8
+    ```
+4. Streaming Image Classification on alveo-u200 with XDNNv3:
+    ```sh
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8
+    ```
+5. Streaming Image Classification on alveo-u200 with XDNNv3, throughput optimized, and reporting accuracy for Imagenet:
+    ```sh
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -g -c throughput
     ```
 6. Multinet Image Classification on Nimbix (Currently, for Multinet only the med size kernel and 16b precision are supported)
     ```sh
@@ -62,23 +88,20 @@ To run any of the three examples, use the provided bash run.sh script.
 Take a look at the following scripts to understand the examples:
 * run.sh
 * test_classify.py
-* batch_classify.py
+* mp_classify.py
 * test_classify_async_multinet.py  
 
-The scripts use the arg parser defined in [xdnn_io.py](../../xfdnn/rt/xdnn_io.py)
+The python scripts use the arg parser defined in [xdnn_io.py](../../xfdnn/rt/xdnn_io.py)
 
-- `--xclbin` 		- Defines which FPGA binary overlay to use. The available binaries are stored in [overlaybins](../../overlaybins)
+- `--xclbin` 		  - Defines which FPGA binary overlay to use. The available binaries are stored in [overlaybins](../../overlaybins)
 - `--netcfg` 	    - FPGA instructions generated by the Compiler for the network being ran
-- `--quantcfg`      - Path to json file to use for quantization (The json file contains scaling params)
-- `--fpgaoutsz`	    - Flattened size of the final activation computed by FPGA (The FPGA will not do FC layers or Softmax)
-- `--firstfpgalayer` - Name of first FPGA layer i.e. conv0 (required by quantization code)
-- `--datadir`		- Path to data files to run for the network (weights)
-- `--labels`		- Path to text file containing line seperated labels
-- `--xlnxlib`		- Path to xfDNN library file (Middleware)
-- `--useblas`		- Use BLAS-optimized functions
-- `--golden`		- Path to text file containing line seperated correct labels
-- `--imagedir`	    - Directory with image files to classify (Only applicable to batch_classify)
-- `--jsoncfg`       - Path to json file used to define seperate networks (Only applicable to multinet)
+- `--quantizecfg` - Path to json file to use for quantization (The json file contains scaling params)
+- `--fpgaoutsz`	  - Flattened size of the final activation computed by FPGA (The FPGA will not do FC layers or Softmax)
+- `--datadir`		  - Path to data files to run for the network (weights)
+- `--labels`		  - Path to text file containing line seperated labels
+- `--golden`		  - Path to text file containing line seperated correct labels
+- `--images`	    - Directory with image files to classify (Only applicable to streaming_classify)
+- `--jsoncfg`     - Path to json file used to define seperate networks (Only applicable to multinet)
 
 For Multinet deployments, the different models/networks are set in the `--jsoncfg` file. For the Multinet example given above, see how to set the arguments here [multinet.json][]
 
@@ -114,21 +137,11 @@ For Multinet deployments, the different models/networks are set in the `--jsoncf
 
   Loading weights/bias/quant_params to FPGA...
 
-  After FPGA (1915.318012 ms)
-
-  After FC (7.054090 ms)
-
-  After Softmax (6.752014 ms)
-
-
   ---------- Prediction 0 for dog.jpg ----------
   0.7376 - "n02112018 Pomeranian"
   0.0785 - "n02123394 Persian cat"
   0.0365 - "n02085620 Chihuahua"
   0.0183 - "n02492035 capuchin, ringtail, Cebus capucinus"
   0.0150 - "n02094433 Yorkshire terrier"
-
-
-  Success!
   ```
 

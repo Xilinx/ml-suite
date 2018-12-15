@@ -6,6 +6,18 @@ Array.prototype.avg = Array.prototype.average || function() {
   return this.sum() / (this.length || 1);
 }
 
+function getUrlParam(paramName) {
+  var query = window.location.search.substring(1);
+  var vars = query.split('&');
+  for (var i = 0; i < vars.length; i++)
+  {
+    var pair = vars[i].split('=');
+    if (pair[0] == paramName)
+      return pair[1];
+   }
+  return "";
+}
+
 function UI(cfg) {
   this.selector = cfg.selector;
   this.num_cores = cfg.num_cores;
@@ -36,8 +48,10 @@ function UI(cfg) {
   this._imgCardInfos = [];   // set by updateWithNewData()
   this._imgFPScounter = 0;  // computed from browser POV
   this._imgFPSfromFPGA = 0; // direct from FPGA
+  this._imgLatencyfromFPGA = 0; // direct from FPGA
   this._imgCoreFPSfromFPGA = {}; // direct from FPGA
   this._imgDeviceFPSfromFPGA = {}; // direct from FPGA
+  this._imgDeviceLatencyfromFPGA = {}; // direct from FPGA
   this._imgFPSfromFPGAbatchSize = 0;
   this._predictionHistory = []; // array of true/false 
   this._slidesCounter = 0;
@@ -69,6 +83,11 @@ function UI(cfg) {
       $("#" + this._bodyTimelineChartId
         + "-wrapper").hide();
   }
+  if (getUrlParam("xdnn") == "v2")
+    {
+      $(".v3").hide();
+      $(".v2").show();
+    }
 }
 UI.prototype.setupHTML = function() {
   var ui = this;
@@ -332,15 +351,27 @@ UI.prototype.updateRealtimeMetrics = function() {
       }
 
       var fps16 = fps.toFixed(0);
-      var fps8 = (fps*2).toFixed(0);
+      var fps8 = 0;
+      if(getUrlParam("xdnn")=="v2")
+        fps8 = (fps*2).toFixed(0); 
+      else
+        fps8 = (fps).toFixed(0); 
       ui._imgFPScounter = 0; // reset
       var topsFactor = 4.272 / 1000; // 267*8000*2
       // 3.3 for F1
       var tops = (fps8 * topsFactor / 2).toFixed(2);
- 
+
       $(ui.fpsSelectorPrefix + "16").html(fps16);
       $(ui.fpsSelectorPrefix + "8").html(fps8);
+      if (ui._imgLatencyfromFPGA)
+        {
+          var latencyFactor = 1.18/0.96;
+          var latency=(ui._imgLatencyfromFPGA*latencyFactor).toFixed(2);
+          var peakLatency = ui._imgLatencyfromFPGA.toFixed(2);
+          $(ui.fpsSelectorPrefix + "latency").html(latency);
+          $(ui.fpsSelectorPrefix + "peakLatency").html(peakLatency);
 
+        }
       $(ui.topsSelector).html(tops);
 
       if (fps8 > 0)
@@ -408,6 +439,7 @@ UI.prototype.updateProfileData = function(data) {
     var fps = ui._imgFPSfromFPGAbatchSize / delta;
     ui._imgCoreFPSfromFPGA[profMap.h + "/" + profMap.k] = fps;
     ui._imgDeviceFPSfromFPGA[profMap.h] = fps;
+    ui._imgDeviceLatencyfromFPGA[profMap.h] = delta;
     var totalFps = 0;
     var numCores = 0;
     for (var k in ui._imgCoreFPSfromFPGA) 
@@ -415,6 +447,7 @@ UI.prototype.updateProfileData = function(data) {
       totalFps += ui._imgCoreFPSfromFPGA[k];
       numCores++;
     }
+    ui._imgLatencyfromFPGA = delta*1000;
     ui._imgFPSfromFPGA = totalFps / numCores;
     //extraExecBarLabel += " / " + parseInt(fps) + " fps";
 
@@ -422,7 +455,11 @@ UI.prototype.updateProfileData = function(data) {
     if (profMap.h !== undefined)
     {
       var deviceFps = fps / ui.num_devices;
-      var val = parseInt(deviceFps+0.5) * 2; // x2 because 8-bit
+      var val = 0;
+      if(getUrlParam("xdnn")=="v2")
+        val = parseInt(deviceFps+0.5) * 2; // x2 because 8-bit
+      else
+         val = parseInt(deviceFps+0.5);
       ui._deviceFpsChart.append(parseInt(profMap.h), val);
       $("#device-fps-text-" + profMap.h).html(val+" fps");
     }
@@ -434,12 +471,25 @@ UI.prototype.updateProfileData = function(data) {
   // update timeline chart rows
   if (profMap.h === undefined || profMap.h == 0)
   {
-    ui._timelineChart.updateRow("Core_" + profMap.k + " - Write", 
+    var timeLimit = 50000;
+    var skipUpdate = false;
+    
+    var writeEndTime = parseFloat(profMap.w_end - profMap.w_start) / 1000.;
+    var kernelEndTime = parseFloat(profMap.k_end - profMap.k_start) / 1000.;
+    var readEndTime = parseFloat(profMap.r_end - profMap.r_start) / 1000.;
+
+    if(!(getUrlParam("xdnn")=="v2") && (writeEndTime > timeLimit || kernelEndTime > timeLimit || readEndTime > timeLimit))
+      skipUpdate = true;
+    
+    if(!skipUpdate)
+      {
+        ui._timelineChart.updateRow("Core_" + profMap.k + " - Write", 
       profMap.w_start, profMap.w_end, null, false);
-    ui._timelineChart.updateRow("Core_" + profMap.k + " - Exec", 
+        ui._timelineChart.updateRow("Core_" + profMap.k + " - Exec", 
       profMap.k_start, profMap.k_end, extraExecBarLabel, false);
-    ui._timelineChart.updateRow("Core_" + profMap.k + " - Read", 
+        ui._timelineChart.updateRow("Core_" + profMap.k + " - Read", 
       profMap.r_start, profMap.r_end, null, true);
+      }
   }
 }
 UI.prototype._getExpectedLabels = function(path) {
@@ -550,7 +600,6 @@ function DeviceFpsChart(cfg) {
         verticalSections: 4 
       },
       labels: { disabled: true, fontSize: 12 },
-      maxValue: 2400,
       minValue: 1000
     });
     var options = {
@@ -660,7 +709,7 @@ TimelineChart.prototype.updateRow
 
   startTime = parseFloat(startTime) / 1000.;
   endTime = parseFloat(endTime) / 1000.;
-
+  
   if (startTime > 10000)
     return; // ANDBG hack - skip outliers
 

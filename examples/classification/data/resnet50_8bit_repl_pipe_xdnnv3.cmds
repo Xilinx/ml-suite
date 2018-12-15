@@ -1,0 +1,83 @@
+# template XNAvgPool id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template XNMaxPool id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset
+# template XNUpload id XNOp inaddr insize inchan
+# template XNConv id XNOp name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template XNDeconv id XNOp name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 
+# template XNMaxPoolPipelined id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset conv_name conv_kernel_w conv_kernel_h conv_strides_w conv_strides_h conv_padding_w conv_padding_h conv_dilation_w conv_dilation_h conv_relu conv_bias pool_insize_w pool_insize_h pool_inchan conv_outsize_w
+# template XNGather id XNOp uram_dest ddr_src input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template XNAvgPoolPipelined id XNOp name kernel_w kernel_h  strides_w strides_h paddings_w paddings_h inaddr insize_w insize_h inchan outaddr outsize_w outsize_h slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset conv_name conv_kernel_w conv_kernel_h conv_strides_w conv_strides_h conv_padding_w conv_padding_h conv_dilation_w conv_dilation_h conv_relu conv_bias pool_insize_w pool_insize_h pool_inchan conv_outsize_w
+# template XNScatter id XNOp uram_src ddr_dest input_w input_h input_chan a0 b1 c1 start_row end_row slice
+# template XNConvP id XNOp name kernel_w kernel_h strides_w strides_h padding_w padding_h dilation_w dilation_h preshift scale postshift relu bias inaddr insize_w insize_h inchan outaddr outsize_w outsize_h  outchan Bypass_Perf_Opt  pool_kernel_w pool_kernel_h pool_strides_w pool_strides_h pool_paddings_w pool_paddings_h pool_fcmode
+# template XNEltwise id XNOp name add bn relu inaddrA inaddrB insize_w insize_h inchan outaddr slice src_full_sect_num src_repl_sect_num src_repl_unit_num src_repl_unit_width dst_full_sect_num dst_repl_sect_num dst_repl_unit_num dst_repl_unit_width concat_i_am_your_father concat_full_sect_num concat_repl_sect_num concat_repl_unit_num concat_repl_unit_width concat_starting_ch wait_download wait_upload wait_conv wait_pool wait_ew wait_upsmpl prerelu en_pingpong_weight en_halfrate_mode en_inlinemaxpool tile_width tile_height HAT SRCAM-Buffer_0 SRCAM-Buffer_1 DEST_AM-Buffer_Offset EWA_2nd-Src_AM 
+# 1 Input download not possible
+2 XNMaxPoolPipelined pool1 3 3 2 2 0 0 0x0 224 224 3 0xc400 56 56 0 0 1 12 8 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 0 1 0 0 0 0 0 0 conv1 7 7 2 2 3 3 1 1 1 1 112 112 64
+3 XNConv res2a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0xc400 56 56 64 0xd040 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+4 XNConv res2a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xc400 56 56 64 0xf500 56 56 64 0 1 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+5 XNConv res2a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xf500 56 56 64 0x10d80 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+6 XNConv res2a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 56 56 64 0x119c0 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+7 XNEltwise res2a 1 0 1 0xd040 0x119c0 56 56 256 0xd040 0 3 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+8 XNConv res2b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xd040 56 56 256 0xf500 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+9 XNConv res2b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xf500 56 56 64 0x10d80 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+10 XNConv res2b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 56 56 64 0x119c0 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+11 XNEltwise res2b 1 0 1 0xd040 0x119c0 56 56 256 0xd040 0 3 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+12 XNConv res2c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xd040 56 56 256 0xf500 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+13 XNConv res2c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xf500 56 56 64 0x10d80 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+14 XNConv res2c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 56 56 64 0x119c0 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+15 XNEltwise res2c 1 0 1 0xd040 0x119c0 56 56 256 0xd040 0 3 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+16 XNConv res3a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0xd040 56 56 256 0xf500 28 28 512 0 3 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+17 XNConv res3a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0xd040 56 56 256 0x10760 28 28 128 0 3 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+18 XNConv res3a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10760 28 28 128 0x10d80 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+19 XNConv res3a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 28 28 128 0x113a0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+20 XNEltwise res3a 1 0 1 0xf500 0x113a0 28 28 512 0xf500 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+21 XNConv res3b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xf500 28 28 512 0x10760 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+22 XNConv res3b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10760 28 28 128 0x10d80 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+23 XNConv res3b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 28 28 128 0x113a0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+24 XNEltwise res3b 1 0 1 0xf500 0x113a0 28 28 512 0xf500 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+25 XNConv res3c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xf500 28 28 512 0x10760 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+26 XNConv res3c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10760 28 28 128 0x10d80 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+27 XNConv res3c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 28 28 128 0x113a0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+28 XNEltwise res3c 1 0 1 0xf500 0x113a0 28 28 512 0xf500 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+29 XNConv res3d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0xf500 28 28 512 0x10760 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+30 XNConv res3d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10760 28 28 128 0x10d80 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+31 XNConv res3d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x10d80 28 28 128 0x113a0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+32 XNEltwise res3d 1 0 1 0xf500 0x113a0 28 28 512 0xf500 0 6 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+33 XNConv res4a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0xf500 28 28 512 0x10760 14 14 1024 0 6 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+34 XNConv res4a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0xf500 28 28 512 0x10fcc 14 14 256 0 6 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+35 XNConv res4a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+36 XNConv res4a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+37 XNEltwise res4a 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+38 XNConv res4b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x10fcc 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+39 XNConv res4b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+40 XNConv res4b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+41 XNEltwise res4b 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+42 XNConv res4c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x10fcc 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+43 XNConv res4c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+44 XNConv res4c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+45 XNEltwise res4c 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+46 XNConv res4d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x10fcc 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+47 XNConv res4d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+48 XNConv res4d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+49 XNEltwise res4d 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+50 XNConv res4e_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x10fcc 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+51 XNConv res4e_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+52 XNConv res4e_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+53 XNEltwise res4e 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+54 XNConv res4f_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x10fcc 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+55 XNConv res4f_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x10fcc 14 14 256 0x112dc 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+56 XNConv res4f_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x112dc 14 14 256 0x11528 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+57 XNEltwise res4f 1 0 1 0x10760 0x11528 14 14 1024 0x10760 0 11 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+58 XNConv res5a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x10760 14 14 1024 0x10fcc 7 7 2048 0 11 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+59 XNConv res5a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x10760 14 14 1024 0x11402 7 7 512 0 11 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+60 XNConv res5a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x11402 7 7 512 0x11528 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0
+61 XNConv res5a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x11528 7 7 512 0x1164e 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+62 XNEltwise res5a 1 0 1 0x10fcc 0x1164e 7 7 2048 0x10fcc 0 22 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+63 XNConv res5b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10fcc 7 7 2048 0x11402 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+64 XNConv res5b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x11402 7 7 512 0x11528 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0
+65 XNConv res5b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x11528 7 7 512 0x1164e 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+66 XNEltwise res5b 1 0 1 0x10fcc 0x1164e 7 7 2048 0x10fcc 0 22 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+67 XNConv res5c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x10fcc 7 7 2048 0x11402 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+68 XNConv res5c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x11402 7 7 512 0x11528 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0
+69 XNConv res5c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x11528 7 7 512 0x1164e 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0
+70 XNEltwise res5c 1 0 1 0x10fcc 0x1164e 7 7 2048 0x10fcc 0 22 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0
+71 XNAvgPool pool5 7 7 1 1 0 0 0x10fcc 7 7 2048 0x11402 1 1 0 22 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 1 0 0 0 0 0 0 0 0
+# ## 72 XNInner fc1000 16 26 2 0x11402 1 2048 0x11418 1 1000 fc1000: type=InnerProduct, sizes=None, shapes=SizeType(batches=[1000, 2048], channels=[1000], height=1, width=1), sched 71 Kernel None Strides None Padding None  NO VALID CODE  

@@ -1,0 +1,11 @@
+{
+  "XDNN_VERSION_MAJOR": "3",
+  "XDNN_VERSION_MINOR": "0",
+  "XDNN_BITWIDTH": "8",
+  "XDNN_DDR_BANK":"2",
+  "XDNN_CSR_BASE":"0x0",
+  "XDNN_SLR_IDX":"1",
+  "SDX_VERSION":"2018.2",
+  "XDNN_NUM_KERNELS":"1",
+  "DSA_VERSION":"xilinx:aws-vu9p-f1-04261818:dynamic:5.0"
+}

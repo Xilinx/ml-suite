@@ -1,23 +1,19 @@
 {
 "confs":[
   {
-    "name":"googlenet_v1",
-    "net":"googlenet",
+    "name":"googlenet",
+    "net":"googlenet_v1",
     "datadir":"data/googlenet_v1_data",
-    "netcfg":"data/googlenet_v1_28.json",
-    "quantizecfg":"data/googlenet_v1_16b.json",
+    "quantizecfg":"data/googlenet_v1_8b.json",
     "PE":"0",
-    "firstfpgalayer":"conv1/7x7_s2",
     "fpgaoutsz":"1024"
     },
   {
-    "name":"resnet50",
-    "net":"resnet",
+    "name":"resnet",
+    "net":"resnet50",
     "datadir":"data/resnet50_data",
-    "netcfg":"data/resnet50_28.json",
-    "quantizecfg":"",
+    "quantizecfg":"data/resnet50_8b.json",
     "PE":"1",
-    "firstfpgalayer":"conv1",
     "fpgaoutsz":"2048"
   }
 ]

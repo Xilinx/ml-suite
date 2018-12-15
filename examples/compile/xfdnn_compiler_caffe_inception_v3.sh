@@ -6,14 +6,30 @@
 #
 #!/bin/bash
 
-for DSP_WIDTH in 28 56; do
+# Set Platform Environment Variables
+if [ -z $MLSUITE_ROOT ]; then
+  MLSUITE_ROOT=../..
+fi
+
+. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+
+for DSP_WIDTH in 28 56 96; do
+    if [ ${DSP_WIDTH} == 28 ]; then
+        MEM=4
+    elif [ ${DSP_WIDTH} == 56 ]; then
+        MEM=6
+    elif [ ${DSP_WIDTH} == 96 ]; then
+        MEM=9
+    fi
+    DDR=256
+
     python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
         -n $MLSUITE_ROOT/models/caffe/inception_v3/fp32/inception_v3_without_bn_deploy.prototxt \
         -g $MLSUITE_ROOT/examples/compile/work/caffe/inception_v3/fp32/inception_v3_without_bn_deploy_${DSP_WIDTH}.cmds \
         -w $MLSUITE_ROOT/models/caffe/inception_v3/fp32/inception_v3_without_bn.caffemodel \
         -s all \
         -i ${DSP_WIDTH} \
-        -m 4 \
-        -d 16
+        -m ${MEM} \
+        -d ${DDR}
 done
 

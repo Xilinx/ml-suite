@@ -18,14 +18,11 @@ from xyolo import xyolo
 
 # Bring in Xilinx Compiler, and Quantizer
 # We directly compile the entire graph to minimize data movement between host, and card
-#sys.path.insert(0,os.path.abspath("../../"))
-
 from xfdnn.tools.quantize.quantize import CaffeFrontend as xfdnnQuantizer
 
 # Select Configuration
 from configs import select_config
 
-#config = select_config("224_8b_tend")
 config = select_config("608_16b",sys.argv[1])
 
 mlsuiteRoot = os.getenv("MLSUITE_ROOT", "../..")
@@ -76,7 +73,7 @@ images = sorted([os.path.join(imgDir,name) for name in os.listdir(imgDir)])
 
 batch_sz = 4 # This determines how many images will be preprocessed and migrated to FPGA DDR at a time
 
-nbatches = len(images) / batch_sz # Ignore the remainder for now (Don't operate on partial batch)
+nbatches = len(images) // batch_sz # Ignore the remainder for now (Don't operate on partial batch)
 
 # Define the xyolo instance
 with xyolo(batch_sz=batch_sz,in_shape=tuple(config["dims"]),quantizecfg=config["quantizecfg"], xlnxlib=mlsuiteRoot+"/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so", xclbin=config["xclbin"],netcfg=config["netcfg"], datadir=config["datadir"],firstfpgalayer=config["firstfpgalayer"],classes=config["classes"],verbose=True) as detector:

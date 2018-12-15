@@ -5,7 +5,8 @@
 # (C) Copyright 2018, Xilinx, Inc.
 #
 import datetime, getopt, json, os, socket, sys, time, zmq
-from multiprocessing.pool import ThreadPool
+from multiprocessing.pool import Pool
+from multiprocessing import Manager, Process
 
 import tornado.httpserver
 import tornado.websocket
@@ -15,15 +16,11 @@ import tornado.web
 from tornado import gen
 from tornado.iostream import StreamClosedError
 
-g_workers = ThreadPool(2)
-g_zmqSubUrl = ""
-g_zmqXSubUrl = ""
 g_httpPort = 8998
 g_wsPort = 8999
 
 class MyWebSocketHandler(tornado.websocket.WebSocketHandler):
   clientConnections = []
-  rxCount = 0
 
   def __init__(self, *args, **kwargs):
     super(MyWebSocketHandler, self).__init__(*args, **kwargs)
@@ -71,6 +68,8 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 httpApp = tornado.web.Application([
   (r"/.*img_val/(.*)", tornado.web.StaticFileHandler,
     {'path': "%s/www/imagenet_val" % pwd } ),
+  (r"/scratch/(.*)", tornado.web.StaticFileHandler,
+    {'path': "/scratch"} ),
   (r"/static/(.*)", tornado.web.StaticFileHandler,
     {'path': "%s" % pwd} )
 ])
@@ -78,11 +77,11 @@ httpApp = tornado.web.Application([
 """
   Subscribe to C++ system for updates. Send updates to GUI websocket
 """
-def backgroundZmqCaffeListener():
-  print "Subscribe to C++ updates %s" % g_zmqSubUrl
+def backgroundZmqCaffeListener(uri, webSocketQ):
+  print "Subscribe to C++ updates %s" % uri
   context = zmq.Context()
   socket = context.socket(zmq.SUB)
-  socket.connect("tcp://%s" % g_zmqSubUrl)
+  socket.connect("tcp://%s" % uri)
   socket.setsockopt(zmq.SUBSCRIBE, "")
 
   while True:
@@ -90,29 +89,50 @@ def backgroundZmqCaffeListener():
       #  Wait for next request from client
       message = socket.recv()
       #print("Received caffe request: %s" % message)
-      MyWebSocketHandler.broadcastMessage("caffe", message)
+      webSocketQ.put(("caffe", message))
+#      MyWebSocketHandler.broadcastMessage("caffe", message)
     except:
+      print ("Got an exception in backgroundZmqCaffeListener", uri)
       pass
 
-def backgroundZmqXmlrtListener():
-  print "Subscribe to xMLrt updates %s" % g_zmqXSubUrl
+def backgroundWebSocketQ(webSocketQ):
+  while not webSocketQ.empty():
+    (topic, msg) = webSocketQ.get()
+    MyWebSocketHandler.broadcastMessage(topic, msg)
+
+def backgroundZmqXmlrtListener(uri, webSocketQ):
+  print "Subscribe to xMLrt updates %s" % uri
   context = zmq.Context()
   socket = context.socket(zmq.SUB)
-  socket.connect("tcp://%s" % g_zmqXSubUrl)
+  socket.connect("tcp://%s" % uri)
   socket.setsockopt(zmq.SUBSCRIBE, "")
 
   while True:
     try:
       #  Wait for next request from client
       message = socket.recv()
-      #print("Received xmlrt request: %s" % message)
-      MyWebSocketHandler.broadcastMessage("xmlrt", message)
+      #print("Received xmlrt request: %s, %s" % (message, uri))
+      webSocketQ.put(("xmlrt", message))
+#      MyWebSocketHandler.broadcastMessage("xmlrt", message)
     except:
+      print ("Got an exception in backgroundZmqXmlrtListener", uri)
       pass
 
+def listUrls(urlstr, url_list) :
+  u_list = urlstr.split(",")
+  m_ip = ""
+  for i in range(len(u_list)) :
+    uri = u_list[i]
+    if m_ip == "" :
+      m_ip = uri[:uri.find(':')]
+    if len(uri) == 4 :
+      uri = m_ip + ":" + uri
+    if len(uri) > 0 :
+      url_list.append(uri)
+
 def main():
-  global g_zmqSubUrl
-  global g_zmqXSubUrl
+  zmqSubUrl = []
+  zmqXSubUrl = []
 
   try:
     opts, args = getopt.getopt(\
@@ -125,10 +145,22 @@ def main():
 
   for o,a in opts:
     if o == "-z":
-      g_zmqSubUrl = a
+      listUrls(a, zmqSubUrl)
     elif o == "-x":
-      g_zmqXSubUrl = a
+      listUrls(a, zmqXSubUrl)
   
+  multiMgr = Manager()
+  webSocketQ = multiMgr.Queue(maxsize=1)
+
+  assert len(zmqSubUrl) > 0 and len(zmqXSubUrl) > 0
+  assert len(zmqSubUrl) == len(zmqXSubUrl)
+  workers = Pool(len(zmqSubUrl) + len(zmqXSubUrl) + 1)
+  
+  for uri in zmqSubUrl:
+    workers.apply_async(backgroundZmqCaffeListener, [uri, webSocketQ])
+  for uri in  zmqXSubUrl:
+    workers.apply_async(backgroundZmqXmlrtListener, [uri, webSocketQ])
+
   print "Start websocket server %s:%d" % (socket.gethostname(), g_wsPort)
   wsServer = tornado.httpserver.HTTPServer(wsApp)
   wsServer.listen(g_wsPort)
@@ -137,11 +169,8 @@ def main():
   httpServer = tornado.httpserver.HTTPServer(httpApp)
   httpServer.listen(g_httpPort)
 
-  if g_zmqSubUrl:
-    g_workers.apply_async(backgroundZmqCaffeListener)
-  if g_zmqXSubUrl:
-    g_workers.apply_async(backgroundZmqXmlrtListener)
-
+  tornado.ioloop.PeriodicCallback(\
+    lambda: backgroundWebSocketQ(webSocketQ), 500).start()
   tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
