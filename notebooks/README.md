@@ -8,7 +8,7 @@ Note for AWS users: The ml-suite AMI on the AWS marketplace already has Jupyter 
   ```
   $ source ~/.bashrc
   $ source activate ml-suite
-  $ pip install jupyter`
+  $ pip install jupyter
   ```
   Follow the instructions to complete the install. You do not need to install Microsoft VScode, when prompted. 
   
