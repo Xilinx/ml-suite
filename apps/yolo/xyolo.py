@@ -21,8 +21,8 @@ import nms
 
 # Bring in Xilinx Caffe Compiler, and Quantizer
 # We directly compile the entire graph to minimize data movement between host, and card
-from xfdnn.tools.compile.frontends.frontend_caffe  import CaffeFrontend as xfdnnCompiler
-from xfdnn.tools.quantize.frontends.frontend_caffe import CaffeFrontend as xfdnnQuantizer
+from xfdnn.tools.compile.bin.xfdnn_compiler_caffe  import CaffeFrontend as xfdnnCompiler
+from xfdnn.tools.quantize.quantize import CaffeFrontend as xfdnnQuantizer
 
 # Bring in Xilinx XDNN middleware
 from xfdnn.rt import xdnn
