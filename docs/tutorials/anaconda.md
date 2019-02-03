@@ -23,7 +23,11 @@ Xilinx recommends using Anaconda2 to operate in a virtual environment:
 4.  Activate Environment   
 `conda activate ml-suite`
 5.  Verify your environment by importing caffe in python  
-`python -c "import caffe"`
+      - Apply workaround: 
+      `conda install --no-deps leveldb=1.20=h00d4201_1 -c conda-forge;`
+      `conda install --no-deps glog=0.3.5=hfc679d8_1 -c conda-forge`
+      - Verify caffe: 
+      `python -c "import caffe"`
 6.  Install other required python packages
 `pip install jupyter tensorflow==1.8 zmq`
 
