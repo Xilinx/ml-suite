@@ -7,7 +7,7 @@ Note for AWS users: The ml-suite AMI on the AWS marketplace already has Jupyter 
 1. Install Jupyter on the remote system (We recommend doing this inside your Anaconda environment). 
   ```
   $ source ~/.bashrc
-  $ source activate ml-suite
+  $ conda activate ml-suite
   $ pip install jupyter`
   ```
   Follow the instructions to complete the install. You do not need to install Microsoft VScode, when prompted. 
