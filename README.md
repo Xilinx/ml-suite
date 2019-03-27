@@ -53,6 +53,7 @@ Cloud Services
 
  On Premise Platforms (Visit [ML Suite Lounge] for Details)
   - Alveo U200 Data Center Accelerator Card
+  - Alveo U250 Data Center Accelerator Card
   - Xilinx Virtex UltraScale+ FPGA VCU1525 Acceleration Development Kit
 
 ## Release Notes
