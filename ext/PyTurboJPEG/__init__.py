@@ -21,4 +21,3 @@ def imread ( f ):
         img = cv2.imread  (f)    
 
     return img
-    

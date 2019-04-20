@@ -11,14 +11,20 @@ if [ -z $MLSUITE_ROOT ]; then
   MLSUITE_ROOT=../..
 fi
 
-. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+. ${MLSUITE_ROOT}/overlaybins/setup.sh
 
-for DSP_WIDTH in 28 56 96; do
-    if [ ${DSP_WIDTH} == 28 ]; then
+for kcfg in med large v3; do
+    if [ ${kcfg} == med ]; then
+        BPP=2
+        DSP_WIDTH=28
         MEM=4
-    elif [ ${DSP_WIDTH} == 56 ]; then
+    elif [ ${kcfg} == large ]; then
+        BPP=2
+        DSP_WIDTH=56
         MEM=6
-    elif [ ${DSP_WIDTH} == 96 ]; then
+    elif [ ${kcfg} == v3 ]; then
+        BPP=1
+        DSP_WIDTH=96
         MEM=9
     fi
     DDR=256
@@ -27,6 +33,7 @@ for DSP_WIDTH in 28 56 96; do
         -n $MLSUITE_ROOT/models/caffe/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \
         -g $MLSUITE_ROOT/examples/compile/work/caffe/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn_deploy_${DSP_WIDTH}.cmds \
         -w $MLSUITE_ROOT/models/caffe/bvlc_googlenet_without_lrn/fp32/bvlc_googlenet_without_lrn.caffemodel \
+        -b ${BPP} \
         -s all \
         -i ${DSP_WIDTH} \
         -m ${MEM} \

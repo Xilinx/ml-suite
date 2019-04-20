@@ -4,10 +4,11 @@ import subprocess
 class TestConfig():
   __test__ = False
 
-  def __init__(self, models=[], bitwidths=[], kernel_types=[]):
+  def __init__(self, models=[], bitwidths=[], kernel_types=[], exec_modes=[]):
     self._models = models
     self._bitwidths = bitwidths
     self._kernel_types = kernel_types
+    self._exec_modes = exec_modes
 
 def run_test(testName, cmdStr, verify, platform):
   if platform is not None:

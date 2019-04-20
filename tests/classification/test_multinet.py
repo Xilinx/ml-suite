@@ -35,9 +35,9 @@ expected["multinet_8_large"] = expected["multinet_8_med"]
 ###########################################
 # auto-generate test functions for pytest
 ###########################################
-for model in testConfig._models:
-  for bitwidth in testConfig._bitwidths:
-    for kType in testConfig._kernel_types:
+for bitwidth in testConfig._bitwidths:
+  for kType in testConfig._kernel_types:
+    for model in testConfig._models:
       cmdArr = ["./run.sh", 
         "-t", "multinet", 
         "-k", kType,

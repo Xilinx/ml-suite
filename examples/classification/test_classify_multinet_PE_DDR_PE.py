@@ -1,13 +1,13 @@
 ##################################################################################
 # Copyright (c) 2017, Xilinx, Inc.
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
 #
 # 1. Redistributions of source code must retain the above copyright notice,
 # this list of conditions and the following disclaimer.
-# 
+#
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 # this list of conditions and the following disclaimer in the documentation
 # and/or other materials provided with the distribution.
@@ -99,7 +99,7 @@ def main(argv=None):
     args = xdnn_io.processCommandLine(argv)
 
     startTime = timeit.default_timer()
-    ret = xdnn.createHandle(args['xclbin'], "kernelSxdnn_0", args['xlnxlib'])
+    ret = xdnn.createHandle(args['xclbin'])
     if ret != 0:
       sys.exit(1)
     elapsedTime = timeit.default_timer() - startTime
@@ -193,10 +193,10 @@ def main(argv=None):
                                  scorethresh,
                                  iouthresh)
 
-    with open(netCfg['args']['labels']) as f:      
-        namez = f.readlines()      
+    with open(netCfg['args']['labels']) as f:
+        namez = f.readlines()
         names = [x.strip() for x in namez]
-        
+
     # Lets print the detections our model made
     for j in range(len(bboxes)):
         print("Obj %d: %s" % (j, names[bboxes[j]['classid']]))
@@ -341,14 +341,11 @@ if __name__ == '__main__':
   import re
 
   XCLBIN_PATH  = os.environ['XCLBIN_PATH']
-  LIBXDNN_PATH = os.environ['LIBXDNN_PATH']
   DSP_WIDTH    = 56
   BITWIDTH     = 8
-  MLSUITE_ROOT = os.environ['MLSUITE_ROOT']
 
   argv =   "--xclbin {0}/xdnn_v2_32x{1}_{2}pe_{3}b_{4}mb_bank21.xclbin \
-            --xlnxlib {5} \
-            --jsoncfg data/multinet_PE_DDR_PE.json".format(XCLBIN_PATH, DSP_WIDTH, 112/DSP_WIDTH, BITWIDTH, 2+DSP_WIDTH/14, LIBXDNN_PATH)
+            --jsoncfg data/multinet_PE_DDR_PE.json".format(XCLBIN_PATH, DSP_WIDTH, 112/DSP_WIDTH, BITWIDTH, 2+DSP_WIDTH/14)
 
   argv = re.split(r'(?<!,)\s+', argv)
   '''

@@ -14,7 +14,7 @@ A "compiled model" consists of low level HW instructions, and quantization param
 
 Important Notes:
  - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
- - The streaming_classify example will require you to download the imagnet validation set, and place the images [here](../../models/data/ilsvrc12/ilsvrc12_img_val/replace_this_file_with_dataset.md)  
+ - The streaming_classify example will require you to download the imagnet validation set, as Xilinx cannot publicly distribute the dataset. Once you download it, you can provide the path to the directory using the flag `-d <DIRECTORY>`
  - Amazon AWS EC2 F1 requires root privileges to load the FPGA, use the documented workaround
 
 The following three examples of applications using the Python xfDNN API are provided:
@@ -69,15 +69,15 @@ To run any of the three examples, use the provided bash run.sh script.
     ```
 3. Streaming Image Classification on alveo-u200 with large kernels:
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k large -b 8
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k large -b 8 -d ../../models/data/ilsvrc12/ilsvrc12_img_val
     ```
 4. Streaming Image Classification on alveo-u200 with XDNNv3:
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -d ../../models/data/ilsvrc12/ilsvrc12_img_val
     ```
 5. Streaming Image Classification on alveo-u200 with XDNNv3, throughput optimized, and reporting accuracy for Imagenet:
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -g -c throughput
+    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -g -c throughput -d ../../models/data/ilsvrc12/ilsvrc12_img_val
     ```
 6. Multinet Image Classification on Nimbix (Currently, for Multinet only the med size kernel and 16b precision are supported)
     ```sh

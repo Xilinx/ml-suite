@@ -12,7 +12,7 @@ from multiprocessing import Process, Queue
 import logging as log
 
 # Bring in some utility functions from local file
-from yolo_utils import cornersToxywh,sigmoid,softmax,generate_colors,draw_boxes
+from yolo_utils import darknet_style_xywh, cornersToxywh,sigmoid,softmax,generate_colors,draw_boxes
 import numpy as np
 
 # Bring in a C implementation of non-max suppression
@@ -21,17 +21,32 @@ import nms
 
 # Bring in Xilinx Caffe Compiler, and Quantizer
 # We directly compile the entire graph to minimize data movement between host, and card
-from xfdnn.tools.compile.bin.xfdnn_compiler_caffe  import CaffeFrontend as xfdnnCompiler
+from xfdnn.tools.compile.bin.xfdnn_compiler_caffe import CaffeFrontend as xfdnnCompiler
 from xfdnn.tools.quantize.quantize import CaffeFrontend as xfdnnQuantizer
 
 # Bring in Xilinx XDNN middleware
 from xfdnn.rt import xdnn
 from xfdnn.rt import xdnn_io
 
+import caffe
+
+def darknet_maxpool_k2x2_s1(data_in, data_out):
+    w = data_in.shape[2]
+    h = data_in.shape[3]
+    print data_in.shape, w, h
+    
+    for x in range(w):
+        for y in range(h):
+            end_val_x = min(x+1, w-1)
+            end_val_y = min(y+1, h-1)
+            data_out[:,:, y,x] = np.maximum(data_in[:,:,y,end_val_x],np.maximum(data_in[:,:,end_val_y,x],np.maximum(data_in[:,:,y,x],data_in[:,:,end_val_y,end_val_x])))
 
 class xyolo():
   def __init__(self,batch_sz=10,in_shape=[3,608,608],quantizecfg="yolo_deploy_608.json",xclbin=None,
-               netcfg="yolo.cmds",datadir="yolov2.caffemodel_data",labels="coco.names",xlnxlib="libxfdnn.so",firstfpgalayer="conv0",classes=80,verbose=False):
+               netcfg="yolo.cmds",weights="yolov2.caffemodel_data",labels="coco.names",xlnxlib="libxfdnn.so",firstfpgalayer="conv0",classes=80,verbose=False,
+               yolo_model=None,
+             caffe_prototxt=None,
+             caffe_model=None):
 
     if verbose: 
       log.basicConfig(format="%(levelname)s: %(message)s",level=log.DEBUG)
@@ -50,14 +65,24 @@ class xyolo():
       names = f.readlines()
     self.names = [x.strip() for x in names]
     
+    if os.path.isdir('./out_labels') is False:
+        os.makedirs('./out_labels')
+        
+    self.out_labels_path = './out_labels'
+    
     # Arguments exposed to user
     self.in_shape    = in_shape
     self.quantizecfg = quantizecfg
     self.xclbin      = xclbin
     self.netcfg      = netcfg
-    self.datadir     = datadir
+    self.weights     = weights
     self.labels      = labels
     self.xlnxlib     = xlnxlib
+    
+    self.yolo_model         = yolo_model
+    self.caffe_prototxt     = caffe_prototxt
+    self.caffe_model        = caffe_model
+    
     self.batch_sz    = batch_sz
     self.firstfpgalayer = firstfpgalayer # User may be using their own prototxt w/ unique names
     self.classes = classes               # User may be using their own prototxt with different region layer
@@ -136,9 +161,11 @@ class xyolo():
     fpgaRT = xdnn.XDNNFPGAOp(handles, config)
 
     # Allocate FPGA Outputs 
-    fpgaOutSize = config['out_w']*config['out_h']*config['bboxplanes']*(config['classes']+config['coords']+1)
-    fpgaOutput = np.empty((config['batch_sz'], fpgaOutSize,), dtype=np.float32, order='C')
-    raw_img = np.empty(((config['batch_sz'],) + config['in_shape']), dtype=np.float32, order='C')
+    #fpgaOutSize = config['out_w']*config['out_h']*config['bboxplanes']*(config['classes']+config['coords']+1)
+    #fpgaOutput = np.empty((config['batch_sz'], fpgaOutSize,), dtype=np.float32, order='C')
+    #raw_img = np.empty(((config['batch_sz'],) + config['in_shape']), dtype=np.float32, order='C')
+    fpgaInput = fpgaRT.getInputs()
+    fpgaOutput = fpgaRT.getOutputs()
 
     numIters = 0
     while True:
@@ -163,25 +190,80 @@ class xyolo():
         log.error("Detect requires images as a parameter")
         continue
 
+    
+      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2')) :
+          pass
+      else:
+          net = caffe.Net(config['caffe_prototxt'], config['caffe_model'], caffe.TEST)
+
+      firstInput = fpgaInput.itervalues().next()
+      firstOutput = fpgaOutput.itervalues().next()
+      maxpool_out = np.empty_like(firstOutput)
+
       log.info("Preparing Input...")
       shapes = []
       for i,img in enumerate(images):
-        raw_img[i,...], s = xdnn_io.loadYoloImageBlobFromFile(img,  config['in_shape'][1], config['in_shape'][2])
+        firstInput[i,...], s = xdnn_io.loadYoloImageBlobFromFile(img,  config['in_shape'][1], config['in_shape'][2])
         shapes.append(s)
 
       job['shapes'] = shapes # pass shapes to next stage
 
       # EXECUTE XDNN
       log.info("Running %s image(s)"%(config['batch_sz']))
-      startTime = timeit.default_timer()
-      fpgaRT.execute(raw_img, fpgaOutput, config['PE'])
-      elapsedTime = timeit.default_timer() - startTime
-
-      # Only showing time for second run because first is loading script
-      log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
-      log.info("Image Time: (%f ms/img):" % (elapsedTime*1000/config['batch_sz']))
-
-      q_bbox.put((job, fpgaOutput))
+      
+      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2')) :
+          startTime = timeit.default_timer()
+          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+          elapsedTime = timeit.default_timer() - startTime
+           
+          # Only showing time for second run because first is loading script
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
+          log.info("Image Time: (%f ms/img):" % (elapsedTime*1000/config['batch_sz']))
+           
+          q_bbox.put((job, firstOutput))
+           
+      elif(config['yolo_model'] == 'standard_yolo_v2'):
+          startTime = timeit.default_timer()
+          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+          elapsedTime = timeit.default_timer() - startTime
+          net.blobs['layer25-conv'].data[...] = fpgaOutput['layer25-conv']
+          net.blobs['layer27-conv'].data[...] = fpgaOutput['layer27-conv']
+          startTime = timeit.default_timer()
+          net.forward(start='layer28-reorg', end='layer31-conv')
+          elapsedTime_cpu = timeit.default_timer() - startTime
+          final_out = net.blobs['layer31-conv'].data[...]
+          softmaxOut = np.copy(final_out)
+           
+          # Only showing time for second run because first is loading script
+          print (elapsedTime*1000, (elapsedTime_cpu*1000) , ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime_cpu*1000))
+          log.info("Image Time: (%f ms/img):" % ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+           
+          q_bbox.put((job, softmaxOut))
+           
+      elif(config['yolo_model'] =='tiny_yolo_v2'):
+          startTime = timeit.default_timer()
+          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+          elapsedTime = timeit.default_timer() - startTime
+          darknet_maxpool_k2x2_s1(firstOutput, maxpool_out)  
+          net.blobs['data'].data[...] =  maxpool_out[...]
+          startTime = timeit.default_timer()
+          net.forward()
+          elapsedTime_cpu = timeit.default_timer() - startTime
+          final_out=net.blobs['layer15-conv'].data[...]
+          softmaxOut = np.copy(final_out)
+           
+          print (elapsedTime*1000, (elapsedTime_cpu*1000) , ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime_cpu*1000))
+          log.info("Image Time: (%f ms/img):" % ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+           
+          q_bbox.put((job, softmaxOut))
+           
+      else:
+          print("model not supported")
+           
 
   @staticmethod
   def bbox_stage(config, q_bbox, maxNumIters=-1):
@@ -225,6 +307,12 @@ class xyolo():
 
         # REPORT BOXES
         log.info("Found %d boxes"%(len(bboxes)))
+        filename = images[i]
+        out_file_txt = ((filename.split("/")[-1]).split(".")[0])
+        out_file_txt = config['out_labels_path']+"/"+out_file_txt+".txt"
+        
+        out_line_list = []
+
         for j in range(len(bboxes)):
           log.info("Obj %d: %s" % (j, config['names'][bboxes[j]['classid']]))
           log.info("\t score = %f" % (bboxes[j]['prob']))
@@ -238,10 +326,26 @@ class xyolo():
           x,y,w,h = cornersToxywh(bboxes[j]["ll"]["x"],bboxes[j]["ll"]["y"],bboxes[j]['ur']['x'],bboxes[j]['ur']['y'])
           result = {"image_id":image_id,"category_id": config['cats'][bboxes[j]["classid"]],"bbox":[x,y,w,h],"score":round(bboxes[j]['prob'],3)}
           results.append(result)
+          x,y,w,h = darknet_style_xywh(job['shapes'][i][1], job['shapes'][i][0], bboxes[j]["ll"]["x"],bboxes[j]["ll"]["y"],bboxes[j]['ur']['x'],bboxes[j]['ur']['y'])
+          line_string = str(bboxes[j]["classid"])
+          line_string = line_string+" "+str(round(bboxes[j]['prob'],3))
+          line_string = line_string+" "+str(x)
+          line_string = line_string+" "+str(y)
+          line_string = line_string+" "+str(w)
+          line_string = line_string+" "+str(h)	
+          out_line_list.append(line_string+"\n")	
 
         # DRAW BOXES w/ LABELS
         if display:
           draw_boxes(images[i],bboxes,config['names'],config['colors'])
+
+        log.info("writing this into prediction file at %s"%(out_file_txt))
+        with open(out_file_txt, "w") as the_file:
+            
+            for lines in out_line_list:
+                
+                the_file.write(lines)
+
 
     log.info("Saving results as results.json")
     with open("results.json","w") as fp:
@@ -272,6 +376,7 @@ class xyolo():
     self.proc_bbox = None
   
 if __name__ == '__main__':
+
 
   config = xdnn_io.processCommandLine()
    

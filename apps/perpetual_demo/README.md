@@ -4,8 +4,6 @@
 This tutorial shows you how to launch an image classification GoogLeNet-v1 demo in a web browser.  
 Once the demo is started, you will be able to view the demo and monitor performance from any web browser.
  
-This demo can be run on AWS or a local machine with a VCU1525 card.
-
 For instructions on launching and connecting to an aws instances, see [here][].
   
 1. Ensure you have an Anaconda environment setup  
@@ -59,7 +57,7 @@ For instructions on launching and connecting to an aws instances, see [here][].
     done
     ```
 
-8. Execte `run_perpetual_demo.sh`
+8. Execute `run_perpetual_demo.sh`
     ```sh
     $ ./run_perpetual_demo.sh 
     ```
@@ -68,6 +66,9 @@ For instructions on launching and connecting to an aws instances, see [here][].
     Navigate to `http://<your_ip>:8998/static/www/index.html`
     If there are multiple FPGAS, Navigate to `http://<your_ip>:8998/static/www/index.html#<no_of_FPGAS>`
     like `http://<your_ip>:8998/static/www/index.html#4`
+    
+10. (Optional)
+    If your device does not have 4 PEs, edit `ml-suite/apps/perpetual_demo/www/index.html` and change `num_cores` to match your device.
 
 ![](../../docs/tutorials/img/image_classification.png)
 

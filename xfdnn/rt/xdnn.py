@@ -12,6 +12,45 @@ import os, sys
 import timeit
 import numpy as np
 from multiprocessing.managers import BaseManager
+#Parsing JSON directly is easier than passing all the necessary params from C++ to python
+#Pybind11 will make passing data between C++/python easier and will remove the need for this class
+class CompilerJsonParser:
+  def __init__(self, compilerJSONFile):
+    self._jsonObj = None
+    inName = {}
+    outName = {}
+
+    self._inputs = {}
+    self._outputs = {}
+    with open(compilerJSONFile) as f:
+      self._jsonObj = json.load(f)
+
+      for i in self._jsonObj["inputs"]:
+        inName[i["input_name"]] = i["input_name"]
+
+      for i in self._jsonObj["outputs"]:
+        outName[ i["output_name"] ] = i["previous_tensors"][0]
+        #print ( i["previous_tensors"][0] , " -> ", i["output_name"] )
+
+      for i in self._jsonObj["network"]:
+        if i["name"] in inName.keys():
+          self._inputs[ inName[ i["name"] ] ] = i["outputshapes"]
+
+        elif i["name"] in outName.keys():
+          self._outputs[ outName[ i["name"] ] ] = i["outputshapes"]
+          #self._outputs[ i["name"] ] = i["outputshapes"]
+        # mergedItem
+     #   if "merged" in i:
+     #     for mergedItem in i["merged"]:
+            #print ( "mergeditem ", mergedItem , " -> ", i["name"] )
+            #self._hwoutname[mergedItem] = i["name"]
+
+
+  def getInputs(self):
+    return self._inputs
+
+  def getOutputs(self):
+    return self._outputs
 
 class XDNNFPGAOp:
   def __init__ (self, handles, args):
@@ -23,61 +62,50 @@ class XDNNFPGAOp:
     self._lib = cdll.LoadLibrary(self._libFile)
     self._handles = handles
 
+    self._prev_time = 0.0
+
     funcMap = {} # "external name -> lib name"
-    funcMap["v3computeWeightsBiasQuantSize"] = "XDNNV3ComputeWeightsBiasQuantSize"
-    funcMap["computeWeightsBiasQuantSize"] = "XDNNComputeWeightsBiasQuantSize"
-    funcMap["makeWeightsBiasQuantBlob"] = "XDNNMakeWeightsBiasQuantBlob"
+    funcMap["v3computeWeightsBiasQuantSize"]  = "XDNNV3ComputeWeightsBiasQuantSize"
+    funcMap["computeWeightsBiasQuantSize"]    = "XDNNComputeWeightsBiasQuantSize"
+    funcMap["makeWeightsBiasQuantBlob"]       = "XDNNMakeWeightsBiasQuantBlob"
 
-    for k in funcMap:
-      v = funcMap[k]
-      setattr(self, k, getattr(self._lib, v))
 
-    self._lib.xHostMalloc.argtypes = [c_size_t]
-    self._lib.xHostMalloc.restype = c_void_p
-    self._lib.xMalloc.argtypes \
-      = [c_void_p , c_size_t, c_bool]
-    self._lib.xMalloc.restype = c_void_p
-    self._lib.xMemcpyHost2Device.argtypes = [c_void_p, c_void_p, c_void_p, c_size_t]
-    self._lib.xFree.argtypes = [c_void_p, c_void_p, c_bool]
-    self._lib.xblasLoadA.argtypes = [c_void_p, c_int, c_void_p, c_char_p, c_void_p, c_int]
-    self._lib.XDNNMakeWeightsBiasQuantBlob.argtypes = [c_int]
-    self._lib.XDNNWaitForResults.argtypes = [c_void_p, c_int]
-    self._lib.XDNNMakeWeightsBiasQuantBlob.restype = POINTER(c_short)
-    self._lib.XDNNV3FillWeightsBiasQuantBlob.argtypes \
-      = [POINTER(c_short), c_int,
-         c_char_p, c_char_p,
-         POINTER(c_float), c_uint, c_float,
-         POINTER(c_float), c_uint, c_float,
-         c_ushort, c_ushort, c_uint, c_uint,
-         c_int, c_int, c_int, c_int, c_bool]
-    self._lib.XDNNFillWeightsBiasQuantBlob.argtypes \
-      = [POINTER(c_short), c_int,
-         c_char_p, c_char_p,
-         POINTER(c_float), c_uint, c_float,
-         POINTER(c_float), c_uint, c_float,
-         c_ushort, c_ushort, c_uint, c_uint]
-
-    self._lib.XDNNReadWeightsFile.argtypes \
-      = [c_char_p, POINTER(POINTER(c_char)),
-         POINTER(POINTER(c_int)), POINTER(POINTER(c_int)),
-         POINTER(POINTER(c_int)), POINTER(POINTER(c_int)),
-         POINTER(POINTER(c_int)), POINTER(POINTER(c_float))]
+    for k, func in funcMap.items():
+      setattr(self, k, getattr(self._lib, func))
 
     self._lib.XDNNMakeScriptExecutor.argtypes \
       = [POINTER(c_void_p), c_int,
          POINTER(c_short), c_char_p, c_char_p, c_float,
          c_int]
+    self._lib.XDNNMakeScriptExecutorAndLoadWeights.argtypes \
+      = [POINTER(c_void_p), c_int,
+         c_char_p, c_char_p, c_char_p, c_float,
+         c_int]
+    self._lib.XDNNMakeScriptExecutorAndLoadWeightsFromMem.argtypes \
+      = [POINTER(c_void_p), c_int, c_int, POINTER(c_char_p),
+         POINTER(POINTER(c_float)), POINTER(c_int),
+         POINTER(POINTER(c_float)), POINTER(c_int),
+         c_char_p, c_char_p, c_float, c_int]
     self._lib.XDNNMakeScriptExecutor.restype = c_void_p
-    self._lib.XDNNExecute_1D_float.argtypes = [c_void_p,
-                                      np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"), np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"),
-                                      c_uint, c_uint, c_int, c_bool]
+    self._lib.XDNNMakeScriptExecutorAndLoadWeights.restype = c_void_p
+    self._lib.XDNNMakeScriptExecutorAndLoadWeightsFromMem.restype = c_void_p
 
     self._lib.XDNNExecute_2D_float.argtypes = [c_void_p,
-                                      POINTER(POINTER(c_float)), np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"),
-                                      c_int, c_int, c_bool]
-    self._qInput = np.empty(((args['batch_sz'],) + args['in_shape']), dtype=np.int16, order='C')
+                                      POINTER(POINTER( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS") )),
+                                      POINTER(c_char_p),
+                                      c_uint,
+                                      POINTER( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS")),
+                                      POINTER(c_uint),
+                                      POINTER(c_char_p),
+                                      c_uint,
+                                      c_uint,
+                                      c_int,
+                                      c_bool]
 
-    self._weights = self.loadWeights(args)
+    self._lib.XDNNSetCustomStartIdx.argtypes = [c_void_p, c_int, c_int]
+    self._lib.XDNNSetCustomStopIdx.argtypes = [c_void_p, c_int, c_int]
+    self._lib.XDNNReadHardwareCounter.argtypes = [c_void_p, c_int, c_int]
+    self._lib.XDNNReadHardwareCounter.restype = c_float
     self._args = args
 
     numHandles = len(handles)
@@ -85,230 +113,75 @@ class XDNNFPGAOp:
     for i,h in enumerate(self._handles):
       handlePtrs[i] = h
 
-    self._executor = self._lib.XDNNMakeScriptExecutor(\
-      handlePtrs, numHandles, self._weights, c_char_p(args['netcfg'].encode('utf-8')), c_char_p(args['quantizecfg'].encode('utf-8')),
-      args['scaleB'], self.getMask(args['PE']))
+    if '_layerParams' not in args:
+      # load from disk
+      self._executor = self._lib.XDNNMakeScriptExecutorAndLoadWeights(\
+        handlePtrs, numHandles,
+        c_char_p(args['weights']),
+        c_char_p(args['netcfg'].encode('utf-8')),
+        c_char_p(args['quantizecfg'].encode('utf-8')),
+        args['scaleB'], self.getMask(args['PE']))
+    else:
+      # load directly from mem
+      layerParams = self._args['_layerParams']
 
-  def loadBlobToDdr(self, blob, size, layer2OffsetMap, PE=-1):
-    if not isinstance (PE, list): PE = [PE]
+      weightLayerIndices = []
+      for i, lp in enumerate(layerParams):
+        if lp["weights"]:
+          lp["weights_sz"] = len(lp["weights"])
+          lp["weights"] = np.ascontiguousarray(lp["weights"], dtype=np.float32).flatten()
+          lp["bias_sz"] = len(lp["bias"])
+          lp["bias"] = np.ascontiguousarray(lp["bias"], dtype=np.float32).flatten()
+          weightLayerIndices.append(i)
 
-    numBytes = size * 2
-    fps = []
-    for h in self._handles:
-      fp = self._lib.xMalloc(h, numBytes, True)
-      self._lib.xMemcpyHost2Device(h, blob, fp, numBytes)
-      fps.append((h, fp))
+      numWeightLayers = len(weightLayerIndices)
+      weightLayerNames = (c_char_p * numWeightLayers)()
+      weights = (POINTER(c_float) * numWeightLayers)()
+      bias = (POINTER(c_float) * numWeightLayers)()
+      weightsSz = (c_int * numWeightLayers)()
+      biasSz = (c_int * numWeightLayers)()
 
-    for peIdx in PE:
-      for h in self._handles:
-        self._lib.xblasLoadA(h, size, blob, c_char_p(layer2OffsetMap.encode('utf-8')), None, peIdx)
+      for i, idx in enumerate(weightLayerIndices):
+        lp = layerParams[idx]
+        weightLayerNames[i] = lp['name']
+        weights[i] = lp['weights'].ctypes.data_as(POINTER(c_float))
+        weightsSz[i] = lp['weights_sz']
+        bias[i] = lp['bias'].ctypes.data_as(POINTER(c_float))
+        biasSz[i] = lp['bias_sz']
 
-    return fps
+      self._executor \
+        = self._lib.XDNNMakeScriptExecutorAndLoadWeightsFromMem(\
+        handlePtrs, numHandles, numWeightLayers,
+        weightLayerNames, weights, weightsSz, bias, biasSz,
+        c_char_p(args['netcfg'].encode('utf-8')),
+        c_char_p(args['quantizecfg'].encode('utf-8')),
+        args['scaleB'], self.getMask(args['PE']))
 
-  def parseCompilerFileJson(self, compilerFileName):
-    with open(compilerFileName) as json_data:
-      compilerContent = json.load(json_data)
-    allLayersParams=[]
-    layerParams={}
-    for i in range(len(compilerContent["network"])):
-      layerObj = compilerContent['network'][i]['xdnn_kv']
-      if bool(layerObj):
-        if layerObj["XNOp"] == "XNConv" \
-          or layerObj["XNOp"] == "XNConvDepth": 
-          layerParams={}
-          layerParams['name']=layerObj["name"]
-          xdnnFields = {'kernW': 'kernel_w', 
-                        'kernH': 'kernel_h', 
-                        'inChans': 'inchan', 
-                        'outChans': 'outchan',
-                        'srcFullSectNum': 'src_full_sect_num', 
-                        'srcReplSectNum': 'src_repl_sect_num', 
-                        'srcReplUnitNum': 'src_repl_unit_num', 
-                        'srcReplUnitWidth': 'src_repl_unit_width', 
-                        'convHalfRateMode': 'en_halfrate_mode'}
-          for (k, v) in xdnnFields.iteritems():
-            if v in layerObj:
-              layerParams[k] = int(layerObj[v])
+    self._compilerJSONObj = CompilerJsonParser( args['netcfg'] )
+    self._npInputs = {}
+    self._npOutputs = {}
 
-          allLayersParams.append(layerParams)
-        elif layerObj["XNOp"] == "XNMaxPoolPipelined":
-          layerParams={}
-          layerParams['name']=layerObj["conv_name"]
-          xdnnFields = {'kernW': 'conv_kernel_w', 
-                        'kernH': 'conv_kernel_h', 
-                        'inChans': 'inchan', 
-                        'outChans': 'pool_inchan',
-                        'srcFullSectNum': 'src_full_sect_num', 
-                        'srcReplSectNum': 'src_repl_sect_num', 
-                        'srcReplUnitNum': 'src_repl_unit_num', 
-                        'srcReplUnitWidth': 'src_repl_unit_width', 
-                        'convHalfRateMode': 'en_halfrate_mode'}
-          for (k, v) in xdnnFields.iteritems():
-            if v in layerObj:
-              layerParams[k] = int(layerObj[v])
-    
-          allLayersParams.append(layerParams)
-
-    return allLayersParams
-
-  def parseCompilerFile(self,compilerFileName):
-    if 'json' in compilerFileName:
-      return self.parseCompilerFileJson(compilerFileName)
-
-    with open(compilerFileName) as compilerReadStream:
-      compilerContent = compilerReadStream.readlines()
-    compilerContent = [x.strip().split(" ") for x in compilerContent]
-    allLayersParams=[]
-    layerParams={}
-    for i in range(len(compilerContent)):
-      if compilerContent[i][1] == "XNConv":
-        layerParams={}
-        layerParams['name']=compilerContent[i][2]
-        layerParams['kernW']=int(compilerContent[i][3])
-        layerParams['kernH']=int(compilerContent[i][4])
-        layerParams['inChans']=int(compilerContent[i][19])
-        layerParams['outChans']=int(compilerContent[i][23])
-        if len(compilerContent[i]) >= 47:
-          layerParams['srcFullSectNum']=int(compilerContent[i][25])
-          layerParams['srcReplSectNum']=int(compilerContent[i][26])
-          layerParams['srcReplUnitNum']=int(compilerContent[i][27])
-          layerParams['srcReplUnitWidth']=int(compilerContent[i][28])
-          layerParams['convHalfRateMode']=int(compilerContent[i][47])
-
-        allLayersParams.append(layerParams)
-      elif compilerContent[i][1] == "XNMaxPoolPipelined":
-        layerParams={}
-        layerParams['name']=compilerContent[i][47]
-        layerParams['kernW']=int(compilerContent[i][48])
-        layerParams['kernH']=int(compilerContent[i][49])
-        layerParams['inChans']=int(compilerContent[i][12])
-        layerParams['outChans']=int(compilerContent[i][60])
-        layerParams['srcFullSectNum']=int(compilerContent[i][17])
-        layerParams['srcReplSectNum']=int(compilerContent[i][18])
-        layerParams['srcReplUnitNum']=int(compilerContent[i][19])
-        layerParams['srcReplUnitWidth']=int(compilerContent[i][20])
-        layerParams['convHalfRateMode']=int(compilerContent[i][39])
-
-        allLayersParams.append(layerParams)
-
-    return allLayersParams
-
-  def loadWeights(self, args) :
-    """
-    Load weights to off chip device memory. The weights are first quantized.
-
-    :param args: Collection of arguments. Most importanly args["datadir"] which is the path to a folder containing weights & biases.
-    :type args: dict.
-    :returns: tuple -- (weightsBlob, fcWeight, fcBias) -- <class 'xdnn.LP_c_short'>, numpy.ndarray, numpy.ndarray
-    """
-    return self.loadWeightsBiasQuant(args)
-
-  def _loadLayerParamsFromFiles(self, args):
-    xdnnv3 = 'xdnnv3' in args and args['xdnnv3']
-    compilerParamsList = self.parseCompilerFile(args['netcfg'])
-    compilerParams = { lp['name']: lp for lp in compilerParamsList }
-
-    paramsFromDataDir = {}
-    if args['datadir']:
-      # collect params from files
-      fi = 0
-      while True:
-        fname = "%s/fwbqb_%d" % (args['datadir'], fi)
-        if not os.path.isfile(fname):
-          break
-
-        with open(fname, 'r') as f:
-          data = f.read()
-          vals = data.strip().split(' ')
-          layerName = vals[0]
-          if 'v2WeightsFormat' in args and args['v2WeightsFormat'] == 1:
-            kernWidth  = int(vals[1])
-            kernHeight = int(vals[2])
-            inChans    = int(vals[3])
-            outChans   = int(vals[4])
-            weights = [float(v) for v in vals[5:]]
-          else:
-            kernWidth = kernHeight = int(vals[1])
-            inChans   = int(vals[2])
-            outChans  = int(vals[3])
-            weights = [float(v) for v in vals[4:]]
-
-        fname = "%s/fwbqb_bias_%d" % (args['datadir'], fi)
-        with open(fname, 'r') as f:
-            data = f.read()
-            vals = data.strip().split(' ')
-            if 'v2WeightsFormat' in args and args['v2WeightsFormat'] == 1:
-              vals = vals[5:]
-            else:
-              vals = vals[4:]
-            bias = [float(v) for v in vals]
-
-        paramsFromDataDir[layerName] = { \
-          'layerName': layerName,
-          'kernWidth': kernWidth,
-          'kernHeight': kernHeight,
-          'inChans': inChans,
-          'outChans': outChans,
-          'weights': weights,
-          'bias': bias }
-        fi += 1
-    visitedLayers = set()
-    layerParams = []
-    for l in compilerParamsList:
-      layerName  = l['name']
-      layerName  = layerName.split("#", 1)[0] # to handle partial layers
-      if layerName in visitedLayers:
-        continue
-      visitedLayers.add(layerName)
-      kernWidth  = l['kernW']
-      kernHeight = l['kernH']
-      inChans    = l['inChans']
-      outChans   = l['outChans']
-      weights    = None
-      bias       = None
-
-      if layerName in paramsFromDataDir:
-        dParams = paramsFromDataDir[layerName]
-        assert kernWidth == dParams['kernWidth']
-        assert kernHeight == dParams['kernHeight']
-        assert inChans == dParams['inChans']
-        assert outChans == dParams['outChans']
-        weights = dParams['weights']
-        bias = dParams['bias']
+    for k, v in self._compilerJSONObj.getInputs().items():
+      if isinstance(args['batch_sz'], dict):
+        batch_size = args['batch_sz'][k]
       else:
-        # no datadir provided; load dummy weights
-        print("WARNING: loading dummy weights for %s" % layerName)
-        weightsSize = kernWidth * kernHeight * inChans * outChans
-        weights = [0] * weightsSize
-        bias = [0] * outChans
+        batch_size = args['batch_sz']
+      self._npInputs[k] = np.empty(((batch_size,) + tuple(v[1:])), dtype=np.float32, order='C')
 
-      layerParam = {
-        "name": layerName,
-        "kern_w": kernWidth,
-        "kern_h": kernHeight,
-        "in_ch": inChans,
-        "out_ch": outChans,
-        "weights": weights,
-        "bias": bias,
-        "quantize": True if args['quantizecfg'] else False
-      }
+    for k, v in self._compilerJSONObj.getOutputs().items():
+      self._npOutputs[k] = np.empty(((batch_size,) + tuple(v[1:])), dtype=np.float32, order='C')
 
-      if xdnnv3:
-        # append compiler params
-        compilerParam = compilerParams[layerName]
-        cparams = ['srcFullSectNum', 'srcReplSectNum', 'srcReplUnitNum',
-          'srcReplUnitWidth', 'convHalfRateMode']
-        for cp in cparams:
-          layerParam[cp] = compilerParam[cp]
+  def getInputDescriptors(self):
+    return self._compilerJSONObj.getInputs()
 
-        # sanity checks
-        assert kernWidth == compilerParam['kernW']
-        assert kernHeight == compilerParam['kernH']
-        assert inChans == compilerParam['inChans']
+  def getOutputDescriptors(self):
+    return self._compilerJSONObj.getOutputs()
 
-      layerParams.append(layerParam)
+  def getOutputs(self):
+    return self._npOutputs
 
-    return layerParams
+  def getInputs(self):
+    return self._npInputs
 
   def is8BitMode(self, args):
     with open(args['xclbin']+'.json') as f:
@@ -321,122 +194,6 @@ class XDNNFPGAOp:
 
     return False
 
-  def loadWeightsBiasQuant(self, args):
-      print("Loading weights/bias/quant_params to FPGA...")
-
-      if '_layerParams' in args:
-        layerParams = args['_layerParams']
-      else:
-        layerParams = self._loadLayerParamsFromFiles(args)
-      xdnnv3 = 'xdnnv3' in args and args['xdnnv3']
-      is8bit = self.is8BitMode(args)
-
-      weightLayerParams = []
-      for lp in layerParams:
-        if lp["weights"]:
-          weightLayerParams.append(lp)
-
-      size = 0
-      for lp in weightLayerParams:
-        if xdnnv3:
-          size += self.v3computeWeightsBiasQuantSize(\
-            lp['kern_w'], lp['kern_h'], lp['out_ch'],
-            lp['srcFullSectNum'], lp['srcReplSectNum'],
-            lp['srcReplUnitNum'], is8bit) * 2
-        else:
-          size += self.computeWeightsBiasQuantSize(\
-            lp['kern_w'], lp['kern_h'],
-            lp['in_ch'], lp['out_ch'], lp['quantize'])
-
-      blob = self.makeWeightsBiasQuantBlob(size)
-
-      layer2OffsetMapStr = ""
-      offset = 0
-      for i, lp in enumerate(weightLayerParams):
-        if layer2OffsetMapStr != "":
-          layer2OffsetMapStr += ","
-        layer2OffsetMapStr += "%s:%d" % (lp['name'], offset)
-
-        if xdnnv3:
-          offset += self.v3fillWeightsBiasQuantBlob(blob, offset,
-            args['quantizecfg'], lp['weights'], args['scaleA'],
-            lp['bias'], args['scaleB'], lp['kern_w'], lp['kern_h'],
-            lp['in_ch'], lp['out_ch'],
-            lp['srcFullSectNum'], lp['srcReplSectNum'],
-            lp['srcReplUnitNum'], lp['srcReplUnitWidth'],
-            lp['convHalfRateMode'], lp['name'])
-        else:
-          offset += self.fillWeightsBiasQuantBlob(blob, offset,
-            args['quantizecfg'], lp['weights'], args['scaleA'],
-            lp['bias'], args['scaleB'], lp['kern_w'], lp['kern_h'],
-            lp['in_ch'], lp['out_ch'], lp['name'])
-
-      self.loadBlobToDdr(blob, size, layer2OffsetMapStr, int(args['PE']))
-
-      return blob
-
-  def v3fillWeightsBiasQuantBlob(self, blob, offset,
-    cfgFile, weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, srcFullSectNum, srcReplSectNum, srcReplunitNum, srcReplUnitWidth, convHalfRateMode, layerName = ""):
-    cWeights = (c_float*len(weights))()
-    for i in range(len(weights)):
-      cWeights[i] = weights[i]
-    cBias = (c_float*len(bias))()
-    for i in range(len(bias)):
-      cBias[i] = bias[i]
-
-    return self._lib.XDNNV3FillWeightsBiasQuantBlob(\
-      blob, offset, c_char_p(layerName),
-      c_char_p(cfgFile),
-      cWeights, len(cWeights), scaleWeight,
-      cBias, len(cBias), scaleBias,
-      c_ushort(kw), c_ushort(kh), inch, outch, srcFullSectNum, srcReplSectNum, srcReplunitNum, srcReplUnitWidth, convHalfRateMode)
-
-  def fillWeightsBiasQuantBlob(self, blob, offset,
-    cfgFile, weights, scaleWeight, bias, scaleBias, kw, kh, inch, outch, layerName = ""):
-    cWeights = (c_float*len(weights))()
-    for i in range(len(weights)):
-      cWeights[i] = weights[i]
-    cBias = (c_float*len(bias))()
-    for i in range(len(bias)):
-      cBias[i] = bias[i]
-
-    return self._lib.XDNNFillWeightsBiasQuantBlob(\
-      blob, offset, c_char_p(layerName.encode('utf-8')),
-      c_char_p(cfgFile.encode('utf-8')),
-      cWeights, len(cWeights), scaleWeight,
-      cBias, len(cBias), scaleBias,
-      c_ushort(kw), c_ushort(kh), inch, outch)
-
-  def readWeightsFile(self, fname):
-    layerNamePtr = POINTER(c_char)()
-    kwPtr = POINTER(c_int)()
-    khPtr = POINTER(c_int)()
-    icPtr = POINTER(c_int)()
-    ocPtr = POINTER(c_int)()
-    nvPtr = POINTER(c_int)()
-    valsPtr = POINTER(c_float)()
-
-    self._lib.XDNNReadWeightsFile(fname, byref(layerNamePtr),
-      byref(kwPtr), byref(khPtr),
-      byref(icPtr), byref(ocPtr), byref(nvPtr), byref(valsPtr))
-
-    # convert to Python
-    layerName = ""
-    i = 0
-    while layerNamePtr[i] != '\0':
-      layerName += layerNamePtr[i]
-      i += 1
-    kw = kwPtr[0]
-    kh = khPtr[0]
-    ic = icPtr[0]
-    oc = ocPtr[0]
-    nv = nvPtr[0]
-    vals = []
-    for i in range(nv):
-      vals.append(valsPtr[i])
-
-    return (layerName, kw, kh, ic, oc, vals)
-
   def getMask(self, peList):
     if not isinstance(peList, list): peList = [peList]
 
@@ -446,7 +203,7 @@ class XDNNFPGAOp:
       peMask = peMask | (1 << peId)
     return peMask
 
-  def execute(self, inputs, output, streamId=0, blocking=True ):
+  def execute(self, inputs, outputs, streamId=0, blocking=True ):
     """
     Executes inference on the hardware accelerator. This API call is blocking.
 
@@ -457,16 +214,70 @@ class XDNNFPGAOp:
     :param streamId: Argument not required.
     :type streamId: int.
     """
-    if isinstance(inputs,np.ndarray):
-      if inputs.dtype == np.float32:
-        self._lib.XDNNExecute_1D_float(self._executor,
-                                    inputs, output, inputs.shape[0], np.product(inputs.shape[1:]), streamId, blocking)        
-      else:
-        raise ValueError( "Unsupported input datatype", inputs.dtype)
+    inKeys = inputs.keys()
+    outKeys = outputs.keys()
 
+#      for key,val in inputs.iteritems():
+#        inKeys.append(key)
+#        #if val.flags['C_CONTIGUOUS'] == False:
+#        #  raise ValueError( "Input for ", key, " must be C Contiguous" )
+#        if isinstance(val,np.ndarray):
+#          inSz.append( np.product(val.shape) )
+#        elif isinstance( val, list ):
+#          inSz.append(np.product(val[0].shape))
+#        else:
+#          raise ValueError( "Unsupported input format", type(val))
+#
+#      for key,val in output.iteritems():
+#        #if val.flags['C_CONTIGUOUS'] == False:
+#        #  raise ValueError( "Output for ", key, " must be C Contiguous" )
+#        outKeys.append(key)
+#
+#        if isinstance(val,np.ndarray):
+#          outSz.append( np.product(val.shape) )
+#        elif isinstance( val, list ):
+#          outSz.append(np.product(val[0].shape))
+#        else:
+#          raise ValueError( "Unsupported input format", type(val))
+
+    in_name_arr = (c_char_p * len(inKeys) )(*inKeys)
+    #in_bufsz_arr = ( c_uint * len(inSz))(*inSz)
+    out_name_arr = (c_char_p * len(outKeys) )()
+    #out_bufsz_arr = ( c_uint * len(outSz))(*outSz)
+    in_ptr = {}
+    firstInput = next(iter(inputs.itervalues()))
+    if isinstance(firstInput,np.ndarray):
+      bsz = firstInput.shape[0]
+      for key, array in inputs.iteritems():
+        in_ptr[key] = []
+        for b in range(bsz):
+          in_ptr[key].append ( array[b,...] )
     else:
-      pointer_ar = (POINTER(c_float) * len(inputs) )(*inputs)
-      self._lib.XDNNExecute_2D_float ( self._executor, pointer_ar, output, len(inputs), streamId, blocking )
+      in_ptr = inputs
+
+    in_batch = next(iter(in_ptr.itervalues()))
+
+    bsz = len(in_batch)
+    ptr_inarr_2d = (POINTER( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS") ) * len(inputs) )()
+    i = 0
+    for v in in_ptr.itervalues():
+      ptr_inarr_2d[i] = ( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS")  * len(v) )()
+      for p, p_val in enumerate(v):
+        ptr_inarr_2d[i][p] = p_val.ctypes.data_as( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS") )
+      i += 1
+
+    ptr_outarr_2d = ( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS") * len(outputs) )()
+    out_bufsz_arr = ( c_uint * len(outputs))()
+
+    i = 0
+    for k,v in outputs.iteritems():
+      ptr_outarr_2d[i] = v.ctypes.data_as( np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS") )
+      out_bufsz_arr[i] = np.prod(v.shape[1:])
+      out_name_arr[i] = k
+      i += 1
+
+    self._lib.XDNNExecute_2D_float ( self._executor, ptr_inarr_2d, in_name_arr,
+                                     len(inputs), ptr_outarr_2d, out_bufsz_arr, out_name_arr, len(outputs), bsz, streamId, blocking)
 
   def exec_async(self, inputs, output, streamId=0):
     """
@@ -490,6 +301,18 @@ class XDNNFPGAOp:
     :returns: int -- Return Code. Expect 0 for success.
     """
     return self._lib.XDNNWaitForResults( self._executor, streamId )
+
+  def set_start_idx(self, mbIdx, dflIdx=-1):
+    return self._lib.XDNNSetCustomStartIdx(self._executor, dflIdx, mbIdx)
+
+  def set_stop_idx(self, mbIdx, dflIdx=-1):
+    return self._lib.XDNNSetCustomStopIdx(self._executor, dflIdx, mbIdx)
+
+  def get_exec_time(self, devIdx=0,cuIdx=0):
+    curr_time = self._lib.XDNNReadHardwareCounter(self._executor, devIdx, cuIdx)
+    elapsed = curr_time - self._prev_time
+    self._prev_time = curr_time
+    return elapsed
 
 class XDNNManager:
   def __init__(self, libFile=None):
@@ -530,12 +353,6 @@ class XDNNManager:
          np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS")]
     self._lib.computeSoftmax.argtypes = [np.ctypeslib.ndpointer(c_float, flags="C_CONTIGUOUS"), c_uint, c_uint ]
 
-    self._lib.XDNNFetchBatchBlob.argtypes \
-      = [POINTER(c_short), c_int, c_char_p]
-    self._lib.XDNNStd2XdnnV3.argtypes = [np.ctypeslib.ndpointer(c_short, flags="C_CONTIGUOUS"), POINTER(c_short), c_int, c_int, c_int, c_bool, c_int]
-
-    self._lib.XDNNGetV3InputFormatSize.argtypes = [c_int, c_int, c_int]
-    self._lib.XDNNGetV3InputFormatSize.restype = c_int
     self._lib.XDNNGetHostDeviceName.argtypes = [c_char_p]
     self._lib.XDNNGetHostDeviceName.restype = c_char_p
 
@@ -546,9 +363,6 @@ class XDNNManager:
     funcMap["quantizeBias"] = "XDNNQuantizeBias"
     funcMap["quantizev3Bias"] = "XDNNV3QuantizeBias"
     funcMap["quantizeAvgPool"] = "XDNNQuantizeAvgPool"
-    funcMap["fetchbatchblob"] = "XDNNFetchBatchBlob"
-    funcMap["std2xdnnv3"] = "XDNNStd2XdnnV3"
-    funcMap["getV3InputFormatSize"] = "XDNNGetV3InputFormatSize"
     funcMap["getHostDeviceName"] = "XDNNGetHostDeviceName"
 
     for k in funcMap:
@@ -619,7 +433,7 @@ class XDNNManager:
       self._lib.computeSoftmax(data[i,:], 1, np.prod(data.shape[1:]))
     return data
 
-  def computeFC(self, weight, bias, data, M, N, K, out):
+  def computeFC(self, weight, bias, data,out):
     """
     Compute the inner product layer for a given activation or a set of activations. WX+B.
 
@@ -629,18 +443,12 @@ class XDNNManager:
     :type bias: numpy.ndarray
     :param data: Activation or a set of activations corresponding to multiple images stored as a 1D Array.
     :type data: numpy.ndarray.
-    :param M: Number of inferences being ran in parallel. i.e. # of images.
-    :type M: int.
-    :param N: Number of elements in the output volume returned by Inner Product for a single inference. This is specific to the network.
-    :type N: int.
-    :param K: Number of elements in the output volume returned by FPGA for a single inference. This is specific to the network.
-    :type K: int.
     :param out: Inner Product result (output volume)
     :type out: numpy.ndarray.
     """
-    M = int(M)
-    N = int(N)
-    K = int(K)
+    M = int(data.shape[0])
+    N = int(out.shape[1])
+    K = np.product ( data.shape[1:])
     if len(weight) != K*N:
       raise Exception('FC weight dim mismatch')
     if np.size(data) != M*K:

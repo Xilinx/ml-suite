@@ -11,9 +11,9 @@ if [ -z $MLSUITE_ROOT ]; then
   MLSUITE_ROOT=../..
 fi
 
-. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+. ${MLSUITE_ROOT}/overlaybins/setup.sh
 
-for BITWIDTH in 16 8; do
+for BITWIDTH in 8; do
     python $MLSUITE_ROOT/xfdnn/tools/quantize/quantize.py \
         --deploy_model $MLSUITE_ROOT/models/caffe/places365/fp32/bvlc_googlenet_without_lrn_deploy.prototxt \
         --output_json $MLSUITE_ROOT/examples/quantize/work/caffe/places365/bvlc_googlenet_without_lrn_quantized_int${BITWIDTH}_deploy.json \

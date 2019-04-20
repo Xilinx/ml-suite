@@ -11,9 +11,9 @@ if [ -z $MLSUITE_ROOT ]; then
   MLSUITE_ROOT=../..
 fi
 
-. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+. ${MLSUITE_ROOT}/overlaybins/setup.sh
 
-for BITWIDTH in 16 8; do
+for BITWIDTH in 8; do
     python $MLSUITE_ROOT/xfdnn/tools/quantize/quantize.py \
         --deploy_model $MLSUITE_ROOT/models/caffe/aiotlabs/fp32/resnet18_baseline_without_bn_deploy.prototxt \
         --output_json $MLSUITE_ROOT/examples/quantize/work/caffe/aiotlabs/resnet18_baseline_without_bn_quantized_int${BITWIDTH}_deploy.json \

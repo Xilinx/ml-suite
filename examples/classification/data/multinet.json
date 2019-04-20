@@ -3,7 +3,7 @@
   {
     "name":"googlenet",
     "net":"googlenet_v1",
-    "datadir":"data/googlenet_v1_data",
+    "weights":"data/googlenet_v1_data",
     "quantizecfg":"data/googlenet_v1_8b.json",
     "PE":"0",
     "fpgaoutsz":"1024"
@@ -11,7 +11,7 @@
   {
     "name":"resnet",
     "net":"resnet50",
-    "datadir":"data/resnet50_data",
+    "weights":"data/resnet50_data",
     "quantizecfg":"data/resnet50_8b.json",
     "PE":"1",
     "fpgaoutsz":"2048"

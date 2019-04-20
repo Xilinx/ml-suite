@@ -11,61 +11,72 @@ if [ -z $MLSUITE_ROOT ]; then
   MLSUITE_ROOT=../..
 fi
 
-. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+. ${MLSUITE_ROOT}/overlaybins/setup.sh
 
-for DSP_WIDTH in 28 56 96; do
-    if [ ${DSP_WIDTH} == 28 ]; then
+for kcfg in med large v3; do
+    if [ ${kcfg} == med ]; then
+        BPP=2
+        DSP_WIDTH=28
         MEM=4
-    elif [ ${DSP_WIDTH} == 56 ]; then
+    elif [ ${kcfg} == large ]; then
+        BPP=2
+        DSP_WIDTH=56
         MEM=6
-    elif [ ${DSP_WIDTH} == 96 ]; then
+    elif [ ${kcfg} == v3 ]; then
+        BPP=1
+        DSP_WIDTH=96
         MEM=9
     fi
     DDR=256
 
-#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_baseline_deploy.prototxt \
-#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_baseline_deploy_${DSP_WIDTH}.cmds \
-#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_baseline.caffemodel \
-#        -s all \
-#        -i ${DSP_WIDTH} \
-#        -m ${MEM} \
-#        -d ${DDR}
-
-#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v1_deploy.prototxt \
-#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v1_deploy_${DSP_WIDTH}.cmds \
-#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v1.caffemodel \
-#        -s all \
-#        -i ${DSP_WIDTH} \
-#        -m ${MEM} \
-#        -d ${DDR}
-
-#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v2_deploy.prototxt \
-#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v2_deploy_${DSP_WIDTH}.cmds \
-#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v2.caffemodel \
-#        -s all \
-#        -i ${DSP_WIDTH} \
-#        -m ${MEM} \
-#        -d ${DDR}
-
     python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v3_deploy.prototxt \
-        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v3_deploy_${DSP_WIDTH}.cmds \
-        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v3.caffemodel \
+        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_baseline_deploy.prototxt \
+        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_baseline_deploy_${DSP_WIDTH}.cmds \
+        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_baseline.caffemodel \
         -s all \
+        -b ${BPP} \
         -i ${DSP_WIDTH} \
         -m ${MEM} \
         -d ${DDR}
+
+    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
+        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v1_deploy.prototxt \
+        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v1_deploy_${DSP_WIDTH}.cmds \
+        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v1.caffemodel \
+        -s all \
+        -b ${BPP} \
+        -i ${DSP_WIDTH} \
+        -m ${MEM} \
+        -d ${DDR}
+
+    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
+        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v2_deploy.prototxt \
+        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v2_deploy_${DSP_WIDTH}.cmds \
+        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v2.caffemodel \
+        -s all \
+        -b ${BPP} \
+        -i ${DSP_WIDTH} \
+        -m ${MEM} \
+        -d ${DDR}
+
+#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
+#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v3_deploy.prototxt \
+#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_v1_pruned_v3_deploy_${DSP_WIDTH}.cmds \
+#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_v1_pruned_v3.caffemodel \
+#        -s all \
+#        -b ${BPP} \
+#        -i ${DSP_WIDTH} \
+#        -m ${MEM} \
+#        -d ${DDR}
 
 #    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
 #        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_baseline_deploy.prototxt \
 #        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_baseline_deploy_${DSP_WIDTH}.cmds \
 #        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_baseline.caffemodel \
 #        -s all \
+#        -b ${BPP} \
 #        -i ${DSP_WIDTH} \
-#        -m 4 \
+#        -m {$MEM} \
 #        -d ${DDR}
 
 #    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
@@ -73,6 +84,7 @@ for DSP_WIDTH in 28 56 96; do
 #        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/inception_pruned_deploy_${DSP_WIDTH}.cmds \
 #        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/inception_pruned.caffemodel \
 #        -s all \
+#        -b ${BPP} \
 #        -i ${DSP_WIDTH} \
 #        -m ${MEM} \
 #        -d ${DDR}
@@ -82,6 +94,7 @@ for DSP_WIDTH in 28 56 96; do
 #        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_baseline_deploy_${DSP_WIDTH}.cmds \
 #        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_baseline.caffemodel \
 #        -s all \
+#        -b ${BPP} \
 #        -i ${DSP_WIDTH} \
 #        -m ${MEM} \
 #        -d ${DDR}
@@ -91,26 +104,29 @@ for DSP_WIDTH in 28 56 96; do
 #        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_pruned_deploy_${DSP_WIDTH}.cmds \
 #        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_pruned.caffemodel \
 #        -s all \
+#        -b ${BPP} \
 #        -i ${DSP_WIDTH} \
 #        -m ${MEM} \
 #        -d ${DDR}
 
-#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_baseline_with_scale_deploy.prototxt \
-#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_baseline_with_scale_deploy_${DSP_WIDTH}.cmds \
-#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_baseline_with_scale.caffemodel \
-#        -s all \
-#        -i ${DSP_WIDTH} \
-#        -m ${MEM} \
-#        -d ${DDR}
+    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
+        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_baseline_with_scale_deploy.prototxt \
+        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_baseline_with_scale_deploy_${DSP_WIDTH}.cmds \
+        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_baseline_with_scale.caffemodel \
+        -s all \
+        -b ${BPP} \
+        -i ${DSP_WIDTH} \
+        -m ${MEM} \
+        -d ${DDR}
 
-#    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
-#        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_pruned_with_scale_deploy.prototxt \
-#        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_pruned_with_scale_deploy_${DSP_WIDTH}.cmds \
-#        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_pruned_with_scale.caffemodel \
-#        -s all \
-#        -i ${DSP_WIDTH} \
-#        -m ${MEM} \
-#        -d ${DDR}
+    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py \
+        -n $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_pruned_with_scale_deploy.prototxt \
+        -g $MLSUITE_ROOT/examples/compile/work/caffe/deephi/fp32/resnet50_pruned_with_scale_deploy_${DSP_WIDTH}.cmds \
+        -w $MLSUITE_ROOT/models/caffe/deephi/fp32/resnet50_pruned_with_scale.caffemodel \
+        -s all \
+        -b ${BPP} \
+        -i ${DSP_WIDTH} \
+        -m ${MEM} \
+        -d ${DDR}
 done
 

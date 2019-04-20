@@ -1,19 +1,68 @@
 {
+    "inputs": [
+        {
+            "input_address": 0, 
+            "input_name": "pool1/7x7_s2",
+            "next_layers": [
+                "pool1/7x7_s2"
+            ]   
+        }
+    ], 
+    "throughput_mode_intermediate_buffers": [
+        {
+            "input_address": 0, 
+            "name": "throughput_mode_interbuf" 
+        }
+    ], 
+    "outputs": [
+        {
+            "output_address": 0, 
+            "output_name": "loss3_classifier/Reshape_output",
+            "previous_layers": [
+                "pool5/7x7_s1"
+            ],            
+            "previous_tensors": [
+                "loss3_classifier/Reshape_output"
+            ]
+        }
+    ], 
     "network": [
         {
-            "name": "conv1/7x7_s2", 
+            "type": "Input",
+            "ops": 401408, 
+            "name": "pool1/7x7_s2", 
+            "outputshapes": [
+                1, 
+                3, 
+                224, 
+                224
+            ], 
             "xdnn_kv": {
-                "HAT": "0", 
+                "conv_name": "conv1/7x7_s2",
+                "HAT": "1", 
                 "SRCAM-Buffer_0": "0", 
-                "SRCAM-Buffer_1": "4096", 
-                "XNOp": "XNConv", 
-                "bias": "1", 
+                "SRCAM-Buffer_1": "0x1000", 
+                "DEST_AM-Buffer_Offset": "0x1000", 
+                "XNOp": "XNMaxPoolPipelined", 
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "conv_bias": "1", 
+                "conv_dilation_h": "1", 
+                "conv_dilation_w": "1", 
+                "conv_kernel_h": "7", 
+                "conv_kernel_w": "7", 
+                "conv_name": "conv1/7x7_s2", 
+                "conv_padding_h": "3", 
+                "conv_padding_w": "3", 
+                "conv_relu": "1", 
+                "conv_strides_h": "2", 
+                "conv_strides_w": "2", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -21,36 +70,42 @@
                 "dst_repl_unit_num": "0", 
                 "dst_repl_unit_width": "0", 
                 "en_halfrate_mode": "0", 
-                "en_inlinemaxpool": "0", 
+                "en_inlinemaxpool": "1", 
                 "en_pingpong_weight": "1", 
                 "id": "2", 
                 "inaddr": "0x0", 
+                "ddr_src": "0x0", 
                 "inchan": "3", 
                 "insize_h": "224", 
                 "insize_w": "224", 
-                "kernel_h": "7", 
-                "kernel_w": "7", 
-                "name": "conv1/7x7_s2", 
+                "kernel_h": "3", 
+                "kernel_w": "3", 
+                "name": "pool1/7x7_s2", 
                 "outaddr": "0x0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
-                "padding_h": "3", 
-                "padding_w": "3", 
+                "paddings_h": "0", 
+                "paddings_w": "0", 
+                "strides_h": "2", 
+                "strides_w": "2", 
+                "pool_inchan": "64", 
+                "pool_insize_h": "112", 
+                "pool_insize_w": "112", 
                 "postshift": "2", 
                 "prerelu": "0", 
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
                 "slice": "0", 
+                "srcAddrReadFromImgQ": "1", 
+                "destAddrReadFromImgQ": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "7", 
                 "src_repl_unit_width": "3", 
-                "strides_h": "2", 
-                "strides_w": "2", 
-                "tile_height": "0", 
-                "tile_width": "0", 
+                "tile_height": "2", 
+                "tile_width": "56", 
                 "wait_conv": "1", 
                 "wait_download": "1", 
                 "wait_ew": "1", 
@@ -60,9 +115,20 @@
             }
         }, 
         {
-            "name": "conv2/3x3_reduce", 
+            "name": "throughput_mode_interbuf",
+            "active": 0, 
+            "type": "ThroughputItermediateBuf", 
+            "ops": 200704, 
             "xdnn_kv": {
-                "HAT": "0", 
+                "XNOp": "XNThroughputInterbuf", 
+                "name": "throughput_mode_interbuf"
+            }
+        }, 
+        {
+            "name": "conv2/3x3_reduce", 
+            "memory_description": "ddr_to_am",
+            "xdnn_kv": {
+                "HAT": "1", 
                 "SRCAM-Buffer_0": "0", 
                 "SRCAM-Buffer_1": "0", 
                 "XNOp": "XNConv", 
@@ -70,8 +136,10 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16789506", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
+                "override_xbar_table_ptr_0": "16789506",
+                "override_xbar_table_ptr_1": "0",
                 "concat_starting_ch": "0", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
@@ -101,15 +169,16 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
+                "srcAddrReadFromImgQ": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
                 "src_repl_unit_width": "32", 
                 "strides_h": "1", 
                 "strides_w": "1", 
-                "tile_height": "0", 
-                "tile_width": "0", 
+                "tile_height": "12", 
+                "tile_width": "56", 
                 "wait_conv": "1", 
                 "wait_download": "1", 
                 "wait_ew": "1", 
@@ -129,9 +198,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16814084", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16814084",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -167,7 +238,7 @@
                 "pool_insize_h": "56", 
                 "pool_insize_w": "56", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "2", 
@@ -196,9 +267,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16822282", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16822282",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -227,7 +300,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -255,9 +328,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16834572", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16834572",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -286,7 +361,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -314,9 +389,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16850959", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16850959",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -345,7 +422,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -376,6 +453,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "2", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -397,7 +476,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -425,9 +504,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16855059", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16855059",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -456,7 +537,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -484,9 +565,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16859156", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16859156",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -515,7 +598,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -543,9 +626,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16863253", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16863253",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -574,7 +659,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -602,9 +687,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16879638", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16879638",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -640,7 +727,7 @@
                 "pool_insize_h": "28", 
                 "pool_insize_w": "28", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "3", 
                 "src_repl_sect_num": "0", 
@@ -669,9 +756,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16896026", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16896026",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -700,7 +789,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "3", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -728,9 +817,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16920606", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16920606",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -766,7 +857,7 @@
                 "pool_insize_h": "28", 
                 "pool_insize_w": "28", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "1", 
@@ -798,6 +889,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "3", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -819,7 +912,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "3", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -847,9 +940,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16928804", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16928804",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -885,7 +980,7 @@
                 "pool_insize_h": "28", 
                 "pool_insize_w": "28", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "3", 
                 "src_repl_sect_num": "0", 
@@ -914,8 +1009,10 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16932902", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
+                "override_xbar_table_ptr_0": "16932902",
+                "override_xbar_table_ptr_1": "0",
                 "concat_starting_ch": "0", 
                 "dilation_h": "1", 
                 "dilation_w": "1", 
@@ -945,7 +1042,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "3", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -973,9 +1070,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16945191", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16945191",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -1011,7 +1110,7 @@
                 "pool_insize_h": "28", 
                 "pool_insize_w": "28", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
@@ -1040,9 +1139,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16969770", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16969770",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -1071,7 +1172,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "5", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1099,9 +1200,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "16982064", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "16982064",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1130,7 +1233,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "5", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1158,9 +1261,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17010739", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17010739",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "3", 
@@ -1189,7 +1294,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1220,6 +1325,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "5", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -1241,7 +1348,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "5", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1269,9 +1376,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17018938", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17018938",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1300,7 +1409,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "5", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1328,9 +1437,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17023036", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17023036",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -1359,7 +1470,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "5", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1387,9 +1498,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17031229", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17031229",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1418,7 +1531,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -1446,9 +1559,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17051711", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17051711",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -1477,7 +1592,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1505,9 +1620,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17068100", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17068100",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1536,7 +1653,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1564,9 +1681,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17096776", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17096776",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "3", 
@@ -1595,7 +1714,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -1626,6 +1745,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "6", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -1647,7 +1768,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1675,9 +1796,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17104975", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17104975",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1706,7 +1829,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1734,9 +1857,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17109073", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17109073",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -1765,7 +1890,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1793,9 +1918,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17117266", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17117266",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1824,7 +1951,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -1852,9 +1979,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17133652", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17133652",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -1883,7 +2012,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1911,9 +2040,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17150040", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17150040",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -1942,7 +2073,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -1970,9 +2101,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17182812", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17182812",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "3", 
@@ -2001,7 +2134,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -2032,6 +2165,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "6", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -2053,7 +2188,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2081,9 +2216,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17191012", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17191012",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2112,7 +2249,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2140,9 +2277,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17195110", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17195110",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -2171,7 +2310,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2199,9 +2338,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17203303", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17203303",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2230,7 +2371,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -2258,9 +2399,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17219689", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17219689",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -2289,7 +2432,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2317,9 +2460,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17240173", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17240173",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2348,7 +2493,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2376,9 +2521,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17277042", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17277042",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "3", 
@@ -2407,7 +2554,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "2", 
@@ -2438,6 +2585,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "6", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -2459,7 +2608,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2487,9 +2636,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17285243", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17285243",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2518,7 +2669,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2546,9 +2697,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17289341", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17289341",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -2577,7 +2730,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2605,9 +2758,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17297534", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17297534",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2636,7 +2791,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -2664,9 +2819,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17330304", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17330304",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -2702,7 +2859,7 @@
                 "pool_insize_h": "14", 
                 "pool_insize_w": "14", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
@@ -2731,9 +2888,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17350792", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17350792",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -2762,7 +2921,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2790,9 +2949,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17391757", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17391757",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -2828,7 +2989,7 @@
                 "pool_insize_h": "14", 
                 "pool_insize_w": "14", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "2", 
@@ -2860,6 +3021,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "6", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -2881,7 +3044,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -2909,9 +3072,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17408151", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17408151",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -2947,7 +3112,7 @@
                 "pool_insize_h": "14", 
                 "pool_insize_w": "14", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
@@ -2976,9 +3141,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17412251", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17412251",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -3007,7 +3174,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "6", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3035,9 +3202,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17428636", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17428636",
+                "override_xbar_table_ptr_1": "0",
                 "conv_bias": "1", 
                 "conv_dilation_h": "1", 
                 "conv_dilation_w": "1", 
@@ -3073,7 +3242,7 @@
                 "pool_insize_h": "14", 
                 "pool_insize_w": "14", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "srcAddrReadFromImgQ": 0, 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
@@ -3102,9 +3271,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17461408", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17461408",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "3", 
@@ -3133,7 +3304,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3161,9 +3332,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17481896", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17481896",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "1", 
@@ -3192,7 +3365,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3220,9 +3393,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17522861", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17522861",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "4", 
@@ -3251,7 +3426,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "1", 
                 "src_repl_sect_num": "2", 
                 "src_repl_unit_num": "3", 
@@ -3282,6 +3457,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "9", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -3303,7 +3480,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3331,9 +3508,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17539255", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17539255",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -3362,7 +3541,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3390,9 +3569,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17543355", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17543355",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -3421,7 +3602,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3449,9 +3630,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17559740", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17559740",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -3480,7 +3663,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "3", 
@@ -3508,9 +3691,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17608896", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17608896",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "4", 
@@ -3539,7 +3724,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3567,9 +3752,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17633484", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17633484",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -3598,7 +3785,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3626,9 +3813,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17682642", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17682642",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "4", 
@@ -3657,7 +3846,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "2", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3688,6 +3877,8 @@
                 "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "0",
+                "override_xbar_table_ptr_1": "0",
                 "dst_full_sect_num": "9", 
                 "dst_repl_sect_num": "0", 
                 "dst_repl_unit_num": "0", 
@@ -3709,7 +3900,7 @@
                 "paddings_h": "1", 
                 "paddings_w": "1", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3737,9 +3928,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17699038", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17699038",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -3768,7 +3961,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3796,9 +3989,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17707234", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17707234",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "0", 
@@ -3827,7 +4022,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "9", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3855,9 +4050,11 @@
                 "concat_full_sect_num": "0", 
                 "concat_i_am_your_father": "0", 
                 "concat_repl_sect_num": "0", 
-                "concat_repl_unit_num": "17723620", 
+                "concat_repl_unit_num": "0", 
                 "concat_repl_unit_width": "0", 
                 "concat_starting_ch": "0", 
+                "override_xbar_table_ptr_0": "17723620",
+                "override_xbar_table_ptr_1": "0",
                 "dilation_h": "1", 
                 "dilation_w": "1", 
                 "dst_full_sect_num": "2", 
@@ -3886,7 +4083,7 @@
                 "preshift": "16", 
                 "relu": "1", 
                 "scale": "26", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "0", 
                 "src_repl_sect_num": "1", 
                 "src_repl_unit_num": "2", 
@@ -3938,7 +4135,7 @@
                 "paddings_h": "0", 
                 "paddings_w": "0", 
                 "prerelu": "0", 
-                "slice": "0", 
+                "slice": "1", 
                 "src_full_sect_num": "11", 
                 "src_repl_sect_num": "0", 
                 "src_repl_unit_num": "0", 
@@ -3954,6 +4151,1431 @@
                 "wait_upload": "1", 
                 "wait_upsmpl": "1"
             }
+        },
+        {
+            "type": "Output", 
+            "name": "loss3_classifier/Reshape_output",
+            "ops": 401408, 
+            "outputshapes": [
+                1, 
+                1024, 
+                1, 
+                1
+            ], 
+            "xdnn_kv": {
+                "XNOp": "XNScatter", 
+                "a0": "0", 
+                "b1": "1", 
+                "c1": "1", 
+                "ddr_dest": "0x0", 
+                "destAddrReadFromImgQ": "1", 
+                "end_row": "0", 
+                "full_sect_num": "11", 
+                "id": "2250", 
+                "outchan": "1024", 
+                "outsize_h": "1", 
+                "outsize_w": "1", 
+                "repl_sect_num": "0", 
+                "repl_unit_num": "0", 
+                "repl_unit_width": "0", 
+                "slice": "1", 
+                "start_row": "0", 
+                "uram_src": "0x821b"
+            }
+        }
+    ],
+    "xbar": [
+        {
+            "control": "0x80000000",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000001",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000002",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000003",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000004",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000005",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000006",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000007",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000008",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000009",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000000a",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000000b",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000000c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000000d",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000000e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000000f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000010",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000011",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000012",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000013",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000014",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000015",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000016",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000017",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000018",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000019",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000001a",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000001b",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000001c",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100001d",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000001e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000001f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000020",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000021",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000022",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000023",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000024",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000025",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000026",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000027",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000028",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000029",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000002a",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000002b",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000002c",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100002d",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000002e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000002f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000030",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000031",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000032",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000033",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000034",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000035",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000036",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000037",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000038",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000039",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000003a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100003b",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000003c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000003d",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000003e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x8000003f",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000040",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000041",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000042",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000043",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000044",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000045",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000046",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000047",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000048",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000049",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000004a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000004b",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000004c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000004d",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000004e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000004f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000050",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000051",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000052",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000053",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000054",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000055",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000056",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000057",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000058",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000059",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000005a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100005b",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000005c",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000005d",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000005e",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000005f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000060",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000061",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000062",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000063",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000064",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000065",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000066",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000067",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000068",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000069",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000006a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000006b",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100006c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000006d",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000006e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000006f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000070",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x80000071",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x18140201",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x80000072",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000073",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x80000074",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x81000075",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000076",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x80000077",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x80000078",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000079",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x8000007a",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x8000007b",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x8100007c",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000007d",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000007e",
+            "setting_0_3": "0x2010000",
+            "setting_4_7": "0x804",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000007f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x80000080",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000081",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000082",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000083",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000084",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000085",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000086",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000087",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000088",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000089",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000008a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100008b",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000008c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000008d",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100008e",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000008f",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000090",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000091",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000092",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000093",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x81000094",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000095",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000096",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000097",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x80000098",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x80000099",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000009a",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000009b",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8000009c",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000009d",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x8000009e",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x8100009f",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a0",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a1",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a2",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000a3",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a4",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a5",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000a6",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a7",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a8",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000a9",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000aa",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000ab",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000ac",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000ad",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000ae",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000af",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b0",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000b1",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b2",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b3",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000b4",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b5",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b6",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000b7",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000b8",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000b9",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000ba",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000bb",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000bc",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000bd",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000be",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000bf",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c0",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c1",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c2",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000c3",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c4",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c5",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000c6",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c7",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000c8",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000c9",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000ca",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000cb",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000cc",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000cd",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000ce",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000cf",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d0",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d1",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000d2",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d3",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d4",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000d5",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d6",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d7",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000d8",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000d9",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000da",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000db",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000dc",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000dd",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000de",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000df",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x800000e0",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000e1",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000e2",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x2010000",
+            "setting_8_11": "0x804"
+        },
+        {
+            "control": "0x800000e3",
+            "setting_0_3": "0x1814",
+            "setting_4_7": "0x18140201",
+            "setting_8_11": "0x2010000"
+        },
+        {
+            "control": "0x800000e4",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000e5",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x8040201",
+            "setting_8_11": "0x0"
+        },
+        {
+            "control": "0x800000e6",
+            "setting_0_3": "0x0",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x8040201"
+        },
+        {
+            "control": "0x810000e7",
+            "setting_0_3": "0x8040201",
+            "setting_4_7": "0x0",
+            "setting_8_11": "0x0"
         }
     ]
 }

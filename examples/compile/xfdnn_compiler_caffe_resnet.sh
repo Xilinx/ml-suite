@@ -11,14 +11,20 @@ if [ -z $MLSUITE_ROOT ]; then
   MLSUITE_ROOT=../..
 fi
 
-. ${MLSUITE_ROOT}/overlaybins/setup.sh 
+. ${MLSUITE_ROOT}/overlaybins/setup.sh
 
-for DSP_WIDTH in 28 56 96; do
-    if [ ${DSP_WIDTH} == 28 ]; then
+for kcfg in med large v3; do
+    if [ ${kcfg} == med ]; then
+        BPP=2
+        DSP_WIDTH=28
         MEM=4
-    elif [ ${DSP_WIDTH} == 56 ]; then
+    elif [ ${kcfg} == large ]; then
+        BPP=2
+        DSP_WIDTH=56
         MEM=6
-    elif [ ${DSP_WIDTH} == 96 ]; then
+    elif [ ${kcfg} == v3 ]; then
+        BPP=1
+        DSP_WIDTH=96
         MEM=9
     fi
     DDR=256
@@ -28,6 +34,7 @@ for DSP_WIDTH in 28 56 96; do
         -g $MLSUITE_ROOT/examples/compile/work/caffe/resnet/fp32/resnet50_without_bn_deploy_${DSP_WIDTH}.cmds \
         -w /wrk/acceleration/MLsuite/master/models/caffe/resnet/int8/resnet50_without_bn.caffemodel \
         -s all \
+        -b ${BPP} \
         -i ${DSP_WIDTH} \
         -m ${MEM} \
         -d ${DDR}
@@ -37,6 +44,7 @@ for DSP_WIDTH in 28 56 96; do
         -g $MLSUITE_ROOT/examples/compile/work/caffe/resnet/fp32/resnet101_without_bn_deploy_${DSP_WIDTH}.cmds \
         -w /wrk/acceleration/MLsuite/master/models/caffe/resnet/int8/resnet101_without_bn.caffemodel \
         -s all \
+        -b ${BPP} \
         -i ${DSP_WIDTH} \
         -m ${MEM} \
         -d ${DDR}
@@ -46,6 +54,7 @@ for DSP_WIDTH in 28 56 96; do
         -g $MLSUITE_ROOT/examples/compile/work/caffe/resnet/fp32/resnet152_without_bn_deploy_${DSP_WIDTH}.cmds \
         -w $MLSUITE_ROOT/models/caffe/resnet/fp32/resnet152_without_bn.caffemodel \
         -s all \
+        -b ${BPP} \
         -i ${DSP_WIDTH} \
         -m ${MEM} \
         -d ${DDR}
