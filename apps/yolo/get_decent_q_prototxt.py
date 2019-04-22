@@ -25,7 +25,7 @@ n = caffe.NetSpec()
 print(type(n))
 n.data = L.ImageData(top='label', include=dict(phase=caffe_pb2.Phase.Value('TRAIN')), transform_param=dict(mirror=False, yolo_height=net_shape[2], yolo_width=net_shape[3]), 
                                       image_data_param=dict(source=sys.argv[4],batch_size=1, shuffle=False,root_folder=sys.argv[5]))
-with open('dummy.prototxt', 'w') as f:
+with open(sys.argv[3], 'w') as f:
     f.write(str(n.to_proto()))
     print(n.to_proto())
 
@@ -44,5 +44,3 @@ with open(sys.argv[2], "r") as f, open(sys.argv[3], "a") as g:
     print("after\n", (net_parameter))
     g.write(tfmt.MessageToString(net_parameter))
 
-    
- 
