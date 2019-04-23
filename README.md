@@ -20,6 +20,11 @@ The ML Suite is composed of three basic parts:
 
 ## [See What's New](docs/release-notes/1.x.md)
  - [Release Notes][]
+ - Integration of Deephi DECENT Quantizer for Caffe
+ - xfDNN Runtime API upgraded to support multi-output networks
+ - Ease of use enhancements
+    - Docker Images
+    - Run on FPGA using Caffe's custom Python layer
  
 ## Getting Started
 1. Clone ML Suite    
