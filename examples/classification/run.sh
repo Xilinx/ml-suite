@@ -94,7 +94,7 @@ fi
 
 # Determine XCLBIN and DSP_WIDTH
 XCLBIN="not_found.xclbin"
-WEIGHTS=./data/${MODEL}_data
+WEIGHTS=./data/${MODEL}_data.h5
 if [ "$KCFG" == "med" ]; then
   DSP_WIDTH=28
   XCLBIN=overlay_1.xclbin
@@ -122,14 +122,12 @@ elif [ "$KCFG" == "v3" ]; then
     COMPILEROPT=latency.json
     WEIGHTS=./data/${MODEL}_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    export XDNN_CUSTOM_CROSSBAR=${NETCFG} # FIXME: delete after xteng's ScriptExecutor changes
     QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
 
   elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "googlenet_v1" ]; then
     COMPILEROPT=throughput.json
     WEIGHTS=./data/${MODEL}_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    export XDNN_CUSTOM_CROSSBAR=${NETCFG} # FIXME: delete after xteng's ScriptExecutor changes
     QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
 
   elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "resnet50" ]; then
