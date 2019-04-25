@@ -63,7 +63,7 @@
             "input_address": 0, 
             "input_name": "data", 
             "next_layers": [
-                "pool1_3x3_s2"
+                "pool1/3x3_s2"
             ]
         }
     ], 
@@ -130,9 +130,9 @@
                 null, 
                 false
             ], 
-            "layer": "pool1_3x3_s2: type=Pooling, sizes=None, shapes=None, sched 1 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "layer": "pool1/3x3_s2: type=Pooling, sizes=None, shapes=None, sched 1 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "pool1_3x3_s2", 
+            "name": "pool1/3x3_s2", 
             "ops": 1806336, 
             "outputshapes": [
                 1, 
@@ -142,7 +142,7 @@
             ], 
             "schedule": 1, 
             "type": "Pooling", 
-            "xdnn_instr": "1 XNMaxPoolPipelined pool1_3x3_s2 3 3 2 2 0 0 0xbc00 224 224 3 0xafc0 56 56 1 0 1 3 32 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 conv1_7x7_s2/Conv2D 7 7 2 2 2 2 1 1 1 0 1 112 112 64 56 # am_to_am", 
+            "xdnn_instr": "1 XNMaxPoolPipelined pool1/3x3_s2 3 3 2 2 0 0 0xbc00 224 224 3 0xafc0 56 56 1 0 1 3 32 1 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 conv1/7x7_s2 7 7 2 2 2 2 1 1 1 0 1 112 112 64 56 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -161,7 +161,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "7", 
                 "conv_kernel_w": "7", 
-                "conv_name": "conv1_7x7_s2/Conv2D", 
+                "conv_name": "conv1/7x7_s2", 
                 "conv_outsize_w": "56", 
                 "conv_padding_h": "2", 
                 "conv_padding_w": "2", 
@@ -185,7 +185,7 @@
                 "insize_w": "224", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "pool1_3x3_s2", 
+                "name": "pool1/3x3_s2", 
                 "outaddr": "0xafc0", 
                 "outsize_h": "56", 
                 "outsize_w": "56", 
@@ -219,7 +219,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool1_3x3_s2"
+                "pool1/3x3_s2"
             ], 
             "deeppy": [
                 [], 
@@ -228,9 +228,9 @@
                 null, 
                 false
             ], 
-            "layer": "conv2_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=64, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "conv2/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=64, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "conv2_3x3_reduce/Conv2D", 
+            "name": "conv2/3x3_reduce", 
             "ops": 25690112, 
             "outputshapes": [
                 1, 
@@ -240,7 +240,7 @@
             ], 
             "schedule": 2, 
             "type": "Convolution", 
-            "xdnn_instr": "2 XNConv conv2_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0xafc0 56 56 64 0x0 56 56 64 1 1 0 0 0 0 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "2 XNConv conv2/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0xafc0 56 56 64 0x0 56 56 64 1 1 0 0 0 0 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -273,7 +273,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "conv2_3x3_reduce/Conv2D", 
+                "name": "conv2/3x3_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -310,7 +310,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "conv2_3x3_reduce/Conv2D"
+                "conv2/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -319,9 +319,9 @@
                 null, 
                 false
             ], 
-            "layer": "pool2_3x3_s2: type=Pooling, sizes=None, shapes=None, sched 3 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "layer": "pool2/3x3_s2: type=Pooling, sizes=None, shapes=None, sched 3 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "pool2_3x3_s2", 
+            "name": "pool2/3x3_s2", 
             "ops": 1354752, 
             "outputshapes": [
                 1, 
@@ -331,7 +331,7 @@
             ], 
             "schedule": 3, 
             "type": "Pooling", 
-            "xdnn_instr": "3 XNMaxPoolPipelined pool2_3x3_s2 3 3 2 2 0 0 0x0 56 56 64 0x1880 28 28 1 0 2 3 32 2 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 conv2_3x3/Conv2D 3 3 1 1 1 1 1 1 1 0 1 56 56 192 28 # am_to_am", 
+            "xdnn_instr": "3 XNMaxPoolPipelined pool2/3x3_s2 3 3 2 2 0 0 0x0 56 56 64 0x1880 28 28 1 0 2 3 32 2 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 conv2/3x3 3 3 1 1 1 1 1 1 1 0 1 56 56 192 28 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -350,7 +350,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "3", 
                 "conv_kernel_w": "3", 
-                "conv_name": "conv2_3x3/Conv2D", 
+                "conv_name": "conv2/3x3", 
                 "conv_outsize_w": "28", 
                 "conv_padding_h": "1", 
                 "conv_padding_w": "1", 
@@ -374,7 +374,7 @@
                 "insize_w": "56", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "pool2_3x3_s2", 
+                "name": "pool2/3x3_s2", 
                 "outaddr": "0x1880", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -408,7 +408,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool2_3x3_s2"
+                "pool2/3x3_s2"
             ], 
             "deeppy": [
                 [], 
@@ -417,9 +417,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 4 Kernel SizeType(batches=16, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3a/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 4 Kernel SizeType(batches=16, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_5x5_reduce/Conv2D", 
+            "name": "inception_3a/5x5_reduce", 
             "ops": 4816896, 
             "outputshapes": [
                 1, 
@@ -429,7 +429,7 @@
             ], 
             "schedule": 4, 
             "type": "Convolution", 
-            "xdnn_instr": "4 XNConv inception_3a_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x0 28 28 16 1 2 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "4 XNConv inception_3a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x0 28 28 16 1 2 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -462,7 +462,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3a_5x5_reduce/Conv2D", 
+                "name": "inception_3a/5x5_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "16", 
                 "outsize_h": "28", 
@@ -499,7 +499,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3a_5x5_reduce/Conv2D"
+                "inception_3a/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -508,9 +508,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 5 Kernel SizeType(batches=32, channels=16, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_3a/5x5: type=Convolution, sizes=None, shapes=None, sched 5 Kernel SizeType(batches=32, channels=16, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_5x5/Conv2D", 
+            "name": "inception_3a/5x5", 
             "ops": 20070400, 
             "outputshapes": [
                 1, 
@@ -520,7 +520,7 @@
             ], 
             "schedule": 5, 
             "type": "Convolution", 
-            "xdnn_instr": "5 XNConv inception_3a_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 28 28 16 0x17cf0 28 28 32 1 0 1 3 32 1 0 0 0 1 3 0 0 0 192 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "5 XNConv inception_3a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 28 28 16 0x17cf0 28 28 32 1 0 1 3 32 1 0 0 0 1 3 0 0 0 192 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -553,7 +553,7 @@
                 "insize_w": "28", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_3a_5x5/Conv2D", 
+                "name": "inception_3a/5x5", 
                 "outaddr": "0x17cf0", 
                 "outchan": "32", 
                 "outsize_h": "28", 
@@ -590,7 +590,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool2_3x3_s2"
+                "pool2/3x3_s2"
             ], 
             "deeppy": [
                 [], 
@@ -599,9 +599,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 6 Kernel SizeType(batches=96, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3a/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 6 Kernel SizeType(batches=96, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_3x3_reduce/Conv2D", 
+            "name": "inception_3a/3x3_reduce", 
             "ops": 28901376, 
             "outputshapes": [
                 1, 
@@ -611,7 +611,7 @@
             ], 
             "schedule": 6, 
             "type": "Convolution", 
-            "xdnn_instr": "6 XNConv inception_3a_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x173c0 28 28 96 1 2 0 0 0 1 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "6 XNConv inception_3a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x173c0 28 28 96 1 2 0 0 0 1 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -644,7 +644,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3a_3x3_reduce/Conv2D", 
+                "name": "inception_3a/3x3_reduce", 
                 "outaddr": "0x173c0", 
                 "outchan": "96", 
                 "outsize_h": "28", 
@@ -681,7 +681,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool2_3x3_s2"
+                "pool2/3x3_s2"
             ], 
             "deeppy": [
                 [], 
@@ -690,9 +690,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_pool: type=Pooling, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_3a/pool: type=Pooling, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_pool", 
+            "name": "inception_3a/pool", 
             "ops": 1354752, 
             "outputshapes": [
                 1, 
@@ -702,7 +702,7 @@
             ], 
             "schedule": 7, 
             "type": "Pooling", 
-            "xdnn_instr": "7 XNMaxPool inception_3a_pool 3 3 1 1 1 1 0x1880 28 28 192 0x16da0 28 28 1 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "7 XNMaxPool inception_3a/pool 3 3 1 1 1 1 0x1880 28 28 192 0x16da0 28 28 1 2 0 0 0 2 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -732,7 +732,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_3a_pool", 
+                "name": "inception_3a/pool", 
                 "outaddr": "0x16da0", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -763,7 +763,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3a_3x3_reduce/Conv2D"
+                "inception_3a/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -772,9 +772,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=128, channels=96, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_3a/3x3: type=Convolution, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=128, channels=96, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_3x3/Conv2D", 
+            "name": "inception_3a/3x3", 
             "ops": 173408256, 
             "outputshapes": [
                 1, 
@@ -784,7 +784,7 @@
             ], 
             "schedule": 8, 
             "type": "Convolution", 
-            "xdnn_instr": "8 XNConv inception_3a_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x173c0 28 28 96 0x176d0 28 28 128 1 1 0 3 32 2 0 0 0 1 3 0 0 0 64 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "8 XNConv inception_3a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x173c0 28 28 96 0x176d0 28 28 128 1 1 0 3 32 2 0 0 0 1 3 0 0 0 64 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -817,7 +817,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_3a_3x3/Conv2D", 
+                "name": "inception_3a/3x3", 
                 "outaddr": "0x176d0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -854,7 +854,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3a_pool"
+                "inception_3a/pool"
             ], 
             "deeppy": [
                 [], 
@@ -863,9 +863,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 8 Kernel SizeType(batches=32, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3a/pool_proj: type=Convolution, sizes=None, shapes=None, sched 8 Kernel SizeType(batches=32, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_pool_proj/Conv2D", 
+            "name": "inception_3a/pool_proj", 
             "ops": 9633792, 
             "outputshapes": [
                 1, 
@@ -875,7 +875,7 @@
             ], 
             "schedule": 9, 
             "type": "Convolution", 
-            "xdnn_instr": "9 XNConv inception_3a_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 28 28 192 0x17cf0 28 28 32 1 2 0 0 0 1 0 0 0 1 3 0 0 0 224 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "9 XNConv inception_3a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 28 28 192 0x17cf0 28 28 32 1 2 0 0 0 1 0 0 0 1 3 0 0 0 224 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -908,7 +908,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3a_pool_proj/Conv2D", 
+                "name": "inception_3a/pool_proj", 
                 "outaddr": "0x17cf0", 
                 "outchan": "32", 
                 "outsize_h": "28", 
@@ -945,7 +945,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool2_3x3_s2"
+                "pool2/3x3_s2"
             ], 
             "deeppy": [
                 [], 
@@ -954,9 +954,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3a_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 9 Kernel SizeType(batches=64, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3a/1x1: type=Convolution, sizes=None, shapes=None, sched 9 Kernel SizeType(batches=64, channels=192, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3a_1x1/Conv2D", 
+            "name": "inception_3a/1x1", 
             "ops": 19267584, 
             "outputshapes": [
                 1, 
@@ -966,7 +966,7 @@
             ], 
             "schedule": 10, 
             "type": "Convolution", 
-            "xdnn_instr": "10 XNConv inception_3a_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x176d0 28 28 64 1 2 0 0 0 1 0 0 0 1 3 0 0 0 0 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "10 XNConv inception_3a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x1880 28 28 192 0x176d0 28 28 64 1 2 0 0 0 1 0 0 0 1 3 0 0 0 0 256 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -999,7 +999,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3a_1x1/Conv2D", 
+                "name": "inception_3a/1x1", 
                 "outaddr": "0x176d0", 
                 "outchan": "64", 
                 "outsize_h": "28", 
@@ -1036,10 +1036,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3a_1x1/Conv2D", 
-                "inception_3a_3x3/Conv2D", 
-                "inception_3a_5x5/Conv2D", 
-                "inception_3a_pool_proj/Conv2D"
+                "inception_3a/1x1", 
+                "inception_3a/3x3", 
+                "inception_3a/5x5", 
+                "inception_3a/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -1076,9 +1076,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3b_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 11 Kernel SizeType(batches=32, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3b/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 11 Kernel SizeType(batches=32, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3b_5x5_reduce/Conv2D", 
+            "name": "inception_3b/5x5_reduce", 
             "ops": 12845056, 
             "outputshapes": [
                 1, 
@@ -1088,7 +1088,7 @@
             ], 
             "schedule": 12, 
             "type": "Convolution", 
-            "xdnn_instr": "12 XNConv inception_3b_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 28 28 256 0x0 28 28 32 1 3 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "12 XNConv inception_3b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 28 28 256 0x0 28 28 32 1 3 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1121,7 +1121,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3b_5x5_reduce/Conv2D", 
+                "name": "inception_3b/5x5_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "32", 
                 "outsize_h": "28", 
@@ -1158,7 +1158,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3b_5x5_reduce/Conv2D"
+                "inception_3b/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -1179,7 +1179,7 @@
             ], 
             "schedule": 13, 
             "type": "Pooling", 
-            "xdnn_instr": "13 XNMaxPoolPipelined inception_3b_5x5/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x0 28 28 32 0x17548 14 14 1 0 1 3 32 1 0 0 0 1 5 0 0 0 320 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b_5x5/Conv2D 5 5 1 1 2 2 1 1 1 0 1 28 28 96 14 # am_to_am", 
+            "xdnn_instr": "13 XNMaxPoolPipelined inception_3b_5x5/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x0 28 28 32 0x17548 14 14 1 0 1 3 32 1 0 0 0 1 5 0 0 0 320 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b/5x5 5 5 1 1 2 2 1 1 1 0 1 28 28 96 14 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1198,7 +1198,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "5", 
                 "conv_kernel_w": "5", 
-                "conv_name": "inception_3b_5x5/Conv2D", 
+                "conv_name": "inception_3b/5x5", 
                 "conv_outsize_w": "14", 
                 "conv_padding_h": "2", 
                 "conv_padding_w": "2", 
@@ -1265,9 +1265,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3b_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 13 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_3b/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 13 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3b_3x3_reduce/Conv2D", 
+            "name": "inception_3b/3x3_reduce", 
             "ops": 51380224, 
             "outputshapes": [
                 1, 
@@ -1277,7 +1277,7 @@
             ], 
             "schedule": 14, 
             "type": "Convolution", 
-            "xdnn_instr": "14 XNConv inception_3b_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 28 28 256 0x16cdc 28 28 128 1 3 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "14 XNConv inception_3b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 28 28 256 0x16cdc 28 28 128 1 3 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1310,7 +1310,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_3b_3x3_reduce/Conv2D", 
+                "name": "inception_3b/3x3_reduce", 
                 "outaddr": "0x16cdc", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -1356,9 +1356,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_3b_pool: type=Pooling, sizes=None, shapes=None, sched 14 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_3b/pool: type=Pooling, sizes=None, shapes=None, sched 14 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_3b_pool", 
+            "name": "inception_3b/pool", 
             "ops": 1806336, 
             "outputshapes": [
                 1, 
@@ -1368,7 +1368,7 @@
             ], 
             "schedule": 15, 
             "type": "Pooling", 
-            "xdnn_instr": "15 XNMaxPool inception_3b_pool 3 3 1 1 1 1 0x176d0 28 28 256 0x163ac 28 28 1 3 0 0 0 3 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "15 XNMaxPool inception_3b/pool 3 3 1 1 1 1 0x176d0 28 28 256 0x163ac 28 28 1 3 0 0 0 3 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1398,7 +1398,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_3b_pool", 
+                "name": "inception_3b/pool", 
                 "outaddr": "0x163ac", 
                 "outsize_h": "28", 
                 "outsize_w": "28", 
@@ -1429,7 +1429,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3b_3x3_reduce/Conv2D"
+                "inception_3b/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -1450,7 +1450,7 @@
             ], 
             "schedule": 16, 
             "type": "Pooling", 
-            "xdnn_instr": "16 XNMaxPoolPipelined inception_3b_3x3/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x16cdc 28 28 128 0x173c0 14 14 1 1 1 3 32 2 0 0 0 1 5 0 0 0 128 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b_3x3/Conv2D 3 3 1 1 1 1 1 1 1 0 1 28 28 192 14 # am_to_am", 
+            "xdnn_instr": "16 XNMaxPoolPipelined inception_3b_3x3/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x16cdc 28 28 128 0x173c0 14 14 1 1 1 3 32 2 0 0 0 1 5 0 0 0 128 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b/3x3 3 3 1 1 1 1 1 1 1 0 1 28 28 192 14 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1469,7 +1469,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "3", 
                 "conv_kernel_w": "3", 
-                "conv_name": "inception_3b_3x3/Conv2D", 
+                "conv_name": "inception_3b/3x3", 
                 "conv_outsize_w": "14", 
                 "conv_padding_h": "1", 
                 "conv_padding_w": "1", 
@@ -1527,7 +1527,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3b_pool"
+                "inception_3b/pool"
             ], 
             "deeppy": [
                 [], 
@@ -1548,7 +1548,7 @@
             ], 
             "schedule": 17, 
             "type": "Pooling", 
-            "xdnn_instr": "17 XNMaxPoolPipelined inception_3b_pool_proj/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x163ac 28 28 256 0x1760c 14 14 1 3 0 0 0 1 0 0 0 1 5 0 0 0 416 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b_pool_proj/Conv2D 1 1 1 1 0 0 1 1 1 0 1 28 28 64 14 # am_to_am", 
+            "xdnn_instr": "17 XNMaxPoolPipelined inception_3b_pool_proj/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x163ac 28 28 256 0x1760c 14 14 1 3 0 0 0 1 0 0 0 1 5 0 0 0 416 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b/pool_proj 1 1 1 1 0 0 1 1 1 0 1 28 28 64 14 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1567,7 +1567,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "1", 
                 "conv_kernel_w": "1", 
-                "conv_name": "inception_3b_pool_proj/Conv2D", 
+                "conv_name": "inception_3b/pool_proj", 
                 "conv_outsize_w": "14", 
                 "conv_padding_h": "0", 
                 "conv_padding_w": "0", 
@@ -1646,7 +1646,7 @@
             ], 
             "schedule": 18, 
             "type": "Pooling", 
-            "xdnn_instr": "18 XNMaxPoolPipelined inception_3b_1x1/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x176d0 28 28 256 0x172fc 14 14 1 3 0 0 0 2 0 0 0 1 5 0 0 0 0 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b_1x1/Conv2D 1 1 1 1 0 0 1 1 1 0 1 28 28 128 14 # am_to_am", 
+            "xdnn_instr": "18 XNMaxPoolPipelined inception_3b_1x1/Conv2D_pool3_3x3_s2 3 3 2 2 0 0 0x176d0 28 28 256 0x172fc 14 14 1 3 0 0 0 2 0 0 0 1 5 0 0 0 0 480 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_3b/1x1 1 1 1 1 0 0 1 1 1 0 1 28 28 128 14 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1665,7 +1665,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "1", 
                 "conv_kernel_w": "1", 
-                "conv_name": "inception_3b_1x1/Conv2D", 
+                "conv_name": "inception_3b/1x1", 
                 "conv_outsize_w": "14", 
                 "conv_padding_h": "0", 
                 "conv_padding_w": "0", 
@@ -1723,10 +1723,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_3b_1x1/Conv2D_pool3_3x3_s2", 
-                "inception_3b_3x3/Conv2D_pool3_3x3_s2", 
-                "inception_3b_5x5/Conv2D_pool3_3x3_s2", 
-                "inception_3b_pool_proj/Conv2D_pool3_3x3_s2"
+                "inception_3b/1x1", 
+                "inception_3b/3x3", 
+                "inception_3b/5x5", 
+                "inception_3b/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -1763,9 +1763,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 18 Kernel SizeType(batches=16, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4a/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 18 Kernel SizeType(batches=16, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_5x5_reduce/Conv2D", 
+            "name": "inception_4a/5x5_reduce", 
             "ops": 3010560, 
             "outputshapes": [
                 1, 
@@ -1775,7 +1775,7 @@
             ], 
             "schedule": 20, 
             "type": "Convolution", 
-            "xdnn_instr": "20 XNConv inception_4a_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x176d0 14 14 16 1 5 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "20 XNConv inception_4a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x176d0 14 14 16 1 5 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1808,7 +1808,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4a_5x5_reduce/Conv2D", 
+                "name": "inception_4a/5x5_reduce", 
                 "outaddr": "0x176d0", 
                 "outchan": "16", 
                 "outsize_h": "14", 
@@ -1845,7 +1845,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4a_5x5_reduce/Conv2D"
+                "inception_4a/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -1854,9 +1854,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 19 Kernel SizeType(batches=48, channels=16, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_4a/5x5: type=Convolution, sizes=None, shapes=None, sched 19 Kernel SizeType(batches=48, channels=16, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_5x5/Conv2D", 
+            "name": "inception_4a/5x5", 
             "ops": 7526400, 
             "outputshapes": [
                 1, 
@@ -1866,7 +1866,7 @@
             ], 
             "schedule": 21, 
             "type": "Convolution", 
-            "xdnn_instr": "21 XNConv inception_4a_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x176d0 14 14 16 0x17e78 14 14 48 1 0 1 3 32 1 0 0 0 1 6 0 0 0 400 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "21 XNConv inception_4a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x176d0 14 14 16 0x17e78 14 14 48 1 0 1 3 32 1 0 0 0 1 6 0 0 0 400 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1899,7 +1899,7 @@
                 "insize_w": "14", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_4a_5x5/Conv2D", 
+                "name": "inception_4a/5x5", 
                 "outaddr": "0x17e78", 
                 "outchan": "48", 
                 "outsize_h": "14", 
@@ -1945,9 +1945,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 20 Kernel SizeType(batches=96, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4a/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 20 Kernel SizeType(batches=96, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_3x3_reduce/Conv2D", 
+            "name": "inception_4a/3x3_reduce", 
             "ops": 18063360, 
             "outputshapes": [
                 1, 
@@ -1957,7 +1957,7 @@
             ], 
             "schedule": 22, 
             "type": "Convolution", 
-            "xdnn_instr": "22 XNConv inception_4a_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x17aa4 14 14 96 1 5 0 0 0 1 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "22 XNConv inception_4a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x17aa4 14 14 96 1 5 0 0 0 1 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -1990,7 +1990,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4a_3x3_reduce/Conv2D", 
+                "name": "inception_4a/3x3_reduce", 
                 "outaddr": "0x17aa4", 
                 "outchan": "96", 
                 "outsize_h": "14", 
@@ -2036,9 +2036,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_pool: type=Pooling, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4a/pool: type=Pooling, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_pool", 
+            "name": "inception_4a/pool", 
             "ops": 846720, 
             "outputshapes": [
                 1, 
@@ -2048,7 +2048,7 @@
             ], 
             "schedule": 23, 
             "type": "Pooling", 
-            "xdnn_instr": "23 XNMaxPool inception_4a_pool 3 3 1 1 1 1 0x172fc 14 14 480 0x176d0 14 14 1 5 0 0 0 5 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "23 XNMaxPool inception_4a/pool 3 3 1 1 1 1 0x172fc 14 14 480 0x176d0 14 14 1 5 0 0 0 5 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2078,7 +2078,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4a_pool", 
+                "name": "inception_4a/pool", 
                 "outaddr": "0x176d0", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -2109,7 +2109,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4a_3x3_reduce/Conv2D"
+                "inception_4a/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -2118,9 +2118,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=208, channels=96, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4a/3x3: type=Convolution, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=208, channels=96, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_3x3/Conv2D", 
+            "name": "inception_4a/3x3", 
             "ops": 70447104, 
             "outputshapes": [
                 1, 
@@ -2130,7 +2130,7 @@
             ], 
             "schedule": 24, 
             "type": "Convolution", 
-            "xdnn_instr": "24 XNConv inception_4a_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17aa4 14 14 96 0x17cf0 14 14 208 1 1 0 3 32 3 0 0 0 1 6 0 0 0 192 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "24 XNConv inception_4a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17aa4 14 14 96 0x17cf0 14 14 208 1 1 0 3 32 3 0 0 0 1 6 0 0 0 192 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2163,7 +2163,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4a_3x3/Conv2D", 
+                "name": "inception_4a/3x3", 
                 "outaddr": "0x17cf0", 
                 "outchan": "208", 
                 "outsize_h": "14", 
@@ -2200,7 +2200,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4a_pool"
+                "inception_4a/pool"
             ], 
             "deeppy": [
                 [], 
@@ -2209,9 +2209,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 22 Kernel SizeType(batches=64, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4a/pool_proj: type=Convolution, sizes=None, shapes=None, sched 22 Kernel SizeType(batches=64, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_pool_proj/Conv2D", 
+            "name": "inception_4a/pool_proj", 
             "ops": 12042240, 
             "outputshapes": [
                 1, 
@@ -2221,7 +2221,7 @@
             ], 
             "schedule": 25, 
             "type": "Convolution", 
-            "xdnn_instr": "25 XNConv inception_4a_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 480 0x17e78 14 14 64 1 5 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "25 XNConv inception_4a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 480 0x17e78 14 14 64 1 5 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2254,7 +2254,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4a_pool_proj/Conv2D", 
+                "name": "inception_4a/pool_proj", 
                 "outaddr": "0x17e78", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -2300,9 +2300,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4a_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 23 Kernel SizeType(batches=192, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4a/1x1: type=Convolution, sizes=None, shapes=None, sched 23 Kernel SizeType(batches=192, channels=480, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4a_1x1/Conv2D", 
+            "name": "inception_4a/1x1", 
             "ops": 36126720, 
             "outputshapes": [
                 1, 
@@ -2312,7 +2312,7 @@
             ], 
             "schedule": 26, 
             "type": "Convolution", 
-            "xdnn_instr": "26 XNConv inception_4a_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x17b68 14 14 192 1 5 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "26 XNConv inception_4a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x172fc 14 14 480 0x17b68 14 14 192 1 5 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2345,7 +2345,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4a_1x1/Conv2D", 
+                "name": "inception_4a/1x1", 
                 "outaddr": "0x17b68", 
                 "outchan": "192", 
                 "outsize_h": "14", 
@@ -2382,10 +2382,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4a_1x1/Conv2D", 
-                "inception_4a_3x3/Conv2D", 
-                "inception_4a_5x5/Conv2D", 
-                "inception_4a_pool_proj/Conv2D"
+                "inception_4a/1x1", 
+                "inception_4a/3x3", 
+                "inception_4a/5x5", 
+                "inception_4a/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -2422,9 +2422,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 25 Kernel SizeType(batches=24, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4b/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 25 Kernel SizeType(batches=24, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_5x5_reduce/Conv2D", 
+            "name": "inception_4b/5x5_reduce", 
             "ops": 4816896, 
             "outputshapes": [
                 1, 
@@ -2434,7 +2434,7 @@
             ], 
             "schedule": 28, 
             "type": "Convolution", 
-            "xdnn_instr": "28 XNConv inception_4b_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x0 14 14 24 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "28 XNConv inception_4b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x0 14 14 24 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2467,7 +2467,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4b_5x5_reduce/Conv2D", 
+                "name": "inception_4b/5x5_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "24", 
                 "outsize_h": "14", 
@@ -2504,7 +2504,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4b_5x5_reduce/Conv2D"
+                "inception_4b/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -2513,9 +2513,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 26 Kernel SizeType(batches=64, channels=24, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_4b/5x5: type=Convolution, sizes=None, shapes=None, sched 26 Kernel SizeType(batches=64, channels=24, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_5x5/Conv2D", 
+            "name": "inception_4b/5x5", 
             "ops": 15052800, 
             "outputshapes": [
                 1, 
@@ -2525,7 +2525,7 @@
             ], 
             "schedule": 29, 
             "type": "Convolution", 
-            "xdnn_instr": "29 XNConv inception_4b_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 14 14 24 0x179e0 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 384 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "29 XNConv inception_4b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 14 14 24 0x179e0 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 384 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2558,7 +2558,7 @@
                 "insize_w": "14", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_4b_5x5/Conv2D", 
+                "name": "inception_4b/5x5", 
                 "outaddr": "0x179e0", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -2604,9 +2604,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 27 Kernel SizeType(batches=112, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4b/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 27 Kernel SizeType(batches=112, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_3x3_reduce/Conv2D", 
+            "name": "inception_4b/3x3_reduce", 
             "ops": 22478848, 
             "outputshapes": [
                 1, 
@@ -2616,7 +2616,7 @@
             ], 
             "schedule": 30, 
             "type": "Convolution", 
-            "xdnn_instr": "30 XNConv inception_4b_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x17548 14 14 112 1 6 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "30 XNConv inception_4b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x17548 14 14 112 1 6 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2649,7 +2649,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4b_3x3_reduce/Conv2D", 
+                "name": "inception_4b/3x3_reduce", 
                 "outaddr": "0x17548", 
                 "outchan": "112", 
                 "outsize_h": "14", 
@@ -2695,9 +2695,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_pool: type=Pooling, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4b/pool: type=Pooling, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_pool", 
+            "name": "inception_4b/pool", 
             "ops": 903168, 
             "outputshapes": [
                 1, 
@@ -2707,7 +2707,7 @@
             ], 
             "schedule": 31, 
             "type": "Pooling", 
-            "xdnn_instr": "31 XNMaxPool inception_4b_pool 3 3 1 1 1 1 0x17b68 14 14 512 0x170b0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "31 XNMaxPool inception_4b/pool 3 3 1 1 1 1 0x17b68 14 14 512 0x170b0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2737,7 +2737,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4b_pool", 
+                "name": "inception_4b/pool", 
                 "outaddr": "0x170b0", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -2768,7 +2768,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4b_3x3_reduce/Conv2D"
+                "inception_4b/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -2777,9 +2777,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=224, channels=112, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4b/3x3: type=Convolution, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=224, channels=112, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_3x3/Conv2D", 
+            "name": "inception_4b/3x3", 
             "ops": 88510464, 
             "outputshapes": [
                 1, 
@@ -2789,7 +2789,7 @@
             ], 
             "schedule": 32, 
             "type": "Convolution", 
-            "xdnn_instr": "32 XNConv inception_4b_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17548 14 14 112 0x17794 14 14 224 1 1 1 3 32 3 0 0 0 1 6 0 0 0 160 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "32 XNConv inception_4b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17548 14 14 112 0x17794 14 14 224 1 1 1 3 32 3 0 0 0 1 6 0 0 0 160 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2822,7 +2822,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4b_3x3/Conv2D", 
+                "name": "inception_4b/3x3", 
                 "outaddr": "0x17794", 
                 "outchan": "224", 
                 "outsize_h": "14", 
@@ -2859,7 +2859,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4b_pool"
+                "inception_4b/pool"
             ], 
             "deeppy": [
                 [], 
@@ -2868,9 +2868,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 29 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4b/pool_proj: type=Convolution, sizes=None, shapes=None, sched 29 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_pool_proj/Conv2D", 
+            "name": "inception_4b/pool_proj", 
             "ops": 12845056, 
             "outputshapes": [
                 1, 
@@ -2880,7 +2880,7 @@
             ], 
             "schedule": 33, 
             "type": "Convolution", 
-            "xdnn_instr": "33 XNConv inception_4b_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x170b0 14 14 512 0x179e0 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "33 XNConv inception_4b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x170b0 14 14 512 0x179e0 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -2913,7 +2913,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4b_pool_proj/Conv2D", 
+                "name": "inception_4b/pool_proj", 
                 "outaddr": "0x179e0", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -2959,9 +2959,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4b_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 30 Kernel SizeType(batches=160, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4b/1x1: type=Convolution, sizes=None, shapes=None, sched 30 Kernel SizeType(batches=160, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4b_1x1/Conv2D", 
+            "name": "inception_4b/1x1", 
             "ops": 32112640, 
             "outputshapes": [
                 1, 
@@ -2971,7 +2971,7 @@
             ], 
             "schedule": 34, 
             "type": "Convolution", 
-            "xdnn_instr": "34 XNConv inception_4b_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x176d0 14 14 160 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "34 XNConv inception_4b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 512 0x176d0 14 14 160 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3004,7 +3004,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4b_1x1/Conv2D", 
+                "name": "inception_4b/1x1", 
                 "outaddr": "0x176d0", 
                 "outchan": "160", 
                 "outsize_h": "14", 
@@ -3041,10 +3041,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4b_1x1/Conv2D", 
-                "inception_4b_3x3/Conv2D", 
-                "inception_4b_5x5/Conv2D", 
-                "inception_4b_pool_proj/Conv2D"
+                "inception_4b/1x1", 
+                "inception_4b/3x3", 
+                "inception_4b/5x5", 
+                "inception_4b/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -3081,9 +3081,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 32 Kernel SizeType(batches=24, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4c/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 32 Kernel SizeType(batches=24, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_5x5_reduce/Conv2D", 
+            "name": "inception_4c/5x5_reduce", 
             "ops": 4816896, 
             "outputshapes": [
                 1, 
@@ -3093,7 +3093,7 @@
             ], 
             "schedule": 36, 
             "type": "Convolution", 
-            "xdnn_instr": "36 XNConv inception_4c_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17b68 14 14 24 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "36 XNConv inception_4c/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17b68 14 14 24 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3126,7 +3126,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4c_5x5_reduce/Conv2D", 
+                "name": "inception_4c/5x5_reduce", 
                 "outaddr": "0x17b68", 
                 "outchan": "24", 
                 "outsize_h": "14", 
@@ -3163,7 +3163,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4c_5x5_reduce/Conv2D"
+                "inception_4c/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -3172,9 +3172,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 33 Kernel SizeType(batches=64, channels=24, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_4c/5x5: type=Convolution, sizes=None, shapes=None, sched 33 Kernel SizeType(batches=64, channels=24, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_5x5/Conv2D", 
+            "name": "inception_4c/5x5", 
             "ops": 15052800, 
             "outputshapes": [
                 1, 
@@ -3184,7 +3184,7 @@
             ], 
             "schedule": 37, 
             "type": "Convolution", 
-            "xdnn_instr": "37 XNConv inception_4c_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x17b68 14 14 24 0x17548 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 384 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "37 XNConv inception_4c/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x17b68 14 14 24 0x17548 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 384 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3217,7 +3217,7 @@
                 "insize_w": "14", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_4c_5x5/Conv2D", 
+                "name": "inception_4c/5x5", 
                 "outaddr": "0x17548", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -3263,9 +3263,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 34 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4c/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 34 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_3x3_reduce/Conv2D", 
+            "name": "inception_4c/3x3_reduce", 
             "ops": 25690112, 
             "outputshapes": [
                 1, 
@@ -3275,7 +3275,7 @@
             ], 
             "schedule": 38, 
             "type": "Convolution", 
-            "xdnn_instr": "38 XNConv inception_4c_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17e78 14 14 128 1 6 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "38 XNConv inception_4c/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17e78 14 14 128 1 6 0 0 0 1 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3308,7 +3308,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4c_3x3_reduce/Conv2D", 
+                "name": "inception_4c/3x3_reduce", 
                 "outaddr": "0x17e78", 
                 "outchan": "128", 
                 "outsize_h": "14", 
@@ -3354,9 +3354,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_pool: type=Pooling, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4c/pool: type=Pooling, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_pool", 
+            "name": "inception_4c/pool", 
             "ops": 903168, 
             "outputshapes": [
                 1, 
@@ -3366,7 +3366,7 @@
             ], 
             "schedule": 39, 
             "type": "Pooling", 
-            "xdnn_instr": "39 XNMaxPool inception_4c_pool 3 3 1 1 1 1 0x176d0 14 14 512 0x16da0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "39 XNMaxPool inception_4c/pool 3 3 1 1 1 1 0x176d0 14 14 512 0x16da0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3396,7 +3396,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4c_pool", 
+                "name": "inception_4c/pool", 
                 "outaddr": "0x16da0", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -3427,7 +3427,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4c_3x3_reduce/Conv2D"
+                "inception_4c/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -3436,9 +3436,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=256, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4c/3x3: type=Convolution, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=256, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_3x3/Conv2D", 
+            "name": "inception_4c/3x3", 
             "ops": 115605504, 
             "outputshapes": [
                 1, 
@@ -3448,7 +3448,7 @@
             ], 
             "schedule": 40, 
             "type": "Convolution", 
-            "xdnn_instr": "40 XNConv inception_4c_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17e78 14 14 128 0x172fc 14 14 256 1 1 1 3 32 3 0 0 0 1 6 0 0 0 128 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "40 XNConv inception_4c/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17e78 14 14 128 0x172fc 14 14 256 1 1 1 3 32 3 0 0 0 1 6 0 0 0 128 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3481,7 +3481,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4c_3x3/Conv2D", 
+                "name": "inception_4c/3x3", 
                 "outaddr": "0x172fc", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -3518,7 +3518,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4c_pool"
+                "inception_4c/pool"
             ], 
             "deeppy": [
                 [], 
@@ -3527,9 +3527,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 36 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4c/pool_proj: type=Convolution, sizes=None, shapes=None, sched 36 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_pool_proj/Conv2D", 
+            "name": "inception_4c/pool_proj", 
             "ops": 12845056, 
             "outputshapes": [
                 1, 
@@ -3539,7 +3539,7 @@
             ], 
             "schedule": 41, 
             "type": "Convolution", 
-            "xdnn_instr": "41 XNConv inception_4c_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 14 14 512 0x17548 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "41 XNConv inception_4c/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 14 14 512 0x17548 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 448 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3572,7 +3572,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4c_pool_proj/Conv2D", 
+                "name": "inception_4c/pool_proj", 
                 "outaddr": "0x17548", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -3618,9 +3618,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4c_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 37 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4c/1x1: type=Convolution, sizes=None, shapes=None, sched 37 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4c_1x1/Conv2D", 
+            "name": "inception_4c/1x1", 
             "ops": 25690112, 
             "outputshapes": [
                 1, 
@@ -3630,7 +3630,7 @@
             ], 
             "schedule": 42, 
             "type": "Convolution", 
-            "xdnn_instr": "42 XNConv inception_4c_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17238 14 14 128 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "42 XNConv inception_4c/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x176d0 14 14 512 0x17238 14 14 128 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 512 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3663,7 +3663,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4c_1x1/Conv2D", 
+                "name": "inception_4c/1x1", 
                 "outaddr": "0x17238", 
                 "outchan": "128", 
                 "outsize_h": "14", 
@@ -3700,10 +3700,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4c_1x1/Conv2D", 
-                "inception_4c_3x3/Conv2D", 
-                "inception_4c_5x5/Conv2D", 
-                "inception_4c_pool_proj/Conv2D"
+                "inception_4c/1x1", 
+                "inception_4c/3x3", 
+                "inception_4c/5x5", 
+                "inception_4c/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -3740,9 +3740,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 39 Kernel SizeType(batches=32, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4d/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 39 Kernel SizeType(batches=32, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_5x5_reduce/Conv2D", 
+            "name": "inception_4d/5x5_reduce", 
             "ops": 6422528, 
             "outputshapes": [
                 1, 
@@ -3752,7 +3752,7 @@
             ], 
             "schedule": 44, 
             "type": "Convolution", 
-            "xdnn_instr": "44 XNConv inception_4d_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x176d0 14 14 32 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "44 XNConv inception_4d/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x176d0 14 14 32 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3785,7 +3785,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4d_5x5_reduce/Conv2D", 
+                "name": "inception_4d/5x5_reduce", 
                 "outaddr": "0x176d0", 
                 "outchan": "32", 
                 "outsize_h": "14", 
@@ -3822,7 +3822,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4d_5x5_reduce/Conv2D"
+                "inception_4d/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -3831,9 +3831,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 40 Kernel SizeType(batches=64, channels=32, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_4d/5x5: type=Convolution, sizes=None, shapes=None, sched 40 Kernel SizeType(batches=64, channels=32, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_5x5/Conv2D", 
+            "name": "inception_4d/5x5", 
             "ops": 20070400, 
             "outputshapes": [
                 1, 
@@ -3843,7 +3843,7 @@
             ], 
             "schedule": 45, 
             "type": "Convolution", 
-            "xdnn_instr": "45 XNConv inception_4d_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x176d0 14 14 32 0x17e78 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 400 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "45 XNConv inception_4d/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x176d0 14 14 32 0x17e78 14 14 64 1 0 1 3 32 1 0 0 0 1 6 0 0 0 400 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3876,7 +3876,7 @@
                 "insize_w": "14", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_4d_5x5/Conv2D", 
+                "name": "inception_4d/5x5", 
                 "outaddr": "0x17e78", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -3922,9 +3922,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 41 Kernel SizeType(batches=144, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4d/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 41 Kernel SizeType(batches=144, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_3x3_reduce/Conv2D", 
+            "name": "inception_4d/3x3_reduce", 
             "ops": 28901376, 
             "outputshapes": [
                 1, 
@@ -3934,7 +3934,7 @@
             ], 
             "schedule": 46, 
             "type": "Convolution", 
-            "xdnn_instr": "46 XNConv inception_4d_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x179e0 14 14 144 1 6 0 0 0 1 1 2 48 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "46 XNConv inception_4d/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x179e0 14 14 144 1 6 0 0 0 1 1 2 48 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -3967,7 +3967,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4d_3x3_reduce/Conv2D", 
+                "name": "inception_4d/3x3_reduce", 
                 "outaddr": "0x179e0", 
                 "outchan": "144", 
                 "outsize_h": "14", 
@@ -4013,9 +4013,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_pool: type=Pooling, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4d/pool: type=Pooling, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_pool", 
+            "name": "inception_4d/pool", 
             "ops": 903168, 
             "outputshapes": [
                 1, 
@@ -4025,7 +4025,7 @@
             ], 
             "schedule": 47, 
             "type": "Pooling", 
-            "xdnn_instr": "47 XNMaxPool inception_4d_pool 3 3 1 1 1 1 0x17238 14 14 512 0x16da0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "47 XNMaxPool inception_4d/pool 3 3 1 1 1 1 0x17238 14 14 512 0x16da0 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4055,7 +4055,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4d_pool", 
+                "name": "inception_4d/pool", 
                 "outaddr": "0x16da0", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -4086,7 +4086,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4d_3x3_reduce/Conv2D"
+                "inception_4d/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -4095,9 +4095,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=288, channels=144, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4d/3x3: type=Convolution, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=288, channels=144, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_3x3/Conv2D", 
+            "name": "inception_4d/3x3", 
             "ops": 146313216, 
             "outputshapes": [
                 1, 
@@ -4107,7 +4107,7 @@
             ], 
             "schedule": 48, 
             "type": "Convolution", 
-            "xdnn_instr": "48 XNConv inception_4d_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x179e0 14 14 144 0x17c2c 14 14 288 1 1 1 2 48 3 0 0 0 1 6 0 0 0 112 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "48 XNConv inception_4d/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x179e0 14 14 144 0x17c2c 14 14 288 1 1 1 2 48 3 0 0 0 1 6 0 0 0 112 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4140,7 +4140,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4d_3x3/Conv2D", 
+                "name": "inception_4d/3x3", 
                 "outaddr": "0x17c2c", 
                 "outchan": "288", 
                 "outsize_h": "14", 
@@ -4177,7 +4177,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4d_pool"
+                "inception_4d/pool"
             ], 
             "deeppy": [
                 [], 
@@ -4186,9 +4186,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 43 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4d/pool_proj: type=Convolution, sizes=None, shapes=None, sched 43 Kernel SizeType(batches=64, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_pool_proj/Conv2D", 
+            "name": "inception_4d/pool_proj", 
             "ops": 12845056, 
             "outputshapes": [
                 1, 
@@ -4198,7 +4198,7 @@
             ], 
             "schedule": 49, 
             "type": "Convolution", 
-            "xdnn_instr": "49 XNConv inception_4d_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 14 14 512 0x17e78 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 464 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "49 XNConv inception_4d/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x16da0 14 14 512 0x17e78 14 14 64 1 6 0 0 0 1 0 0 0 1 6 0 0 0 464 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4231,7 +4231,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4d_pool_proj/Conv2D", 
+                "name": "inception_4d/pool_proj", 
                 "outaddr": "0x17e78", 
                 "outchan": "64", 
                 "outsize_h": "14", 
@@ -4277,9 +4277,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4d_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 44 Kernel SizeType(batches=112, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4d/1x1: type=Convolution, sizes=None, shapes=None, sched 44 Kernel SizeType(batches=112, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4d_1x1/Conv2D", 
+            "name": "inception_4d/1x1", 
             "ops": 22478848, 
             "outputshapes": [
                 1, 
@@ -4289,7 +4289,7 @@
             ], 
             "schedule": 50, 
             "type": "Convolution", 
-            "xdnn_instr": "50 XNConv inception_4d_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x17b68 14 14 112 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "50 XNConv inception_4d/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17238 14 14 512 0x17b68 14 14 112 1 6 0 0 0 2 0 0 0 1 6 0 0 0 0 528 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4322,7 +4322,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4d_1x1/Conv2D", 
+                "name": "inception_4d/1x1", 
                 "outaddr": "0x17b68", 
                 "outchan": "112", 
                 "outsize_h": "14", 
@@ -4359,10 +4359,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4d_1x1/Conv2D", 
-                "inception_4d_3x3/Conv2D", 
-                "inception_4d_5x5/Conv2D", 
-                "inception_4d_pool_proj/Conv2D"
+                "inception_4d/1x1", 
+                "inception_4d/3x3", 
+                "inception_4d/5x5", 
+                "inception_4d/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -4399,9 +4399,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4e_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 46 Kernel SizeType(batches=32, channels=528, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4e/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 46 Kernel SizeType(batches=32, channels=528, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4e_5x5_reduce/Conv2D", 
+            "name": "inception_4e/5x5_reduce", 
             "ops": 6623232, 
             "outputshapes": [
                 1, 
@@ -4411,7 +4411,7 @@
             ], 
             "schedule": 52, 
             "type": "Convolution", 
-            "xdnn_instr": "52 XNConv inception_4e_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 528 0x0 14 14 32 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "52 XNConv inception_4e/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 528 0x0 14 14 32 1 6 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4444,7 +4444,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4e_5x5_reduce/Conv2D", 
+                "name": "inception_4e/5x5_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "32", 
                 "outsize_h": "14", 
@@ -4481,7 +4481,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4e_5x5_reduce/Conv2D"
+                "inception_4e/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -4502,7 +4502,7 @@
             ], 
             "schedule": 53, 
             "type": "Pooling", 
-            "xdnn_instr": "53 XNMaxPoolPipelined inception_4e_5x5/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x0 14 14 32 0x17ad5 7 7 1 0 1 3 32 2 0 0 0 1 9 0 0 0 576 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e_5x5/Conv2D 5 5 1 1 2 2 1 1 1 0 1 14 14 128 7 # am_to_am", 
+            "xdnn_instr": "53 XNMaxPoolPipelined inception_4e_5x5/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x0 14 14 32 0x17ad5 7 7 1 0 1 3 32 2 0 0 0 1 9 0 0 0 576 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e/5x5 5 5 1 1 2 2 1 1 1 0 1 14 14 128 7 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4521,7 +4521,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "5", 
                 "conv_kernel_w": "5", 
-                "conv_name": "inception_4e_5x5/Conv2D", 
+                "conv_name": "inception_4e/5x5", 
                 "conv_outsize_w": "7", 
                 "conv_padding_h": "2", 
                 "conv_padding_w": "2", 
@@ -4588,9 +4588,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4e_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 48 Kernel SizeType(batches=160, channels=528, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_4e/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 48 Kernel SizeType(batches=160, channels=528, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4e_3x3_reduce/Conv2D", 
+            "name": "inception_4e/3x3_reduce", 
             "ops": 33116160, 
             "outputshapes": [
                 1, 
@@ -4600,7 +4600,7 @@
             ], 
             "schedule": 54, 
             "type": "Convolution", 
-            "xdnn_instr": "54 XNConv inception_4e_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 528 0x17763 14 14 160 1 6 0 0 0 1 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "54 XNConv inception_4e/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17b68 14 14 528 0x17763 14 14 160 1 6 0 0 0 1 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4633,7 +4633,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_4e_3x3_reduce/Conv2D", 
+                "name": "inception_4e/3x3_reduce", 
                 "outaddr": "0x17763", 
                 "outchan": "160", 
                 "outsize_h": "14", 
@@ -4679,9 +4679,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_4e_pool: type=Pooling, sizes=None, shapes=None, sched 49 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_4e/pool: type=Pooling, sizes=None, shapes=None, sched 49 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_4e_pool", 
+            "name": "inception_4e/pool", 
             "ops": 931392, 
             "outputshapes": [
                 1, 
@@ -4691,7 +4691,7 @@
             ], 
             "schedule": 55, 
             "type": "Pooling", 
-            "xdnn_instr": "55 XNMaxPool inception_4e_pool 3 3 1 1 1 1 0x17b68 14 14 528 0x172cb 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "55 XNMaxPool inception_4e/pool 3 3 1 1 1 1 0x17b68 14 14 528 0x172cb 14 14 1 6 0 0 0 6 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4721,7 +4721,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_4e_pool", 
+                "name": "inception_4e/pool", 
                 "outaddr": "0x172cb", 
                 "outsize_h": "14", 
                 "outsize_w": "14", 
@@ -4752,7 +4752,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4e_3x3_reduce/Conv2D"
+                "inception_4e/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -4773,7 +4773,7 @@
             ], 
             "schedule": 56, 
             "type": "Pooling", 
-            "xdnn_instr": "56 XNMaxPoolPipelined inception_4e_3x3/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x17763 14 14 160 0x17a11 7 7 1 1 2 3 32 4 0 0 0 1 9 0 0 0 256 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e_3x3/Conv2D 3 3 1 1 1 1 1 1 1 0 1 14 14 320 7 # am_to_am", 
+            "xdnn_instr": "56 XNMaxPoolPipelined inception_4e_3x3/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x17763 14 14 160 0x17a11 7 7 1 1 2 3 32 4 0 0 0 1 9 0 0 0 256 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e/3x3 3 3 1 1 1 1 1 1 1 0 1 14 14 320 7 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4792,7 +4792,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "3", 
                 "conv_kernel_w": "3", 
-                "conv_name": "inception_4e_3x3/Conv2D", 
+                "conv_name": "inception_4e/3x3", 
                 "conv_outsize_w": "7", 
                 "conv_padding_h": "1", 
                 "conv_padding_w": "1", 
@@ -4850,7 +4850,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_4e_pool"
+                "inception_4e/pool"
             ], 
             "deeppy": [
                 [], 
@@ -4871,7 +4871,7 @@
             ], 
             "schedule": 57, 
             "type": "Pooling", 
-            "xdnn_instr": "57 XNMaxPoolPipelined inception_4e_pool_proj/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x172cb 14 14 528 0x17b06 7 7 1 6 0 0 0 2 0 0 0 1 9 0 0 0 704 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e_pool_proj/Conv2D 1 1 1 1 0 0 1 1 1 0 1 14 14 128 7 # am_to_am", 
+            "xdnn_instr": "57 XNMaxPoolPipelined inception_4e_pool_proj/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x172cb 14 14 528 0x17b06 7 7 1 6 0 0 0 2 0 0 0 1 9 0 0 0 704 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e/pool_proj 1 1 1 1 0 0 1 1 1 0 1 14 14 128 7 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4890,7 +4890,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "1", 
                 "conv_kernel_w": "1", 
-                "conv_name": "inception_4e_pool_proj/Conv2D", 
+                "conv_name": "inception_4e/pool_proj", 
                 "conv_outsize_w": "7", 
                 "conv_padding_h": "0", 
                 "conv_padding_w": "0", 
@@ -4969,7 +4969,7 @@
             ], 
             "schedule": 58, 
             "type": "Pooling", 
-            "xdnn_instr": "58 XNMaxPoolPipelined inception_4e_1x1/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x17b68 14 14 528 0x179af 7 7 1 6 0 0 0 3 0 0 0 1 9 0 0 0 0 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e_1x1/Conv2D 1 1 1 1 0 0 1 1 1 0 1 14 14 256 7 # am_to_am", 
+            "xdnn_instr": "58 XNMaxPoolPipelined inception_4e_1x1/Conv2D_pool4_3x3_s2 3 3 2 2 0 0 0x17b68 14 14 528 0x179af 7 7 1 6 0 0 0 3 0 0 0 1 9 0 0 0 0 832 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 inception_4e/1x1 1 1 1 1 0 0 1 1 1 0 1 14 14 256 7 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -4988,7 +4988,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "1", 
                 "conv_kernel_w": "1", 
-                "conv_name": "inception_4e_1x1/Conv2D", 
+                "conv_name": "inception_4e/1x1", 
                 "conv_outsize_w": "7", 
                 "conv_padding_h": "0", 
                 "conv_padding_w": "0", 
@@ -5086,9 +5086,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 53 Kernel SizeType(batches=160, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5a/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 53 Kernel SizeType(batches=160, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_3x3_reduce/Conv2D", 
+            "name": "inception_5a/3x3_reduce", 
             "ops": 13045760, 
             "outputshapes": [
                 1, 
@@ -5098,7 +5098,7 @@
             ], 
             "schedule": 60, 
             "type": "Convolution", 
-            "xdnn_instr": "60 XNConv inception_5a_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17b68 7 7 160 1 9 0 0 0 1 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "60 XNConv inception_5a/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17b68 7 7 160 1 9 0 0 0 1 2 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5131,7 +5131,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5a_3x3_reduce/Conv2D", 
+                "name": "inception_5a/3x3_reduce", 
                 "outaddr": "0x17b68", 
                 "outchan": "160", 
                 "outsize_h": "7", 
@@ -5168,7 +5168,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5a_3x3_reduce/Conv2D"
+                "inception_5a/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -5177,9 +5177,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 54 Kernel SizeType(batches=320, channels=160, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_5a/3x3: type=Convolution, sizes=None, shapes=None, sched 54 Kernel SizeType(batches=320, channels=160, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_3x3/Conv2D", 
+            "name": "inception_5a/3x3", 
             "ops": 45158400, 
             "outputshapes": [
                 1, 
@@ -5189,7 +5189,7 @@
             ], 
             "schedule": 61, 
             "type": "Convolution", 
-            "xdnn_instr": "61 XNConv inception_5a_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17b68 7 7 160 0x17ea9 7 7 320 1 1 2 3 32 4 0 0 0 1 9 0 0 0 256 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "61 XNConv inception_5a/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17b68 7 7 160 0x17ea9 7 7 320 1 1 2 3 32 4 0 0 0 1 9 0 0 0 256 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5222,7 +5222,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_5a_3x3/Conv2D", 
+                "name": "inception_5a/3x3", 
                 "outaddr": "0x17ea9", 
                 "outchan": "320", 
                 "outsize_h": "7", 
@@ -5268,9 +5268,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 55 Kernel SizeType(batches=32, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5a/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 55 Kernel SizeType(batches=32, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_5x5_reduce/Conv2D", 
+            "name": "inception_5a/5x5_reduce", 
             "ops": 2609152, 
             "outputshapes": [
                 1, 
@@ -5280,7 +5280,7 @@
             ], 
             "schedule": 62, 
             "type": "Convolution", 
-            "xdnn_instr": "62 XNConv inception_5a_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17e16 7 7 32 1 9 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "62 XNConv inception_5a/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17e16 7 7 32 1 9 0 0 0 0 1 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5313,7 +5313,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5a_5x5_reduce/Conv2D", 
+                "name": "inception_5a/5x5_reduce", 
                 "outaddr": "0x17e16", 
                 "outchan": "32", 
                 "outsize_h": "7", 
@@ -5359,9 +5359,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_pool: type=Pooling, sizes=None, shapes=None, sched 56 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_5a/pool: type=Pooling, sizes=None, shapes=None, sched 56 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_pool", 
+            "name": "inception_5a/pool", 
             "ops": 366912, 
             "outputshapes": [
                 1, 
@@ -5371,7 +5371,7 @@
             ], 
             "schedule": 63, 
             "type": "Pooling", 
-            "xdnn_instr": "63 XNMaxPool inception_5a_pool 3 3 1 1 1 1 0x179af 7 7 832 0x17c5d 7 7 1 9 0 0 0 9 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "63 XNMaxPool inception_5a/pool 3 3 1 1 1 1 0x179af 7 7 832 0x17c5d 7 7 1 9 0 0 0 9 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5401,7 +5401,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_5a_pool", 
+                "name": "inception_5a/pool", 
                 "outaddr": "0x17c5d", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -5432,7 +5432,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5a_5x5_reduce/Conv2D"
+                "inception_5a/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -5441,9 +5441,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 56 Kernel SizeType(batches=128, channels=32, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_5a/5x5: type=Convolution, sizes=None, shapes=None, sched 56 Kernel SizeType(batches=128, channels=32, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_5x5/Conv2D", 
+            "name": "inception_5a/5x5", 
             "ops": 10035200, 
             "outputshapes": [
                 1, 
@@ -5453,7 +5453,7 @@
             ], 
             "schedule": 64, 
             "type": "Convolution", 
-            "xdnn_instr": "64 XNConv inception_5a_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x17e16 7 7 32 0x17f6d 7 7 128 1 0 1 3 32 2 0 0 0 1 9 0 0 0 576 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "64 XNConv inception_5a/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x17e16 7 7 32 0x17f6d 7 7 128 1 0 1 3 32 2 0 0 0 1 9 0 0 0 576 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5486,7 +5486,7 @@
                 "insize_w": "7", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_5a_5x5/Conv2D", 
+                "name": "inception_5a/5x5", 
                 "outaddr": "0x17f6d", 
                 "outchan": "128", 
                 "outsize_h": "7", 
@@ -5523,7 +5523,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5a_pool"
+                "inception_5a/pool"
             ], 
             "deeppy": [
                 [], 
@@ -5532,9 +5532,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 57 Kernel SizeType(batches=128, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5a/pool_proj: type=Convolution, sizes=None, shapes=None, sched 57 Kernel SizeType(batches=128, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_pool_proj/Conv2D", 
+            "name": "inception_5a/pool_proj", 
             "ops": 10436608, 
             "outputshapes": [
                 1, 
@@ -5544,7 +5544,7 @@
             ], 
             "schedule": 65, 
             "type": "Convolution", 
-            "xdnn_instr": "65 XNConv inception_5a_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17c5d 7 7 832 0x17f9e 7 7 128 1 9 0 0 0 2 0 0 0 1 9 0 0 0 704 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "65 XNConv inception_5a/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17c5d 7 7 832 0x17f9e 7 7 128 1 9 0 0 0 2 0 0 0 1 9 0 0 0 704 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5577,7 +5577,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5a_pool_proj/Conv2D", 
+                "name": "inception_5a/pool_proj", 
                 "outaddr": "0x17f9e", 
                 "outchan": "128", 
                 "outsize_h": "7", 
@@ -5623,9 +5623,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5a_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 58 Kernel SizeType(batches=256, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5a/1x1: type=Convolution, sizes=None, shapes=None, sched 58 Kernel SizeType(batches=256, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5a_1x1/Conv2D", 
+            "name": "inception_5a/1x1", 
             "ops": 20873216, 
             "outputshapes": [
                 1, 
@@ -5635,7 +5635,7 @@
             ], 
             "schedule": 66, 
             "type": "Convolution", 
-            "xdnn_instr": "66 XNConv inception_5a_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17e47 7 7 256 1 9 0 0 0 3 0 0 0 1 9 0 0 0 0 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "66 XNConv inception_5a/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x179af 7 7 832 0x17e47 7 7 256 1 9 0 0 0 3 0 0 0 1 9 0 0 0 0 832 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5668,7 +5668,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5a_1x1/Conv2D", 
+                "name": "inception_5a/1x1", 
                 "outaddr": "0x17e47", 
                 "outchan": "256", 
                 "outsize_h": "7", 
@@ -5705,10 +5705,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5a_1x1/Conv2D", 
-                "inception_5a_3x3/Conv2D", 
-                "inception_5a_5x5/Conv2D", 
-                "inception_5a_pool_proj/Conv2D"
+                "inception_5a/1x1", 
+                "inception_5a/3x3", 
+                "inception_5a/5x5", 
+                "inception_5a/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -5745,9 +5745,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_5x5_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 60 Kernel SizeType(batches=48, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5b/5x5_reduce: type=Convolution, sizes=None, shapes=None, sched 60 Kernel SizeType(batches=48, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_5x5_reduce/Conv2D", 
+            "name": "inception_5b/5x5_reduce", 
             "ops": 3913728, 
             "outputshapes": [
                 1, 
@@ -5757,7 +5757,7 @@
             ], 
             "schedule": 68, 
             "type": "Convolution", 
-            "xdnn_instr": "68 XNConv inception_5b_5x5_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x0 7 7 48 1 9 0 0 0 0 1 2 48 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "68 XNConv inception_5b/5x5_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x0 7 7 48 1 9 0 0 0 0 1 2 48 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5790,7 +5790,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5b_5x5_reduce/Conv2D", 
+                "name": "inception_5b/5x5_reduce", 
                 "outaddr": "0x0", 
                 "outchan": "48", 
                 "outsize_h": "7", 
@@ -5827,7 +5827,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5b_5x5_reduce/Conv2D"
+                "inception_5b/5x5_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -5836,9 +5836,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_5x5/Conv2D: type=Convolution, sizes=None, shapes=None, sched 61 Kernel SizeType(batches=128, channels=48, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
+            "layer": "inception_5b/5x5: type=Convolution, sizes=None, shapes=None, sched 61 Kernel SizeType(batches=128, channels=48, height=5, width=5) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [2, 2]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_5x5/Conv2D", 
+            "name": "inception_5b/5x5", 
             "ops": 15052800, 
             "outputshapes": [
                 1, 
@@ -5848,7 +5848,7 @@
             ], 
             "schedule": 69, 
             "type": "Convolution", 
-            "xdnn_instr": "69 XNConv inception_5b_5x5/Conv2D 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 7 7 48 0x17db4 7 7 128 1 0 1 2 48 2 0 0 0 1 11 0 0 0 768 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "69 XNConv inception_5b/5x5 5 5 1 1 2 2 1 1 16 26 2 1 0 1 0x0 7 7 48 0x17db4 7 7 128 1 0 1 2 48 2 0 0 0 1 11 0 0 0 768 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5881,7 +5881,7 @@
                 "insize_w": "7", 
                 "kernel_h": "5", 
                 "kernel_w": "5", 
-                "name": "inception_5b_5x5/Conv2D", 
+                "name": "inception_5b/5x5", 
                 "outaddr": "0x17db4", 
                 "outchan": "128", 
                 "outsize_h": "7", 
@@ -5927,9 +5927,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_3x3_reduce/Conv2D: type=Convolution, sizes=None, shapes=None, sched 62 Kernel SizeType(batches=192, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5b/3x3_reduce: type=Convolution, sizes=None, shapes=None, sched 62 Kernel SizeType(batches=192, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_3x3_reduce/Conv2D", 
+            "name": "inception_5b/3x3_reduce", 
             "ops": 15654912, 
             "outputshapes": [
                 1, 
@@ -5939,7 +5939,7 @@
             ], 
             "schedule": 70, 
             "type": "Convolution", 
-            "xdnn_instr": "70 XNConv inception_5b_3x3_reduce/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x17bca 7 7 192 1 9 0 0 0 2 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "70 XNConv inception_5b/3x3_reduce 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x17bca 7 7 192 1 9 0 0 0 2 0 3 32 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -5972,7 +5972,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5b_3x3_reduce/Conv2D", 
+                "name": "inception_5b/3x3_reduce", 
                 "outaddr": "0x17bca", 
                 "outchan": "192", 
                 "outsize_h": "7", 
@@ -6018,9 +6018,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_pool: type=Pooling, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_5b/pool: type=Pooling, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=1L, channels=1, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_pool", 
+            "name": "inception_5b/pool", 
             "ops": 366912, 
             "outputshapes": [
                 1, 
@@ -6030,7 +6030,7 @@
             ], 
             "schedule": 71, 
             "type": "Pooling", 
-            "xdnn_instr": "71 XNMaxPool inception_5b_pool 3 3 1 1 1 1 0x17e47 7 7 832 0x17a11 7 7 1 9 0 0 0 9 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "71 XNMaxPool inception_5b/pool 3 3 1 1 1 1 0x17e47 7 7 832 0x17a11 7 7 1 9 0 0 0 9 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -6060,7 +6060,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_5b_pool", 
+                "name": "inception_5b/pool", 
                 "outaddr": "0x17a11", 
                 "outsize_h": "7", 
                 "outsize_w": "7", 
@@ -6091,7 +6091,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5b_3x3_reduce/Conv2D"
+                "inception_5b/3x3_reduce"
             ], 
             "deeppy": [
                 [], 
@@ -6100,9 +6100,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_3x3/Conv2D: type=Convolution, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=384, channels=192, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "layer": "inception_5b/3x3: type=Convolution, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=384, channels=192, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_3x3/Conv2D", 
+            "name": "inception_5b/3x3", 
             "ops": 65028096, 
             "outputshapes": [
                 1, 
@@ -6112,7 +6112,7 @@
             ], 
             "schedule": 72, 
             "type": "Convolution", 
-            "xdnn_instr": "72 XNConv inception_5b_3x3/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17bca 7 7 192 0x17cf0 7 7 384 1 2 0 3 32 4 0 0 0 1 11 0 0 0 384 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "72 XNConv inception_5b/3x3 3 3 1 1 1 1 1 1 16 26 2 1 0 1 0x17bca 7 7 192 0x17cf0 7 7 384 1 2 0 3 32 4 0 0 0 1 11 0 0 0 384 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -6145,7 +6145,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "inception_5b_3x3/Conv2D", 
+                "name": "inception_5b/3x3", 
                 "outaddr": "0x17cf0", 
                 "outchan": "384", 
                 "outsize_h": "7", 
@@ -6182,7 +6182,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5b_pool"
+                "inception_5b/pool"
             ], 
             "deeppy": [
                 [], 
@@ -6191,9 +6191,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_pool_proj/Conv2D: type=Convolution, sizes=None, shapes=None, sched 64 Kernel SizeType(batches=128, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5b/pool_proj: type=Convolution, sizes=None, shapes=None, sched 64 Kernel SizeType(batches=128, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_pool_proj/Conv2D", 
+            "name": "inception_5b/pool_proj", 
             "ops": 10436608, 
             "outputshapes": [
                 1, 
@@ -6203,7 +6203,7 @@
             ], 
             "schedule": 73, 
             "type": "Convolution", 
-            "xdnn_instr": "73 XNConv inception_5b_pool_proj/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17a11 7 7 832 0x17de5 7 7 128 1 9 0 0 0 2 0 0 0 1 11 0 0 0 896 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "73 XNConv inception_5b/pool_proj 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17a11 7 7 832 0x17de5 7 7 128 1 9 0 0 0 2 0 0 0 1 11 0 0 0 896 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -6236,7 +6236,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5b_pool_proj/Conv2D", 
+                "name": "inception_5b/pool_proj", 
                 "outaddr": "0x17de5", 
                 "outchan": "128", 
                 "outsize_h": "7", 
@@ -6282,9 +6282,9 @@
                 null, 
                 false
             ], 
-            "layer": "inception_5b_1x1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 65 Kernel SizeType(batches=384, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "layer": "inception_5b/1x1: type=Convolution, sizes=None, shapes=None, sched 65 Kernel SizeType(batches=384, channels=832, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "inception_5b_1x1/Conv2D", 
+            "name": "inception_5b/1x1", 
             "ops": 31309824, 
             "outputshapes": [
                 1, 
@@ -6294,7 +6294,7 @@
             ], 
             "schedule": 74, 
             "type": "Convolution", 
-            "xdnn_instr": "74 XNConv inception_5b_1x1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x17c2c 7 7 384 1 9 0 0 0 4 0 0 0 1 11 0 0 0 0 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "74 XNConv inception_5b/1x1 1 1 1 1 0 0 1 1 16 26 2 1 0 1 0x17e47 7 7 832 0x17c2c 7 7 384 1 9 0 0 0 4 0 0 0 1 11 0 0 0 0 1024 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -6327,7 +6327,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "inception_5b_1x1/Conv2D", 
+                "name": "inception_5b/1x1", 
                 "outaddr": "0x17c2c", 
                 "outchan": "384", 
                 "outsize_h": "7", 
@@ -6364,10 +6364,10 @@
         {
             "active": 1, 
             "bottoms": [
-                "inception_5b_1x1/Conv2D", 
-                "inception_5b_3x3/Conv2D", 
-                "inception_5b_5x5/Conv2D", 
-                "inception_5b_pool_proj/Conv2D"
+                "inception_5b/1x1", 
+                "inception_5b/3x3", 
+                "inception_5b/5x5", 
+                "inception_5b/pool_proj"
             ], 
             "deeppy": [
                 [], 
@@ -6404,9 +6404,9 @@
                 null, 
                 false
             ], 
-            "layer": "pool5_7x7_s1: type=Pooling, sizes=None, shapes=None, sched 67 Kernel [7, 7] Strides [1, 1] Padding [0, 0]", 
+            "layer": "pool5/7x7_s1: type=Pooling, sizes=None, shapes=None, sched 67 Kernel [7, 7] Strides [1, 1] Padding [0, 0]", 
             "memory_description": "am_to_am", 
-            "name": "pool5_7x7_s1", 
+            "name": "pool5/7x7_s1", 
             "ops": 50176, 
             "outputshapes": [
                 1, 
@@ -6416,7 +6416,7 @@
             ], 
             "schedule": 76, 
             "type": "Pooling", 
-            "xdnn_instr": "76 XNAvgPool pool5_7x7_s1 7 7 1 1 0 0 0x17c2c 7 7 1024 0x17e47 1 1 1 11 0 0 0 11 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
+            "xdnn_instr": "76 XNAvgPool pool5/7x7_s1 7 7 1 1 0 0 0x17c2c 7 7 1024 0x17e47 1 1 1 11 0 0 0 11 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 # am_to_am", 
             "xdnn_kv": {
                 "DEST_AM-Buffer_Offset": "0", 
                 "HAT": "0", 
@@ -6446,7 +6446,7 @@
                 "insize_w": "7", 
                 "kernel_h": "7", 
                 "kernel_w": "7", 
-                "name": "pool5_7x7_s1", 
+                "name": "pool5/7x7_s1", 
                 "outaddr": "0x17e47", 
                 "outsize_h": "1", 
                 "outsize_w": "1", 
@@ -6477,7 +6477,7 @@
         {
             "active": 1, 
             "bottoms": [
-                "pool5_7x7_s1"
+                "pool5/7x7_s1"
             ], 
             "deeppy": [
                 [], 
@@ -6529,7 +6529,7 @@
             "output_address": 0, 
             "output_name": "loss3_classifier/Reshape_output", 
             "previous_layers": [
-                "pool5_7x7_s1"
+                "pool5/7x7_s1"
             ],
             "previous_tensors": [
                 "loss3_classifier/Reshape_output"

@@ -4,7 +4,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "conv1/Conv2D",
+            "name": "conv1",
             "postscale_shift": [
                 23,
                 23,
@@ -344,7 +344,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2a_branch1/Conv2D",
+            "name": "res2a_branch1",
             "postscale_shift": [
                 21,
                 21,
@@ -1644,7 +1644,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2a_branch2a/Conv2D",
+            "name": "res2a_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -1984,7 +1984,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2a_branch2b/Conv2D",
+            "name": "res2a_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -2324,7 +2324,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2a_branch2c/Conv2D",
+            "name": "res2a_branch2c",
             "postscale_shift": [
                 21,
                 21,
@@ -3642,7 +3642,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2b_branch2a/Conv2D",
+            "name": "res2b_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -3982,7 +3982,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2b_branch2b/Conv2D",
+            "name": "res2b_branch2b",
             "postscale_shift": [
                 21,
                 21,
@@ -4322,7 +4322,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2b_branch2c/Conv2D",
+            "name": "res2b_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -5640,7 +5640,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2c_branch2a/Conv2D",
+            "name": "res2c_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -5980,7 +5980,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2c_branch2b/Conv2D",
+            "name": "res2c_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -6320,7 +6320,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res2c_branch2c/Conv2D",
+            "name": "res2c_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -7638,7 +7638,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3a_branch1/Conv2D",
+            "name": "res3a_branch1",
             "postscale_shift": [
                 22,
                 22,
@@ -10218,7 +10218,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3a_branch2a/Conv2D",
+            "name": "res3a_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -10878,7 +10878,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3a_branch2b/Conv2D",
+            "name": "res3a_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -11538,7 +11538,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3a_branch2c/Conv2D",
+            "name": "res3a_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -14136,7 +14136,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3b_branch2a/Conv2D",
+            "name": "res3b_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -14796,7 +14796,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3b_branch2b/Conv2D",
+            "name": "res3b_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -15456,7 +15456,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3b_branch2c/Conv2D",
+            "name": "res3b_branch2c",
             "postscale_shift": [
                 21,
                 21,
@@ -18054,7 +18054,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3c_branch2a/Conv2D",
+            "name": "res3c_branch2a",
             "postscale_shift": [
                 21,
                 21,
@@ -18714,7 +18714,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3c_branch2b/Conv2D",
+            "name": "res3c_branch2b",
             "postscale_shift": [
                 21,
                 21,
@@ -19374,7 +19374,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3c_branch2c/Conv2D",
+            "name": "res3c_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -21972,7 +21972,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3d_branch2a/Conv2D",
+            "name": "res3d_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -22632,7 +22632,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3d_branch2b/Conv2D",
+            "name": "res3d_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -23292,7 +23292,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res3d_branch2c/Conv2D",
+            "name": "res3d_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -25890,7 +25890,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4a_branch1/Conv2D",
+            "name": "res4a_branch1",
             "postscale_shift": [
                 22,
                 22,
@@ -31030,7 +31030,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4a_branch2a/Conv2D",
+            "name": "res4a_branch2a",
             "postscale_shift": [
                 21,
                 21,
@@ -32330,7 +32330,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4a_branch2b/Conv2D",
+            "name": "res4a_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -33630,7 +33630,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4a_branch2c/Conv2D",
+            "name": "res4a_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -38788,7 +38788,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4b_branch2a/Conv2D",
+            "name": "res4b_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -40088,7 +40088,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4b_branch2b/Conv2D",
+            "name": "res4b_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -41388,7 +41388,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4b_branch2c/Conv2D",
+            "name": "res4b_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -46546,7 +46546,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4c_branch2a/Conv2D",
+            "name": "res4c_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -47846,7 +47846,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4c_branch2b/Conv2D",
+            "name": "res4c_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -49146,7 +49146,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4c_branch2c/Conv2D",
+            "name": "res4c_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -54304,7 +54304,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4d_branch2a/Conv2D",
+            "name": "res4d_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -55604,7 +55604,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4d_branch2b/Conv2D",
+            "name": "res4d_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -56904,7 +56904,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4d_branch2c/Conv2D",
+            "name": "res4d_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -62062,7 +62062,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4e_branch2a/Conv2D",
+            "name": "res4e_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -63362,7 +63362,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4e_branch2b/Conv2D",
+            "name": "res4e_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -64662,7 +64662,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4e_branch2c/Conv2D",
+            "name": "res4e_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -69820,7 +69820,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4f_branch2a/Conv2D",
+            "name": "res4f_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -71120,7 +71120,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4f_branch2b/Conv2D",
+            "name": "res4f_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -72420,7 +72420,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res4f_branch2c/Conv2D",
+            "name": "res4f_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -77578,7 +77578,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5a_branch1/Conv2D",
+            "name": "res5a_branch1",
             "postscale_shift": [
                 21,
                 21,
@@ -87838,7 +87838,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5a_branch2a/Conv2D",
+            "name": "res5a_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -90418,7 +90418,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5a_branch2b/Conv2D",
+            "name": "res5a_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -92998,7 +92998,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5a_branch2c/Conv2D",
+            "name": "res5a_branch2c",
             "postscale_shift": [
                 21,
                 21,
@@ -103276,7 +103276,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5b_branch2a/Conv2D",
+            "name": "res5b_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -105856,7 +105856,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5b_branch2b/Conv2D",
+            "name": "res5b_branch2b",
             "postscale_shift": [
                 22,
                 22,
@@ -108436,7 +108436,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5b_branch2c/Conv2D",
+            "name": "res5b_branch2c",
             "postscale_shift": [
                 22,
                 22,
@@ -118714,7 +118714,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5c_branch2a/Conv2D",
+            "name": "res5c_branch2a",
             "postscale_shift": [
                 22,
                 22,
@@ -121294,7 +121294,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5c_branch2b/Conv2D",
+            "name": "res5c_branch2b",
             "postscale_shift": [
                 23,
                 23,
@@ -123874,7 +123874,7 @@
             "bw_layer_in": 8,
             "bw_layer_out": 8,
             "bw_params": 8,
-            "name": "res5c_branch2c/Conv2D",
+            "name": "res5c_branch2c",
             "postscale_shift": [
                 21,
                 21,

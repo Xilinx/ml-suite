@@ -18,10 +18,10 @@ class CaffeXFDNN_XDLF(caffe.Layer):
       import os.path as osp
       import os
       if not osp.exists(_args['save']) : os.makedirs(_args['save'])
-    self.rt = compilerxdnnRT(_args['compilerjson'], _args['weightdir'], _args['device'], _args["input_names"], _args["output_names"],  _args['xdnnv3'], _args['save'])
+    self.rt = compilerxdnnRT(_args['netcfg'], _args['weights'], _args['device'], _args["input_names"], _args["output_names"],  _args['xdnnv3'], _args['save'])
     self._indictnames = _args["input_names"]
     self._outdictnames =  _args["output_names"]
-    self._parser = xdnn.CompilerJsonParser(_args["compilerjson"])
+    self._parser = xdnn.CompilerJsonParser(_args["netcfg"])
 
   # Called before every forward
   def reshape(self, bottom, top):

@@ -120,21 +120,18 @@ elif [ "$KCFG" == "v3" ]; then
 
   if [ $COMPILEROPT == "latency" ] && [ $MODEL == "googlenet_v1" ]; then
     COMPILEROPT=latency.json
-    WEIGHTS=./data/${MODEL}_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
     QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
 
   elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "googlenet_v1" ]; then
     COMPILEROPT=throughput.json
-    WEIGHTS=./data/${MODEL}_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
     QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
 
   elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "resnet50" ]; then
     COMPILEROPT=throughput.json
-    WEIGHTS=./data/${MODEL}_tensorflow_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_tensorflow_xdnnv3.json
+    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
 
   else
     if [ $COMPILEROPT == "latency" ]; then
@@ -142,9 +139,8 @@ elif [ "$KCFG" == "v3" ]; then
     else
       COMPILEROPT="autoAllOpt.json"
     fi
-    WEIGHTS=./data/${MODEL}_tensorflow_data
     NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_tensorflow_xdnnv3.json
+    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json
   fi
 
 else

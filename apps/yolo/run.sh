@@ -73,6 +73,7 @@ do
   esac
 done
 
+echo -e $COMPILEROPT
 # Verbose Debug Profiling Prints
 # Note, the VERBOSE mechanic here is not working
 # Its always safer to set this manually
@@ -112,18 +113,7 @@ else
 fi
 
 # Determine FPGAOUTSZ which depend upon model
-if [ "$MODEL" == "googlenet_v1" ]; then
-  FPGAOUTSZ=1024
-elif [ "$MODEL" == "inception_v3" ]; then
-  FPGAOUTSZ=8192
-elif [ "$MODEL" == "mobilenet" ]; then
-  FPGAOUTSZ=1024
-  IMG_INPUT_SCALE=0.017
-elif [ "$MODEL" == "resnet50" ]; then
-  FPGAOUTSZ=2048
-elif [ "$MODEL" == "resnet101" ]; then
-  FPGAOUTSZ=2048
-elif [ "$MODEL" == "yolo_v2_224" ]; then
+if [ "$MODEL" == "yolo_v2_224" ]; then
   NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov2/fp32/yolo_deploy_224.prototxt
   FPGAOUTSZ=2048000
   INSHAPE_CHANNELS=3
@@ -233,39 +223,6 @@ elif [ "$KCFG" == "v3" ]; then
     XCLBIN=overlay_5.xclbin
   fi
 
-  if [ $COMPILEROPT == "latency" ] && [ $MODEL == "googlenet_v1" ]; then
-    COMPILEROPT=latency.json
-    export XDNN_LATENCY_OPTIMIZED=1
-    WEIGHTS=./data/${MODEL}_data
-    NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    export XDNN_CUSTOM_CROSSBAR=${NETCFG} # FIXME: delete after xteng's ScriptExecutor changes
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json 
-
-  elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "googlenet_v1" ]; then
-    COMPILEROPT=throughput.json
-    export XDNN_THROUGHPUT_OPTIMIZED=1
-    WEIGHTS=./data/${MODEL}_data
-    NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    export XDNN_CUSTOM_CROSSBAR=${NETCFG} # FIXME: delete after xteng's ScriptExecutor changes
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_xdnnv3.json 
-
-  elif [ $COMPILEROPT == "throughput" ] && [ $MODEL == "resnet50" ]; then
-    COMPILEROPT=throughput.json
-    export XDNN_RESNET_THROUGHPUT_OPTIMIZED=1
-    WEIGHTS=./data/${MODEL}_tensorflow_data
-    NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_tensorflow_xdnnv3.json 
-  
-  else
-    if [ $COMPILEROPT == "latency" ]; then
-      COMPILEROPT=latency.json
-    else
-      COMPILEROPT="autoAllOpt.json"
-    fi
-    WEIGHTS=./data/${MODEL}_tensorflow_data
-    NETCFG=./data/${MODEL}_${BITWIDTH}b_${COMPILEROPT}
-    QUANTCFG=./data/${MODEL}_${BITWIDTH}b_tensorflow_xdnnv3.json
-  fi
 
 elif [ "$MLSUITE_PLATFORM" == "gpu" ] ; then
   echo -e "Running in GPU mode, no XDNN config required "  
@@ -313,7 +270,7 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
     #sed -e 's/$/ 1/' -i images.txt 
     DUMMY_PTXT=dummy.prototxt
     IMGLIST="$MLSUITE_ROOT/"apps/yolo/images.txt
-    CALIB_DATASET="$MLSUITE_ROOT/"xfdnn/tools/quantize/calibration_directory/
+    CALIB_DATASET="$MLSUITE_ROOT/"apps/yolo/test_image_set
     python get_decent_q_prototxt.py ${CAFFE_ROOT}/python/ $NET_DEF_FPGA  $DUMMY_PTXT $IMGLIST  $CALIB_DATASET
     ${CAFFE_ROOT}/build/tools/decent_q quantize  -model $DUMMY_PTXT -weights $NET_WEIGHTS --output_dir work/  -calib_iter 100
     
@@ -324,8 +281,8 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
     DDR=256
     export GLOG_minloglevel=2 # Supress Caffe prints
     echo "### Running MLSUITE Compiler ###"
-    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.pyc \
-      -b ${BPP} \
+
+    COMPILER_BASE_OPT=" -b ${BPP} \
       -i ${DSP_WIDTH} \
       -m ${MEM} \
       -d ${DDR} \
@@ -335,11 +292,23 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
       -w work/deploy.caffemodel \
       -g work/compiler \
       -qz work/quantizer \
-      -C
-      
+      -C "
+
+    if [ $COMPILEROPT == "latency" ] || [ $COMPILEROPT == "throughput" ]; then
+       COMPILER_BASE_OPT+="-mix --poolingaround -P "  
+       COMPILER_BASE_OPT+="-pcmp --parallelread ['bottom','tops'] -Q ['tops','bottom'] "
+    fi
+
+    python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.pyc $COMPILER_BASE_OPT
+    echo -e $COMPILEROPT  
     NETCFG=work/compiler.json
     QUANTCFG=work/quantizer.json
     WEIGHTS=work/deploy.caffemodel_data
+
+    if [ $COMPILEROPT == "throughput" ]; then
+       python $MLSUITE_ROOT/xfdnn/tools/compile/scripts/xfdnn_gen_throughput_json.py --i work/compiler.json --o work/compiler_tput.json            
+       NETCFG=work/compiler_tput.json
+    fi  
     
   fi  
      
@@ -398,7 +367,7 @@ fi
 if [ "$TEST" == "test_detect" ]; then
   TEST=yolo.py
   if [ -z ${DIRECTORY+x} ]; then
-  DIRECTORY=${MLSUITE_ROOT}/xfdnn/tools/quantize/calibration_directory
+  DIRECTORY=${MLSUITE_ROOT}/apps/yolo/test_image_set/
   fi
   BASEOPT+=" --images $DIRECTORY"
   BASEOPT+=" --dsp $DSP_WIDTH"
@@ -413,7 +382,7 @@ elif [ "$TEST" == "darknet_detect" ]; then
     DIRECTORY=/opt/data/deephi_data/coco_test_image/
   fi
   if [ -z ${DIRECTORY+x} ]; then
-  DIRECTORY=${MLSUITE_ROOT}/xfdnn/tools/quantize/calibration_directory
+  DIRECTORY=${MLSUITE_ROOT}/apps/yolo/test_image_set/
   fi
   BASEOPT+=" --images $DIRECTORY"
   BASEOPT+=" --dsp $DSP_WIDTH"
@@ -442,7 +411,7 @@ elif [ "$TEST" == "yolo_cpp" ]; then
   OUTSHAPE_DEPTH=425
   fi
  
-  DIRECTORY=${MLSUITE_ROOT}/xfdnn/tools/quantize/calibration_directory
+  DIRECTORY=${MLSUITE_ROOT}/apps/yolo/test_image_set/
   BASEOPT_CPP=" --xclbin $XCLBIN_PATH/$XCLBIN"
   BASEOPT_CPP+=" --netcfg $NETCFG" 
   BASEOPT_CPP+=" --weights $WEIGHTS"

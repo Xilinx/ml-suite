@@ -21,9 +21,9 @@ def _fixQuantJsonLayerNames(quantFile):
     json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
 class xdnn_env(object):
-    def __init__(self, quant_cfgfile=None):
+    def __init__(self, quant_cfgfile=None, **kwargs):
         self._xdnnParams = {}
-        self._xdnnParams['lib_path'] = os.environ["LIBXDNN_PATH"]
+        self._xdnnParams['lib_path'] = kwargs['lib_path'] if 'lib_path' in kwargs else os.environ["LIBXDNN_PATH"]
         self._xdnnParams['api'] = xdnn.XDNNManager(self._xdnnParams['lib_path'])
         self._xdnnParams['quantDB'] = None
         self._xdnnParams['scaleA'] = 10000

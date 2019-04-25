@@ -119,7 +119,7 @@
             "memory_description": "ddr_to_am",
             "ops": 1806336, 
             "schedule": 2, 
-            "xdnn_instr": "2 XNMaxPoolPipelined pool1 3 3 2 2 0 0 0x0 224 224 3 0x8000 56 56 0 0 1 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 conv1/Conv2D 7 7 2 2 3 3 1 1 1 1 112 112 64", 
+            "xdnn_instr": "2 XNMaxPoolPipelined pool1 3 3 2 2 0 0 0x0 224 224 3 0x8000 56 56 0 0 1 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 1 0 0 0 0 0 0 conv1 7 7 2 2 3 3 1 1 1 1 112 112 64", 
             "outputshapes": [
                 1, 
                 3, 
@@ -143,7 +143,7 @@
                 "conv_dilation_w": "1", 
                 "conv_kernel_h": "7", 
                 "conv_kernel_w": "7", 
-                "conv_name": "conv1/Conv2D", 
+                "conv_name": "conv1", 
                 "conv_padding_h": "3", 
                 "conv_padding_w": "3", 
                 "conv_relu": "1", 
@@ -386,7 +386,7 @@
                 ], 
                 [
                     "conv_name", 
-                    "conv1/Conv2D"
+                    "conv1"
                 ], 
                 [
                     "conv_kernel_w", 
@@ -443,11 +443,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2a_branch1/Conv2D", 
+            "layer": "res2a_branch1: type=Convolution, sizes=None, shapes=None, sched 2 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2a_branch1", 
             "ops": 102760448, 
             "schedule": 3, 
-            "xdnn_instr": "3 XNConv res2a_branch1/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x8000 56 56 64 0x0 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "3 XNConv res2a_branch1 1 1 1 1 0 0 1 1 16 26 2 0 1 0x8000 56 56 64 0x0 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -476,7 +476,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2a_branch1/Conv2D", 
+                "name": "res2a_branch1", 
                 "outaddr": "0x0", 
                 "outchan": "256", 
                 "outsize_h": "56", 
@@ -516,7 +516,7 @@
                 ], 
                 [
                     "name", 
-                    "res2a_branch1/Conv2D"
+                    "res2a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -729,11 +729,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 3 Kernel SizeType(batches=64, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2a_branch2a/Conv2D", 
+            "layer": "res2a_branch2a: type=Convolution, sizes=None, shapes=None, sched 3 Kernel SizeType(batches=64, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2a_branch2a", 
             "ops": 25690112, 
             "schedule": 4, 
-            "xdnn_instr": "4 XNConv res2a_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x8000 56 56 64 0x24c0 56 56 64 0 1 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "4 XNConv res2a_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x8000 56 56 64 0x24c0 56 56 64 0 1 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -762,7 +762,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2a_branch2a/Conv2D", 
+                "name": "res2a_branch2a", 
                 "outaddr": "0x24c0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -802,7 +802,7 @@
                 ], 
                 [
                     "name", 
-                    "res2a_branch2a/Conv2D"
+                    "res2a_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -1015,11 +1015,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 4 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res2a_branch2b/Conv2D", 
+            "layer": "res2a_branch2b: type=Convolution, sizes=None, shapes=None, sched 4 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res2a_branch2b", 
             "ops": 231211008, 
             "schedule": 5, 
-            "xdnn_instr": "5 XNConv res2a_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "5 XNConv res2a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -1048,7 +1048,7 @@
                 "insize_w": "56", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res2a_branch2b/Conv2D", 
+                "name": "res2a_branch2b", 
                 "outaddr": "0x3d40", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -1088,7 +1088,7 @@
                 ], 
                 [
                     "name", 
-                    "res2a_branch2b/Conv2D"
+                    "res2a_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -1301,11 +1301,11 @@
             ]
         }, 
         {
-            "layer": "res2a_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 5 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2a_branch2c/Conv2D", 
+            "layer": "res2a_branch2c: type=Convolution, sizes=None, shapes=None, sched 5 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2a_branch2c", 
             "ops": 102760448, 
             "schedule": 6, 
-            "xdnn_instr": "6 XNConv res2a_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "6 XNConv res2a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -1334,7 +1334,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2a_branch2c/Conv2D", 
+                "name": "res2a_branch2c", 
                 "outaddr": "0x15b40", 
                 "outchan": "256", 
                 "outsize_h": "56", 
@@ -1374,7 +1374,7 @@
                 ], 
                 [
                     "name", 
-                    "res2a_branch2c/Conv2D"
+                    "res2a_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -1823,11 +1823,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2b_branch2a/Conv2D", 
+            "layer": "res2b_branch2a: type=Convolution, sizes=None, shapes=None, sched 7 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2b_branch2a", 
             "ops": 102760448, 
             "schedule": 8, 
-            "xdnn_instr": "8 XNConv res2b_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x24c0 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "8 XNConv res2b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x24c0 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -1856,7 +1856,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2b_branch2a/Conv2D", 
+                "name": "res2b_branch2a", 
                 "outaddr": "0x24c0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -1896,7 +1896,7 @@
                 ], 
                 [
                     "name", 
-                    "res2b_branch2a/Conv2D"
+                    "res2b_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -2109,11 +2109,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 8 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res2b_branch2b/Conv2D", 
+            "layer": "res2b_branch2b: type=Convolution, sizes=None, shapes=None, sched 8 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res2b_branch2b", 
             "ops": 231211008, 
             "schedule": 9, 
-            "xdnn_instr": "9 XNConv res2b_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "9 XNConv res2b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -2142,7 +2142,7 @@
                 "insize_w": "56", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res2b_branch2b/Conv2D", 
+                "name": "res2b_branch2b", 
                 "outaddr": "0x3d40", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -2182,7 +2182,7 @@
                 ], 
                 [
                     "name", 
-                    "res2b_branch2b/Conv2D"
+                    "res2b_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -2395,11 +2395,11 @@
             ]
         }, 
         {
-            "layer": "res2b_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 9 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2b_branch2c/Conv2D", 
+            "layer": "res2b_branch2c: type=Convolution, sizes=None, shapes=None, sched 9 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2b_branch2c", 
             "ops": 102760448, 
             "schedule": 10, 
-            "xdnn_instr": "10 XNConv res2b_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "10 XNConv res2b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -2428,7 +2428,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2b_branch2c/Conv2D", 
+                "name": "res2b_branch2c", 
                 "outaddr": "0x15b40", 
                 "outchan": "256", 
                 "outsize_h": "56", 
@@ -2468,7 +2468,7 @@
                 ], 
                 [
                     "name", 
-                    "res2b_branch2c/Conv2D"
+                    "res2b_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -2917,11 +2917,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 11 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2c_branch2a/Conv2D", 
+            "layer": "res2c_branch2a: type=Convolution, sizes=None, shapes=None, sched 11 Kernel SizeType(batches=64, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2c_branch2a", 
             "ops": 102760448, 
             "schedule": 12, 
-            "xdnn_instr": "12 XNConv res2c_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x24c0 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "12 XNConv res2c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x24c0 56 56 64 0 3 0 0 0 0 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -2950,7 +2950,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2c_branch2a/Conv2D", 
+                "name": "res2c_branch2a", 
                 "outaddr": "0x24c0", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -2990,7 +2990,7 @@
                 ], 
                 [
                     "name", 
-                    "res2c_branch2a/Conv2D"
+                    "res2c_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -3203,11 +3203,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 12 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res2c_branch2b/Conv2D", 
+            "layer": "res2c_branch2b: type=Convolution, sizes=None, shapes=None, sched 12 Kernel SizeType(batches=64, channels=64, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res2c_branch2b", 
             "ops": 231211008, 
             "schedule": 13, 
-            "xdnn_instr": "13 XNConv res2c_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "13 XNConv res2c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x24c0 56 56 64 0x3d40 56 56 64 0 0 2 3 32 1 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -3236,7 +3236,7 @@
                 "insize_w": "56", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res2c_branch2b/Conv2D", 
+                "name": "res2c_branch2b", 
                 "outaddr": "0x3d40", 
                 "outchan": "64", 
                 "outsize_h": "56", 
@@ -3276,7 +3276,7 @@
                 ], 
                 [
                     "name", 
-                    "res2c_branch2b/Conv2D"
+                    "res2c_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -3489,11 +3489,11 @@
             ]
         }, 
         {
-            "layer": "res2c_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 13 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res2c_branch2c/Conv2D", 
+            "layer": "res2c_branch2c: type=Convolution, sizes=None, shapes=None, sched 13 Kernel SizeType(batches=256, channels=64, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res2c_branch2c", 
             "ops": 102760448, 
             "schedule": 14, 
-            "xdnn_instr": "14 XNConv res2c_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "14 XNConv res2c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x3d40 56 56 64 0x15b40 56 56 256 0 1 0 0 0 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -3522,7 +3522,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res2c_branch2c/Conv2D", 
+                "name": "res2c_branch2c", 
                 "outaddr": "0x15b40", 
                 "outchan": "256", 
                 "outsize_h": "56", 
@@ -3562,7 +3562,7 @@
                 ], 
                 [
                     "name", 
-                    "res2c_branch2c/Conv2D"
+                    "res2c_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -4011,11 +4011,11 @@
             ]
         }, 
         {
-            "layer": "res3a_branch1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 15 Kernel SizeType(batches=512, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res3a_branch1/Conv2D", 
+            "layer": "res3a_branch1: type=Convolution, sizes=None, shapes=None, sched 15 Kernel SizeType(batches=512, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res3a_branch1", 
             "ops": 205520896, 
             "schedule": 16, 
-            "xdnn_instr": "16 XNConv res3a_branch1/Conv2D 1 1 2 2 0 0 1 1 16 26 2 0 1 0x0 56 56 256 0x24c0 28 28 512 0 3 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "16 XNConv res3a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x0 56 56 256 0x24c0 28 28 512 0 3 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -4044,7 +4044,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3a_branch1/Conv2D", 
+                "name": "res3a_branch1", 
                 "outaddr": "0x24c0", 
                 "outchan": "512", 
                 "outsize_h": "28", 
@@ -4084,7 +4084,7 @@
                 ], 
                 [
                     "name", 
-                    "res3a_branch1/Conv2D"
+                    "res3a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -4297,11 +4297,11 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 16 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res3a_branch2a/Conv2D", 
+            "layer": "res3a_branch2a: type=Convolution, sizes=None, shapes=None, sched 16 Kernel SizeType(batches=128, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res3a_branch2a", 
             "ops": 51380224, 
             "schedule": 17, 
-            "xdnn_instr": "17 XNConv res3a_branch2a/Conv2D 1 1 2 2 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x3720 28 28 128 0 3 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "17 XNConv res3a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x0 56 56 256 0x3720 28 28 128 0 3 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -4330,7 +4330,7 @@
                 "insize_w": "56", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3a_branch2a/Conv2D", 
+                "name": "res3a_branch2a", 
                 "outaddr": "0x3720", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -4370,7 +4370,7 @@
                 ], 
                 [
                     "name", 
-                    "res3a_branch2a/Conv2D"
+                    "res3a_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -4583,11 +4583,11 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 17 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res3a_branch2b/Conv2D", 
+            "layer": "res3a_branch2b: type=Convolution, sizes=None, shapes=None, sched 17 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res3a_branch2b", 
             "ops": 231211008, 
             "schedule": 18, 
-            "xdnn_instr": "18 XNConv res3a_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x3720 28 28 128 0x0 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "18 XNConv res3a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x3720 28 28 128 0x0 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -4616,7 +4616,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res3a_branch2b/Conv2D", 
+                "name": "res3a_branch2b", 
                 "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -4656,7 +4656,7 @@
                 ], 
                 [
                     "name", 
-                    "res3a_branch2b/Conv2D"
+                    "res3a_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -4869,11 +4869,11 @@
             ]
         }, 
         {
-            "layer": "res3a_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 18 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3a_branch2c/Conv2D", 
+            "layer": "res3a_branch2c: type=Convolution, sizes=None, shapes=None, sched 18 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3a_branch2c", 
             "ops": 102760448, 
             "schedule": 19, 
-            "xdnn_instr": "19 XNConv res3a_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "19 XNConv res3a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -4902,7 +4902,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3a_branch2c/Conv2D", 
+                "name": "res3a_branch2c", 
                 "outaddr": "0x16da0", 
                 "outchan": "512", 
                 "outsize_h": "28", 
@@ -4942,7 +4942,7 @@
                 ], 
                 [
                     "name", 
-                    "res3a_branch2c/Conv2D"
+                    "res3a_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -5391,11 +5391,11 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 20 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3b_branch2a/Conv2D", 
+            "layer": "res3b_branch2a: type=Convolution, sizes=None, shapes=None, sched 20 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3b_branch2a", 
             "ops": 102760448, 
             "schedule": 21, 
-            "xdnn_instr": "21 XNConv res3b_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "21 XNConv res3b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -5424,7 +5424,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3b_branch2a/Conv2D", 
+                "name": "res3b_branch2a", 
                 "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -5464,7 +5464,7 @@
                 ], 
                 [
                     "name", 
-                    "res3b_branch2a/Conv2D"
+                    "res3b_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -5677,11 +5677,11 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res3b_branch2b/Conv2D", 
+            "layer": "res3b_branch2b: type=Convolution, sizes=None, shapes=None, sched 21 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res3b_branch2b", 
             "ops": 231211008, 
             "schedule": 22, 
-            "xdnn_instr": "22 XNConv res3b_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "22 XNConv res3b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -5710,7 +5710,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res3b_branch2b/Conv2D", 
+                "name": "res3b_branch2b", 
                 "outaddr": "0x620", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -5750,7 +5750,7 @@
                 ], 
                 [
                     "name", 
-                    "res3b_branch2b/Conv2D"
+                    "res3b_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -5963,11 +5963,11 @@
             ]
         }, 
         {
-            "layer": "res3b_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 22 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3b_branch2c/Conv2D", 
+            "layer": "res3b_branch2c: type=Convolution, sizes=None, shapes=None, sched 22 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3b_branch2c", 
             "ops": 102760448, 
             "schedule": 23, 
-            "xdnn_instr": "23 XNConv res3b_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "23 XNConv res3b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -5996,7 +5996,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3b_branch2c/Conv2D", 
+                "name": "res3b_branch2c", 
                 "outaddr": "0x16da0", 
                 "outchan": "512", 
                 "outsize_h": "28", 
@@ -6036,7 +6036,7 @@
                 ], 
                 [
                     "name", 
-                    "res3b_branch2c/Conv2D"
+                    "res3b_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -6485,11 +6485,11 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 24 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3c_branch2a/Conv2D", 
+            "layer": "res3c_branch2a: type=Convolution, sizes=None, shapes=None, sched 24 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3c_branch2a", 
             "ops": 102760448, 
             "schedule": 25, 
-            "xdnn_instr": "25 XNConv res3c_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "25 XNConv res3c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -6518,7 +6518,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3c_branch2a/Conv2D", 
+                "name": "res3c_branch2a", 
                 "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -6558,7 +6558,7 @@
                 ], 
                 [
                     "name", 
-                    "res3c_branch2a/Conv2D"
+                    "res3c_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -6771,11 +6771,11 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 25 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res3c_branch2b/Conv2D", 
+            "layer": "res3c_branch2b: type=Convolution, sizes=None, shapes=None, sched 25 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res3c_branch2b", 
             "ops": 231211008, 
             "schedule": 26, 
-            "xdnn_instr": "26 XNConv res3c_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "26 XNConv res3c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -6804,7 +6804,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res3c_branch2b/Conv2D", 
+                "name": "res3c_branch2b", 
                 "outaddr": "0x620", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -6844,7 +6844,7 @@
                 ], 
                 [
                     "name", 
-                    "res3c_branch2b/Conv2D"
+                    "res3c_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -7057,11 +7057,11 @@
             ]
         }, 
         {
-            "layer": "res3c_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 26 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3c_branch2c/Conv2D", 
+            "layer": "res3c_branch2c: type=Convolution, sizes=None, shapes=None, sched 26 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3c_branch2c", 
             "ops": 102760448, 
             "schedule": 27, 
-            "xdnn_instr": "27 XNConv res3c_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "27 XNConv res3c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -7090,7 +7090,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3c_branch2c/Conv2D", 
+                "name": "res3c_branch2c", 
                 "outaddr": "0x16da0", 
                 "outchan": "512", 
                 "outsize_h": "28", 
@@ -7130,7 +7130,7 @@
                 ], 
                 [
                     "name", 
-                    "res3c_branch2c/Conv2D"
+                    "res3c_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -7579,11 +7579,11 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3d_branch2a/Conv2D", 
+            "layer": "res3d_branch2a: type=Convolution, sizes=None, shapes=None, sched 28 Kernel SizeType(batches=128, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3d_branch2a", 
             "ops": 102760448, 
             "schedule": 29, 
-            "xdnn_instr": "29 XNConv res3d_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "29 XNConv res3d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x0 28 28 128 0 6 0 0 0 1 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -7612,7 +7612,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3d_branch2a/Conv2D", 
+                "name": "res3d_branch2a", 
                 "outaddr": "0x0", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -7652,7 +7652,7 @@
                 ], 
                 [
                     "name", 
-                    "res3d_branch2a/Conv2D"
+                    "res3d_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -7865,11 +7865,11 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 29 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res3d_branch2b/Conv2D", 
+            "layer": "res3d_branch2b: type=Convolution, sizes=None, shapes=None, sched 29 Kernel SizeType(batches=128, channels=128, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res3d_branch2b", 
             "ops": 231211008, 
             "schedule": 30, 
-            "xdnn_instr": "30 XNConv res3d_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "30 XNConv res3d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 28 28 128 0x620 28 28 128 0 1 1 3 32 2 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -7898,7 +7898,7 @@
                 "insize_w": "28", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res3d_branch2b/Conv2D", 
+                "name": "res3d_branch2b", 
                 "outaddr": "0x620", 
                 "outchan": "128", 
                 "outsize_h": "28", 
@@ -7938,7 +7938,7 @@
                 ], 
                 [
                     "name", 
-                    "res3d_branch2b/Conv2D"
+                    "res3d_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -8151,11 +8151,11 @@
             ]
         }, 
         {
-            "layer": "res3d_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 30 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res3d_branch2c/Conv2D", 
+            "layer": "res3d_branch2c: type=Convolution, sizes=None, shapes=None, sched 30 Kernel SizeType(batches=512, channels=128, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res3d_branch2c", 
             "ops": 102760448, 
             "schedule": 31, 
-            "xdnn_instr": "31 XNConv res3d_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "31 XNConv res3d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x620 28 28 128 0x16da0 28 28 512 0 2 0 0 0 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -8184,7 +8184,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res3d_branch2c/Conv2D", 
+                "name": "res3d_branch2c", 
                 "outaddr": "0x16da0", 
                 "outchan": "512", 
                 "outsize_h": "28", 
@@ -8224,7 +8224,7 @@
                 ], 
                 [
                     "name", 
-                    "res3d_branch2c/Conv2D"
+                    "res3d_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -8673,11 +8673,11 @@
             ]
         }, 
         {
-            "layer": "res4a_branch1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 32 Kernel SizeType(batches=1024, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res4a_branch1/Conv2D", 
+            "layer": "res4a_branch1: type=Convolution, sizes=None, shapes=None, sched 32 Kernel SizeType(batches=1024, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res4a_branch1", 
             "ops": 205520896, 
             "schedule": 33, 
-            "xdnn_instr": "33 XNConv res4a_branch1/Conv2D 1 1 2 2 0 0 1 1 16 26 2 0 1 0x24c0 28 28 512 0x0 14 14 1024 0 6 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "33 XNConv res4a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x24c0 28 28 512 0x0 14 14 1024 0 6 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -8706,7 +8706,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4a_branch1/Conv2D", 
+                "name": "res4a_branch1", 
                 "outaddr": "0x0", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -8746,7 +8746,7 @@
                 ], 
                 [
                     "name", 
-                    "res4a_branch1/Conv2D"
+                    "res4a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -8959,11 +8959,11 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 33 Kernel SizeType(batches=256, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res4a_branch2a/Conv2D", 
+            "layer": "res4a_branch2a: type=Convolution, sizes=None, shapes=None, sched 33 Kernel SizeType(batches=256, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res4a_branch2a", 
             "ops": 51380224, 
             "schedule": 34, 
-            "xdnn_instr": "34 XNConv res4a_branch2a/Conv2D 1 1 2 2 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x86c 14 14 256 0 6 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "34 XNConv res4a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x24c0 28 28 512 0x86c 14 14 256 0 6 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -8992,7 +8992,7 @@
                 "insize_w": "28", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4a_branch2a/Conv2D", 
+                "name": "res4a_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -9032,7 +9032,7 @@
                 ], 
                 [
                     "name", 
-                    "res4a_branch2a/Conv2D"
+                    "res4a_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -9245,11 +9245,11 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 34 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4a_branch2b/Conv2D", 
+            "layer": "res4a_branch2b: type=Convolution, sizes=None, shapes=None, sched 34 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4a_branch2b", 
             "ops": 231211008, 
             "schedule": 35, 
-            "xdnn_instr": "35 XNConv res4a_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "35 XNConv res4a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -9278,7 +9278,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4a_branch2b/Conv2D", 
+                "name": "res4a_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -9318,7 +9318,7 @@
                 ], 
                 [
                     "name", 
-                    "res4a_branch2b/Conv2D"
+                    "res4a_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -9531,11 +9531,11 @@
             ]
         }, 
         {
-            "layer": "res4a_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4a_branch2c/Conv2D", 
+            "layer": "res4a_branch2c: type=Convolution, sizes=None, shapes=None, sched 35 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4a_branch2c", 
             "ops": 102760448, 
             "schedule": 36, 
-            "xdnn_instr": "36 XNConv res4a_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "36 XNConv res4a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -9564,7 +9564,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4a_branch2c/Conv2D", 
+                "name": "res4a_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -9604,7 +9604,7 @@
                 ], 
                 [
                     "name", 
-                    "res4a_branch2c/Conv2D"
+                    "res4a_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -10053,11 +10053,11 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 37 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4b_branch2a/Conv2D", 
+            "layer": "res4b_branch2a: type=Convolution, sizes=None, shapes=None, sched 37 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4b_branch2a", 
             "ops": 102760448, 
             "schedule": 38, 
-            "xdnn_instr": "38 XNConv res4b_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "38 XNConv res4b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -10086,7 +10086,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4b_branch2a/Conv2D", 
+                "name": "res4b_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -10126,7 +10126,7 @@
                 ], 
                 [
                     "name", 
-                    "res4b_branch2a/Conv2D"
+                    "res4b_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -10339,11 +10339,11 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 38 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4b_branch2b/Conv2D", 
+            "layer": "res4b_branch2b: type=Convolution, sizes=None, shapes=None, sched 38 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4b_branch2b", 
             "ops": 231211008, 
             "schedule": 39, 
-            "xdnn_instr": "39 XNConv res4b_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "39 XNConv res4b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -10372,7 +10372,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4b_branch2b/Conv2D", 
+                "name": "res4b_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -10412,7 +10412,7 @@
                 ], 
                 [
                     "name", 
-                    "res4b_branch2b/Conv2D"
+                    "res4b_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -10625,11 +10625,11 @@
             ]
         }, 
         {
-            "layer": "res4b_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 39 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4b_branch2c/Conv2D", 
+            "layer": "res4b_branch2c: type=Convolution, sizes=None, shapes=None, sched 39 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4b_branch2c", 
             "ops": 102760448, 
             "schedule": 40, 
-            "xdnn_instr": "40 XNConv res4b_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "40 XNConv res4b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -10658,7 +10658,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4b_branch2c/Conv2D", 
+                "name": "res4b_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -10698,7 +10698,7 @@
                 ], 
                 [
                     "name", 
-                    "res4b_branch2c/Conv2D"
+                    "res4b_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -11147,11 +11147,11 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 41 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4c_branch2a/Conv2D", 
+            "layer": "res4c_branch2a: type=Convolution, sizes=None, shapes=None, sched 41 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4c_branch2a", 
             "ops": 102760448, 
             "schedule": 42, 
-            "xdnn_instr": "42 XNConv res4c_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "42 XNConv res4c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -11180,7 +11180,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4c_branch2a/Conv2D", 
+                "name": "res4c_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -11220,7 +11220,7 @@
                 ], 
                 [
                     "name", 
-                    "res4c_branch2a/Conv2D"
+                    "res4c_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -11433,11 +11433,11 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4c_branch2b/Conv2D", 
+            "layer": "res4c_branch2b: type=Convolution, sizes=None, shapes=None, sched 42 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4c_branch2b", 
             "ops": 231211008, 
             "schedule": 43, 
-            "xdnn_instr": "43 XNConv res4c_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "43 XNConv res4c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -11466,7 +11466,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4c_branch2b/Conv2D", 
+                "name": "res4c_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -11506,7 +11506,7 @@
                 ], 
                 [
                     "name", 
-                    "res4c_branch2b/Conv2D"
+                    "res4c_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -11719,11 +11719,11 @@
             ]
         }, 
         {
-            "layer": "res4c_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 43 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4c_branch2c/Conv2D", 
+            "layer": "res4c_branch2c: type=Convolution, sizes=None, shapes=None, sched 43 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4c_branch2c", 
             "ops": 102760448, 
             "schedule": 44, 
-            "xdnn_instr": "44 XNConv res4c_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "44 XNConv res4c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -11752,7 +11752,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4c_branch2c/Conv2D", 
+                "name": "res4c_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -11792,7 +11792,7 @@
                 ], 
                 [
                     "name", 
-                    "res4c_branch2c/Conv2D"
+                    "res4c_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -12241,11 +12241,11 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 45 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4d_branch2a/Conv2D", 
+            "layer": "res4d_branch2a: type=Convolution, sizes=None, shapes=None, sched 45 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4d_branch2a", 
             "ops": 102760448, 
             "schedule": 46, 
-            "xdnn_instr": "46 XNConv res4d_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "46 XNConv res4d_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -12274,7 +12274,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4d_branch2a/Conv2D", 
+                "name": "res4d_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -12314,7 +12314,7 @@
                 ], 
                 [
                     "name", 
-                    "res4d_branch2a/Conv2D"
+                    "res4d_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -12527,11 +12527,11 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 46 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4d_branch2b/Conv2D", 
+            "layer": "res4d_branch2b: type=Convolution, sizes=None, shapes=None, sched 46 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4d_branch2b", 
             "ops": 231211008, 
             "schedule": 47, 
-            "xdnn_instr": "47 XNConv res4d_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "47 XNConv res4d_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -12560,7 +12560,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4d_branch2b/Conv2D", 
+                "name": "res4d_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -12600,7 +12600,7 @@
                 ], 
                 [
                     "name", 
-                    "res4d_branch2b/Conv2D"
+                    "res4d_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -12813,11 +12813,11 @@
             ]
         }, 
         {
-            "layer": "res4d_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 47 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4d_branch2c/Conv2D", 
+            "layer": "res4d_branch2c: type=Convolution, sizes=None, shapes=None, sched 47 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4d_branch2c", 
             "ops": 102760448, 
             "schedule": 48, 
-            "xdnn_instr": "48 XNConv res4d_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "48 XNConv res4d_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -12846,7 +12846,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4d_branch2c/Conv2D", 
+                "name": "res4d_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -12886,7 +12886,7 @@
                 ], 
                 [
                     "name", 
-                    "res4d_branch2c/Conv2D"
+                    "res4d_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -13335,11 +13335,11 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 49 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4e_branch2a/Conv2D", 
+            "layer": "res4e_branch2a: type=Convolution, sizes=None, shapes=None, sched 49 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4e_branch2a", 
             "ops": 102760448, 
             "schedule": 50, 
-            "xdnn_instr": "50 XNConv res4e_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "50 XNConv res4e_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -13368,7 +13368,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4e_branch2a/Conv2D", 
+                "name": "res4e_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -13408,7 +13408,7 @@
                 ], 
                 [
                     "name", 
-                    "res4e_branch2a/Conv2D"
+                    "res4e_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -13621,11 +13621,11 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 50 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4e_branch2b/Conv2D", 
+            "layer": "res4e_branch2b: type=Convolution, sizes=None, shapes=None, sched 50 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4e_branch2b", 
             "ops": 231211008, 
             "schedule": 51, 
-            "xdnn_instr": "51 XNConv res4e_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "51 XNConv res4e_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -13654,7 +13654,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4e_branch2b/Conv2D", 
+                "name": "res4e_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -13694,7 +13694,7 @@
                 ], 
                 [
                     "name", 
-                    "res4e_branch2b/Conv2D"
+                    "res4e_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -13907,11 +13907,11 @@
             ]
         }, 
         {
-            "layer": "res4e_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 51 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4e_branch2c/Conv2D", 
+            "layer": "res4e_branch2c: type=Convolution, sizes=None, shapes=None, sched 51 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4e_branch2c", 
             "ops": 102760448, 
             "schedule": 52, 
-            "xdnn_instr": "52 XNConv res4e_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "52 XNConv res4e_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -13940,7 +13940,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4e_branch2c/Conv2D", 
+                "name": "res4e_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -13980,7 +13980,7 @@
                 ], 
                 [
                     "name", 
-                    "res4e_branch2c/Conv2D"
+                    "res4e_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -14429,11 +14429,11 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 53 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4f_branch2a/Conv2D", 
+            "layer": "res4f_branch2a: type=Convolution, sizes=None, shapes=None, sched 53 Kernel SizeType(batches=256, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4f_branch2a", 
             "ops": 102760448, 
             "schedule": 54, 
-            "xdnn_instr": "54 XNConv res4f_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "54 XNConv res4f_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0x86c 14 14 256 0 11 0 0 0 2 2 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -14462,7 +14462,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4f_branch2a/Conv2D", 
+                "name": "res4f_branch2a", 
                 "outaddr": "0x86c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -14502,7 +14502,7 @@
                 ], 
                 [
                     "name", 
-                    "res4f_branch2a/Conv2D"
+                    "res4f_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -14715,11 +14715,11 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 54 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res4f_branch2b/Conv2D", 
+            "layer": "res4f_branch2b: type=Convolution, sizes=None, shapes=None, sched 54 Kernel SizeType(batches=256, channels=256, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res4f_branch2b", 
             "ops": 231211008, 
             "schedule": 55, 
-            "xdnn_instr": "55 XNConv res4f_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "55 XNConv res4f_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x86c 14 14 256 0xb7c 14 14 256 0 2 2 3 32 3 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -14748,7 +14748,7 @@
                 "insize_w": "14", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res4f_branch2b/Conv2D", 
+                "name": "res4f_branch2b", 
                 "outaddr": "0xb7c", 
                 "outchan": "256", 
                 "outsize_h": "14", 
@@ -14788,7 +14788,7 @@
                 ], 
                 [
                     "name", 
-                    "res4f_branch2b/Conv2D"
+                    "res4f_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -15001,11 +15001,11 @@
             ]
         }, 
         {
-            "layer": "res4f_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 55 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res4f_branch2c/Conv2D", 
+            "layer": "res4f_branch2c: type=Convolution, sizes=None, shapes=None, sched 55 Kernel SizeType(batches=1024, channels=256, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res4f_branch2c", 
             "ops": 102760448, 
             "schedule": 56, 
-            "xdnn_instr": "56 XNConv res4f_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "56 XNConv res4f_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0xb7c 14 14 256 0x17794 14 14 1024 0 3 0 0 0 11 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -15034,7 +15034,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res4f_branch2c/Conv2D", 
+                "name": "res4f_branch2c", 
                 "outaddr": "0x17794", 
                 "outchan": "1024", 
                 "outsize_h": "14", 
@@ -15074,7 +15074,7 @@
                 ], 
                 [
                     "name", 
-                    "res4f_branch2c/Conv2D"
+                    "res4f_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -15523,11 +15523,11 @@
             ]
         }, 
         {
-            "layer": "res5a_branch1/Conv2D: type=Convolution, sizes=None, shapes=None, sched 57 Kernel SizeType(batches=2048, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res5a_branch1/Conv2D", 
+            "layer": "res5a_branch1: type=Convolution, sizes=None, shapes=None, sched 57 Kernel SizeType(batches=2048, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res5a_branch1", 
             "ops": 205520896, 
             "schedule": 58, 
-            "xdnn_instr": "58 XNConv res5a_branch1/Conv2D 1 1 2 2 0 0 1 1 16 26 2 0 1 0x0 14 14 1024 0x86c 7 7 2048 0 11 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "58 XNConv res5a_branch1 1 1 2 2 0 0 1 1 16 26 2 0 1 0x0 14 14 1024 0x86c 7 7 2048 0 11 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -15556,7 +15556,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5a_branch1/Conv2D", 
+                "name": "res5a_branch1", 
                 "outaddr": "0x86c", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
@@ -15596,7 +15596,7 @@
                 ], 
                 [
                     "name", 
-                    "res5a_branch1/Conv2D"
+                    "res5a_branch1"
                 ], 
                 [
                     "kernel_w", 
@@ -15809,11 +15809,11 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 58 Kernel SizeType(batches=512, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
-            "name": "res5a_branch2a/Conv2D", 
+            "layer": "res5a_branch2a: type=Convolution, sizes=None, shapes=None, sched 58 Kernel SizeType(batches=512, channels=1024, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=2, width=2) Padding [0, 0]", 
+            "name": "res5a_branch2a", 
             "ops": 51380224, 
             "schedule": 59, 
-            "xdnn_instr": "59 XNConv res5a_branch2a/Conv2D 1 1 2 2 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0xca2 7 7 512 0 11 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "59 XNConv res5a_branch2a 1 1 2 2 0 0 1 1 16 26 2 1 1 0x0 14 14 1024 0xca2 7 7 512 0 11 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -15842,7 +15842,7 @@
                 "insize_w": "14", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5a_branch2a/Conv2D", 
+                "name": "res5a_branch2a", 
                 "outaddr": "0xca2", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -15882,7 +15882,7 @@
                 ], 
                 [
                     "name", 
-                    "res5a_branch2a/Conv2D"
+                    "res5a_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -16095,11 +16095,11 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 59 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res5a_branch2b/Conv2D", 
+            "layer": "res5a_branch2b: type=Convolution, sizes=None, shapes=None, sched 59 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res5a_branch2b", 
             "ops": 231211008, 
             "schedule": 60, 
-            "xdnn_instr": "60 XNConv res5a_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0xca2 7 7 512 0x0 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
+            "xdnn_instr": "60 XNConv res5a_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0xca2 7 7 512 0x0 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -16128,7 +16128,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res5a_branch2b/Conv2D", 
+                "name": "res5a_branch2b", 
                 "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -16168,7 +16168,7 @@
                 ], 
                 [
                     "name", 
-                    "res5a_branch2b/Conv2D"
+                    "res5a_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -16381,11 +16381,11 @@
             ]
         }, 
         {
-            "layer": "res5a_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 60 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res5a_branch2c/Conv2D", 
+            "layer": "res5a_branch2c: type=Convolution, sizes=None, shapes=None, sched 60 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5a_branch2c", 
             "ops": 102760448, 
             "schedule": 61, 
-            "xdnn_instr": "61 XNConv res5a_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "61 XNConv res5a_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x0 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -16414,7 +16414,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5a_branch2c/Conv2D", 
+                "name": "res5a_branch2c", 
                 "outaddr": "0x17bca", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
@@ -16454,7 +16454,7 @@
                 ], 
                 [
                     "name", 
-                    "res5a_branch2c/Conv2D"
+                    "res5a_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -16903,11 +16903,11 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 62 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res5b_branch2a/Conv2D", 
+            "layer": "res5b_branch2a: type=Convolution, sizes=None, shapes=None, sched 62 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5b_branch2a", 
             "ops": 102760448, 
             "schedule": 63, 
-            "xdnn_instr": "63 XNConv res5b_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 7 7 2048 0x0 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "63 XNConv res5b_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 7 7 2048 0x0 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -16936,7 +16936,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5b_branch2a/Conv2D", 
+                "name": "res5b_branch2a", 
                 "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -16976,7 +16976,7 @@
                 ], 
                 [
                     "name", 
-                    "res5b_branch2a/Conv2D"
+                    "res5b_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -17189,11 +17189,11 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res5b_branch2b/Conv2D", 
+            "layer": "res5b_branch2b: type=Convolution, sizes=None, shapes=None, sched 63 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res5b_branch2b", 
             "ops": 231211008, 
             "schedule": 64, 
-            "xdnn_instr": "64 XNConv res5b_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x126 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
+            "xdnn_instr": "64 XNConv res5b_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x126 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -17222,7 +17222,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res5b_branch2b/Conv2D", 
+                "name": "res5b_branch2b", 
                 "outaddr": "0x126", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -17262,7 +17262,7 @@
                 ], 
                 [
                     "name", 
-                    "res5b_branch2b/Conv2D"
+                    "res5b_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -17475,11 +17475,11 @@
             ]
         }, 
         {
-            "layer": "res5b_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 64 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res5b_branch2c/Conv2D", 
+            "layer": "res5b_branch2c: type=Convolution, sizes=None, shapes=None, sched 64 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5b_branch2c", 
             "ops": 102760448, 
             "schedule": 65, 
-            "xdnn_instr": "65 XNConv res5b_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x126 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "65 XNConv res5b_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x126 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -17508,7 +17508,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5b_branch2c/Conv2D", 
+                "name": "res5b_branch2c", 
                 "outaddr": "0x17bca", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
@@ -17548,7 +17548,7 @@
                 ], 
                 [
                     "name", 
-                    "res5b_branch2c/Conv2D"
+                    "res5b_branch2c"
                 ], 
                 [
                     "kernel_w", 
@@ -17997,11 +17997,11 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2a/Conv2D: type=Convolution, sizes=None, shapes=None, sched 66 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res5c_branch2a/Conv2D", 
+            "layer": "res5c_branch2a: type=Convolution, sizes=None, shapes=None, sched 66 Kernel SizeType(batches=512, channels=2048, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5c_branch2a", 
             "ops": 102760448, 
             "schedule": 67, 
-            "xdnn_instr": "67 XNConv res5c_branch2a/Conv2D 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 7 7 2048 0x0 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "67 XNConv res5c_branch2a 1 1 1 1 0 0 1 1 16 26 2 1 1 0x86c 7 7 2048 0x0 7 7 512 0 22 0 0 0 5 1 3 32 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -18030,7 +18030,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5c_branch2a/Conv2D", 
+                "name": "res5c_branch2a", 
                 "outaddr": "0x0", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -18070,7 +18070,7 @@
                 ], 
                 [
                     "name", 
-                    "res5c_branch2a/Conv2D"
+                    "res5c_branch2a"
                 ], 
                 [
                     "kernel_w", 
@@ -18283,11 +18283,11 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2b/Conv2D: type=Convolution, sizes=None, shapes=None, sched 67 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
-            "name": "res5c_branch2b/Conv2D", 
+            "layer": "res5c_branch2b: type=Convolution, sizes=None, shapes=None, sched 67 Kernel SizeType(batches=512, channels=512, height=3, width=3) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [1, 1]", 
+            "name": "res5c_branch2b", 
             "ops": 231211008, 
             "schedule": 68, 
-            "xdnn_instr": "68 XNConv res5c_branch2b/Conv2D 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x126 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
+            "xdnn_instr": "68 XNConv res5c_branch2b 3 3 1 1 1 1 1 1 16 26 2 1 1 0x0 7 7 512 0x126 7 7 512 0 5 1 3 32 6 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -18316,7 +18316,7 @@
                 "insize_w": "7", 
                 "kernel_h": "3", 
                 "kernel_w": "3", 
-                "name": "res5c_branch2b/Conv2D", 
+                "name": "res5c_branch2b", 
                 "outaddr": "0x126", 
                 "outchan": "512", 
                 "outsize_h": "7", 
@@ -18356,7 +18356,7 @@
                 ], 
                 [
                     "name", 
-                    "res5c_branch2b/Conv2D"
+                    "res5c_branch2b"
                 ], 
                 [
                     "kernel_w", 
@@ -18569,11 +18569,11 @@
             ]
         }, 
         {
-            "layer": "res5c_branch2c/Conv2D: type=Convolution, sizes=None, shapes=None, sched 68 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
-            "name": "res5c_branch2c/Conv2D", 
+            "layer": "res5c_branch2c: type=Convolution, sizes=None, shapes=None, sched 68 Kernel SizeType(batches=2048, channels=512, height=1, width=1) Strides SizeType(batches=1L, channels=1, height=1, width=1) Padding [0, 0]", 
+            "name": "res5c_branch2c", 
             "ops": 102760448, 
             "schedule": 69, 
-            "xdnn_instr": "69 XNConv res5c_branch2c/Conv2D 1 1 1 1 0 0 1 1 16 26 2 0 1 0x126 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
+            "xdnn_instr": "69 XNConv res5c_branch2c 1 1 1 1 0 0 1 1 16 26 2 0 1 0x126 7 7 512 0x17bca 7 7 2048 0 6 0 0 0 22 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 0 0 1 0 0 0 0 0 0 0", 
             "xdnn_kv": {
                 "HAT": "0", 
                 "SRCAM-Buffer_0": "0", 
@@ -18602,7 +18602,7 @@
                 "insize_w": "7", 
                 "kernel_h": "1", 
                 "kernel_w": "1", 
-                "name": "res5c_branch2c/Conv2D", 
+                "name": "res5c_branch2c", 
                 "outaddr": "0x17bca", 
                 "outchan": "2048", 
                 "outsize_h": "7", 
@@ -18642,7 +18642,7 @@
                 ], 
                 [
                     "name", 
-                    "res5c_branch2c/Conv2D"
+                    "res5c_branch2c"
                 ], 
                 [
                     "kernel_w", 
