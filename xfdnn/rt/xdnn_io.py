@@ -533,16 +533,16 @@ def getClassification(output, img_paths, labels, topK = 5, zmqPub = False):
   return ret
 
 
-def getNearFileMatchWithPrefix(path, prefix):
+def getNearFileMatchWithPrefix(path, prefix, index = 0):
     nearMatches = [f for f in os.listdir(path) if f.startswith(prefix)]
     nearMatches.sort()
     if len(nearMatches) > 0:
-        return "%s/%s" % (path, nearMatches[0])
+        return "%s/%s" % (path, nearMatches[index])
 
     return None
 
 
-def loadFCWeightsBias(arg):
+def loadFCWeightsBias(arg, index = 0):
   data_dir = arg['weights']
   if ".h5" in data_dir:
     import h5py
@@ -556,7 +556,7 @@ def loadFCWeightsBias(arg):
   else:
     fname = "%s/fc" % data_dir
     if not os.path.exists(fname):
-      nearMatch = getNearFileMatchWithPrefix(data_dir, "fc")
+      nearMatch = getNearFileMatchWithPrefix(data_dir, "fc", index)
       if nearMatch:
         fname = nearMatch
     if os.path.exists(fname):
@@ -571,7 +571,7 @@ def loadFCWeightsBias(arg):
 
     fname = "%s/fc_bias" % data_dir
     if not os.path.exists(fname):
-      nearMatch = getNearFileMatchWithPrefix(data_dir, "fc_bias")
+      nearMatch = getNearFileMatchWithPrefix(data_dir, "fc_bias", index)
       if nearMatch:
         fname = nearMatch
     with open(fname, 'r') as f:

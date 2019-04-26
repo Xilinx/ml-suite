@@ -17,6 +17,7 @@ from os import listdir as _listdir
 from os.path import join as _join
 
 import tensor_tools as tt
+import json
 import keras_tools as kt
 
 from xdnn_env         import xdnn_env as _xdnn_env, xdnn_fpga_env as _xdnn_fpga_env
@@ -142,8 +143,8 @@ class CPUTransform:
         schedule.append(xdlf_layer)
       elif layer['name'] in inps :
         print "Detected input : ", layer['name'], layer['type'], layer['outputshapes']
-    print schedule     
-    return schedule   
+    print schedule
+    return schedule
 
   def create_schedule(self, time_to_layer_list, layerparameter_dict, options):
     print("Creating schedule for \"CPU\"")
@@ -223,7 +224,9 @@ class FPGATransform (CPUTransform):
     for l in compilerJson['network']:
       self._layerParameterMap[l['name']] += [l]
 
-    self.xdnn_env = _xdnn_fpga_env(options.xclbin, quant_cfgfile=options.quant_cfgfile, isxdnnv3=(options.xdnnv3==True))
+    self._layerQuantMap = {l['name']: l for l in compilerJson['quantization']['network']}
+
+    self.xdnn_env = _xdnn_fpga_env(options.xclbin, quant_info=compilerJson['quantization'], quant_cfgfile=options.quant_cfgfile, isxdnnv3=(options.xdnnv3==True))
 
     newSchedule = []  # we will be building this
     layersForFpga = []
@@ -256,6 +259,7 @@ class FPGATransform (CPUTransform):
       ol_name = ol.output
       compilerInfo[ol_name] = {}
       compilerInfo[ol_name]['layerParameter'] = self._layerParameterMap[ol_name]
+      compilerInfo[ol_name]['layerQuant'] = self._layerQuantMap.get(ol_name, None)
       compilerInfo[ol_name]['weights'] = ol.filter_weights if hasattr(ol, "filter_weights") else None
       compilerInfo[ol_name]['biases'] = ol.biases if hasattr(ol, "biases") else None
 
@@ -299,7 +303,7 @@ class HWEmuTransform(CPUTransform):
       opFactorySelect = "hwEmuV3"
     else:
       opFactorySelect = "hwEmuV2"
-    
+
     self._is_var_quantized = set()
     quantizedLayers = defaultdict(int) # for stats
     newSchedule = []  # we will be building this

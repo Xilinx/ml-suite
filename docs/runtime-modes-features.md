@@ -1,6 +1,6 @@
 # Runtime modes and features
 
-`TODO: index`
+`TODO: index and point to examples in the repo`
 
 ## Latency and Throughput modes
 
@@ -38,14 +38,25 @@ For maximum throughput, it is recommended to take advantage of the XDNN processo
 - D. Execute network on FPGA
 - E. Read result from FPGA
 - F. Post-process image
-It is not necessary to wait for all steps to finish for an image before proceeding to the next image. As soon as image 1 is done with step A, image 2 can be submitted to step A while image 1 moves to step B.
 
-## Single PE and multiple model
+It is not necessary to wait for one image to finish all steps before proceeding to the next image. As soon as image 1 is done with step A, image 2 can be submitted to step A while image 1 moves to step B.
 
-## Multiple PE and different models
+## Single PE and multiple models
 
-## Multiple PE and same model
+Our runtime engine supports loading multiple CNN models onto one PE. The runtime loads one set of XDNN instructions for each model. Each set of instructions is assigned a start and stop index after they are pushed into the XDNN processor's instruction memory. The runtime remembers the start and stop instruction index for each model. When the application requests to run a model, the runtime recalls the instruction start/stop index of that model and executes instructions in its range.
+
+## Multiple PE and same model / Multiple PE and different models
+
+XDNN supports implementing multiple PEs on one FPGA. Each PE can run independently -- PEs have their own DDR address space, on-chip memory address space and instruction memory. Because of this, the application has to flexibility mato run the same model on all PEs on an FPGA for maximum throughput for one model. 
+
+Or, the application may load different models to different PEs for maximum throughput for multiple models. The throughput will be determined by the latency of the slowest model.
 
 ## Single model multiple PE
 
+To further optimize for throughput, the application may partition a model so that subgraphs of one model are distributed over multiple XDNN PEs. 
+
+To optimize for lower latency, the application may apply tensorization techniques to partition and distribute one layer/operation's computation across multiple XDNN PEs.
+
 ## Multiple FPGA execution
+
+The runtime engine allows the application to select which FPGA to run a compiled model on. To take advantage of multiple FPGAs on a single host machine, the application may open one process per FPGA with an optional master process orchestrating the overall execution.
