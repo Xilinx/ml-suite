@@ -5,21 +5,17 @@ You only look once (YOLO) is a state-of-the-art, real-time object detection algo
 The algorithm was published by Redmon et al. in 2016 via the following publications:
 [YOLOv1](https://arxiv.org/abs/1506.02640),
 [YOLOv2](https://arxiv.org/abs/1612.08242).  
-The same author has already released YOLOv3, and some experimental tiny YOLO networks. This tutorial focuses on YOLOv2.
+The same author has already released YOLOv3, and some experimental tiny YOLO networks. This tutorial focuses on different YOLOv2 networks.
 This application requires more than just simple classification. The task here is to detect the presence of objects, and localize them within a frame. 
 Please refer to the papers for full algorithm details, and/or watch [this.](https://www.youtube.com/watch?v=9s_FpMpdYW8). 
 In this tutorial, the network was trained on the 80 class [COCO dataset.](http://cocodataset.org/#home)
 
 ## Background
-The authors of the YOLO papers used their own programming framework called "Darknet" for research, and development. The framework is written in C, and was [open sourced.](https://github.com/pjreddie/darknet) Additionally, they host documentation, and pretrained weights [here.](https://pjreddie.com/darknet/yolov2/) Currently, the Darknet framework is not supported by Xilinx's ML Suite. Additionally, there are some aspects of the YOLOv2 network that are not supported by the Hardware Accelerator, such as the leaky ReLU activation function. For these reasons the network was modified, retrained, and converted to caffe. In this tutorial we will run the network accelerated on an FPGA using 16b quantized weights and a hardware kernel implementing a 56x32 systolic array with 5MB of image RAM. All convolutions/pools are accelerated on the FPGA fabric, while the final sigmoid, softmax, and non-max suppression functions are executed on the CPU. Converting from Darknet to Caffe will be discussed in future documentation.
+The authors of the YOLO papers used their own programming framework called "Darknet" for research, and development. The framework is written in C, and was [open sourced.](https://github.com/pjreddie/darknet) Additionally, they host documentation, and pretrained weights [here.](https://pjreddie.com/darknet/yolov2/) Currently, the Darknet framework is not supported by Xilinx's ML Suite. Additionally, there are some aspects of the YOLOv2 network that are not supported by the Hardware Accelerator, such as the reorg layer. For these reasons we are sharing original and modified versions of YOLOv2 network. The inference using original YOLOv2 version is acheived by running reorg layer in software. The modified version of the YOLOv2 network was obtained by  replacing unsuppored layers with supported layers, retraining this modified network on Darknet, and converting the model to caffe. In this tutorial we will run the network accelerated on an FPGA using 8b quantized weights and a hardware kernel implementing a 96x32 systolic array with 9MB of image RAM. All convolutions/pools/leaky-ReLU are accelerated on the FPGA fabric, while the final sigmoid, softmax, and non-max suppression functions are executed on the CPU. Converting from Darknet to Caffe is discussed in the [Darknet2Caffe.md](../../docs/Darknet2Caffe.md) document .
 
-### Network Modifications
-* Leaky ReLU replaced by ReLU
-* "reorg" layer a.k.a. "space_to_depth" layer replaced by MAX POOL
- 
 ## Running the Application
-
-Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end", meaning we will run all of the required offline, and online software to get some example results.   
+Xilinx has provided a demo application showing the different YOLOv2 networks can be run in different modes to cater to differnt use cases and speed requirements
+Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end", meaning we will run all of the required offline, and online software to get some example results.
 [yolo.py](./yolo.py) is the top level python module where you will see how the compiler, quantizer, and xyolo module are invoked.   
 [configs.py](./configs.py) is a configuration file used to modify the desired run configuration. We are supporting 608x608/224x224 images, 16b/8b quantization.  
 [xyolo.py](./xyolo.py) is a python class meant to be reusable, but it also demonstrates how to use the PYXDNN in a custom application. It provides a YOLO detect method.  
@@ -40,42 +36,51 @@ Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end
     - -k `kernel config` - Valid values are `large` or `v3` - Used to select overlaybins
     - -b `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8
       - Note: XDNNv3 only supports 8 which is also the default precision (INT8)
-    - -g `calclulate mAP score` - specify the folder containing the labels(txt) files for set of images given with -d option
+    - -g `calclulate mAP score` - to calcluate mAP score specify the folder containing the labels(txt) files for set of images given with -d option
     - -d `images` - Directory of images
-    - -cw 'net weights dumped by complier` - specify folder containing weights and biases as txt files
-    - -cn 'net.cmds.json file generated by compler` - specify schedule generated by compiler
-    - -cq 'net_quant.json file generated by quantizer` - specify quantizer parameters generated by quantizer
-    
+    - -c `select perfromance modes` - throghput and latency are the 2 modes that serve different perfromance requirments and are discribed in the [runtime-modes-features.md](../../docs/runtime-modes-features.md) document 
+    - -cw `net weights dumped by complier` - to use pre-generated weights, specify folder containing weights and biases as txt files
+    - -cn `net.cmds.json file generated by compler` - to use pre generated compiler file, specify schedule generated by compiler
+    - -cq `net_quant.json file generated by quantizer` - to use pre generated quantizer file, specify quantizer parameters generated by quantizer
+    - -m `select model and image resolution` - specific model and resolution of the network to run. options are
+       - `yolo_v2_224` : select modified YOLOv2 network where reorg is replaced with maxpool and LeakyReLU is replaced with ReLU. Change the suffix 224 to 408 or 608 for the other 2 supported input resolutions
+       - `yolo_v2_standard_224` : select original YOLOv2 network where reorg is run in software. Change the suffix 224 to 408 or 608 for the other 2 supported input resolutions
+       - `yolo_v2_prelu_224` : select modified YOLOv2 network where reorg is replaced with maxpool. Change the suffix 224 to 408 or 608 for the other 2 supported input resolutions
+       - `yolo_v2_tiny_224` : select tiny YOLOv2 network darknet stype maxpool and rest of the layers are run in software. Change the suffix 224 to 408 or 608 for the other 2 supported input resolutions
     
       
 ## Example Invocations
-1. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x224x224, with XDNNv3:
+1. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x224x224, with XDNNv3 in throghput mode:
     ```sh
-    $ ./run.sh -p alveo-u200 -t test_detect -k v3 -b 8 -m yolo_v2_224
+    $ ./run.sh -p alveo-u200 -t test_detect -k v3 -b 8 -m yolo_v2_224 --compilerOpt throughput
     ```
-2. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x224x224, with 8-bit XDNNv2 large kernel:
+2. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x224x224, with XDNNv3 in latency mode:
+    ```sh
+    $ ./run.sh -p alveo-u200 -t test_detect -k v3 -b 8 -m yolo_v2_224 --compilerOpt latency
+    ```
+3. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x224x224, with 8-bit XDNNv2 large kernel:
     ```sh
     $ ./run.sh -p alveo-u200 -t test_detect -k large -b 8 -m yolo_v2_224
     ```
-3. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
+4. Object detection on a set of images on alveo-u200, with yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
     ```sh
     $ ./run.sh -p alveo-u200 -t test_detect -k large -b 8 -m yolo_v2_608
     ```
-4. Object detection  compute mAP score on a set of images on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
+5. Object detection and compute mAP score on a set of images on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
     ```sh
     $ ./run.sh -p alveo-u200 -t test_detect -k large -b 8 -m yolo_v2_tiny_608 -g labels/val2014/ -d val2014/
     ```
-5. Object detection in streaming mode on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
+6. Object detection in streaming mode on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
     ```sh
     $ ./run.sh -p alveo-u200 -t streaming_detect -k large -b 8 -m yolo_v2_tiny_608 -cw yolo_v2_tiny.caffemodel_data/ -cn yolo_v2_tiny.cmds.json -cq yolo_v2_8bit_deploy.json
     ```
-6. Object detection in benchmarking mode on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
+7. Object detection in benchmarking mode on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
     ```sh
     $ ./run.sh -p alveo-u200 -t streaming_detect_benchmark -k large -b 8 -m yolo_v2_tiny_608 -cw yolo_v2_tiny.caffemodel_data/ -cn yolo_v2_tiny.cmds.json -cq yolo_v2_8bit_deploy.json
     ```
-7. Object detection on gpu, with tiny yolo-v2 input 3x608x608, with 8-bit precison:
+8. Object detection on cpu, with tiny yolo-v2 input 3x608x608, with 8-bit precison:
     ```sh
-    $ ./run.sh -p gpu -t test_detect -m yolo_v2_tiny_608 
+    $ ./run.sh -p cpu -t test_detect -m yolo_v2_tiny_608 
     ```
 
 

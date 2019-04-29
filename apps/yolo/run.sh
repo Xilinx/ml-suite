@@ -91,6 +91,10 @@ cd nms
 make 
 cd ..
 
+
+#remove work folder
+rm -rf ./work
+
 if [ -z $CAFFE_ROOT ]; then
     CAFFE_ROOT=/wrk/acceleration/users/arun/caffe
 fi
@@ -200,6 +204,9 @@ XCLBIN="not_found.xclbin"
 WEIGHTS=./data/${MODEL}_data
 if [ "$KCFG" == "med" ]; then
   DSP_WIDTH=28
+  BPP=2
+  MEMORY=5
+  DDR=256
   XCLBIN=overlay_1.xclbin
   if [ "$BITWIDTH" == "8" ]; then
     XCLBIN=overlay_0.xclbin
@@ -208,6 +215,9 @@ if [ "$KCFG" == "med" ]; then
   QUANTCFG=./data/${MODEL}_${BITWIDTH}b.json
 elif [ "$KCFG" == "large" ]; then
   DSP_WIDTH=56
+  BPP=2
+  MEMORY=5
+  DDR=256
   XCLBIN=overlay_3.xclbin
   if [ "$BITWIDTH" == "8" ]; then
     XCLBIN=overlay_2.xclbin
@@ -217,10 +227,13 @@ elif [ "$KCFG" == "large" ]; then
 elif [ "$KCFG" == "v3" ]; then
   DSP_WIDTH=96
   MEMORY=9
+  BPP=1
+  DDR=256
   if [ "$BITWIDTH" == "8" ]; then
     XCLBIN=overlay_4.xclbin
   elif [ "$BITWIDTH" == "16" ]; then
     XCLBIN=overlay_5.xclbin
+    BPP=2
   fi
 
 
@@ -263,28 +276,24 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
     NET_DEF_FPGA=$NET_DEF
   fi
   
-  if [ "$KCFG" == "v3" ]; then
+  if [ "$KCFG" == "v3" ] || [ "$KCFG" == "large" ] || [ "$KCFG" == "med" ] ; then
     export DECENT_DEBUG=1
     #: > images.txt
     #ls -d -1 "$MLSUITE_ROOT/"xfdnn/tools/quantize/calibration_directory/*.jpg >> images.txt
     #sed -e 's/$/ 1/' -i images.txt 
     DUMMY_PTXT=dummy.prototxt
     IMGLIST="$MLSUITE_ROOT/"apps/yolo/images.txt
-    CALIB_DATASET="$MLSUITE_ROOT/"apps/yolo/test_image_set
+    CALIB_DATASET="$MLSUITE_ROOT/"apps/yolo/test_image_set/
     python get_decent_q_prototxt.py ${CAFFE_ROOT}/python/ $NET_DEF_FPGA  $DUMMY_PTXT $IMGLIST  $CALIB_DATASET
-    ${CAFFE_ROOT}/build/tools/decent_q quantize  -model $DUMMY_PTXT -weights $NET_WEIGHTS --output_dir work/  -calib_iter 100
+    ${CAFFE_ROOT}/build/tools/decent_q quantize  -model $DUMMY_PTXT -weights $NET_WEIGHTS --output_dir work/  -calib_iter 1 -weights_bit $BITWIDTH -data_bit $BITWIDTH
     
     # Compiler Args
-    BPP=1
-    DSP_WIDTH=96
-    MEM=9
-    DDR=256
     export GLOG_minloglevel=2 # Supress Caffe prints
     echo "### Running MLSUITE Compiler ###"
 
     COMPILER_BASE_OPT=" -b ${BPP} \
       -i ${DSP_WIDTH} \
-      -m ${MEM} \
+      -m ${MEMORY} \
       -d ${DDR} \
       --usedeephi \
       --quant_cfgfile work/quantize_info.txt \
@@ -294,22 +303,25 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
       -qz work/quantizer \
       -C "
 
-    if [ $COMPILEROPT == "latency" ] || [ $COMPILEROPT == "throughput" ]; then
-       COMPILER_BASE_OPT+="-mix --poolingaround -P "  
-       COMPILER_BASE_OPT+="-pcmp --parallelread ['bottom','tops'] -Q ['tops','bottom'] "
+    if [ "$KCFG" == "v3" ] ; then
+      if [ $COMPILEROPT == "latency" ] || [ $COMPILEROPT == "throughput" ]; then
+         COMPILER_BASE_OPT+="-mix --poolingaround -P "  
+         COMPILER_BASE_OPT+="-pcmp --parallelread ['bottom','tops'] -Q ['tops','bottom'] "
+      fi
     fi
 
     python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.pyc $COMPILER_BASE_OPT
     echo -e $COMPILEROPT  
     NETCFG=work/compiler.json
     QUANTCFG=work/quantizer.json
-    WEIGHTS=work/deploy.caffemodel_data
+    WEIGHTS=work/deploy.caffemodel_data.h5
 
-    if [ $COMPILEROPT == "throughput" ]; then
+    if [ $COMPILEROPT == "throughput" ] && [ "$KCFG" == "v3" ]; then
        python $MLSUITE_ROOT/xfdnn/tools/compile/scripts/xfdnn_gen_throughput_json.py --i work/compiler.json --o work/compiler_tput.json            
        NETCFG=work/compiler_tput.json
     fi  
     
+      
   fi  
      
 fi  

@@ -19,7 +19,7 @@ from xyolo import xyolo
 
 # Bring in Xilinx Compiler, and Quantizer
 # We directly compile the entire graph to minimize data movement between host, and card
-from xfdnn.tools.quantize.quantize import CaffeFrontend as xfdnnQuantizer
+#from xfdnn.tools.quantize.quantize import CaffeFrontend as xfdnnQuantizer
 
 # Select Configuration
 from configs import select_config
@@ -71,7 +71,7 @@ def main():
       config['netcfg'] = dummy_config['netcfg']
       config['weights'] = dummy_config['datadir']
       run_complier = True
-  elif(os.path.isdir(config['weights']) == False):
+  elif(config['weights'].split(".")[-1] != "h5"):
       # for handcode json file, compiler is still needed to run generate wieght files
       hand_coded_json = config['netcfg']
       config['netcfg'] = dummy_config['netcfg']
@@ -104,6 +104,7 @@ def main():
     
     
   # Define the quantizer, and its parameters
+  """
   quantizer = xfdnnQuantizer(
             xdnn_version=int(config['overlaycfg']['XDNN_VERSION_MAJOR']),
             deploy_model=config["net_def"],           # Prototxt filename: input file
@@ -121,15 +122,16 @@ def main():
             mean_value=[0,0,0],                            # Image mean per channel to caffe transformer
             input_scale=1                                  # Input scale argument to caffe transformer
             )
-    
+  """  
   # Invoke compiler
   if run_complier:
       compiler.compile()
-    
+  
+  """
   # Invoke quantizer
   if run_quantizer:
       quantizer.quantize()
-
+  """
   if hand_coded_json is not None:
       config["netcfg"] = hand_coded_json
       
