@@ -14,7 +14,7 @@ def run_test(testName, cmdStr, verify, platform):
   if platform is not None:
     cmdStr += " -p " + platform
     
-  _testSrcPath = "%s/../../examples/classification" \
+  _testSrcPath = "%s/../../examples/deployment_modes" \
     % os.path.dirname(os.path.realpath(__file__))
 
   cwd = os.getcwd()

@@ -8,7 +8,7 @@
 - [I have a new trained model, where do I begin](i-have-a-new-trained-model,-where-do-i-begin)
 - [Why does ml suite need to compile a graph from my framework](#why-does-ml-suite-need-to-compile-a-graph-from-my-framework)
 - [What is quantization why needed does it impact accuracy](#what-is-quantization-why-needed-does-it-impact-accuracy)
-- [Why is the compiler and quantizer not needed in examples classification](#why-is-the-compiler-and-quantizer-not-needed-in-examples-classification)
+- [Why is the compiler and quantizer not needed in deployment examples](#why-is-the-compiler-and-quantizer-not-needed-in-deployment-examples)
 
 ## What kinds of networks can be accelerated using the Xilinx ml-suite
 
@@ -69,7 +69,7 @@ FPGA accelerated networks are far superior to GPU accelerated networks for laten
 ## I have a new trained model, where do I begin
 1. Ensure the model is defined in a framework that is digestible by Xilinx ml-suite (Caffe, Tensorflow, Keras, MXNet, Darknet)
 2. Check for existing examples of how to run that network  
-  a. ml-suite/examples/classification  
+  a. ml-suite/examples/deployment_modes  
   b. ml-suite/notebooks
 3. Ensure your software environment is set up appropriately  
   a. [Anaconda setup](./anaconda.md)
@@ -82,7 +82,7 @@ FPGA accelerated networks are far superior to GPU accelerated networks for laten
   a. [See quantizer tutorial](../../notebooks/quantizer_caffe.ipynb)
 7. Deploy the model  
   a. This is accomplished using ml-suite python APIs.  
-  b. [See test classify](../../examples/classification/test_classify.py)  
+  b. [See test classify](../../examples/deployment_modes/test_classify.py)  
   c. Alternatively, see the jupyter tutorial that covers compile, quantize, deploy for image classification w/ InceptionV1  
       aa. [image classification caffe](../../notebooks/image_classification_caffe.ipynb)
 
@@ -115,9 +115,9 @@ Fixed point arithmetic allows us to reach maximum OPs/second, and there is a poo
 
 Xilinx has actually seen some networks perform better with fixed-point quantization.
 
-## Why is the compiler and quantizer not needed in examples classification
+## Why is the compiler and quantizer not needed in deployment examples
 
-The provided examples in ml-suite/examples/classification demonstrate how to execute an inference on an FPGA. The compiler, and quantizer steps have previously been ran by us! There is a ml-suite/examples/classification/data directory that holds important files:
+The provided examples in ml-suite/examples/deployment_modes demonstrate how to execute an inference on an FPGA. The compiler, and quantizer steps have previously been ran by us! There is a ml-suite/examples/deployment_modes/data directory that holds important files:
 
 ```
 bryanloz@xsjprodvda8-162% ls -lart data

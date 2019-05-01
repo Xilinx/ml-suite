@@ -24,7 +24,7 @@ For instructions on launching and connecting to an aws instances, see [here][].
 
     Download and extract the files to the following locations:
     ml-suite/apps/perpetual_demo/www/imagenet_val (for Terminal 1 below)  
-    ml-suite/examples/classification/imagenet_val (for Terminal 2 below)  
+    ml-suite/examples/deployment_modes/imagenet_val (for Terminal 2 below)  
 
 3. Terminal 1: run Web GUI  
     ```sh
@@ -44,9 +44,9 @@ For instructions on launching and connecting to an aws instances, see [here][].
     This starts the web GUI @ http://<your_ip>:8998/static/www/index.html  
     Note: you may need to open port 8998, if it is not already open. For AWS see the console settings.  
     
-6. Open a new Terminal (Terminal 2) and start anaconda environment and navigate to the Classification examples
+6. Open a new Terminal (Terminal 2) and start anaconda environment and navigate to the Deployment examples
     ```sh
-    $ cd ml-suite/examples/classification
+    $ cd ml-suite/examples/deployment_modes
     ```
 7. Open `run_perpetual_demo.sh` and edit the for loop to run all the FPGAs. By default, all of them run Googlenet V1, for other networks, add the flag -m <model name>. Note that while most platforms can be autodetected by the software, some of them can't. You may need to edit the command to provide -p <platform name>
     ```

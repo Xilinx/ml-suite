@@ -37,7 +37,7 @@ The ML Suite is composed of three basic parts:
 - [ML Suite Overview][]  
 - Tutorials and Examples:
   - [Jupyter Notebooks](notebooks/)
-  - [Precompiled Examples](examples/classification/)  
+  - [Precompiled Deployment Examples](examples/deployment_modes/)  
 
 ## Recommended System Requirements
 - OS: Ubuntu 16.04.2 LTS, Ubuntu 18.04 LTS, CentOS 7.4

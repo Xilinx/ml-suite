@@ -1,4 +1,4 @@
-# Runtime modes and features
+# Runtime deployment modes and features
 
 ## Latency and Throughput modes
 
@@ -16,7 +16,7 @@ In Throughput mode, the throughput of the XDNN processor is determined by the ma
 
 Example:
 ```
-examples/classification/test_classify.py
+examples/deployment_modes/test_classify.py
 ./run.sh -t test_classify -k v3 -c latency 
 ./run.sh -t test_classify -k v3 -c throughput
 ```
@@ -37,7 +37,7 @@ We use the following scheme for enqueuing execution asynchronously and collectin
 
 Example:
 ```
-examples/classification/test_classify_async_multinet.py
+examples/deployment_modes/test_classify_async_multinet.py
 ./run.sh -t multinet -k v3 
 ```
 
@@ -56,7 +56,7 @@ It is not necessary to wait for one image to finish all steps before proceeding 
 
 The following example shows how to achieve maximum end-to-end inference throughput using the API: 
 ```
-examples/classification/mp_classify.py
+examples/deployment_modes/mp_classify.py
 ./run.sh -t streaming_classify -k v3 
 ```
 
@@ -69,11 +69,11 @@ Or, the application may load different models to different PEs for maximum throu
 Examples:
 ```
 # Multiple PEs running the same model (default)
-examples/classification/test_classify.py
+examples/deployment_modes/test_classify.py
 ./run.sh -t test_classify -k v3 
 
 # Multiple PEs, each running a different model
-examples/classification/test_classify_async_multinet.py
+examples/deployment_modes/test_classify_async_multinet.py
 ./run.sh -t multinet -k v3 
 ```
 

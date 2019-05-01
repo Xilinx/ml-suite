@@ -340,7 +340,7 @@ void check_arg_list(std::map<std::string ,std::string> &arg_map,std::vector<std:
 }
 void arg_list_help(){
         cout<<"Expected arguments:"<<endl;
-        cout<<" --xclbin=<MLsuite ROOT PATH>/overlaybins/1525/overlay_2.xclbin --data_dir=<MLsuite ROOT PATH>/apps/yolo/work/yolov2.caffemodel_data --cmd_json=<MLsuite ROOT PATH>/apps/yolo/work/yolo.cmds.json --quant_json=<MLsuite ROOT PATH>/apps/yolo/work/yolo_deploy_608_8b.json --labelfile=<MLsuite ROOT PATH>/examples/classification/coco_names.txt --in_img/--in_img_dir=<MLsuite ROOT PATH>/xfdnn/tools/quantize/calibration_directory/4788821373_441cd29c9f_z.jpg --in_w=608 --in_h=608 --out_w=19 --out_h=19 --out_d=425" <<endl;
+        cout<<" --xclbin=<MLsuite ROOT PATH>/overlaybins/1525/overlay_2.xclbin --data_dir=<MLsuite ROOT PATH>/apps/yolo/work/yolov2.caffemodel_data --cmd_json=<MLsuite ROOT PATH>/apps/yolo/work/yolo.cmds.json --quant_json=<MLsuite ROOT PATH>/apps/yolo/work/yolo_deploy_608_8b.json --labelfile=<MLsuite ROOT PATH>/examples/deployment_modes/coco_names.txt --in_img/--in_img_dir=<MLsuite ROOT PATH>/xfdnn/tools/quantize/calibration_directory/4788821373_441cd29c9f_z.jpg --in_w=608 --in_h=608 --out_w=19 --out_h=19 --out_d=425" <<endl;
 }
 void ProcessArgs(int argc, char** argv,std::map<std::string ,std::string> &arg_map,std::vector<std::string> &app_args,string &xclbin,string &dataDir,string &netCfgFile,string &quantCfgFile,string &labelFile,int &height,int &width,int &out_h,int &out_w,int &out_d,int &batch_sz,string &dir_path){
 

@@ -30,7 +30,7 @@ def extractGeneralCounter(output):
 
 def test_profile_network(platform):
   configs = {
-    "googlenet_latency": ("../../examples/classification/data/googlenet_v1_8b_latency.json",
+    "googlenet_latency": ("../../examples/deployment_modes/data/googlenet_v1_8b_latency.json",
                           "./data/googlenet_v1_data",
                           "./data/googlenet_v1_8b_xdnnv3.json"),
     "googlenet_norepl": ("../../xfdnn/tools/compile/examples/googlev1.1.96.9.noreplication.json",
@@ -39,7 +39,7 @@ def test_profile_network(platform):
     "googlenet_repl": ("../../xfdnn/tools/compile/examples/googlev1.1.96.9.replication.json",
                        "./data/googlenet_v1_tensorflow_data",
                        "./data/googlenet_v1_8b_tensorflow_xdnnv3.json"),
-    "resnet_latency": ("../../examples/classification/data/resnet50_8b_latency.json",
+    "resnet_latency": ("../../examples/deployment_modes/data/resnet50_8b_latency.json",
                           "./data/resnet50_tensorflow_data",
                           "./data/resnet50_8b_tensorflow_xdnnv3.json"),
     "resnet_norepl": ("../../xfdnn/tools/compile/examples/resnet50.1.96.9.noreplication.json",
