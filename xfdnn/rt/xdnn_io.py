@@ -455,14 +455,16 @@ def loadYoloImageBlobFromFile(imgFile, img_h, img_w):
 
 
 def getFilePaths(paths_list):
+    ext = (".jpg",".jpeg",".JPG",".JPEG")
     img_paths = []
     for p in paths_list:
-        if os.path.isfile(p):
+        if os.path.isfile(p) and p.endswith(ext):
             img_paths.append( os.path.abspath(p) )
         else:
             for dirpath,_,filenames in os.walk(p):
                 for f in filenames:
-                    img_paths.append( os.path.abspath(os.path.join(dirpath, f)))
+		    if f.endswith(ext):
+                        img_paths.append( os.path.abspath(os.path.join(dirpath, f)))
 
     return img_paths
 

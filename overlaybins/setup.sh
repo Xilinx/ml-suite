@@ -61,7 +61,7 @@ echo "-------------------"
 echo $LIBXDNN_PATH
 echo ""
 
-export PYTHONPATH=${MLSUITE_ROOT}:${MLSUITE_ROOT}/xfdnn/rt:${MLSUITE_ROOT}/ext:${MLSUITE_ROOT}/models/darknet/tools:${MLSUITE_ROOT}/apps/yolo:${MLSUITE_ROOT}/apps/yolo/nms:${MLSUITE_ROOT}/xfdnn/tools/emu:${MLSUITE_ROOT}/xfdnn/tools/compile/network:${MLSUITE_ROOT}/xfdnn/tools/compile/graph:${MLSUITE_ROOT}/xfdnn/tools/compile/optimizations:${MLSUITE_ROOT}/xfdnn/tools/compile/codegeneration:${MLSUITE_ROOT}/xfdnn/tools/compile/memory:${MLSUITE_ROOT}/xfdnn/tools/compile/version:${MLSUITE_ROOT}/xfdnn/tools/compile/memory:${MLSUITE_ROOT}/xfdnn/tools/compile/weights:${MLSUITE_ROOT}/xfdnn/tools/compile/bin:${MLSUITE_ROOT}/xfdnn/tools/compile/parallel:${MLSUITE_ROOT}/xfdnn/tools/compile/pickle:${MLSUITE_ROOT}/xfmlp/python:${MLSUITE_ROOT}/xfdnn/rt/scripts/framework/caffe:${PYTHONPATH}
+export PYTHONPATH=${MLSUITE_ROOT}:${MLSUITE_ROOT}/xfdnn/rt:${MLSUITE_ROOT}/ext:${MLSUITE_ROOT}/models/darknet/tools:${MLSUITE_ROOT}/apps/yolo:${MLSUITE_ROOT}/apps/yolo/nms:${MLSUITE_ROOT}/xfdnn/tools/emu:${MLSUITE_ROOT}/xfdnn/tools/compile/network:${MLSUITE_ROOT}/xfdnn/tools/compile/graph:${MLSUITE_ROOT}/xfdnn/tools/compile/optimizations:${MLSUITE_ROOT}/xfdnn/tools/compile/codegeneration:${MLSUITE_ROOT}/xfdnn/tools/compile/memory:${MLSUITE_ROOT}/xfdnn/tools/compile/version:${MLSUITE_ROOT}/xfdnn/tools/compile/memory:${MLSUITE_ROOT}/xfdnn/tools/compile/weights:${MLSUITE_ROOT}/xfdnn/tools/compile/bin:${MLSUITE_ROOT}/xfdnn/tools/compile/parallel:${MLSUITE_ROOT}/xfdnn/tools/compile/pickle:${MLSUITE_ROOT}/xfmlp/python:${MLSUITE_ROOT}/xfdnn/rt/scripts/framework/caffe:${MLSUITE_ROOT}/xfdnn/rt/scripts/framework/base:${PYTHONPATH}
 
 echo "-------------------"
 echo "PYTHONPATH"

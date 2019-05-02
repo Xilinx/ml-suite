@@ -10,15 +10,18 @@ The ML Suite is composed of three basic parts:
 3. **ML Framework and Open Source Support**  - Support for high level ML Frameworks and other open source projects.
 
 ### xDNN IP
-Xilinx xDNN IP cores are high performance general CNN processing engines. This means they can accept a wide range of CNN networks and models. xDNN has been optimized for different performance metrics. Today, there are two configurations available (**28x32** and **56x32**). These are shown in the following table.
+Xilinx xDNN IP cores are high performance general CNN processing engines (PE). This means they can accept a wide range of CNN networks and models. xDNN has been optimized for different performance metrics. Our latest version 3 of the IP has the following configuration:
+
+| DSP Array Configuration | Total Image Memory per PE | Total DSPs in Array | 16-bit GOP/s @700MHz | 8-bit GOP/s @700MHz |
+|:-------------------------:|:---------------------------:|:---------------------:|:----------------------:|:---------------------:|
+| 96x16                   | 9 MB                      | 1536                | 2150                  | 4300                |
+
+For comparison, the table below shows the configurations of version 2 of the IP that was replaced:
 
 | DSP Array Configuration | Total Image Memory per PE | Total DSPs in Array | 16-bit GOP/s @500MHz | 8-bit GOP/s @500MHz |
 |:-------------------------:|:---------------------------:|:---------------------:|:----------------------:|:---------------------:|
 | 28x32                   | 4 MB                      | 896                 | 896                  | 1792                |
 | 56x32                   | 6 MB                      | 1792                | 1792                 | 3584                |
-
-- The **28x32** configuration, also referred to as **medium**, is optimized for higher throughput. These kernels can be implemented on Xilinx FPGA fabric in different configurations. 
-- The **56x32** kernel is optimized for larger models, but also delivers lower latency.
 
 Each xDNN IP Kernel supports the following Layers:
 
@@ -26,7 +29,26 @@ Each xDNN IP Kernel supports the following Layers:
   <img width="674" height="466" src="img/xdnnv2-support.png">
 </p>
 
-The following example shows an **overlay** of four **medium** kernels.
+The XDNN-v3 IP is a general CNN inference engine spporting applications such as: Classification, Object Detection, and Segmentation. 
+  
+<p align="center">
+  <img width="674" height="674" src="img/xdnnv3top.png">
+</p>
+  
+**The key features of this engine are:**
+
+* 96x16 DSP Systolic Array operating at 700MHz
+* Instruction-based programming model for simplicity and flexibility to represent a variety of custom neural network graphs.
+* 9MB on-chip Tensor Memory composed of UltraRAM
+* Distributed on-chip filter cache
+* Utilizes external DDR memory for storing Filters and Tensor data
+* Pipelined Scale, ReLU, and Pooling Blocks for maximum efficiency
+* Standalone Pooling/Eltwise execution block for parallel processing with Convolution layers
+* Hardware-Assisted Tiling Engine to sub-divide tensors to fit in on-chip Tensor Memory and pipelined instruction scheduling
+* Standard AXI-MM and AXI-Lite top-level interfaces for simplified system-level integration
+* Optional pipelined RGB tensor Convolution engine for efficiency boost
+
+The following example shows an **overlay** with four PEs.
 
 ![](img/xdnn-overlay.png)
 

@@ -45,7 +45,7 @@ def Compile(prototxt="quantize_results/deploy.prototxt",\
     weights=caffemodel,
     quant_cfgfile=quantize_info,
     generatefile="work/compiler",
-    quantz="work/quantizer"
+    quantz="work/quantizer",
     **Getopts(),
   )
   compiler.compile()
@@ -122,5 +122,5 @@ if __name__ == "__main__":
     Infer("xfdnn_auto_cut_train_val.prototxt",args["caffemodel"],args["numBatches"])
 
   if args["image"]:
-    InferImage("xfdnn_auto_cut_deploy.prototxt",args["caffemodel"],args["image"],"../deployment_modes/synset_words.txt")
+    Classify("xfdnn_auto_cut_deploy.prototxt",args["caffemodel"],args["image"],"../deployment_modes/synset_words.txt")
   

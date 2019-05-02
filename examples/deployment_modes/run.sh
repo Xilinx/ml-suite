@@ -27,7 +27,7 @@ usage() {
 # Default
 TEST="test_classify"
 MODEL="googlenet_v1"
-KCFG="large"
+KCFG="v3"
 BITWIDTH="8"
 ACCELERATOR="0"
 BATCHSIZE=-1
@@ -112,6 +112,7 @@ elif [ "$KCFG" == "large" ]; then
   NETCFG=./data/${MODEL}_${DSP_WIDTH}.json
   QUANTCFG=./data/${MODEL}_${BITWIDTH}b.json
 elif [ "$KCFG" == "v3" ]; then
+  DSP_WIDTH=96
   if [ "$BITWIDTH" == "8" ]; then
     XCLBIN=overlay_4.xclbin
   elif [ "$BITWIDTH" == "16" ]; then

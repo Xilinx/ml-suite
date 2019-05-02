@@ -1,11 +1,9 @@
 # Deployment modes for inference with Python APIs
 
-- [Introducing XDNNv3](#example-invocations) 
-
 ## Introduction
 This directory provides examples of how to deploy Deep CNNs on FPGAs using Xilinx Python APIs.
 
-All examples provided within this directory exercise precompiled models whose components are stored in the local ./data directory.  
+All examples provided within this directory exercise precompiled versions of GoogLeNet or ResNet50 whose components are stored in the local ./data directory.  
 
 A "compiled model" consists of low level HW instructions, and quantization parameters. 
 
@@ -13,75 +11,55 @@ A "compiled model" consists of low level HW instructions, and quantization param
 **Quantizer Outputs**: JSON FILE containing scaling factors for each layer in the corresponding network. (*_8b.json or *_16b.json)  
 
 Important Notes:
- - The final layers of the network (Fully connected, Softmax) are run on the CPU, as those layers are not supported by the FPGA
- - The streaming_classify example will require you to download the imagnet validation set, as Xilinx cannot publicly distribute the dataset. Once you download it, you can provide the path to the directory using the flag `-d <DIRECTORY>`
+ - The final layers of the network (Fully connected, Softmax) are ran on the CPU, as those layers are not supported by the FPGA
+ - The streaming_classify example will require you to download the imagnet validation set. Once you download it, you can provide the path to the directory using the flag `-d <DIRECTORY>`
  - Amazon AWS EC2 F1 requires root privileges to load the FPGA, use the documented workaround
 
 The following three examples of applications using the Python xfDNN API are provided:
 
 1. A **Test Classification** example that demonstrates how to run inference on a single image "dog.jpg"
 2. A **Streaming Classifcation** example that streams images from disk through the FPGA for classification.
-3. A **Multi-Network** example that shows different DNNs running independently on multiple processing elements on the FPGA.  
-
-## Kernel Configurations
-The provided examples can target a few different hardware overlays. For more detail on the various configurations see [here.](../../overlaybins/README.md)  
-  
-As of ml-suite 1.3 release you can target the latest generation of the accelerator "XDNNv3" by using `-k v3`.  
-Note that XDNNv3 only supports 8b precision at this time.  
-
-"XDNNv2" is invoked using the `-k med` and `-k large` flags.  
-
+3. A **Multi-Network** example that shows different DNNs running independently on multiple processing elements on the FPGA.   
+   
 ## Running the Examples  
 
 To run any of the three examples, use the provided bash run.sh script. 
 
-1. Start Anaconda.
-    ```sh
-    $ conda activate ml-suite
-    ```
-
-2. Navigate to the `ml-suite/examples/deployment_modes` dir.
+1. Navigate to the `ml-suite/examples/deployment_modes` dir.
     ```sh
     $ cd ml-suite/examples/deployment_modes
     ```
 
-3. Familiarize yourself with the script usage by:  
+2. Familiarize yourself with the script usage by:  
   `./run.sh -h`  
   The key parameters are:
-    - -p `platform` Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, `1525-ml`
-      - Note: If the platform flag is omitted software will try to auto-detect the platform, but the -ml shells will always need to be specified
-    - -t `test` - Valid values are `test_classify` or `streaming_classify` or `multinet`
-    - -k `kernel config` - Valid values are `med`, `large` or `v3` - Used to select overlaybins
-    - -b `quantization precision` - Valid values are `16` or `8` - corresponding to INT16 or INT8
-      - Note: XDNNv3 only supports 8 which is also the default precision (INT8)
-    - -c `compiler optimized` - This flag runs the network with a compiler optimization for max throughput
-      - Note: XDNNv3 only
-    - -g `check golden` - This flag enables accuracy checking given a golden result text file.   
+    - -p **platform** Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, `1525-ml`
+      - Note: If the platform flag is omitted software will try to auto-detect the platform
+    - -t **test** - Valid values are `test_classify` or `streaming_classify` or `multinet`
+    - -k **kernel config** - Valid values are `med`, `large` or `v3` - Used to select overlaybins
+    - -c **compiler optimized** - This flag runs the network with a compiler optimization for max throughput
+    - -g - This flag enables accuracy checking given a golden result text file.   
 
 ## Example Invocations
 1. Single Image Classification on alveo-u200, ResNet50 v1, with XDNNv3:
     ```sh
-    $ ./run.sh -p alveo-u200 -t test_classify -k v3 -b 8 -m resnet50
+    $ ./run.sh -t test_classify -m resnet50
     ```
-2. Single Image Classification on AWS, with medium kernels:
+2. Single Image Classification on AWS:
     ```sh
-    $ ./run.sh -p aws -t test_classify -k med -b 16
+    $ ./run.sh -p aws -t test_classify 
     ```
-3. Streaming Image Classification on alveo-u200 with large kernels:
+3. Streaming Image Classification on alveo-u200:
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k large -b 8 -d ../../models/data/ilsvrc12/ilsvrc12_img_val
+    $ ./run.sh -t streaming_classify -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-4. Streaming Image Classification on alveo-u200 with XDNNv3:
+4. Streaming Image Classification on alveo-u200, throughput optimized, and reporting accuracy for Imagenet validation set:
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -d ../../models/data/ilsvrc12/ilsvrc12_img_val
+    $ ./run.sh -t streaming_classify -g -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-5. Streaming Image Classification on alveo-u200 with XDNNv3, throughput optimized, and reporting accuracy for Imagenet:
+6. Multinet Image Classification on alveo-u200
     ```sh
-    $ ./run.sh -p alveo-u200 -t streaming_classify -k v3 -b 8 -g -c throughput -d ../../models/data/ilsvrc12/ilsvrc12_img_val
-    ```
-6. Multinet Image Classification on Nimbix (Currently, for Multinet only the med size kernel and 16b precision are supported)
-    ```sh
-    ./run.sh -p nimbix -t multinet -k med -b 16
+    ./run.sh -t multinet
     ```
 
 ## Example Script Switches
@@ -108,7 +86,7 @@ For Multinet deployments, the different models/networks are set in the `--jsoncf
 ## Example Output From Single Image Classification
 
   ```sh
-  $ ./run.sh -p 1525 -t test_classify -k med -b 16
+  $ ./run.sh -t test_classify
   =============== pyXDNN =============================
   [XBLAS] # kernels: 1
   Linux:4.4.0-121-generic:#145-Ubuntu SMP Fri Apr 13 13:47:23 UTC 2018:x86_64
@@ -119,29 +97,28 @@ For Multinet deployments, the different models/networks are set in the `--jsoncf
   ---
   CL_PLATFORM_VENDOR Xilinx
   CL_PLATFORM_NAME Xilinx
-  CL_DEVICE_0: 0x175a1d0
+  CL_DEVICE_0: 0x21f60c0
   CL_DEVICES_FOUND 1, using 0
-  loading /home/bryanloz/DEEPXILINX/MLsuite/overlaybins/1525/xdnn_28_16b.xclbin
+  loading /opt/ml-suite/overlaybins/1525/overlay_4.xclbin
   [XBLAS] kernel0: kernelSxdnn_0
-  [XDNN] loading xclbin settings from /home/bryanloz/DEEPXILINX/MLsuite/overlaybins/1525/xdnn_28_16b.xclbin.json
-  [XDNN] using custom DDR banks 2,2,1,1
-
-  [XDNN] kernel configuration
-  [XDNN]   num cores       : 2
-  [XDNN]   dsp array width : 28
-  [XDNN]   img mem size    : 4 MB
-  [XDNN]   version         : 2.1
-  [XDNN]   8-bit mode      : 0
-  [XDNN]   Max Image W/H   : 0
-  [XDNN]   Max Image Depth : 0
-
+  [XDNN] loading xclbin settings from /opt/ml-suite/overlaybins/1525/overlay_4.xclbin.json
+  [XDNN] using custom DDR banks 0, 3
   Loading weights/bias/quant_params to FPGA...
 
-  ---------- Prediction 0 for dog.jpg ----------
-  0.7376 - "n02112018 Pomeranian"
-  0.0785 - "n02123394 Persian cat"
-  0.0365 - "n02085620 Chihuahua"
-  0.0183 - "n02492035 capuchin, ringtail, Cebus capucinus"
-  0.0150 - "n02094433 Yorkshire terrier"
+  [XDNN] kernel configuration
+  [XDNN]   num cores                  : 2
+  [XDNN]   dsp array width            : 96
+  [XDNN]   axi data width (in 32bits) : 16
+  [XDNN]   img mem size               : 9 MB
+  [XDNN]   max instr num              : 1536
+  [XDNN]   max xbar entries           : 4096
+  [XDNN]   version                    : 3.1
+  [XDNN]   8-bit mode                 : 1
+  ---------- Prediction 1/2 for /opt/ml-suite/examples/deployment_modes/dog.jpg ----------
+  0.5986 "n02112018 Pomeranian"
+  0.2033 "n02123394 Persian cat"
+  0.0319 "n02492035 capuchin, ringtail, Cebus capucinus"
+  0.0271 "n02085620 Chihuahua"
+  0.0198 "n02123597 Siamese cat, Siamese"
   ```
 

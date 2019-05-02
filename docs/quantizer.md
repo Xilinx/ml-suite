@@ -2,7 +2,7 @@
 DECENT_Q is a tool to convert the 32-bit floating-point weights and activations to 8-bit integer (INT8). The fixed-point network model requires less memory bandwidth, thus providing faster speed and higher power efficiency than the floating-point model. This tool supports common layers in neural networks, such as convolution, pooling, fully-connected, and batchnorm among others. There is no need to retrain the network after the quantization process, instead only a small set of images is needed to analyze the distribution of activation values for calibration. The quantization time ranges from a few seconds to several minutes, depending on the size of the neural network. DECENT_Q is based on Caffe 1.0. The block diagram of DECENT_Q as shown in figure.
 
 <div align="center">
-<img src="Blockdiagram_decent.png"><br><br>
+<img src="img/Blockdiagram_decent.png"><br><br>
 </div>
 
 ## Steps for running DECENT_Q
