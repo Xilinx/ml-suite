@@ -1,6 +1,6 @@
 
 
-## Running Caffe Benchmark Models
+## Running Caffe Benchmark Models:
 ### One time setup
 
 Download a minimal validation set for [Imagenet2012](http://www.image-net.org/challenges/LSVRC/2012) using [Collective Knowledge (CK)](https://github.com/ctuning).
@@ -14,6 +14,9 @@ head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > $HOME/CK-TO
 
 # Resize all the images to a common dimension for Caffe
 python resize.py $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min 256 256
+
+# Get the necessary models
+python getModels.py
 
 # Setup ml-suite Environment Variables
 source $MLSUITE_ROOT/overlaybins/setup.sh

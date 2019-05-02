@@ -41,7 +41,7 @@ To run any of the three examples, use the provided bash run.sh script.
     - -g - This flag enables accuracy checking given a golden result text file.   
 
 ## Example Invocations
-1. Single Image Classification on alveo-u200, ResNet50 v1, with XDNNv3:
+1. Single Image Classification on alveo, ResNet50 v1, with XDNNv3:
     ```sh
     $ ./run.sh -t test_classify -m resnet50
     ```
@@ -49,13 +49,17 @@ To run any of the three examples, use the provided bash run.sh script.
     ```sh
     $ ./run.sh -p aws -t test_classify 
     ```
-3. Streaming Image Classification on alveo-u200:
+3. Streaming Image Classification on alveo:
     ```sh
     $ ./run.sh -t streaming_classify -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-4. Streaming Image Classification on alveo-u200, throughput optimized, and reporting accuracy for Imagenet validation set:
+4. Streaming Image Classification on alveo, throughput optimized, and reporting accuracy for Imagenet validation set:
     ```sh
     $ ./run.sh -t streaming_classify -g -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
+    ```
+5. Streaming Image Classification benchmark mode on alveo (image pre-processing and output accuracy check are skipped), throughput optimized:
+    ```sh
+    $ ./run.sh -t streaming_classify_benchmark -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
 6. Multinet Image Classification on alveo-u200
     ```sh

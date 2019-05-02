@@ -10,7 +10,7 @@ from base import TestConfig, OutputVerifier, run_test
 testConfig = TestConfig(
   models=["multinet"],
   bitwidths=[8],
-  kernel_types=["med", "large"])
+  kernel_types=["v3"]) #["med", "large"])
 
 ###########################################
 # define expected results

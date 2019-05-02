@@ -36,7 +36,7 @@ def main(argv):
       
       confName   = str(netconf_args['name'])
       confNames += [confName]
-      netconf_args['netcfg'] = './data/{}_{}.json'.format(netconf_args['net'], netconf_args['dsp'])
+      # netconf_args['netcfg'] = './data/{}_{}.json'.format(netconf_args['net'], netconf_args['dsp'])
       fpgaRT[confName] = xdnn.XDNNFPGAOp(handles, netconf_args)
       netconf_args['in_shape'] = tuple((netconf_args['batch_sz'],) + tuple(fpgaRT[confName].getInputDescriptors().itervalues().next()[1:] )) 
       (fcWeights[confName],

@@ -46,7 +46,7 @@ def Compile(prototxt="quantize_results/deploy.prototxt",\
     quant_cfgfile=quantize_info,
     generatefile="work/compiler",
     quantz="work/quantizer",
-    **Getopts(),
+    **Getopts()
   )
   compiler.compile()
 
