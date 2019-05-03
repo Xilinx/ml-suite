@@ -66,7 +66,7 @@ wsApp = tornado.web.Application([
 
 pwd = os.path.dirname(os.path.realpath(__file__))
 httpApp = tornado.web.Application([
-  (r"/.*img_val/(.*)", tornado.web.StaticFileHandler,
+  (r"/.*val-min/(.*)", tornado.web.StaticFileHandler,
     {'path': "%s/www/imagenet_val" % pwd } ),
   (r"/scratch/(.*)", tornado.web.StaticFileHandler,
     {'path': "/scratch"} ),

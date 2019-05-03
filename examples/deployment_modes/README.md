@@ -61,7 +61,7 @@ To run any of the three examples, use the provided bash run.sh script.
     ```sh
     $ ./run.sh -t streaming_classify_benchmark -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-6. Multinet Image Classification on alveo-u200
+6. Multinet Image Classification on alveo
     ```sh
     ./run.sh -t multinet
     ```

@@ -76,6 +76,6 @@ for kType in testConfig._kernel_types:
           verifier = OutputVerifier(expected[configStr]).verify_accuracy
 
         # TODO figure out how to add @pytest.mark.timeout(30)
-        test = functools.partial(run_test, testName, cmdStr, verifier)
-        globals()[testName] = test
+        mytest = functools.partial(run_test, testName, cmdStr, verifier)
+        globals()[testName] = mytest
 

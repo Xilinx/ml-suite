@@ -5,7 +5,8 @@ import argparse
 
 def forward(prototxt,caffemodel,numBatches): 
   net = caffe.Net(prototxt,caffemodel,caffe.TEST)
-  ptxtShape = net.blobs["data"].data.shape
+  inputKey = net.blobs.keys()[0]
+  ptxtShape = net.blobs[inputKey].data.shape
   print "Running with shape of: ",ptxtShape
   accum = {}
   for i in xrange(1,numBatches+1): # 1000 iterations w/ batchSize 50 will yield 50,000 images 
