@@ -26,7 +26,7 @@ Please note that the label number is not actually used in calibration and arbitr
 
 
 # Get the necessary models
-python getModels.py
+python $MLSUITE_ROOT/exampls/caffe/getModels.py
 
 # Setup ml-suite Environment Variables
 source $MLSUITE_ROOT/overlaybins/setup.sh
