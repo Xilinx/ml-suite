@@ -1,3 +1,4 @@
+from __future__ import print_function
 #coding=utf_8
 import numpy as np
 import cv2
@@ -5,7 +6,6 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
 
 from xfdnn.tools.compile.bin.xfdnn_compiler_caffe  import CaffeFrontend as xfdnnCompiler
 from decent import CaffeFrontend as xfdnnQuantizer
@@ -169,6 +169,7 @@ def detect_one_image(net,transformer,labelmap,image_path,image_resize_height, im
             int_ymax = int(f_ymax)
             if is_view and top_conf[i] >= view_theshold:
                 color = colors_tableau[int(top_label_indices[i])]
+		print  (str(top_labels[i]),':','xmin',int_xmin,'ymin',int_ymin,'xmax',int_xmax,'ymax', int_ymax) 
                 cv2.rectangle(image, (int_xmin, int_ymin), (int_xmax, int_ymax), color, 1)
                 cv2.putText(image, str(top_labels[i]), (int_xmin, int_ymin + 10), font, 0.4, (255, 255, 255), 1) 
                 cv2.putText(image, str(top_conf[i]), (int_xmin, int_ymin - 10), font, 0.4, (255, 255, 255), 1)
@@ -255,7 +256,7 @@ if __name__ == "__main__":
 
     if	args["validate"]: 
 	if ((args["image_list_file"] == None) or (args["gt_file"] == None) or (args["test_image_root"] == None)):
-	    print 'Provide the arguments for image_list_file, gt_file and test_image_root'
+	    print ('Provide the arguments for image_list_file, gt_file and test_image_root')
 	    exit(0)
 	Infer("xfdnn_auto_cut_deploy.prototxt",args["caffemodel"], args)
 

@@ -1,6 +1,8 @@
 
 
-## Running Caffe Benchmark Models:
+## Running Caffe Benchmark Models
+This directory provides scripts for running several well known models on the FPGA.  
+For published results, and details on running a full accuracy evaluation, please see these [instructions](Benchmark_README.md). 
 ### One time setup
 
 Download a minimal validation set for [Imagenet2012](http://www.image-net.org/challenges/LSVRC/2012) using [Collective Knowledge (CK)](https://github.com/ctuning).
@@ -32,11 +34,11 @@ python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_v
   
 ### Run Inference across N batches
 ```
-python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --numBatches 10 --validate
+python run.py --prototxt xfdnn_auto_cut_train_val.prototxt --caffemodel quantize_results/deploy.caffemodel --numBatches 10 --validate
 ```
 
 ### Run Inference for a single image
 ```
-python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --image ../deployment_modes/dog.jpg
+python run.py --prototxt xfdnn_auto_cut_deploy.prototxt --caffemodel quantize_results/deploy.caffemodel --image ../deployment_modes/dog.jpg
 ```
 
