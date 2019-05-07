@@ -72,7 +72,7 @@ FPGA accelerated networks are far superior to GPU accelerated networks for laten
   a. ml-suite/examples/deployment_modes  
   b. ml-suite/notebooks
 3. Ensure your software environment is set up appropriately  
-  a. [Anaconda setup](./anaconda.md)
+  a. [docker setup](./container.md) (
 4. Ensure your hardware environment is set up appropriately (Before you attempt to deploy on hardware)  
   a. If you are running in the cloud, you can take it for granted that this is done.  
   b. [Hardware setup](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=vcu1525;d=ug1268-vcu1525-reconfig-accel-platform.pdf;a=xBoardInstallation)

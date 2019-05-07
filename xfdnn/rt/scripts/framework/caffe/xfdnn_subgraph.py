@@ -36,13 +36,14 @@ def cut_subgraph(netpb, in_blob, graphname, args):
     print("ERROR: Can't find %s in compiler JSON file"%'network')
     return None
   for networkItem in network:
-    merged=networkItem['merged']
-    if (merged == None or len(merged) == 0) and (networkItem['layer'] != "data movement"):
-      print("ERROR: Empty merge list found in non data movement layer")
-      return None
-    networkMergeList.append(merged)
-    for mergeItem in merged:
-      visited.add(mergeItem)
+    if 'merged' in networkItem:
+        merged=networkItem['merged']
+        if (merged == None or len(merged) == 0) and (networkItem['layer'] != "data movement"):
+          print("ERROR: Empty merge list found in non data movement layer")
+          return None
+        networkMergeList.append(merged)
+        for mergeItem in merged:
+          visited.add(mergeItem)
 
   compilerOutputs = compilerData['outputs']
   compilerOutputsDict = {}

@@ -7,11 +7,13 @@
 
 The Xilinx Machine Learning (ML) Suite provides users with the tools to develop and deploy Machine Learning applications for Real-time Inference. It provides support for many common machine learning frameworks such as Caffe, Tensorflow, and MXNet.  
 
-![](docs/img/stack.png)
+<p align="left">
+  <img width="700" height="350" src="docs/img/stack.png">
+</p>
 
 The ML Suite is composed of three basic parts:
 1. **ML Framework and Open Source Support**  - Support for high level ML Frameworks and other open source projects.
-2. **xfDNN Middleware** - Software Library and Tools to Interface with ML Frameworks and optimize them for Real-time Inference.
+2. **xfDNN Middleware** - Software Library and Tools to Interface with ML Frameworks and optimize networks for Real-time Inference.
 3. **xDNN IP** - High Performance CNN processing engine.
 
 **Learn More:** [ML Suite Overview][]  
@@ -40,6 +42,7 @@ The ML Suite is composed of three basic parts:
    - [Deployment Mode Examples](examples/deployment_modes/README.md)
  - [In-Browser GoogLeNet Demo](apps/perpetual_demo/README.md)
  - [REST Server Example](examples/caffe/REST/README.md)
+ - [Container Pipeline Example](docs/container_pipeline.md)
  
 ## References 
 - [ML Suite Overview][]  
@@ -50,9 +53,8 @@ The ML Suite is composed of three basic parts:
 
 ## Questions and Support
 - [FAQ][]
-- [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
 - [ML Suite Forum][]
-
+- [AWS F1 Application Execution on Xilinx Virtex UltraScale Devices][]
 
 [models]: docs/models.md
 [Amazon AWS EC2 F1]: https://aws.amazon.com/marketplace/pp/B077FM2JNS
