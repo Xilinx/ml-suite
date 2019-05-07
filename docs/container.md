@@ -2,7 +2,7 @@
 The ML Suite Docker container provides users with a largely self contained software environment for running inference on Xilinx FPGAs.
 The only external dependencies are:  
 - docker-ce
-- Xilinx XRT (Xilinx Run Time)
+- [Xilinx XRT (Xilinx Run Time)](xrt.md)
 
 1. Install Docker 
    

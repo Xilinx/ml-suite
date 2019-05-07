@@ -357,7 +357,7 @@ def get_within_boundary_ops(ops, seed_ops, boundary_ops=(), inclusive=False):
   res          = set(seed_ops)
   #if boundary_ops & res:
   #  raise ValueError("Boundary is intersecting with the seeds.")
-  wave = set(seed_ops)
+  wave = set() if res == boundary_ops else set(seed_ops)
   while wave:
     new_wave = set()
     ops_io = [inp.op for op in wave for inp in op.inputs]
