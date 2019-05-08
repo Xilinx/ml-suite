@@ -57,6 +57,26 @@ The 3 commonly used ‘other options’ are shown below:<br />
 
 For more information about usage of decent_q, run ‘decent_q –help’ command.
 
+### Running DECENT_Q with python <br /> 
+```
+source $MLSUITE_ROOT/overlaybins/setup.sh alveo-u200
+# Bring in ml-suite Quantizer
+from decent import CaffeFrontend as xfdnnQuantizer
+def Quantize(prototxt, caffemodel, calib_iter=1, test_iter=1):
+    quantizer = xfdnnQuantizer(
+      model=prototxt,
+      weights=caffemodel,
+      calib_iter=calib_iter,
+      test_iter=test_iter,
+      auto_test=True,
+    )
+    quantizer.quantize()  
+```
+```
+Quantize(prototxt='float.prototxt', caffemodel='float.caffemdodel')
+
+```
+
 ### Outputs
 After successful execution of the above command, five files will be generated (under the default directory "./quantize_results/"). Out of five generated files, only three files are required by MLsuite compiler.<br /> 
 

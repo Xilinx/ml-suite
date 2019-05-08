@@ -11,7 +11,7 @@ Please refer to the papers for full algorithm details, and/or watch [this.](http
 In this tutorial, the network was trained on the 80 class [COCO dataset.](http://cocodataset.org/#home)
 
 ## Background
-The authors of the YOLO papers used their own programming framework called "Darknet" for research, and development. The framework is written in C, and was [open sourced.](https://github.com/pjreddie/darknet) Additionally, they host documentation, and pretrained weights [here.](https://pjreddie.com/darknet/yolov2/) Currently, the Darknet framework is not supported by Xilinx's ML Suite. Additionally, there are some aspects of the YOLOv2 network that are not supported by the Hardware Accelerator, such as the reorg layer. For these reasons we are sharing original and modified versions of YOLOv2 network. The inference using original YOLOv2 version is acheived by running reorg layer in software. The modified version of the YOLOv2 network was obtained by  replacing unsuppored layers with supported layers, retraining this modified network on Darknet, and converting the model to caffe. In this tutorial we will run the network accelerated on an FPGA using 8b quantized weights and a hardware kernel implementing a 96x32 systolic array with 9MB of image RAM. All convolutions/pools/leaky-ReLU are accelerated on the FPGA fabric, while the final sigmoid, softmax, and non-max suppression functions are executed on the CPU. Converting from Darknet to Caffe is discussed in the [Darknet2Caffe.md](../../docs/Darknet2Caffe.md) document .
+The authors of the YOLO papers used their own programming framework called "Darknet" for research, and development. The framework is written in C, and was [open sourced.](https://github.com/pjreddie/darknet) Additionally, they host documentation, and pretrained weights [here.](https://pjreddie.com/darknet/yolov2/) Currently, the Darknet framework is not supported by Xilinx's ML Suite. Additionally, there are some aspects of the YOLOv2 network that are not supported by the Hardware Accelerator, such as the reorg layer. For these reasons we are sharing original and modified versions of YOLOv2 network. The inference using original YOLOv2 version is acheived by running reorg layer in software. The modified version of the YOLOv2 network was obtained by  replacing unsuppored layers with supported layers, retraining this modified network on Darknet, and converting the model to caffe. In this tutorial we will run the network accelerated on an FPGA using 8b quantized weights and a hardware kernel implementing a 96x32 systolic array with 9MB of image RAM. All convolutions/pools/leaky-ReLU are accelerated on the FPGA fabric, while the final sigmoid, softmax, and non-max suppression functions are executed on the CPU. 
 
 ## Running the Application
 Xilinx has provided a demo application showing the different YOLOv2 networks can be run in different modes to cater to differnt use cases and speed requirements
@@ -67,6 +67,15 @@ Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end
     $ ./run.sh -p alveo-u200 -t test_detect -k large -b 8 -m yolo_v2_608
     ```
 5. Object detection and compute mAP score on a set of images on alveo-u200, with tiny yolo-v2 input 3x608x608, with 8-bit XDNNv2 large kernel:
+    Prepare Data 
+    ```
+    Download Images and lables
+    wget -c https://pjreddie.com/media/files/val2014.zip
+    unzip -q val2014.zip
+    wget -c https://pjreddie.com/media/files/coco/labels.tgz
+    tar xzf labels.tgz
+    ```
+
     ```sh
     $ ./run.sh -p alveo-u200 -t test_detect -k large -b 8 -m yolo_v2_tiny_608 -g labels/val2014/ -d val2014/
     ```
