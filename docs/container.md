@@ -7,6 +7,7 @@ The only external dependencies are:
 1. Install Docker 
    
    - [ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce)  
+   - [centos](https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce)
      
    Note: Ensure /var/lib/docker has sufficient space (Should be > 5GB), if not move your Docker Root elsewhere.  
    

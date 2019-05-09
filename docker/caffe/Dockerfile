@@ -1,6 +1,4 @@
-#FROM ubuntu:16.04
-ARG IMAGE_NAME
-FROM ${IMAGE_NAME}
+FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,8 +28,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
  libprotobuf-dev\
  libsnappy-dev\
  protobuf-compiler\
- libyaml-cpp-dev\
- && rm -rf /var/lib/apt/lists/*
+ libyaml-cpp-dev
+
+# Install XRT
+RUN wget https://www.xilinx.com/support/download/xrt/xrt-201802-2-1-83/xrt_201802.2.1.83_16.04.deb && \
+ sudo apt install ./*.deb -y && rm -rf ./*.deb && rm -rf /var/lib/apt/lists/*
 
 # Get pip setuptools and wheel
 RUN cd /tmp && curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm get-pip.py

@@ -1,12 +1,25 @@
 #!/usr/bin/env bash
 user=`whoami`
 
-image_name=${1:-ubuntu:16.04}
-
 HERE=`dirname $(readlink -f $0)`
 
 mkdir -p $HERE/share
 chmod -R a+rwx $HERE/share
+
+xclmgmt_driver="$(find /dev -name xclmgmt\*)"
+docker_devices=""
+echo "Found xclmgmt driver(s) at ${xclmgmt_driver}"
+for i in ${xclmgmt_driver} ;
+do
+  docker_devices+="--device=$i "
+done
+
+render_driver="$(find /dev/dri -name renderD\*)"
+echo "Found render driver(s) at ${render_driver}"
+for i in ${render_driver} ;
+do
+  docker_devices+="--device=$i "
+done
 
 #sudo \ 
 docker run \
@@ -14,9 +27,8 @@ docker run \
   --net=host \
   --privileged=true \
   -it \
-  -v /dev:/dev \
-  -v /opt/xilinx:/opt/xilinx \
+  $docker_devices \
   -v $HERE/share:/opt/ml-suite/share \
   -w /opt/ml-suite \
-  $user/ml-suite/$image_name \
+  $user/ml-suite \
   bash
