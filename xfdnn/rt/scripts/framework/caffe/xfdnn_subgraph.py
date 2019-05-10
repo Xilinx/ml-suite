@@ -29,6 +29,18 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   with open(args["netcfg"]) as f:
     compilerData = json.load(f)
 
+  FPGA_input_layer = []
+  # get input list to FPGA layer 
+  inputs=compilerData['inputs']
+  if (inputs == None):
+    print("ERROR: Can't find %s in compiler JSON file"%'inputs')
+    return None
+  for inputItem in inputs:
+    input_name=inputItem['input_name']
+    FPGA_input_layer.append(input_name)
+    print("Found input to FPGA layer %s"%input_name)
+
+
   # add merged list to FPGA layer 
   network=compilerData['network'] 
   networkMergeList=[]
@@ -52,19 +64,23 @@ def cut_subgraph(netpb, in_blob, graphname, args):
     outTensorNames.add(o["previous_tensors"][0])
     compilerOutputsDict[o["previous_layers"][0]] = (o["previous_tensors"][0]);
   
-  # Add input  
+  # create new prototxt
   newpb_layer = []
-  newpb_input_layer = []
+  
+  #Add input
+  input_layer = []
   for l in netpb.layer:
-    if l.name == in_blob:
-      newpb_input_layer.append( l )
-  newpb_layer.extend( newpb_input_layer )
+    # do not remove input layers if in visited
+    if (l.type == 'Input' and l.name in visited):
+      input_layer.append(l)
+  newpb_layer.extend(input_layer)
+  
   
   # add Custom Layer
   pylayer = caffe_pb2.LayerParameter()
   pylayer.name = "xfdnn/%s"%(graphname)
   pylayer.type = "Python"
-  pylayer.bottom.append(in_blob)
+  pylayer.bottom.extend(FPGA_input_layer)
   for o in outTensorNames:
     pylayer.top.append ( o )
   if args["profile"]:
@@ -74,7 +90,7 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   pylayer.python_param.layer = "CaffeXFDNN"
   
   input_names = []
-  input_names.append(in_blob)
+  input_names.extend(FPGA_input_layer)
   args["input_names"] = input_names
   args["output_names"] = list(outTensorNames)
   pylayer.python_param.param_str = str(args)
@@ -83,12 +99,13 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   #Add non custom layer (Shell layer)
   newpb_shell_layer = []
   for l in netpb.layer:
+    # do remove layers if in visited
     if l.name not in visited:
       newpb_shell_layer.append(l)
   newpb_layer.extend(newpb_shell_layer)
  
   #ONEHACK TO FIX MERGE LAYER TENSOR NAMES
-  newpb_shell_layer.extend(newpb_input_layer)
+  newpb_shell_layer.extend(input_layer)
   # ensure connection within shell layers are present 
   for l in newpb_shell_layer:
     for b in l.bottom:

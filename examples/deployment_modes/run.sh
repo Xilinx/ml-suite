@@ -38,11 +38,12 @@ PERPETUAL=0
 IMG_INPUT_SCALE=1.0
 # These variables are used in case there multiple FPGAs running in parallel
 NUMDEVICES=1
+NUMSTREAMS=8
 DEVICEID=0
 NUMPREPPROC=4
 COMPILEROPT="autoAllOpt.json"
 # Parse Options
-OPTS=`getopt -o p:t:m:k:b:d:s:a:n:i:c:y:gvzfxh --long platform:,test:,model:,kcfg:,bitwidth:,directory:,numdevices:,deviceid:,batchsize:,compilerOpt:,numprepproc,checkaccuracy,verbose,zelda,frodo,perpetual,help -n "$0" -- "$@"`
+OPTS=`getopt -o p:t:m:k:b:d:s:a:n:ns:i:c:y:gvzfxh --long platform:,test:,model:,kcfg:,bitwidth:,directory:,numdevices:,numstreams:,deviceid:,batchsize:,compilerOpt:,numprepproc,checkaccuracy,verbose,zelda,frodo,perpetual,help -n "$0" -- "$@"`
 
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; usage; exit 1 ; fi
 
@@ -58,6 +59,7 @@ do
     -s |--batchsize     ) BATCHSIZE="$2"        ; shift 2 ;;
     -a |--accelerator   ) ACCELERATOR="$2"      ; shift 2 ;;
     -n |--numdevices    ) NUMDEVICES="$2"       ; shift 2 ;;
+    -ns|--numstreams    ) NUMSTREAMS="$2"       ; shift 2 ;;
     -i |--deviceid      ) DEVICEID="$2"         ; shift 2 ;;
     -c |--compilerOpt   ) COMPILEROPT="$2"      ; shift 2 ;;
     -y |--numprepproc   ) NUMPREPPROC="$2"      ; shift 2 ;;
@@ -205,6 +207,7 @@ elif [[ "$TEST" == "streaming_classify"* ]]; then
   if [ "$TEST" == "streaming_classify_benchmark" ]; then
     BASEOPT+=" --benchmarkmode 1"
   fi 
+  BASEOPT+=" --numstream $NUMSTREAMS"
   BASEOPT+=" --images $DIRECTORY"
   BASEOPT+=" --numprepproc $NUMPREPPROC"
   if [ "$PERPETUAL" == 1 ]; then

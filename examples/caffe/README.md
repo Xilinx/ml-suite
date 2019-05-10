@@ -1,4 +1,4 @@
-## Getting Started to prepare and deploy a trained Caffe model for FPGA acceleration as an inference server 
+## Getting Started to prepare and deploy a trained Caffe model for FPGA acceleration
 
 ### Running Caffe Benchmark Models
 This directory provides scripts for running several well known models on the FPGA.
@@ -51,101 +51,43 @@ After the setup, run through a sample end to end caffe classification example us
   Compile the Model - In this step, the network Graph (prototxt) and the Weights (caffemodel) are compiled, the compiler
  
   Subgraph Cutting - In this step, the original graph is cut, and a custom FPGA accelerated python layer is inserted to be used for Inference.
- 
+  
+  The above three steps are invoked by using the --prepare switch  
+  
+  If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories.
+
   ```
    python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prepare
   ```
 
-3. **Classification** - Run the validation set for 10 iterations on the FPGA
+3. **Validate accuracy** - Run the validation set for 10 iterations on the FPGA
 
   ```
    python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --numBatches 10 --validate
   ```
 
-4. **Classification** - Run a single image on the FPGA
+4. **Inference** - Run a single image on the FPGA
 
   ```
   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --image ../deployment_modes/dog.jpg
   ```
-
-5. **Classification** - Running an Inference Server 
-
-    Feel free to skip steps 5-7 from this readme and follow the instructions at [REST Server Example](examples/caffe/REST/README.md) to see an example of setting up an inference server, and running classifications as REST API to that server. 
- 
-    In this step, a python flask inference server is started, and the caffe model as well as the prototxt from the previous step are run on the FPGA to perform inference on an input image.
-
-    This starts an inference server which can be accessed at port 5000 from end point /predict. For example: http://127.0.0.1:5000/predict
-
-   ```
-   python REST/app.py --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prototxt xfdnn_auto_cut_deploy.prototxt --synset_words /home/mluser/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt --port 5000
-   ```
-
-   You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server
-
-6. **Classification** - Sending sample image requests to the Inference Server
-
-   ```
-   curl -X POST -F image=@$HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG 'http://localhost:5000/predict
-   ```
-
-   There is also a python script in the REST directory to do the same:
-
-   ```
-   python -m pip install requests --user
-   python REST/request.py --rest_api_url http://localhost:5000/predict --image_path $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG
-   ```
-
-7. **Benchmarking**
-
-   Run the benchmark.py script in /opt/ml-suite/examples/caffe/ directory, which will send a sample input image to the inference server repeatedly while measuring response times, and finally calculating the average response time.
-
-  ```
-  python REST/benchmark.py --rest_api_url http://localhost:5000/predict --image_path /opt/share/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG
-
-
-  The next section walks through how to invoke the individual steps namely quantize, compile and sub-graph cutting, that we already did as a single wrapper command in step 2. 
-
-## Running the steps individually
-
-1. **Quantize the model** - The quantizer will generate scaling parameters for quantizing floats INT8. This is required, because FPGAs will take advantage of Fixed Point Precision, to achieve more parallelization at lower power
-
-  ```
-   export DECENT_DEBUG=1 
-  /opt/caffe/build/tools/decent_q quantize -model /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt -weights /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel -auto_test -test_iter 1 --calib_iter 1   
-   ```
   
-2. **Compile the Model** - In this step, the network Graph (prototxt) and the Weights (caffemodel) are compiled, the compiler
+5. **Benchmark performance** - evaluate network throughput and/or latency in a streaming deployment scenario
 
   ```
-  python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.pyc \
-    -b 1 \
-    -i 96 \
-    -m 9 \
-    -d 256 \
-    -mix \
-    --pipelineconvmaxpool \
-    --usedeephi \
-    --quant_cfgfile quantize_results/quantize_info.txt \
-    -n quantize_results/deploy.prototxt \
-    -w quantize_results/deploy.caffemodel \
-    -g work/compiler \
-    -qz work/quantizer \
-    -C
+  cd $MLSUITE_ROOT/examples/deployment_modes && \
+  ./run.sh -ns 1 \
+    -t streaming_classify_benchmark -v -x \
+    -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min \
+    -cw $MLSUITE_ROOT/examples/caffe/work/deploy.caffemodel_data.h5 \
+    -cn $MLSUITE_ROOT/examples/caffe/work/compiler.json \
+    -cq $MLSUITE_ROOT/examples/caffe/work/quantizer.json \
+    | python $MLSUITE_ROOT/xfdnn/rt/scripts/speedometer.py
   ```
    
-3. **Subgraph Cutting** - In this step, the original graph is cut, and a custom FPGA accelerated python layer is inserted to be used for Inference.
+ `-ns 1` tells the script to use 1 stream, which sends 1 image to each PE. This will achieve minimum latency. 
+ To maximize throughput, try increasing the number of streams with `-ns` (e.g., `-ns 4`) until `FPGA utilization` reaches 100%. After `FPGA utilization` reaches 100%, increasing the number of streams no longer improves throughput and only hurts latency.
+   
+ To exit the streaming demo, press `CTRL-Z` and type `kill %%`.
 
-   ```
-   python $MLSUITE_ROOT/xfdnn/rt/scripts/framework/caffe/xfdnn_subgraph.py \
-    --inproto quantize_results/deploy.prototxt \
-    --trainproto /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt \
-    --outproto xfdnn_auto_cut_deploy.prototxt \
-    --cutAfter data \
-    --xclbin $MLSUITE_ROOT/overlaybins/$MLSUITE_PLATFORM/overlay_4.xclbin \
-    --netcfg work/compiler.json \
-    --quantizecfg work/quantizer.json \
-    --weights work/deploy.caffemodel_data.h5 \
-    --profile True
-   ```
-
-
+ Note: The above instruction assumes that the --output_dir switch was not used, and artifacts were generated in ./work

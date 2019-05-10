@@ -6,6 +6,26 @@
 #
 
 from collections import defaultdict
+from six import string_types
+from ast import literal_eval as l_eval
+
+
+def make_list(obj):
+  if isinstance(obj, string_types):
+    try:
+      obj = l_eval(obj)
+    except:
+      obj = [o.strip() for o in obj.split(',')]
+
+  if not isinstance(obj, list):
+    if obj is None:
+      obj = []
+    else:
+      obj = [obj]
+
+  return obj
+
+
 
 ######################################################
 ## utility functions for union-find structure

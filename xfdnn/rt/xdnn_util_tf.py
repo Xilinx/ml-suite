@@ -5,10 +5,8 @@
 # (C) Copyright 2019, Xilinx, Inc.
 #
 
-from ast import literal_eval as l_eval
 from collections import defaultdict, Iterable
 from orderedset import OrderedSet
-from six import string_types as _string_types
 
 import numpy as np
 import tensorflow as tf
@@ -18,7 +16,7 @@ from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import tensor_shape as _tensor_shape
 from google.protobuf import text_format
 
-from xdnn_util import dict2attr
+from xdnn_util import dict2attr, make_list
 
 
 
@@ -36,6 +34,9 @@ def strip_node_name(node_name):
 
 
 ## expanding tf.NodeDef methods
+def set_name(self, name):
+  self.name = name
+
 def set_shape(self, shape):
   if 'shape' in self.attr and len(self.attr['shape'].shape.dim) != len(shape):
     raise ValueError('dimension mismatch')
@@ -93,6 +94,15 @@ def get_output_dict(self):
       input_name = strip_node_name(input_name)
       output_dict[input_name][node_name] = input_index
   return output_dict
+
+def get_node_index(self, node_name):
+  for idx, node in enumerate(self.node):
+    if node.name == node_name:
+      return idx
+
+def remove_node(self, node_names):
+  for name in make_list(node_names):
+    del self.node[self.get_node_index(name)]
 
 def is_cyclic(self):
   output_dict = get_output_dict(self)
@@ -168,27 +178,9 @@ def freeze_graph(sess, graph_def, remove_training_nodes=True, remove_redundant_n
 
   print('freeze model')
 
-  if isinstance(sinknodes_list, _string_types):
-    try:
-      sinknodes_list = l_eval(sinknodes_list)
-    except:
-      sinknodes_list = [sinknodes_list]
-
-  if isinstance(freeze_blacklist, _string_types):
-    try:
-      freeze_blacklist = l_eval(freeze_blacklist)
-    except:
-      freeze_blacklist = [freeze_blacklist]
-
-  if isinstance(freeze_whitelist, _string_types):
-    try:
-      freeze_whitelist = l_eval(freeze_whitelist)
-    except:
-      freeze_whitelist = [freeze_whitelist]
-
-  sinknodes_list   = list(sinknodes_list)
-  freeze_blacklist = list(freeze_blacklist)
-  freeze_whitelist = list(freeze_whitelist)
+  sinknodes_list   = make_list(sinknodes_list)
+  freeze_blacklist = make_list(freeze_blacklist)
+  freeze_whitelist = make_list(freeze_whitelist)
 
   # if sess is not None:
   #   graph_def = sess.graph.as_graph_def(add_shapes=True)
@@ -274,10 +266,10 @@ def load_graph(args, **kwargs):
       print('{}: {}'.format(key, args[key]))
     print('#############################################\n')
 
-    sess = None
-    startnode = l_eval(args.startnode) if isinstance(args.startnode, _string_types) else args.startnode
-    finalnode = l_eval(args.finalnode) if isinstance(args.finalnode, _string_types) else args.finalnode
-    placeholdershape = l_eval(args.placeholdershape) if isinstance(args.placeholdershape, _string_types) else args.placeholdershape
+    sess             = None
+    startnode        = make_list(args.startnode)
+    finalnode        = make_list(args.finalnode)
+    placeholdershape = make_list(args.placeholdershape)
 
     ## load graph_def
     graph_def = tf.GraphDef()
