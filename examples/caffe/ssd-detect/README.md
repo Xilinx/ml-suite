@@ -12,19 +12,21 @@ wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 tar -xvf VOCtest_06-Nov-2007.tar
 #Generate ground truth file 
 python generate_gt_file.py
-Note: VOC dataset contains 21 classes. But this model is trained with 19 classes (removed diningtable and train). If your model is having 21 classes please comment 40 line in generate_gt_file.py
+```
+>**:pushpin: NOTE:** VOC dataset contains 21 classes. But this model is trained with 19 classes (removed diningtable and train). If your model is having 21 classes, comment 40 line in generate_gt_file.py
 
-The format of calib.txt used in calibration phase of DECENT is as follow:
+The format of calib.txt used in calibration phase of decent_q is as follow:
+```
 #image_name fake_label_number  
 000001.jpg 1
 000002.jpg 1
 000003.jpg 1
 000004.jpg 1
 000006.jpg 1
+```
+>**:pushpin: NOTE:** The label number is not actually used in calibration and arbitrary label number can be used.
 
-Please note that the label number is not actually used in calibration and arbitrary label number can be used.
-
-
+```
 # Get the necessary models
 python $MLSUITE_ROOT/exampls/caffe/getModels.py
 
@@ -47,5 +49,5 @@ python run_ssd.py --prototxt xfdnn_auto_cut_deploy.prototxt --caffemodel quantiz
 
 ### Run Inference for a single image
 ```
-python run_ssd.py --prototxt xfdnn_auto_cut_deploy.prototxt --caffemodel quantize_results/deploy.caffemodel --labelmap_file labelmap_voc_19c.prototxt --image ./test_pic/000115.jpg
+python run_ssd.py --prototxt xfdnn_auto_cut_deploy.prototxt --caffemodel quantize_results/deploy.caffemodel --labelmap_file labelmap_voc_19c.prototxt --image ./test_pic/000022.jpg
 ```

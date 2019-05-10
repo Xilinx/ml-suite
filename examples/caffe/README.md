@@ -54,16 +54,16 @@ After the setup, run through a sample end to end caffe classification example us
   
   The above three steps are invoked by using the --prepare switch  
   
-  If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories.
+  If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories. By default, output_dir is ./work
 
   ```
-   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prepare
+   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prepare --output_dir work
   ```
 
 3. **Validate accuracy** - Run the validation set for 10 iterations on the FPGA
 
   ```
-   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --numBatches 10 --validate
+   python run.py --validate --output_dir work --numBatches 10
   ```
 
 4. **Inference** - Run a single image on the FPGA

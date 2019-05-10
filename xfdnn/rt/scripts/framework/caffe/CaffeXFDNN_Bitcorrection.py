@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 import caffe,json
 import xdnn, xdnn_io
 from quantize_controls import quantize_controls

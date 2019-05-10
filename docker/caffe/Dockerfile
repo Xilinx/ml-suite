@@ -77,8 +77,7 @@ ENV CAFFE_ROOT=/opt/caffe
 ENV PYCAFFE_ROOT $CAFFE_ROOT/python
 ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
 ENV PATH $CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
-RUN mkdir /opt/caffe
-ADD caffe_decent.tar.gz /opt/caffe
+ADD caffe_decent.tar.gz /opt/
 
 # Public ml-suite Setup To /opt/ml-suite switch to latest branch
 ENV MLSUITE_ROOT=/opt/ml-suite

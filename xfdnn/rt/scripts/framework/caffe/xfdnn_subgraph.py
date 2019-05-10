@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env python
 import xdnn_io
 import google.protobuf.text_format as pbtf
 import caffe.proto.caffe_pb2 as caffe_pb2

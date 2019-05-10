@@ -34,22 +34,22 @@ To run any of the three examples, use the provided bash run.sh script.
   `./run.sh -h`  
   The key parameters are:
     - -p **platform** Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, `1525-ml`
-      - Note: If the platform flag is omitted software will try to auto-detect the platform
+      - Note: Generally this switch is no longer needed, because we auto-detect the platform
     - -t **test** - Valid values are `test_classify` or `streaming_classify` or `multinet`
-    - -k **kernel config** - Valid values are `med`, `large` or `v3` - Used to select overlaybins
-    - -c **compiler optimized** - This flag runs the network with a compiler optimization for max throughput
+    - -m **model** - Valid values are `googlenet_v1` or `resnet50`, default is `googlenet_v1`
+    - -c **compiler optimized** - This flag runs the network with a compiler optimization for max throughput or min latency
     - -g - This flag enables accuracy checking given a golden result text file.   
 
 ## Example Invocations
-1. Single Image Classification on alveo, ResNet50 v1, with XDNNv3:
+1. Single Image Classification on alveo, ResNet50 v1:
     ```sh
     $ ./run.sh -t test_classify -m resnet50
     ```
-2. Single Image Classification on AWS:
+2. Single Image Classification on AWS, GoogLeNet:
     ```sh
-    $ ./run.sh -p aws -t test_classify 
+    $ ./run.sh -t test_classify -m googlenet_v1
     ```
-3. Streaming Image Classification on alveo:
+3. Streaming Image Classification on alveo, GoogLeNet:
     ```sh
     $ ./run.sh -t streaming_classify -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```

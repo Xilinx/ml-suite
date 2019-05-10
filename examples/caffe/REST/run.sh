@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 #!/bin/bash
 
 MODEL_WEIGHTS="/opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel"

@@ -82,8 +82,14 @@ if [ -z "$MLSUITE_PLATFORM" ]; then
       #echo "Auto-detected platform: ${AUTODETECT_PLATFORM}"
       export MLSUITE_PLATFORM=${AUTODETECT_PLATFORM}
   else
-    echo "Warning: failed to auto-detect platform. Please manually specify platform with -p"
+    if [ -f /sys/hypervisor/uuid ] && [ `head -c 3 /sys/hypervisor/uuid` == ec2 ]; then
+      export MLSUITE_PLATFORM=aws
+    else
+      echo "Warning: failed to auto-detect platform. Please manually specify platform with -p"
+    fi
   fi
+else
+  export MLSUITE_PLATFORM=$MLSUITE_PLATFORM
 fi
 
 echo "-------------------"

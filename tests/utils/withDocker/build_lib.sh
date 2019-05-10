@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 #!/bin/bash
 echo "### Cleaning Stale Files From Previous Run ###"
 #rm -rf output_logs

@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/python
 from __future__ import print_function
 
 import os,sys,argparse
@@ -113,18 +120,23 @@ if __name__ == "__main__":
   parser.add_argument('--validate', action="store_true", help='If validation is enabled, the model will be ran on the FPGA, and the validation set examined')
   parser.add_argument('--image', default=None, help='User can provide an image to run')
   args = vars(parser.parse_args())
- 
-  if args["prepare"]: 
+
+  if args["prepare"]:
+    print("Cleaning model artifacts in %s"%os.path.abspath(args["output_dir"]))
+    filesToClean = [os.path.join(os.path.abspath(args["output_dir"]),f) for f in os.listdir(args["output_dir"])]
+    for f in filesToClean:
+      os.remove(f)
     Quantize(args["prototxt"],args["caffemodel"],args["qtest_iter"],args["qcalib_iter"],args["output_dir"])
-    Compile(args["output_dir"]+"/deploy.prototxt",args["output_dir"]+"/deploy.caffemodel",args["output_dir"])
-    Cut(args["prototxt"])
+    Compile(args["output_dir"])
+    Cut(args["prototxt"],args["output_dir"])
     print("Generated model artifacts in %s"%os.path.abspath(args["output_dir"]))
-    print(os.listdir(args["output_dir"]))
-  
+    for f in os.listdir(args["output_dir"]):
+      print("  "+f)
+
   # Both validate, and image require that the user has previously called prepare.
-  if args["validate"]: 
-    Infer("xfdnn_auto_cut_train_val.prototxt",args["caffemodel"],args["numBatches"])
+  if args["validate"]:
+    Infer(args["output_dir"]+"/xfdnn_auto_cut_train_val.prototxt",args["output_dir"]+"/deploy.caffemodel",args["numBatches"])
 
   if args["image"]:
-    Classify("xfdnn_auto_cut_deploy.prototxt",args["caffemodel"],args["image"],"../deployment_modes/synset_words.txt")
+    Classify(args["output_dir"]+"/xfdnn_auto_cut_deploy.prototxt",args["output_dir"]+"/deploy.caffemodel",args["image"],"../deployment_modes/synset_words.txt")
   

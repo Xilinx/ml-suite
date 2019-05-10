@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 def plot_all(X):
   import numpy as np 
   import matplotlib.pyplot as plt
