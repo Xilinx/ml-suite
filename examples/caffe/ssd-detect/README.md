@@ -28,7 +28,7 @@ The format of calib.txt used in calibration phase of decent_q is as follow:
 
 ```
 # Get the necessary models
-python $MLSUITE_ROOT/exampls/caffe/getModels.py
+python $MLSUITE_ROOT/examples/caffe/getModels.py
 
 # Setup ml-suite Environment Variables
 source $MLSUITE_ROOT/overlaybins/setup.sh
