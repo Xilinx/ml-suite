@@ -122,10 +122,11 @@ if __name__ == "__main__":
   args = vars(parser.parse_args())
 
   if args["prepare"]:
-    print("Cleaning model artifacts in %s"%os.path.abspath(args["output_dir"]))
-    filesToClean = [os.path.join(os.path.abspath(args["output_dir"]),f) for f in os.listdir(args["output_dir"])]
-    for f in filesToClean:
-      os.remove(f)
+    if os.path.isdir(args["output_dir"]):
+      print("Cleaning model artifacts in %s"%os.path.abspath(args["output_dir"]))
+      filesToClean = [os.path.join(os.path.abspath(args["output_dir"]),f) for f in os.listdir(args["output_dir"])]
+      for f in filesToClean:
+        os.remove(f)
     Quantize(args["prototxt"],args["caffemodel"],args["qtest_iter"],args["qcalib_iter"],args["output_dir"])
     Compile(args["output_dir"])
     Cut(args["prototxt"],args["output_dir"])

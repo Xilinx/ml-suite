@@ -72,12 +72,12 @@ After the setup, run through a sample end to end caffe classification example us
   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --image ../deployment_modes/dog.jpg
   ```
   
-5. **Benchmark performance** - evaluate network throughput and/or latency in a streaming deployment scenario
+5. **Benchmark FPGA performance** - evaluate network throughput and/or latency in a streaming deployment scenario (FPGA only)
 
   ```
   cd $MLSUITE_ROOT/examples/deployment_modes && \
   ./run.sh -ns 1 \
-    -t streaming_classify_benchmark -v -x \
+    -t streaming_classify_fpgaonly -v -x \
     -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min \
     -cw $MLSUITE_ROOT/examples/caffe/work/deploy.caffemodel_data.h5 \
     -cn $MLSUITE_ROOT/examples/caffe/work/compiler.json \
@@ -89,5 +89,23 @@ After the setup, run through a sample end to end caffe classification example us
  To maximize throughput, try increasing the number of streams with `-ns` (e.g., `-ns 4`) until `FPGA utilization` reaches 100%. After `FPGA utilization` reaches 100%, increasing the number of streams no longer improves throughput and only hurts latency.
    
  To exit the streaming demo, press `CTRL-Z` and type `kill %%`.
+ 
+ 6. **Benchmark end-to-end performance** - evaluate end-to-end network throughput and/or latency in a streaming deployment scenario. 
+ 
+ This demo includes pre-processing and post-processing, which run on CPU. In some cases, CPU code may need additional optimizations in order to maximize the utilization of FPGA.
+
+  ```
+  cd $MLSUITE_ROOT/examples/deployment_modes && \
+  ./run.sh -ns 1 \
+    -t streaming_classify -v -x \
+    -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min \
+    -cw $MLSUITE_ROOT/examples/caffe/work/deploy.caffemodel_data.h5 \
+    -cn $MLSUITE_ROOT/examples/caffe/work/compiler.json \
+    -cq $MLSUITE_ROOT/examples/caffe/work/quantizer.json \
+    | python $MLSUITE_ROOT/xfdnn/rt/scripts/speedometer.py
+  ```
+   
+ To exit the streaming demo, press `CTRL-Z` and type `kill %%`.
+
 
  Note: The above instruction assumes that the --output_dir switch was not used, and artifacts were generated in ./work

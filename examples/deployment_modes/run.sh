@@ -11,7 +11,7 @@ usage() {
   echo "./run.sh --platform <platform> --test <test> --model <model> --kcfg <kcfg> --bitwidth <bitwidth>"
   echo "./run.sh  -p        <platform>  -t    <test>  -m <model>  -k <kcfg>  -b <bitwidth>"
   echo "<platform> : 1525 / 1525-ml / alveo-u200 / alveo-u200-ml / alveo-u250 / aws / nimbix"
-  echo "<test>     : test_classify / streaming_classify / streaming_classify_benchmark"
+  echo "<test>     : test_classify / streaming_classify / streaming_classify_fpgaonly"
   echo "<kcfg>     : med / large / v3"
   echo "<bitwidth> : 8 / 16"
   echo "<compilerOpt> : autoAllOpt / latency / throughput"
@@ -204,7 +204,7 @@ elif [[ "$TEST" == "streaming_classify"* ]]; then
     DIRECTORY=../../models/data/ilsvrc12/ilsvrc12_img_val
   fi
 
-  if [ "$TEST" == "streaming_classify_benchmark" ]; then
+  if [ "$TEST" == "streaming_classify_fpgaonly" ]; then
     BASEOPT+=" --benchmarkmode 1"
   fi 
   BASEOPT+=" --numstream $NUMSTREAMS"

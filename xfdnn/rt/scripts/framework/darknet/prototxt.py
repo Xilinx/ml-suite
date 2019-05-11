@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 #
-# // SPDX-License-Identifier: BSD-3-CLAUSE
-#
 # (C) Copyright 2018, Xilinx, Inc.
 #
 """MIT License from https://github.com/ysh329/darknet-to-caffe-model-convertor/
