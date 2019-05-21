@@ -32,6 +32,7 @@ The table below describes the optional arguments.
 Argument  |Description
 --------- | ---------
 -h, help  |Show this help message and exit
+framework FRAMEWORK  |Input tf / caffe
 deploy_model DEPLOY_MODEL  |Input deploy prototxt file
 output_json OUTPUT_JSON  |Output quantization file
 weights WEIGHTS  |Input caffemodel file
@@ -46,6 +47,8 @@ channel_swap CHANNEL_SWAP  |Image preprocessing operation (3 of 6) to swap chann
 raw_scale RAW_SCALE  |Image preprocessing operation (4 of 6) to scale, e.g., from [0., 1.] to [0., 255.] with "255."
 mean_value MEAN_VALUE  |Image preprocessing operation (5 of 6) to subtract from each channel, e.g., from BGR to B - 104., G - 117., and R - 123., respectively, with "[104., 117., 123.]"
 input_scale INPUT_SCALE  |Image preprocessing operation (6 of 6) to scale, e.g., "1." for GoogLeNet and ResNet or "0.017" for MobileNet
+input_layer INPUT_LAYER   |input layer name
+output_layer OUTPUT_LAYER   |output layer name
 
 ## Additional Resources
 
