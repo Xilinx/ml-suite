@@ -4,14 +4,14 @@ The xfDNN Quantizer performs a technique of quantization known as recalibration.
 
 This technique does not require full retraining of the model, and can be accomplished in a matter of seconds, as you will see below. It also allows you to maintain the accuracy of the high precision model.
 
-Quantization of the model does not alter the orginal high precision model, rather, it calculates the dynamic range of the model and produces scaling parameters recorded in a json file, which will be used by the xDNN overlay during execution of the network/model. Quantization of the model is an offline process that only needs to be performed once per model. The quantizer produces an optimal target quantization from a given network (prototxt and caffemodel) and calibration set (unlabeled input images) without requiring hours of retraining or a labeled dataset. The following sections describe the usage and command line arguments of the `xfdnn_compiler_caffe` compiler.
+Quantization of the model does not alter the orginal high precision model, rather, it calculates the dynamic range of the model and produces scaling parameters recorded in a json file, which will be used by the xDNN overlay during execution of the network/model. Quantization of the model is an offline process that only needs to be performed once per model. The quantizer produces an optimal target quantization from a given network (Caffe - (prototxt and caffemodel) and Tensorflow (pb)) and calibration set (unlabeled input images) without requiring hours of retraining or a labeled dataset. The following sections describe the usage and command line arguments of the both `xfdnn_compiler_caffe`  and `xfdnn_compiler_tf` compiler.
 
 To run the quantizer, use the command `python quantize.pyc`. The following sections describe the usage and commandline arguments of the quantizer.
 
 ## Usage
 
 ```cpp
-quantize.pyc [-h] [--deploy_model DEPLOY_MODEL]
+quantize.pyc [-h]   [--framework FRAMEWORK] [--deploy_model DEPLOY_MODEL]
                     [--output_json OUTPUT_JSON] [--weights WEIGHTS]
                     [--calibration_directory CALIBRATION_DIRECTORY]
                     [--calibration_size CALIBRATION_SIZE]
@@ -20,7 +20,9 @@ quantize.pyc [-h] [--deploy_model DEPLOY_MODEL]
                     [--bitwidths BITWIDTHS] [--dims DIMS]
                     [--transpose TRANSPOSE] [--channel_swap CHANNEL_SWAP]
                     [--raw_scale RAW_SCALE] [--mean_value MEAN_VALUE]
-                    [--input_scale INPUT_SCALE]
+                    [--input_scale INPUT_SCALE] [--input_layer INPUT_LAYER]
+                    [--output_layer OUTPUT_LAYER]
+                    
 ```
 
 ## Arguments
