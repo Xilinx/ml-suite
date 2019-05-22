@@ -45,7 +45,7 @@ for i in $(seq 0 $NUMCARDS)
       PORTSZ="${PORTSZ},"
       PORTSX="${PORTSX},"
     fi
-    ./run.sh -t streaming_classify -i $i -x -v -d $DIRECTORY > /dev/null &
+    ./run.sh -t streaming_classify -i $i -x -v -c throughput -ns 8 -d $DIRECTORY > /dev/null &
   done 
 
 cd -

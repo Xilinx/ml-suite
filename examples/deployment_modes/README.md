@@ -57,11 +57,16 @@ To run any of the three examples, use the provided bash run.sh script.
     ```sh
     $ ./run.sh -t streaming_classify -g -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-5. Streaming Image Classification benchmark mode on alveo (image pre-processing and output accuracy check are skipped), throughput optimized:
+5. Streaming Image Classification FPGA-only mode on alveo (image pre-processing and output accuracy check are skipped), throughput optimized:
     ```sh
-    $ ./run.sh -t streaming_classify_benchmark -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
+    $ ./run.sh -t streaming_classify_fpgaonly -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min
     ```
-6. Multinet Image Classification on alveo
+6. Streaming Image Classification FPGA-only mode with live pipeline performance report:
+    ```sh
+    $ ./run.sh -t streaming_classify_fpgaonly -c throughput -d $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min -x -v | python $MLSUITE_ROOT/xfdnn/rt/scripts/speedometer.py
+    ```
+   To exit the streaming report view, press CTRL-Z and type kill -9 %%.
+7. Multinet Image Classification on alveo
     ```sh
     ./run.sh -t multinet
     ```

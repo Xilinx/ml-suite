@@ -88,7 +88,7 @@ After the setup, run through a sample end to end caffe classification example us
  `-ns 1` tells the script to use 1 stream, which sends 1 image to each PE. This will achieve minimum latency. 
  To maximize throughput, try increasing the number of streams with `-ns` (e.g., `-ns 4`) until `FPGA utilization` reaches 100%. After `FPGA utilization` reaches 100%, increasing the number of streams no longer improves throughput and only hurts latency.
    
- To exit the streaming demo, press `CTRL-Z` and type `kill %%`.
+ To exit the streaming demo, press `CTRL-Z` and type `kill -9 %%`.
  
  6. **Benchmark end-to-end performance** - evaluate end-to-end network throughput and/or latency in a streaming deployment scenario. 
  
@@ -105,7 +105,7 @@ After the setup, run through a sample end to end caffe classification example us
     | python $MLSUITE_ROOT/xfdnn/rt/scripts/speedometer.py
   ```
    
- To exit the streaming demo, press `CTRL-Z` and type `kill %%`.
+ To exit the streaming demo, press `CTRL-Z` and type `kill -9 %%`.
 
 
  Note: The above instruction assumes that the --output_dir switch was not used, and artifacts were generated in ./work
