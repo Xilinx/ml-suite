@@ -13,7 +13,7 @@ tar -xvf VOCtest_06-Nov-2007.tar
 #Generate ground truth file 
 python generate_gt_file.py
 ```
->**:pushpin: NOTE:** VOC dataset contains 21 classes. But this model is trained with 19 classes (removed diningtable and train). If your model is having 21 classes, comment 40 line in generate_gt_file.py
+>**:pushpin: NOTE:** VOC dataset contains 21 classes. But this model is trained with 19 classes (removed diningtable and train). If your model is having 21 classes, comment 46 line in generate_gt_file.py
 
 The format of calib.txt used in calibration phase of decent_q is as follow:
 ```

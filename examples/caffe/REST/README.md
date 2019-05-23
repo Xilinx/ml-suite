@@ -46,12 +46,12 @@ This starts an inference server which can be accessed at port 5000 from end poin
    python app.py --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prototxt xfdnn_auto_cut_deploy.prototxt --synset_words /home/mluser/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt --port 5000
    ```
 
-You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server
+You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server. Note that you wont just type the inference server URL on the browser, but only use the command line options shown below to pass an input image to classify. Feel free to take this as a starting point and modify as needed for your inference server needs. 
 
 ### Classification (Sending sample image requests to the Inference Server)
 
    ```
-   curl -X POST -F image=@$HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG 'http://localhost:5000/predict
+   curl -X POST -F image=@$HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG 'http://localhost:5000/predict'
    ```
 
 There is also a python script in the same directory to do the same:
@@ -78,6 +78,24 @@ There is also a python script in the same directory to do the same:
    python ../run.py --prototxt ${MODEL_PROTOTXT} --caffemodel ${MODEL_WEIGHTS} --prepare
 
    python app.py --caffemodel ${MODEL_WEIGHTS} --prototxt xfdnn_auto_cut_deploy.prototxt --synset_words ${LABELS} --port ${PORT}
+   ```
+
+You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server. Note that you wont just type the inference server URL on the b
+rowser, but only use the command line options shown below to pass an input image to classify. Feel free to take thi
+s as a starting point and modify as needed for your inference server needs.
+
+### Classification (Sending sample image requests to the Inference Server)
+
+   ```
+   curl -X POST -F image=@$HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG 'http://localhost:5000/predict'
+   ```
+
+There is also a python script in the same directory to do the same:
+
+   ```
+   cd $MLSUITE_ROOT/examples/caffe/REST
+   python -m pip install requests --user
+   python request.py --rest_api_url http://localhost:5000/predict --image_path $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG
    ```
 
 ### Benchmarking

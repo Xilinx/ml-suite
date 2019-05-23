@@ -11,22 +11,9 @@ The only external dependencies are:
      
    Note: Ensure /var/lib/docker has sufficient space (Should be > 5GB), if not move your Docker Root elsewhere.  
    
-2. Launch an MLSuite Container using the Xilinx ML Suite Docker Image
+2. Download the appropriate ML Suite Container from xilinx.com
    ```
-   docker run \
-   --rm \
-   --net=host \
-   --privileged=true \
-   -it \
-   -v /dev:/dev \
-   -v /opt/xilinx:/opt/xilinx \
-   -w /opt/ml-suite \
-   xilinxatg/ml_suite:ubuntu-16.04-caffe-mls-1.4 \
-   bash
-   
-   # Note: --rm will remove the container when you exit, omit this flag if you want the container to persist
-   # Note: /dev and /opt/xilinx are mounted from the host to enable hardware runs; 
-   #  Xilinx XRT must be installed on the host.
+   $ tbd
    ```
 
 3. Follow the Jupyter notebook or command line examples in the container
