@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 ##############################################
 ## Welcome to resnet50
 ##
@@ -14,16 +21,23 @@ NICK=resnet50
 for B in 1 2 
 do
     
-    python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
-	--fromtensorflow  \
-	-b $B \
-	--noreplication  \
-	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
+##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
+##	--fromtensorflow  \
+##	-b $B \
+##	--noreplication  \
+##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
 
+##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication \
+##	--fromtensorflow  \
+##	-b $B \
+##	 \
+
+	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
     python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication \
-	--fromtensorflow  \
+	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication.C \
+	--fromtensorflow  -C \
 	-b $B \
 	 \
 	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
@@ -59,12 +73,16 @@ done
 B=2
 M=4
 
-for DSP in #28 56 
+for DSP in 28 56 
 do
     
+#    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+#	   --dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
+#	   --fromtensorflow   > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
+    
     python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
-	--fromtensorflow   > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
+	   --dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.C \
+	   --fromtensorflow -C   > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
 
 done
 

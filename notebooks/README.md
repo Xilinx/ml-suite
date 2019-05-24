@@ -1,38 +1,31 @@
 # Jupyter Notebooks
-The Jupyter Notebooks provide easy to use tutorials on how to use the xfDNN tools and deploy models within the Xilinx ML Suite.  
+The Jupyter Notebooks provide tutorials on how to run models within the Xilinx ML Suite.  
+Jupyter is preinstalled in the Xilinx ML Suite Docker image.
 
-Note for AWS users: The ml-suite AMI on the AWS marketplace already has Jupyter installed, and it will auto-start the notebooks shortly after you launch the EC2 instance. You just need to navigate via a web-browser to \<public-dns\>:8888
-
-## Installation 
-1. Install Jupyter on the remote system (We recommend doing this inside your Anaconda environment). 
+## Notebook Setup
+Follow these instructions from inside a running container
+1. Install the necessary dataset
   ```
-  $ source ~/.bashrc
-  $ source activate ml-suite
-  $ pip install jupyter`
+  # For Imagenet
+  cd /opt/ml-suite/examples/caffe
+  python -m ck pull repo:ck-env
+  python -m ck install package:imagenet-2012-val-min
+  python -m ck install package:imagenet-2012-aux
+  head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > \
+  $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/val_map.txt
+  # Resize all the images to a common dimension for Caffe
+  python resize.py $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min 256 256
+  # Get the necessary models
+  python getModels.py
   ```
-  Follow the instructions to complete the install. You do not need to install Microsoft VScode, when prompted. 
   
-2. Navigate to the top level `ml-suite' dir and source the setup script
+2. Launch Jupyter notebook server
   ```
-  $ cd /ml-suite/
-  $ source ./overlaybins/setup.sh <platform>
+  cd /opt/ml-suite/notebooks
+  jupyter notebook --no-browser --ip=0.0.0.0 --NotebookApp.token='' --NotebookApp.password=''
   ```
-  Options for `<platform>`: `aws` `nimbix` `1525` `alveo-u200` `alveo-u250` `alveo-u200-ml` `alveo-u250-ml`
-
-3. Set initial Password for Jupyter Server 
-  ```
-  $ jupyter notebook --generate-config
-  $ jupyter notebook password 
-  $ Enter Password: 
-  $ Verify Password: 
-  $ [NotebookPasswordApp] Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json
-  ```
-
-## Launching Notebook Server 
-
-1. Launch the jupyter notebook server  
-  `jupyter notebook --no-browser --ip=*`
   
-2. On local machine, open a broswer and navigate to `http://localhost:8888` or `youripaddress>:8888`
-
-3. On a remote machine, open a broswer on your local machine navigate to `yourpublicipaddress>:8888`
+3. Open a broswer, and navigate to one of:  
+  - `<yourpublicipaddress>:8888`
+  - `<yourdns>:8888`
+  - `<yourhostname>:8888`

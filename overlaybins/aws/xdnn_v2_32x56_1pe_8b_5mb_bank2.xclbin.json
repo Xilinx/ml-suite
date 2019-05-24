@@ -1,5 +1,8 @@
-{
-  "XDNN_DDR_BANK":"2",
-  "XDNN_CSR_BASE":"0x0",
-  "XDNN_SLR_IDX":"0"
-}
+{"XDNN_NUM_KERNELS":"1",
+"XDNN_VERSION_MINOR":"0",
+"XDNN_SLR_IDX":"0",
+"XDNN_DDR_BANK":"2",
+"XDNN_CSR_BASE":"0x0",
+"XDNN_BITWIDTH":"8",
+"DSA_VERSION":"xilinx_aws-vu9p-f1-04261818_dynamic_5_0",
+"XDNN_VERSION_MAJOR":"2"}
