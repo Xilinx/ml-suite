@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 ###########################
 ## Welcome to google v1 
 ##
@@ -21,27 +28,34 @@ NICK=googlev1
 for B in 1 
 do
     
-    python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
-	--fromtensorflow  \
-	-b $B \
-	--noreplication  \
-	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
+##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
+##	--fromtensorflow  \
+##	-b $B \
+##	--noreplication  \
+##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
+
+##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication \
+##	--fromtensorflow  \
+##	-b $B \
+##	\
+##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
 
     python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication \
-	--fromtensorflow  \
+	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication.C \
+	--fromtensorflow  -C \
 	-b $B \
 	\
 	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
     
-##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
-##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P \
-##	--fromtensorflow  \
-##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B \
-##	-P --parallelismstrategy "['tops','bottom']" \
-##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
-##
+ ##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
+ ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P \
+ ##	--fromtensorflow  \
+ ##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B \
+ ##	-P --parallelismstrategy "['tops','bottom']" \
+ ##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
+
 ##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
 ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P.noreplication \
 ##	--fromtensorflow --noreplication  \
@@ -59,60 +73,70 @@ do
 ##	--fromtensorflow  --noreplication  \
 ##	--parallelread "Any" --pipelineconvmaxpool --poolingaround  -b $B --parallelismstrategy "['tops','bottom']" \
 ##	> out.${NICK}.$B.$DSP.$M.norep 2> err.${NICK}.$B.$DSP.$M.norep   
-
+##
 done
 for B in 2 
 do
     
-    python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
-	--fromtensorflow  \
-	-b $B \
-	--noreplication  \
-	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
+##    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.simple \
+##	--fromtensorflow  \
+##	-b $B \
+##	--noreplication  \
+##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
 
+    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication.C \
+	--fromtensorflow  -C \
+	-b $B \
+	\
+	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
     python bin/xfdnn_compiler_caffe.py  -n $FILE \
 	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.replication \
 	--fromtensorflow  \
 	-b $B \
 	\
 	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
- ##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
- ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P \
- ##	--fromtensorflow  \
- ##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B \
- ##	-P --parallelismstrategy "['bottom','tops']" \
- ##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
- ##
- ##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
- ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P.noreplication \
- ##	--fromtensorflow --noreplication  \
- ##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B -P --parallelismstrategy "['bottom','tops']" \
- ##	> out.${NICK}.$B.$DSP.$M.P.norep 2> err.${NICK}.$B.$DSP.$M.P.norep  
- ##
- ##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
- ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
- ##	--fromtensorflow  \
- ##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B  --parallelismstrategy "['bottom','tops']" \
- ##	> out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M  
- ##
- ##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
- ##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.noreplication \
- ##	--fromtensorflow  --noreplication  \
- ##	--parallelread "Any" --pipelineconvmaxpool --poolingaround  -b $B --parallelismstrategy "['bottom','tops']" \
- ##	> out.${NICK}.$B.$DSP.$M.norep 2> err.${NICK}.$B.$DSP.$M.norep   
+##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P \
+##	--fromtensorflow  \
+##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B \
+##	-P --parallelismstrategy "['bottom','tops']" \
+##	> out.${NICK}.$B.$DSP.$M.P 2> err.${NICK}.$B.$DSP.$M.P   
 
+##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.P.noreplication \
+##	--fromtensorflow --noreplication  \
+##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B -P --parallelismstrategy "['bottom','tops']" \
+##	> out.${NICK}.$B.$DSP.$M.P.norep 2> err.${NICK}.$B.$DSP.$M.P.norep  
+##
+##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
+##	--fromtensorflow  \
+##	--parallelread "Any" --pipelineconvmaxpool  --poolingaround -b $B  --parallelismstrategy "['bottom','tops']" \
+##	> out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M  
+##
+##   python bin/xfdnn_compiler_caffe.py  -n $FILE \
+##	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.noreplication \
+##	--fromtensorflow  --noreplication  \
+##	--parallelread "Any" --pipelineconvmaxpool --poolingaround  -b $B --parallelismstrategy "['bottom','tops']" \
+##	> out.${NICK}.$B.$DSP.$M.norep 2> err.${NICK}.$B.$DSP.$M.norep   
+##
 done
 
 B=2
 M=6
 
-for DSP in #28 56 
+for DSP in 28 56 
 do
     
+#    python bin/xfdnn_compiler_caffe.py  -n $FILE \
+#	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
+#	--fromtensorflow  > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
+
     python bin/xfdnn_compiler_caffe.py  -n $FILE \
-	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M \
-	--fromtensorflow  > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
+	--dsp $DSP -m $M -s all -g ${NICK}.$B.$DSP.$M.C \
+	--fromtensorflow  -C > out.${NICK}.$B.$DSP.$M 2> err.${NICK}.$B.$DSP.$M 
 
 
 

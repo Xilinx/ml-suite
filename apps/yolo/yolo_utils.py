@@ -14,6 +14,20 @@ import numpy as np
 import os
 from PIL import Image, ImageDraw, ImageFont
 
+def darknet_style_xywh(image_width, image_height, llx,lly,urx,ury):
+    # Assumes (llx,ury) is upper left corner, and (urx,lly always bottom right
+    dw = 1./(image_width)
+    dh = 1./(image_height)
+    x = (llx + urx)/2.0 - 1
+    y = (lly + ury)/2.0 - 1
+    w = urx - llx
+    h = lly - ury
+    x = x*dw
+    w = w*dw
+    y = y*dh
+    h = h*dh
+    return x,y,w,h
+
 # To run evaluation on the MS COCO validation set, we must convert to
 # MS COCO style boxes, which although not well explained is
 # The X,Y Coordinate of the upper left corner of the bounding box
