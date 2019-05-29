@@ -18,7 +18,7 @@ The only external dependencies are:
 3. Load the container
    ```
    # May need sudo
-   $ docker load < xilinx-ml-suite-ubuntu-16.04-xrt-2018.2-caffe-mls-1.4.tar.gz
+   $ docker load -i < xilinx-ml-suite-ubuntu-16.04-xrt-2018.2-caffe-mls-1.4.tar.gz
    ```
    
 4. Use the provided [script](../docker_run.sh) to launch and interact with the container
