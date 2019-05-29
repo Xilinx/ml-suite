@@ -25,7 +25,7 @@ This step must be done in a browser and you must use your Xilinx login. After do
 |-------------------|------------------|------|  
 | vcu1525 | Ubuntu 16.04 | [VCU1525 .deb](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-vcu1525-dynamic-16.04.deb) |
 | vcu1525 | Ubuntu 18.04 | [VCU1525 .deb](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-vcu1525-dynamic-18.04.deb) |
-| vcu1525 | RHEL/CentOS | [[VCU1525 .rpm](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-vcu1525-dynamic-5.1-2342198.x86_64.rpm) |
+| vcu1525 | RHEL/CentOS | [VCU1525 .rpm](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-vcu1525-dynamic-5.1-2342198.x86_64.rpm) |
 | alveo-u200 | Ubuntu 16.04 | [U200 .deb](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-u200-xdma-16.04.deb) |
 | alveo-u200 | Ubuntu 18.04 | [U200 .deb](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-u200-xdma-18.04.deb) |
 | alveo-u200 | RHEL/CentOS | [U200 .rpm](https://www.xilinx.com/member/forms/download/eula-xef.html?filename=xilinx-u200-xdma-201820.1-2342198.x86_64.rpm) |
