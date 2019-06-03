@@ -69,7 +69,7 @@ After the setup, run through a sample end to end caffe classification example us
 4. **Inference** - Run a single image on the FPGA
 
   ```
-  python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --image ../deployment_modes/dog.jpg
+  python run.py --image ../deployment_modes/dog.jpg
   ```
   
 5. **Benchmark FPGA performance** - evaluate network throughput and/or latency in a streaming deployment scenario (FPGA only)
