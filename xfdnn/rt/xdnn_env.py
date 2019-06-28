@@ -4,9 +4,13 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
-import xdnn
 import json
 import os, sys
+
+from xfdnn.rt import xdnn
+
+
+
 
 def _fixQuantJsonLayerNames(quantFile):
   obj = None

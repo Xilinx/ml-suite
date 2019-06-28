@@ -16,7 +16,7 @@ from tensorflow.python.framework import ops as _ops
 from tensorflow.python.framework import tensor_shape as _tensor_shape
 from google.protobuf import text_format
 
-from xdnn_util import dict2attr, make_list
+from xfdnn.rt.xdnn_util import dict2attr, make_list
 
 
 
@@ -100,7 +100,7 @@ def get_node_index(self, node_name):
     if node.name == node_name:
       return idx
 
-def remove_node(self, node_names):
+def remove_nodes(self, node_names):
   for name in make_list(node_names):
     del self.node[self.get_node_index(name)]
 
@@ -269,26 +269,31 @@ def load_graph(args, **kwargs):
     sess             = None
     startnode        = make_list(args.startnode)
     finalnode        = make_list(args.finalnode)
-    placeholdershape = make_list(args.placeholdershape)
+    placeholdershape = args.get('placeholdershape', {})
 
     ## load graph_def
+    if not args.networkfile:
+      raise ValueError('networkfile is not specified!')
+
     graph_def = tf.GraphDef()
     with tf.Graph().as_default() as temp_graph:
-      if args.loadmode.lower() == 'checkpoint':
+      loadmode = args.get('loadmode', 'binary')
+
+      if loadmode.lower() == 'checkpoint':
         sess = tf.Session(graph=temp_graph)
         tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], args.networkfile)
         graph_def = sess.graph.as_graph_def(add_shapes=True)
 
-      elif args.loadmode.lower() == 'text':
+      elif loadmode.lower() == 'text':
         with open(args.networkfile) as f:
           graph_def = text_format.Parse(f.read(), tf.GraphDef())
 
-      elif args.loadmode.lower() == 'binary':
+      elif loadmode.lower() == 'binary':
         with _gfile.FastGFile(args.networkfile, 'rb') as f:
           graph_def.ParseFromString(f.read())
 
       else:
-        raise ValueError('unsupported textmode parameter')
+        raise ValueError('unsupported textmode parameter: \"{}\"'.format(loadmode))
 
       ## fill in all output shapes (Not necessary, will be performed in freeze_graph)
       # tf.import_graph_def(graph_def, name='')
@@ -309,13 +314,8 @@ def load_graph(args, **kwargs):
       node_dict = get_node_dict(graph_def)
       for name, shape in placeholdershape.items():
         print('change palceholder {} shape to {}'.format(name, shape))
-
-        try:
-          node = node_dict[name]
-          set_shape(node, shape)
-        except Exception as e:
-          print('existing placeholder names {}'.format(inputs))
-          assert(False, 'No placeholder named {}'.format(name))
+        node = node_dict[name]
+        set_shape(node, shape)
 
     graph_def, fValidGraph = freeze_graph(sess, graph_def,
                                           sinknodes_list=outputs,

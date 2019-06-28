@@ -1,0 +1,3 @@
+Reference:
+OpenBlas downloaded from https://github.com/xianyi/OpenBLAS/wiki/Download
+make NO_SHARED=1

@@ -24,11 +24,11 @@ testConfig = TestConfig(
 expected = {}
 expected["multinet_8_v3"] = \
 """
-0.7386 "n02112018 Pomeranian"
-0.1021 "n02123394 Persian cat"
-0.0318 "n02085620 Chihuahua"
-0.0261 "n02492035 capuchin, ringtail, Cebus capucinus"
-0.0149 "n02123597 Siamese cat, Siamese"
+0.5986 "n02112018 Pomeranian"
+0.2033 "n02123394 Persian cat"
+0.0319 "n02492035 capuchin, ringtail, Cebus capucinus"
+0.0271 "n02085620 Chihuahua"
+0.0198 "n02123597 Siamese cat, Siamese"
 
 0.9026 "n02123394 Persian cat"
 0.0846 "n02112018 Pomeranian"
