@@ -12,8 +12,6 @@ import os, sys
 import timeit
 import numpy as np
 from multiprocessing.managers import BaseManager
-
-
 #Parsing JSON directly is easier than passing all the necessary params from C++ to python
 #Pybind11 will make passing data between C++/python easier and will remove the need for this class
 class CompilerJsonParser:
@@ -103,8 +101,9 @@ class XDNNFPGAOp:
                                       c_uint,
                                       c_int,
                                       c_bool]
-    self._lib.XDNNWaitForResults.argtypes = [c_void_p, c_int] 
 
+    self._lib.XDNNSetCustomStartIdx.argtypes = [c_void_p, c_int, c_int]
+    self._lib.XDNNSetCustomStopIdx.argtypes = [c_void_p, c_int, c_int]
     self._lib.XDNNReadHardwareCounter.argtypes = [c_void_p, c_int, c_int]
     self._lib.XDNNReadHardwareCounter.restype = c_float
     self._args = args
@@ -302,6 +301,12 @@ class XDNNFPGAOp:
     :returns: int -- Return Code. Expect 0 for success.
     """
     return self._lib.XDNNWaitForResults( self._executor, streamId )
+
+  def set_start_idx(self, mbIdx, dflIdx=-1):
+    return self._lib.XDNNSetCustomStartIdx(self._executor, dflIdx, mbIdx)
+
+  def set_stop_idx(self, mbIdx, dflIdx=-1):
+    return self._lib.XDNNSetCustomStopIdx(self._executor, dflIdx, mbIdx)
 
   def get_exec_time(self, devIdx=0,cuIdx=0):
     curr_time = self._lib.XDNNReadHardwareCounter(self._executor, devIdx, cuIdx)

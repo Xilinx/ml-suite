@@ -10,7 +10,7 @@ from __future__ import print_function
 import os,sys,argparse
 
 from xfdnn.tools.compile.bin.xfdnn_compiler_caffe  import CaffeFrontend as xfdnnCompiler
-#from decent import CaffeFrontend as xfdnnQuantizer
+from decent import CaffeFrontend as xfdnnQuantizer
 from xfdnn_subgraph import CaffeCutter as xfdnnCutter
 
 import numpy as np
@@ -20,16 +20,16 @@ MLSUITE_ROOT = os.getenv("MLSUITE_ROOT","../../")
 MLSUITE_PLATFORM = os.getenv("MLSUITE_PLATFORM","1525")
 
 # Generate scaling parameters for fixed point conversion
-#def Quantize(prototxt,caffemodel,test_iter=1,calib_iter=1,output_dir="work"):
-#  quantizer = xfdnnQuantizer(
-#    model=prototxt,
-#    weights=caffemodel,
-#    test_iter=test_iter,
-#    calib_iter=calib_iter,
-#    auto_test=True,
-#    output_dir=output_dir,
-#  )
-#  quantizer.quantize()
+def Quantize(prototxt,caffemodel,test_iter=1,calib_iter=1,output_dir="work"):
+  quantizer = xfdnnQuantizer(
+    model=prototxt,
+    weights=caffemodel,
+    test_iter=test_iter,
+    calib_iter=calib_iter,
+    auto_test=True,
+    output_dir=output_dir,
+  )
+  quantizer.quantize()
 
 # Standard compiler arguments for XDNNv3
 def Getopts():
@@ -127,7 +127,7 @@ if __name__ == "__main__":
       filesToClean = [os.path.join(os.path.abspath(args["output_dir"]),f) for f in os.listdir(args["output_dir"])]
       for f in filesToClean:
         os.remove(f)
-    #Quantize(args["prototxt"],args["caffemodel"],args["qtest_iter"],args["qcalib_iter"],args["output_dir"])
+    Quantize(args["prototxt"],args["caffemodel"],args["qtest_iter"],args["qcalib_iter"],args["output_dir"])
     Compile(args["output_dir"])
     Cut(args["prototxt"],args["output_dir"])
     print("Generated model artifacts in %s"%os.path.abspath(args["output_dir"]))

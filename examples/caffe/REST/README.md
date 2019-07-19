@@ -15,7 +15,7 @@ head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > $HOME/CK-TO
 python $MLSUITE_ROOT/examples/caffe/resize.py $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min 256 256
 
 # Get Samples Models 
-python $MLSUITE_ROOT/examples/caffe/getModels.py
+python getModels.py
 
 # Setup ml-suite Environment Variables
 source $MLSUITE_ROOT/overlaybins/setup.sh
@@ -33,8 +33,7 @@ This performs quantization, compilation and subgraph cutting in a single step. T
   Subgraph Cutting - In this step, the original graph is cut, and a custom FPGA accelerated python layer is inserted to be used for Inference.
 
   ```
-  cd $MLSUITE_ROOT/examples/caffe 
-  python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prepare
+   python run.py --prototxt /opt/models/caffe/bvlc_googlenet/bvlc_googlenet_train_val.prototxt --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prepare
   ```
 
 ### Running an Inference Server for Classification
@@ -44,9 +43,7 @@ In this step, a python flask inference server is started, and the caffe model as
 This starts an inference server which can be accessed at port 5000 from end point /predict. For example: http://127.0.0.1:5000/predict
 
    ```
-   cd $MLSUITE_ROOT/examples/caffe/REST
-   ln -s ../work .
-   python app.py --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prototxt $MLSUITE_ROOT/examples/caffe/work/xfdnn_auto_cut_deploy.prototxt --synset_words /home/mluser/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt --port 5000
+   python app.py --caffemodel /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel --prototxt xfdnn_auto_cut_deploy.prototxt --synset_words /home/mluser/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt --port 5000
    ```
 
 You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server. Note that you wont just type the inference server URL on the browser, but only use the command line options shown below to pass an input image to classify. Feel free to take this as a starting point and modify as needed for your inference server needs. 
@@ -60,7 +57,6 @@ You can switch the above command to running in the background, and you can use a
 There is also a python script in the same directory to do the same:
 
    ```
-   cd $MLSUITE_ROOT/examples/caffe/REST
    python -m pip install requests --user
    python request.py --rest_api_url http://localhost:5000/predict --image_path $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG
    ```
@@ -68,7 +64,6 @@ There is also a python script in the same directory to do the same:
 ### Running all of them in one step (preparing and serving up the inference server)
 
    ```
-   cd $MLSUITE_ROOT/examples/caffe/REST
    ./run.sh
    ```
 
@@ -80,9 +75,9 @@ There is also a python script in the same directory to do the same:
    LABELS="/home/mluser/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt"
    PORT="5000"
 
-   python /opt/ml-suite/examples/caffe/run.py --prototxt ${MODEL_PROTOTXT} --caffemodel ${MODEL_WEIGHTS} --prepare
+   python ../run.py --prototxt ${MODEL_PROTOTXT} --caffemodel ${MODEL_WEIGHTS} --prepare
 
-   python /opt/ml-suite/examples/caffe/REST/app.py --caffemodel ${MODEL_WEIGHTS} --prototxt /opt/ml-suite/examples/caffe/work/xfdnn_auto_cut_deploy.prototxt --synset_words ${LABELS} --port ${PORT}
+   python app.py --caffemodel ${MODEL_WEIGHTS} --prototxt xfdnn_auto_cut_deploy.prototxt --synset_words ${LABELS} --port ${PORT}
    ```
 
 You can switch the above command to running in the background, and you can use a CURL command perform inference on an input image, passed to the REST inference server. Note that you wont just type the inference server URL on the b
@@ -108,7 +103,6 @@ There is also a python script in the same directory to do the same:
    Run the benchmark.py script in /opt/ml-suite/examples/caffe/ directory, which will send a sample input image to the inference server repeatedly while measuring response times, and finally calculating the average response time.
 
   ```
-  cd $MLSUITE_ROOT/examples/caffe/REST
   python benchmark.py --rest_api_url http://localhost:5000/predict --image_path /opt/share/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/ILSVRC2012_val_00000001.JPEG
   ```
 

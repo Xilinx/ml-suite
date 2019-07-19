@@ -4,8 +4,10 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
+import numpy as np
 import caffe
 import argparse
+#import copy
 
 def forward(prototxt,caffemodel,numBatches): 
   net = caffe.Net(prototxt,caffemodel,caffe.TEST)

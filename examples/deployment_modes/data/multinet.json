@@ -3,7 +3,7 @@
   {
     "name":"googlenet",
     "net":"googlenet_v1",
-    "netcfg":"data/googlenet_v1_8b_autoAllOpt.json",
+    "netcfg":"data/googlenet_v1_8b_latency.json",
     "weights":"data/googlenet_v1_data.h5",
     "quantizecfg":"data/googlenet_v1_8b_xdnnv3.json",
     "PE":"0",

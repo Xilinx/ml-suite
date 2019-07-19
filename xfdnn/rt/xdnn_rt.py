@@ -18,12 +18,12 @@ import caffe
 import numpy as np
 from tensorflow.python.ops import script_ops as _script_ops
 
-from xfdnn.tools.compile.bin.xfdnn_compiler_tensorflow import TFFrontend
-from xfdnn.tools.compile.bin.xfdnn_compiler_caffe import CaffeFrontend
-from . import xdnn_util
-from . import xdnn_tf_util
-from .xdnn_opt import CPUTransform, HWEmuTransform, FPGATransform
-from ext.PyTurboJPEG import imread as _imread
+from xfdnn_compiler_tensorflow import TFFrontend
+from xfdnn_compiler_caffe import CaffeFrontend
+import xdnn_util
+import xdnn_tf_util
+from xdnn_opt import CPUTransform, HWEmuTransform, FPGATransform
+import PyTurboJPEG
 
 
 
@@ -855,6 +855,75 @@ class TFxdnnRT(xdnnRT):
                                                    freeze_blacklist=[], freeze_whitelist=[])
 
 
+    def feed_forward_uber(self, inputs, outputs=None, preprocess=None, **kwargs):
+        if not outputs:
+          outputs = self.outputs
+        if not preprocess:
+          preprocess = self.preprocess
+        if not isinstance(inputs, list):
+          inputs = [inputs]
+
+        config   = kwargs['config'] if 'config' in kwargs else None
+        num_iter = kwargs['num_iter'] if 'num_iter' in kwargs else 2
+
+        with tf.Graph().as_default() as graph:
+          dataset  = tf.data.Dataset.from_tensors(preprocess(inputs[0])).repeat()
+          iterator = dataset.make_one_shot_iterator()
+          return_t = tf.import_graph_def(graph_def=self.graph_def, input_map={self.inputs[0]:
+                                                                              iterator.get_next()},
+                                         return_elements=outputs, name='')
+
+          # Unwrap the returned output node. For now, we assume we only
+          # want the tensor with index `:0`, which is the 0th element of the
+          # `.outputs` list.
+          output_t = return_t[0].outputs[0]
+
+
+          ## declare py_functions in graph
+          py_func_tokens = _script_ops._py_funcs._funcs.keys()
+          for token in py_func_tokens:
+            _script_ops._py_funcs.remove(token)
+          _script_ops._py_funcs._unique_id = 0
+          for pyfunc_name, (partition, input_names, output_dtypes) in self.fpga_pynode_dict.items():
+            input_tensors = [graph.get_tensor_by_name(name) for name in input_names]
+            fpga_output_tensor = tf.py_func(partition.forward_exec, input_tensors, output_dtypes,
+                                            stateful=False, name=pyfunc_name)
+
+          ## declare input and output tensors to network graph
+          input_tensors  = [graph.get_operation_by_name(name).outputs[0] for name in self.inputs]
+          output_tensors = []
+          for output in outputs:
+            if isinstance(output, list):
+              output = [graph.get_operation_by_name(name).outputs[0] for name in output]
+            else:
+              output = graph.get_operation_by_name(output).outputs[0]
+            output_tensors.append(output)
+
+          import timeit
+          with tf.Session(graph=graph, config=config) as sess:
+            # create log and inlude graph in the log
+            #log_writer = tf.summary.FileWriter('./logs', sess.graph)
+
+            # Warm up run
+            print("Warm up run ...")
+            for _ in range(10):
+              ret = sess.run(output_tensors)
+
+            print("Start timing ...")
+            timings = np.zeros(num_iter)
+            for i in range(num_iter):
+              start_time = timeit.default_timer()
+              ret = sess.run(output_tensors)
+              end_time = timeit.default_timer()
+              timings[i] = end_time - start_time
+
+              print("Iteration {}: {:.6f} s".format(i, end_time - start_time))
+
+            #log_writer.close()
+
+        return ret[0], list(timings)
+
+
     def forward_exec(self, inputs, outputs=None, preprocess=None, **kwargs):
         if not outputs:
           outputs = self.outputs
@@ -927,5 +996,5 @@ class TFxdnnRT(xdnnRT):
           if isinstance(inp, np.ndarray):
             res.append(inp)
           elif isinstance(inp, basestring):
-            res.append(_imread(inp))
+            res.append(PyTurboJPEG.imread(inp))
         return res

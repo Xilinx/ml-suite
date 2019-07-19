@@ -1,29 +1,29 @@
 #!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 tag=$1
-
-# export MLSUITE_ROOT
-if [ -z $MLSUITE_ROOT];
-then
-    echo "Please set MLSUITE_ROOT"
-    exit 1;
-fi
-
+mlsuite=`dirname $PWD`
 
 #sudo \ 
 docker run \
-  --name "mluser_container" \
+  --name "anup_container" \
   --rm \
   --net=host \
   --privileged=true \
   -it \
   -v /dev:/dev \
   -v /opt/xilinx:/opt/xilinx \
-  -v $MLSUITE_ROOT:/opt/ml-suite \
+  -v $mlsuite:/opt/ml-suite \
+  -v /wrk/acceleration/models:/opt/models \
   -v /wrk/acceleration/shareData:/opt/data \
-  -v $MLSUITE_ROOT/share:/opt/share \
-  -v $MLSUITE_ROOT/share/CK-TOOLS:/home/mluser/CK-TOOLS \
   -w /opt/ml-suite \
   xilinxatg/ml_suite:$tag \
   bash
+#&& cd test_deephi && bash -x nw_list.sh"
 

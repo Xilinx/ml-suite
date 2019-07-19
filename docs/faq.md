@@ -76,13 +76,15 @@ FPGA accelerated networks are far superior to GPU accelerated networks for laten
 4. Ensure your hardware environment is set up appropriately (Before you attempt to deploy on hardware)  
   a. If you are running in the cloud, you can take it for granted that this is done.  
   b. [Hardware setup](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=vcu1525;d=ug1268-vcu1525-reconfig-accel-platform.pdf;a=xBoardInstallation)
-5. Quantize the model  
-6. Compile the model  
+5. Compile the model  
+  a. [See compiler tutorial](../../notebooks/compiler_caffe.ipynb)
+6. Quantize the model  
+  a. [See quantizer tutorial](../../notebooks/quantizer_caffe.ipynb)
 7. Deploy the model  
   a. This is accomplished using ml-suite python APIs.  
-  b. [See test classify](../examples/deployment_modes/test_classify.py)  
-  c. Alternatively, see the jupyter tutorial that covers quantize, compile, deploy for image classification w/ InceptionV1  
-      aa. [image classification caffe](../notebooks/image_classification_caffe.ipynb)
+  b. [See test classify](../../examples/deployment_modes/test_classify.py)  
+  c. Alternatively, see the jupyter tutorial that covers compile, quantize, deploy for image classification w/ InceptionV1  
+      aa. [image classification caffe](../../notebooks/image_classification_caffe.ipynb)
 
 Should you hit errors at step 5, it is possible that your network needs some modification to run optimally.  
 Ensure that you aren't dealing with unsupported layers.  

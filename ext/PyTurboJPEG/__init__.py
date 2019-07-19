@@ -6,7 +6,7 @@
 #
 import cv2
 import os 
-from . turbojpeg import TurboJPEG
+from turbojpeg import TurboJPEG
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 lib_jpeg_turbo = TurboJPEG( dir_path + "/lib/libturbojpeg.so")

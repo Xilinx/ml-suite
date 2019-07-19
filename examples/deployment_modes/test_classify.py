@@ -6,10 +6,8 @@
 #
 
 import sys
-
+import xdnn, xdnn_io
 import numpy as np
-
-from xfdnn.rt import xdnn, xdnn_io
 
 import timeit
 
@@ -27,25 +25,24 @@ def main():
   fcWeight, fcBias = xdnn_io.loadFCWeightsBias(args)
   img_paths = xdnn_io.getFilePaths(args['images'])
   fcOutput = np.empty((args['batch_sz'], args['outsz'],), dtype=np.float32, order='C')
-
-  inShape = (args['batch_sz'],) +  tuple ( tuple (fpgaRT.getInputDescriptors().values() )[0][1:] )
- 
+  inShape = (args['batch_sz'],) + tuple(fpgaRT.getInputDescriptors().itervalues().next()[1:])
   labels = xdnn_io.get_labels(args['labels'])
   if args['golden']:
     goldenMap = xdnn_io.getGoldenMap(args['golden'])
     top5Count = 0
     top1Count = 0
 
-  firstInput = list(fpgaInput.values())[0]
-  firstOutput = list (fpgaOutput.values())[0] 
+  firstInput = fpgaInput.itervalues().next()
+  firstOutput = fpgaOutput.itervalues().next() 
 
-  for i in range(0, len(img_paths), args['batch_sz']):
+  for i in xrange(0, len(img_paths), args['batch_sz']):
     pl = []
     for j, p in enumerate(img_paths[i:i + args['batch_sz']]):
       firstInput[j, ...], _ = xdnn_io.loadImageBlobFromFile(p, args['img_raw_scale'], args['img_mean'], args['img_input_scale'], inShape[2], inShape[3])
       pl.append(p)
 
     fpgaRT.execute(fpgaInput, fpgaOutput)
+    
     xdnn.computeFC(fcWeight, fcBias, firstOutput, fcOutput)
     softmaxOut = xdnn.computeSoftmax(fcOutput)
     xdnn_io.printClassification(softmaxOut, pl, labels)

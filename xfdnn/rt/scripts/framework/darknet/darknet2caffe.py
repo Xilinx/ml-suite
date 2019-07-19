@@ -29,8 +29,8 @@ THE SOFTWARE.
 import sys
 sys.path.insert(0, '/wrk/acceleration/users/arun/Deephi/caffe_decent/python')
 import caffe
-from collections import OrderedDict
 import numpy as np
+from collections import OrderedDict
 from cfg import *
 from prototxt import *
 

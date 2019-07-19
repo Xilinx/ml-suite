@@ -16,29 +16,27 @@ import operator, pprint
 from os import listdir as _listdir
 from os.path import join as _join
 
+import tensor_tools as tt
 import json
-import numpy as np
+import keras_tools as kt
 
-from xfdnn.rt.xdnn_env                import xdnn_env as _xdnn_env, xdnn_fpga_env as _xdnn_fpga_env
-from xfdnn.rt.xdnn_util               import DefaultOrderedDict
-from xfdnn.tools.compile.network      import tensor_tools as tt
-from xfdnn.tools.compile.network      import keras_tools as kt
-from xfdnn.tools.emu.factory          import factory as _factory
-from xfdnn.tools.emu.conv_layer       import conv_layer as _conv_layer
-from xfdnn.tools.emu.eltwise_layer    import eltwise_layer as _eltwise_layer
-from xfdnn.tools.emu.scale_layer      import scale_layer as _scale_layer
-from xfdnn.tools.emu.concat_layer     import concat_layer as _concat_layer
-from xfdnn.tools.emu.identity_layer   import identity_layer as _identity_layer
-from xfdnn.tools.emu.pool_layer       import pool_layer as _pool_layer
-from xfdnn.tools.emu.reshape_layer    import reshape_layer as _reshape_layer
-from xfdnn.tools.emu.matop_layer      import matop_layer as _matop_layer
-from xfdnn.tools.emu.quantize_layer   import quantize_layer as _quantize_layer, unquantize_layer as _unquantize_layer
-from xfdnn.tools.emu.softmax_layer    import softmax_layer as _softmax_layer
-from xfdnn.tools.emu.relu_layer       import relu_layer as _relu_layer
-from xfdnn.tools.emu.batchnorm_layer  import batchnorm_layer as _batchnorm_layer
-from xfdnn.tools.emu.reduce_layer     import reduce_layer as _reduce_layer
-from xfdnn.tools.emu.fpga_pydot_layer import fpga_pydot_layer as _fpga_pydot_layer
-from xfdnn.tools.emu.pool_hwemu_layer import pool_hwemu_layer
+from xdnn_env         import xdnn_env as _xdnn_env, xdnn_fpga_env as _xdnn_fpga_env
+from factory          import factory as _factory
+from conv_layer       import conv_layer as _conv_layer
+from eltwise_layer    import eltwise_layer as _eltwise_layer
+from scale_layer      import scale_layer as _scale_layer
+from concat_layer     import concat_layer as _concat_layer
+from identity_layer   import identity_layer as _identity_layer
+from pool_layer       import pool_layer as _pool_layer
+from reshape_layer    import reshape_layer as _reshape_layer
+from matop_layer      import matop_layer as _matop_layer
+from quantize_layer   import quantize_layer as _quantize_layer, unquantize_layer as _unquantize_layer
+from softmax_layer    import softmax_layer as _softmax_layer
+from relu_layer       import relu_layer as _relu_layer
+from batchnorm_layer  import batchnorm_layer as _batchnorm_layer
+from reduce_layer     import reduce_layer as _reduce_layer
+from fpga_pydot_layer import fpga_pydot_layer as _fpga_pydot_layer
+from pool_hwemu_layer import pool_hwemu_layer
 
 
 
@@ -116,6 +114,7 @@ class CPUTransform:
     return sub_graph
 
   def create_compiled_schedule(self, networkjson, weightdir, inps) :
+    import numpy as np
     weights = _listdir(weightdir)
     weights = [_join(weightdir, wt) for wt in weights]
     const = {}
@@ -200,62 +199,79 @@ class CPUTransform:
   def getLayerNames(self):
     return [layer.output for layer in self._layers]
 
-
-
-
-
-
 class FPGATransform (CPUTransform):
   def __init__(self, time_to_layer_list, layerparameter_dict, compilerJson, options=object(),
-               native_graph=None, filename=None):
+               native_graph=None, name_postfix=None):
     CPUTransform.__init__(self, time_to_layer_list, layerparameter_dict, options, native_graph)
 
     print("Creating schedule for \"FPGA\"")
 
-    self.filename = filename
+    self.name_postfix = name_postfix
     self.fpga_layer_cnt = 0
 
-    layerQuantMap = {l['name']: l for l in compilerJson['quantization']['network']}
-    boundryMap    = {'inputs':  compilerJson.get('inputs', []),
-                     'outputs': compilerJson.get('outputs', [])}
+    if isinstance(options.fpga_recipe, dict):
+      recipe = options.fpga_recipe
+    elif isinstance(options.fpga_recipe, _string_types):
+      recipe = _loads(options.fpga_recipe)
+    else:
+      recipe = {"start": [], "end": []}
+
+    self._boundryMap = {'inputs':  compilerJson.get('inputs', []),
+                        'outputs': compilerJson.get('outputs', [])}
 
     ## NOTE: each layer might have multiple commands due to gather and scatter
-    layerParameterMap = DefaultOrderedDict(list)
+    self._layerParameterMap = defaultdict(list)
     for l in compilerJson['network']:
-      layerParameterMap[l['name']] += [l]
+      self._layerParameterMap[l['name']] += [l]
 
-    xdnn_env = _xdnn_fpga_env(options.xclbin, quant_info=compilerJson['quantization'],
-                              quant_cfgfile=options.quant_cfgfile,
-                              isxdnnv3=(options.xdnnv3==True))
+    self._layerQuantMap = {l['name']: l for l in compilerJson['quantization']['network']}
 
-    layersForFpga = {ol.output: ol for ol in self._layers}
+    self.xdnn_env = _xdnn_fpga_env(options.xclbin, quant_info=compilerJson['quantization'], quant_cfgfile=options.quant_cfgfile, isxdnnv3=(options.xdnnv3==True))
+
+    newSchedule = []  # we will be building this
+    layersForFpga = []
+    collectLayersForFpga = False
+    for li, ol in enumerate(self._layers):
+      if ((not recipe["start"] and isinstance(ol, _conv_layer))
+          or ol.output in recipe["start"]):
+        collectLayersForFpga = True
+
+      if ol.output in self._layerParameterMap and collectLayersForFpga:
+        layersForFpga.append(ol)
+      else:
+        newSchedule.append(ol)
+
+      if not recipe["end"] or ol.output in recipe["end"]:
+        if layersForFpga:
+          newSchedule.append(self._make_fpga_layer(layersForFpga))
+          layersForFpga = []
+        collectLayersForFpga = False
+
+    if layersForFpga:
+      newSchedule.append(self._make_fpga_layer(layersForFpga))
 
     # update schedule with new FPGA schedule
-    self._layers = self._make_fpga_layer(layersForFpga, layerParameterMap, layerQuantMap, boundryMap, xdnn_env)
+    self._layers = newSchedule
 
-  def _make_fpga_layer(self, layersForFpga, layerParameterMap, layerQuantMap, boundryMap, xdnn_env):
-    compilerInfo = DefaultOrderedDict(dict)
-    for ol_name, layerParams in layerParameterMap.items():
-      ol = layersForFpga.get(ol_name, None)
-      compilerInfo[ol_name]['layerParameter'] = layerParameterMap[ol_name]
-      compilerInfo[ol_name]['layerQuant'] = layerQuantMap.get(ol_name, None)
-      compilerInfo[ol_name]['weights'] = ol.filter_weights if ol and hasattr(ol, "filter_weights") else None
-      compilerInfo[ol_name]['biases'] = ol.biases if ol and hasattr(ol, "biases") else None
+  def _make_fpga_layer(self, layersForFpga):
+    compilerInfo = OrderedDict()
+    for ol in layersForFpga:
+      ol_name = ol.output
+      compilerInfo[ol_name] = {}
+      compilerInfo[ol_name]['layerParameter'] = self._layerParameterMap[ol_name]
+      compilerInfo[ol_name]['layerQuant'] = self._layerQuantMap.get(ol_name, None)
+      compilerInfo[ol_name]['weights'] = ol.filter_weights if hasattr(ol, "filter_weights") else None
+      compilerInfo[ol_name]['biases'] = ol.biases if hasattr(ol, "biases") else None
 
-    l = _fpga_pydot_layer(compilerInfo=compilerInfo, boundryMap=boundryMap,
-                          xdnn_env=xdnn_env, filename=self.filename)
+    l = _fpga_pydot_layer(compilerInfo=compilerInfo, boundryMap=self._boundryMap,
+                          xdnn_env=self.xdnn_env, name_postfix=self.name_postfix)
 
     l.name = 'fpga_pydot_layer_{}'.format(self.fpga_layer_cnt)
     self.fpga_layer_cnt += 1
 
-    l.setInput([input['input_name'] for input in boundryMap['inputs']])
-    l.setOutput([output['previous_layers'][0] for output in boundryMap['outputs']])
-    return [l]
-
-
-
-
-
+    l.setInput([input['input_name'] for input in self._boundryMap['inputs']])
+    l.setOutput([output['previous_layers'][0] for output in self._boundryMap['outputs']])
+    return l
 
 class HWEmuTransform(CPUTransform):
   def __init__(self, time_to_layer=None, layer_param_dict=None, options=object(), native_graph=None, networkjson = None, weightdir = None, inps = None, outs = None, isV3 = True):

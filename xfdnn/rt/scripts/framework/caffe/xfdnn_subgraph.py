@@ -5,11 +5,11 @@
 # (C) Copyright 2018, Xilinx, Inc.
 #
 #!/usr/bin/env python
-import argparse
-import json # parse compiler
+import xdnn_io
 import google.protobuf.text_format as pbtf
 import caffe.proto.caffe_pb2 as caffe_pb2
-from xfdnn.rt import xdnn_io
+import argparse
+import json # parse compiler
 
 def build_tensor_list(netpb):
   tensorlist = {}
@@ -75,16 +75,10 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   
   #Add input
   input_layer = []
-  input_start_flag = True
   for l in netpb.layer:
     # do not remove input layers if in visited
-    #if (l.type == 'Input' and l.name in visited):
-    if (input_start_flag):
+    if (l.type == 'Input' and l.name in visited):
       input_layer.append(l)
-      for in_layer in FPGA_input_layer:
-	if in_layer == l.name:
-		input_start_flag = False
-
   newpb_layer.extend(input_layer)
   
   
@@ -98,7 +92,7 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   if args["profile"]:
     pylayer.top.append("xfdnn/"+graphname+"/latency") 
    
-  pylayer.python_param.module = "xfdnn.rt.scripts.framework.caffe.CaffeXFDNN"
+  pylayer.python_param.module = "CaffeXFDNN"
   pylayer.python_param.layer = "CaffeXFDNN"
   
   input_names = []
@@ -109,23 +103,12 @@ def cut_subgraph(netpb, in_blob, graphname, args):
   newpb_layer.append(pylayer)
   
   #Add non custom layer (Shell layer)
-  layer_exist = False
   newpb_shell_layer = []
-  for l in netpb.layer: 
+  for l in netpb.layer:
     # do remove layers if in visited
-    if l.name not in visited :
-	for i in newpb_layer:
-		if l.name == i.name:
-			layer_exist = True
-			break
-	
-	if not layer_exist :
-		newpb_shell_layer.append(l)
-
-	layer_exist = False
-
+    if l.name not in visited:
+      newpb_shell_layer.append(l)
   newpb_layer.extend(newpb_shell_layer)
-  
  
   #ONEHACK TO FIX MERGE LAYER TENSOR NAMES
   newpb_shell_layer.extend(input_layer)

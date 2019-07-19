@@ -4,9 +4,10 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
-import caffe
-
-from xfdnn.rt.scripts.framework.base.quantize_controls import quantize_controls
+import caffe,json
+import xdnn, xdnn_io
+from quantize_controls import quantize_controls
+import time
 
 class CaffeXFDNN_UnQuantize(caffe.Layer):
   def setup(self, bottom, top):

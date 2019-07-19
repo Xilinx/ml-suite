@@ -6,12 +6,11 @@
 #
 #!/usr/bin/env python
 
-import caffe
+import caffe,json
+import xdnn, xdnn_io
+from xdnn_rt_compiled import compilerxdnnRT
 import time
-
-from xfdnn.rt.xdnn_rt_compiled import compilerxdnnRT
-from xfdnn.rt import xdnn, xdnn_io
-
+import json
 # Our custom FPGA One-shot layer
 class CaffeXFDNN_XDLF(caffe.Layer):
 
