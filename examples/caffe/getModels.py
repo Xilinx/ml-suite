@@ -17,10 +17,9 @@ models = [
 for model in models:
   subprocess.call(["wget",model,"-O","temp.zip"])
   subprocess.call(["unzip","-o","temp.zip"])
-  # Strip Unnecessary heirarchy
   for Dir,SubDirs,Files in os.walk("models"):
-    if len(Files) > 0:
-      pathToParent = Dir
-      break
-  subprocess.call(["mv",pathToParent,modelsDir])   
-  subprocess.call(["rm","-rf","temp.zip","models"])
+    for file_name in Files:
+      full_file_name = os.path.join(Dir, file_name)
+      if os.path.isfile(full_file_name):
+        shutil.copy(full_file_name, modelsDir)
+subprocess.call(["rm", "-rf", "temp.zip", "models"])

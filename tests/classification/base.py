@@ -19,7 +19,7 @@ class TestConfig():
 def run_test(testName, cmdStr, verify, platform):
   if platform is not None:
     cmdStr += " -p " + platform
-    
+
   _testSrcPath = "%s/../../examples/deployment_modes" \
     % os.path.dirname(os.path.realpath(__file__))
 
@@ -30,10 +30,10 @@ def run_test(testName, cmdStr, verify, platform):
   output = ""
   try:
     print "\nRunning [%s] ...\nCommand: %s" % (testName, cmdStr)
-    process = subprocess.Popen(cmdStr, 
+    process = subprocess.Popen(cmdStr,
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     # replace '' with b'' for Python 3 below
-    for line in iter(process.stdout.readline, ''): 
+    for line in iter(process.stdout.readline, ''):
       output += line
       sys.stdout.write(line)
     process.stdout.close()
@@ -60,24 +60,25 @@ def run_test(testName, cmdStr, verify, platform):
 class OutputVerifier():
   def __init__(self, expected):
     self._expected = expected
-  
+
   def get_predictions(self, output):
-    predictions = []
+    predictions = {}
     lines = output.split("\n")
     for l in lines:
       match = re.search(r'^([0-9.]+)\s+\"(.+)\"', l)
       if not match:
         continue
-      predictions.append([match.group(1), match.group(2)])
-  
+      predictions[match.group(2)] = match.group(1)
+
     return predictions
-  
+
   def verify_predictions(self, output):
     pred = self.get_predictions(output)
     golden = self.get_predictions(self._expected)
-  
-    if pred != golden:
-      raise ValueError, "\nExpected:\n%s" % self._expected
+
+    diffs = {key: (val, pred[key] if key in pred else None) for key, val in golden.items() if key not in pred or pred[key] != val}
+    if diffs:
+      raise ValueError('mis-prediction ERROR!!\n{}'.format('\n'.join(['Expected {} predicted {} for label \"{}\"'.format(val[0], val[1], key) for key, val in diffs.items()])))
 
   def get_accuracy(self, output):
     lines = output.split("\n")

@@ -24,11 +24,13 @@ Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end
  To run:
  1. Connect to F1 or Local Hardware
  
- 2. Download the xilinx trained models from Xilinx.com, save as models at the root of this repo 
+ 2. setup the docker/comntainer. Please refer to [container.md](../../docs/container.md) for details on setting up the container
  
- 3. `cd MLsuite/apps/yolo`
+ 3. Download the xilinx trained models from Xilinx.com, save as models at the root of this repo 
  
- 4. Familiarize yourself with the script usage by:  
+ 4. `cd MLsuite/apps/yolo`
+ 
+ 5. Familiarize yourself with the script usage by:  
   `./run.sh -h`  
   The key parameters are:
     - -p `platform` Valid values are `alveo-u200`, `alveo-u250`, `aws`, `nimbix`, `1525`, `1525-ml` and `gpu` 

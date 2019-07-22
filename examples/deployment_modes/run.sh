@@ -226,21 +226,15 @@ elif [ "$TEST" == "classify_cpp" ]; then
   make
   cp ./classify.exe ../classify.exe
   cd -
-  if [ "$MODEL" == "googlenet_v1" ]; then
-     FPGAOUTSZ=1024
-  elif [ "$MODEL" == "resnet50" ];then
-     FPGAOUTSZ=2048
-  fi
-  BATCHSIZE=2
+  BATCHSIZE=1
   DIRECTORY=$MLSUITE_ROOT/examples/deployment_modes/dog.jpg
-  BASEOPT_CPP="--xclbin $XCLBIN_PATH/$XCLBIN --netcfg $NETCFG --fpgaoutsz $FPGAOUTSZ --datadir $WEIGHTS --labels ./synset_words.txt --quantizecfg $QUANTCFG --img_input_scale $IMG_INPUT_SCALE --batch_sz $BATCHSIZE"
+  BASEOPT_CPP="--xclbin $XCLBIN_PATH/$XCLBIN --netcfg $NETCFG --datadir $WEIGHTS --labels ./synset_words.txt --quantizecfg $QUANTCFG --img_input_scale $IMG_INPUT_SCALE --batch_sz $BATCHSIZE"
   BASEOPT_CPP+=" --image $DIRECTORY"
-  BASEOPT_CPP+=" --in_w 224 --in_h 224 --out_w 1 --out_h 1 --out_d $FPGAOUTSZ"
-
+  
   OPENCV_LIB=${MLSUITE_ROOT}/opencv_lib
   HDF5_PATH=${MLSUITE_ROOT}/ext/hdf5
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB
-  #export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB
   if [ "$KCFG" == "v3" ]; then
 	  cp $MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so.v3 $OPENCV_LIB/libxfdnn.so
   else

@@ -11,8 +11,8 @@ import math
 import sys
 import timeit
 import json
-import xdnn, xdnn_io
 import numpy as np
+from xfdnn.rt import xdnn, xdnn_io
 
 # example for multiple executors
 def main(argv):
