@@ -83,8 +83,9 @@ while(idx < len(lines)):
                  hw_err_flag = 1
             
             if "exec_xdnn" in line and data['network_name'] == ' yolov2':
-                 reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip())
-                 l1 = reobj.groups()
+                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+                 #reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip())
+                 l1 = reobj[0]
                  latency = ''.join(l1)
                  data["latency mode exec_xdnn in ms"] = latency
             
@@ -103,8 +104,9 @@ while(idx < len(lines)):
                  hw_err_flag = 1
            
             if "mAP:" in line and latency_mode :
-                 reobj= re.match('mAP: (\d+\.\d+)', line.strip())
-                 mAP = reobj.groups()
+                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+                 #reobj= re.match('mAP: (\d+\.\d+)', line.strip())
+                 mAP = reobj[0]
                  score = ''.join(mAP)
                  data["latency mode HW acc"] = str(round(float(score)*100, 2))
                  if data["latency mode HW acc"] < 45.0 :
@@ -115,8 +117,9 @@ while(idx < len(lines)):
 
 
             if "exec_xdnn" in line and latency_mode :
-                 reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip())
-                 l1 = reobj.groups()
+                 #reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip())
+                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+                 l1 = reobj[0]
                  latency = ''.join(l1)
                  data["latency mode exec_xdnn in ms"] = latency
             
@@ -166,7 +169,7 @@ while(idx < len(lines)):
             
             if "hw_counter" in line and not latency_mode :
                  #print lines[idx-1].strip()
-                 #print line
+                 print line
 		 reobj = re.findall(r'-?\d+\.\d+', line.strip())
                  #reobj= re.match('\[XDNN\]   hw_counter     : (\d+\.\d+) ms', line.strip())
                  l1 = reobj[0]
@@ -178,21 +181,26 @@ while(idx < len(lines)):
                  hw_err_flag = 1
            
 
-            if "subgraph0/latency" in line and not latency_mode :
-                 #print lines[idx-1].strip()
-                 print line
-                 reobj= re.match('xfdnn/subgraph0/latency  -- This Batch:  \[(\d+\.\d+)\]  Average:  \[(\d+\.\d+)]  Batch#:  (\d+)', line.strip())
-                 cur_lat, avg_lat, batch_num = reobj.groups()
-                 #reobj= re.match('\[XDNN\]   hw_counter     : (\d+\.\d+) ms', line.strip())
-                 #l1 = reobj.groups()
-                 #latency = ''.join(l1)
-                 #print latency
-                 #print type(latency)
-                 data["throughput mode hw_counter in ms"] = avg_lat
+#            if "subgraph0/latency" in line and not latency_mode :
+#                 #print lines[idx-1].strip()
+#                 print line
+#                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+#                 #print reobj
+#                 #reobj= re.match('xfdnn/subgraph0/latency  -- This Batch:  \[(\d+\.\d+)\]  Average:  \[(\d+\.\d+)]  Batch#:  (\d+)', line.strip())
+#                 #cur_lat, avg_lat, batch_num = reobj.groups()
+#                 #reobj= re.match('\[XDNN\]   hw_counter     : (\d+\.\d+) ms', line.strip())
+#                 l1 = reobj[1]
+#                 avg_lat = ''.join(l1)
+#                 #l1 = reobj.groups()
+#                 #latency = ''.join(l1)
+#                 #print latency
+#                 #print type(latency)
+#                 data["throughput mode hw_counter in ms"] = avg_lat
            
             if "exec_xdnn" in line and not latency_mode :
-                 reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip())
-                 l1 = reobj.groups()
+                 #reobj= re.match('\[XDNN\]   exec_xdnn      : (\d+\.\d+) ms', line.strip()
+                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+                 l1 = reobj[0]
                  latency = ''.join(l1)
                  data["throughput mode exec_xdnn in ms"] = latency
             
@@ -211,8 +219,9 @@ while(idx < len(lines)):
             #if "mAP:" in line and "Run mode : throughput" in lines[idx-3].strip():
             if "mAP:" in line and not latency_mode :
                  #print line
-                 reobj= re.match('mAP: (\d+\.\d+)', line.strip())
-                 mAP = reobj.groups()
+                 #reobj= re.match('mAP: (\d+\.\d+)', line.strip()
+                 reobj = re.findall(r'-?\d+\.\d+', line.strip())
+                 mAP = reobj[0]
                  score = ''.join(mAP)
                  data["throughput mode HW acc"] =  str(round(float(score)*100, 2))
                  if data["throughput mode HW acc"] < 45.0 :

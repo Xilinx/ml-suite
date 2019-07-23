@@ -171,6 +171,13 @@ elif [ "$MODEL" == "yolo_v3_standard_224" ]; then
   INSHAPE_CHANNELS=3
   INSHAPE_WIDTH=224
   INSHAPE_HEIGHT=224
+elif [ "$MODEL" == "yolo_v3_spp_608" ]; then
+  NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov3/fp32/yolov3_spp_608.prototxt
+  NET_DEF_FPGA=${MLSUITE_ROOT}/models/caffe/yolov3/fp32/yolov3_spp_608.prototxt
+  FPGAOUTSZ=2048000
+  INSHAPE_CHANNELS=3
+  INSHAPE_WIDTH=608
+  INSHAPE_HEIGHT=608
 
 elif [ "$MODEL" == "yolo_v3_tiny_608" ]; then
   NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov3/fp32/yolo_v3_tiny_608_bns.prototxt
@@ -297,7 +304,7 @@ if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yo
    [ $MODEL == "yolo_v2_tiny_224" ] || [ $MODEL == "yolo_v2_tiny_416" ] || [ $MODEL == "yolo_v2_tiny_608" ] ||
    [ $MODEL == "yolo_v2_standard_224" ] || [ $MODEL == "yolo_v2_standard_416" ] || [ $MODEL == "yolo_v2_standard_608" ] ||
    [ $MODEL == "yolo_v2_prelu_224" ] || [ $MODEL == "yolo_v2_prelu_416" ] || [ $MODEL == "yolo_v2_prelu_608" ] ||
-   [ $MODEL == "yolo_v3_standard_608" ] || [ $MODEL == "yolo_v3_standard_224" ] ||  [ $MODEL == "yolo_v3_tiny_608" ]; then
+   [ $MODEL == "yolo_v3_standard_608" ] || [ $MODEL == "yolo_v3_standard_224" ] || [ $MODEL == "yolo_v3_spp_608" ] || [ $MODEL == "yolo_v3_tiny_608" ]; then
 # setting dummy paths for below  
   NETCFG=$NET_DEF
 #'work/yolo.cmds'
@@ -351,6 +358,10 @@ fi
   elif [ $MODEL == "yolo_v3_standard_608" ] || [ $MODEL == "yolo_v3_standard_224" ]; then
     NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolo_v3_standard.caffemodel
     YOLO_TYPE="standard_yolo_v3"
+  elif [ $MODEL == "yolo_v3_spp_608" ] ; then
+    NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolov3_spp.caffemodel
+    YOLO_TYPE="spp_yolo_v3"
+
   elif [ $MODEL == "yolo_v3_tiny_608" ] ; then
     NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolo_v3_tiny_bns.caffemodel
     YOLO_TYPE="tiny_yolo_v3"
@@ -403,12 +414,13 @@ fi
       fi
     fi
 
+    #COMPILER_BASE_OPT+=" -M $DEBUG_LAYERS "
     if [ $RUN_COMPILER == "yes" ] ; then
         python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py $COMPILER_BASE_OPT 
         echo -e $COMPILEROPT  
         NETCFG=work/compiler.json
         WEIGHTS=work/deploy.caffemodel_data.h5
-    
+   
     if [ $COMPILEROPT == "throughput" ] && [ "$KCFG" == "v3" ]; then
        python $MLSUITE_ROOT/xfdnn/tools/compile/scripts/xfdnn_gen_throughput_json.py --i work/compiler.json --o work/compiler_tput.json            
        NETCFG=work/compiler_tput.json
@@ -465,7 +477,31 @@ if [ "$TEST" == "test_detect" ]; then
   BASEOPT+=" --yolo_model $YOLO_TYPE"
   BASEOPT+=" --caffe_inference $NET_DEF"
 
+elif  [ "$TEST" == "layer_wise" ]; then
+  #TEST=layer_wise.py
+  if [ -z ${DIRECTORY+x} ]; then
+  DIRECTORY=${MLSUITE_ROOT}/apps/yolo/test_1_image/
+  fi
+  BASEOPT+=" --images $DIRECTORY"
+  BASEOPT+=" --dsp $DSP_WIDTH"
+  BASEOPT+=" --net_weights $NET_WEIGHTS"
+  BASEOPT+=" --outsz $NUM_CLASSES"
+  BASEOPT+=" --in_shape $INSHAPE_CHANNELS $INSHAPE_WIDTH $INSHAPE_HEIGHT"
+  BASEOPT+=" --yolo_model $YOLO_TYPE"
+  BASEOPT+=" --caffe_inference $NET_DEF"
+  BASEOPT_DUMP=$BASEOPT 
+  DUMP_FOLDER=out_proto_dump 
+  BASEOPT_DUMP+=" --dump_proto $DUMP_FOLDER"
+  BASEOPT_DUMP+=" --net_def $NET_DEF"
+  python layer_wise.py $BASEOPT_DUMP
+  for file in ${DUMP_FOLDER}/*; do
+     echo $file
+     RUN_FPGA=$BASEOPT
+     RUN_FPGA+=" --net_def $file" 
+     python layer_wise.py $RUN_FPGA
+  done
 
+  
 elif [ "$TEST" == "darknet_detect" ]; then
   TEST=darknet_yolo.py
   if [ ! -z $GOLDEN ]; then

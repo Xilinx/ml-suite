@@ -238,6 +238,11 @@ class xyolo():
               out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer93-conv'].data.shape[1:4]))
               out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer105-conv'].data.shape[1:4]))
           
+          elif(config['yolo_model'] == 'spp_yolo_v3'):
+              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer88-conv'].data.shape[1:4]))
+              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer100-conv'].data.shape[1:4]))
+              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer112-conv'].data.shape[1:4]))
+
           print "out_data_shape : ", out_data_shape
           softmaxOut=[]
           for list_idx in range(len(out_data_shape)):
@@ -256,13 +261,12 @@ class xyolo():
         shapes.append(s)
 
       job['shapes'] = shapes # pass shapes to next stage
-
       # EXECUTE XDNN
       log.info("Running %s image(s)"%(config['batch_sz']))
       
       if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2')) :
           startTime = timeit.default_timer()
-          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'] )
           elapsedTime = timeit.default_timer() - startTime
            
           # Only showing time for second run because first is loading script
@@ -331,6 +335,29 @@ class xyolo():
 
           q_bbox.put((job, softmaxOut))
            
+      elif(config['yolo_model'] == 'spp_yolo_v3'):
+          startTime = timeit.default_timer()
+          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+          elapsedTime = timeit.default_timer() - startTime
+
+
+          startTime = timeit.default_timer()
+          for bt_idx in range(config['batch_sz']):
+                  softmaxOut[0][bt_idx,...] = fpgaOutput['layer88-conv'][bt_idx,...]
+                  softmaxOut[1][bt_idx,...] = fpgaOutput['layer100-conv'][bt_idx,...]
+                  softmaxOut[2][bt_idx,...] = fpgaOutput['layer112-conv'][bt_idx,...]
+
+
+
+          elapsedTime_cpu = timeit.default_timer() - startTime
+          # Only showing time for second run because first is loading script
+          print (elapsedTime*1000, (elapsedTime_cpu*1000) , ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
+          log.info("\nTotal FPGA: %f ms" % (elapsedTime_cpu*1000))
+          log.info("Image Time: (%f ms/img):" % ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+
+          q_bbox.put((job, softmaxOut))
+
       elif(config['yolo_model'] =='tiny_yolo_v2'):
           startTime = timeit.default_timer()
           fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
@@ -375,7 +402,7 @@ class xyolo():
       coco = job['coco']
       
      
-      if((config['yolo_model'] =='standard_yolo_v3') or (config['yolo_model'] =='tiny_yolo_v3')):
+      if((config['yolo_model'] =='standard_yolo_v3') or (config['yolo_model'] =='tiny_yolo_v3') or (config['yolo_model'] =='spp_yolo_v3')):
           anchorCnt = 3
           classes = config['classes']
           if (config['yolo_model'] =='tiny_yolo_v3') :

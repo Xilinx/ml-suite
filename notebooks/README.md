@@ -12,7 +12,7 @@ Follow these instructions from inside a running container
   python -m ck install package:imagenet-2012-val-min
   python -m ck install package:imagenet-2012-aux
   head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > \
-  $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/val_map.txt
+  $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/val.txt
   # Resize all the images to a common dimension for Caffe
   python resize.py $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min 256 256
   # Get the necessary models

@@ -400,7 +400,6 @@ def run(args=None):
   if not xdnn.createManager():
     sys.exit(1)
   fpgaRT = None
-  args['numprepproc'] = 1
   sharedInputArrs = []
   fpgaOutputs = []
 
