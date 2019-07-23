@@ -230,16 +230,9 @@ elif [ "$TEST" == "classify_cpp" ]; then
   DIRECTORY=$MLSUITE_ROOT/examples/deployment_modes/dog.jpg
   BASEOPT_CPP="--xclbin $XCLBIN_PATH/$XCLBIN --netcfg $NETCFG --datadir $WEIGHTS --labels ./synset_words.txt --quantizecfg $QUANTCFG --img_input_scale $IMG_INPUT_SCALE --batch_sz $BATCHSIZE"
   BASEOPT_CPP+=" --image $DIRECTORY"
-  
-  OPENCV_LIB=${MLSUITE_ROOT}/opencv_lib
+  OPENCV_LIB=/usr/lib/x86_64-linux-gnu
   HDF5_PATH=${MLSUITE_ROOT}/ext/hdf5
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB
-  if [ "$KCFG" == "v3" ]; then
-	  cp $MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so.v3 $OPENCV_LIB/libxfdnn.so
-  else
-	  cp $MLSUITE_ROOT/xfdnn/rt/xdnn_cpp/lib/libxfdnn.so $OPENCV_LIB/libxfdnn.so
-  fi
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB:$MLSUITE_ROOT/xfdnn/rt/libs
 
 ###########################
 # multi-PE multi-network (Run two different networks simultaneously)
@@ -270,4 +263,3 @@ else
   echo python $TEST $BASEOPT
   python $TEST $BASEOPT
 fi
-

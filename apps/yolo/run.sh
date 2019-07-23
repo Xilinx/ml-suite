@@ -556,10 +556,10 @@ elif [ "$TEST" == "yolo_cpp" ]; then
   BASEOPT_CPP+=" --batch_sz $BATCHSIZE"
   echo $BASEOPT_CPP
   ROOT_PATH=../../..
-  OPENCV_LIB=${ROOT_PATH}/opencv_lib
+  OPENCV_LIB=/usr/lib/x86_64-linux-gnu
   HDF5_PATH=${ROOT_PATH}/ext/hdf5
   NMS_LIB=${ROOT_PATH}/apps/yolo/nms
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROOT_PATH/xfdnn/rt/xdnn_cpp/lib:$ROOT_PATH/ext/zmq/libs:$ROOT_PATH/ext/boost/libs:$ROOT_PATH/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:${NMS_LIB}:$OPENCV_LIB
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROOT_PATH/xfdnn/rt/libs:$ROOT_PATH/ext/zmq/libs:$ROOT_PATH/ext/boost/libs:$ROOT_PATH/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:${NMS_LIB}:$OPENCV_LIB
   cd -  
   
 ############################
@@ -654,5 +654,4 @@ fi
 if [ ! -z $GOLDEN ]; then
   python get_mAP_darknet.py --class_names_file $LABELS --ground_truth_labels  $GOLDEN  --detection_labels ./out_labels 2>&1 |tee batch_out.txt
 fi
-
 
