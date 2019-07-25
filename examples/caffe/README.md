@@ -13,7 +13,7 @@ For published results, and details on running a full accuracy evaluation, please
    python -m ck pull repo:ck-env
    python -m ck install package:imagenet-2012-val-min
    python -m ck install package:imagenet-2012-aux
-   head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/val.txt
+   head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min/val_map.txt
    ```
 
    Resize all the images to a common dimension for Caffe
