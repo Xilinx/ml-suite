@@ -1,0 +1,9 @@
+
+#ifndef HDF5_CPP_INFER_H
+#define HDF5_CPP_INFER_H
+
+#include <vector>
+#include <unordered_map>
+void XDNNLoadFCWeights(std::unordered_map<int, std::vector<std::vector<float>> > &fc_wb_map,char *hdf5_file);
+
+#endif
