@@ -70,7 +70,7 @@ def getBar(val, maxVal, c):
   if not maxVal:
     return ''
   pct = val/maxVal 
-  return c * int(pct*20)
+  return c * int(pct*6)
 
 def printLine(screen, row, line):
   h, w = screen.getmaxyx()
@@ -117,7 +117,7 @@ def printStats(screen, stats, numPEs):
       slowestStageFlag = 'x'
 
     printLine(screen, ycurse,
-      "%13s %21s %6s (min: %.2f) %s" \
+      "%13s %8s %6s (min: %.2f) %s" \
       % (label, pctBar, "%.2f" % mean, minv, slowestStageFlag))
     ycurse += 1
 

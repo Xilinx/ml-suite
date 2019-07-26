@@ -754,7 +754,7 @@ int XDNNV3FillWeightsBiasQuantBlob(short *blob, int offset,
     unsigned short kern_w, unsigned short kern_h,
     unsigned int inChans, unsigned int outChans, int srcFullSectNum,
     int srcReplSectNum, int srcReplUnitNum, int srcReplUnitWidth,
-    bool convHalfRateMode, std::string opType, int slice);
+    bool convHalfRateMode, std::string opType, int slice, std::vector<int> &cfgWtEachItnDemarkIdx);
 template<typename DType>
 int XDNNFillWeightsBiasQuantBlob(short *blob, int offset,
     std::string layerName, std::string fpgaCfgFile,
@@ -762,6 +762,11 @@ int XDNNFillWeightsBiasQuantBlob(short *blob, int offset,
     const DType *bias, unsigned int bias_sz, float scale_bias,
     unsigned short kern_w, unsigned short kern_h,
     unsigned int inChans, unsigned int outChans, XDNNOperation op);
+void XDNNHBMDataSplitCfgBlob(int startCfgIdx, int endCfgIdx, std::vector<std::vector<int> > &dataBlobsHBM, std::vector<int> &idxInBankToFill, int* &dataBlobToSplit);
+
+void XDNNHBMDataSplitWtsBlob(int startWtIdx, int endWtIdx, std::vector<std::vector<int> > &dataBlobsHBM, std::vector<int> &idxInBankToFill, int* &dataBlobToSplit);
+
+void XDNNHBMDataSplit(std::vector<std::vector<int> > &dataBlobsHBM, std::vector<int> &breakIdx, int totalSize, int* &dataBlobToSplit);
 
 void XDNNPostProcessOutput(std::string layerName, void *output,
     int numBatches, int batchImgSize, std::string fpgaCfgFile,
@@ -791,7 +796,7 @@ extern "C" {
       unsigned short kern_w, unsigned short kern_h,
       unsigned int inChans, unsigned int outChans, int srcFullSectNum,
       int srcReplSectNum, int srcReplUnitNum, int srcReplUnitWidth,
-      bool convHalfRateMode, char *opType, int slice);
+      bool convHalfRateMode, char *opType, int slice, std::vector<int> &cfgWtEachItnDemarkIdx);
   int XDNNFillWeightsBiasQuantBlob(short *blob, int offset,
       char *layerName, char *fpgaCfgFile,
       const float *weight, unsigned int weight_sz, float scale_wgt,
