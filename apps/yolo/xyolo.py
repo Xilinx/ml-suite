@@ -229,8 +229,8 @@ class xyolo():
               out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer15-conv'].data.shape[1:4]))
 
           elif(config['yolo_model'] == 'tiny_yolo_v3'):
-              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer16-conv'].data.shape[1:4]))
-              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer23-conv'].data.shape[1:4]))
+              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer14-conv'].data.shape[1:4]))
+              out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer21-conv'].data.shape[1:4]))
 
               
           elif(config['yolo_model'] == 'standard_yolo_v3'):
@@ -304,10 +304,9 @@ class xyolo():
           startTime = timeit.default_timer()
           fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
           elapsedTime = timeit.default_timer() - startTime
-          print "yolo v3 tiny ", fpgaOutput['layer16-conv'].shape 
           for bt_idx in range(config['batch_sz']):
-                 softmaxOut[0][bt_idx,...] = fpgaOutput['layer16-conv'][bt_idx,...]
-                 softmaxOut[1][bt_idx,...] = fpgaOutput['layer23-conv'][bt_idx,...]
+                 softmaxOut[0][bt_idx,...] = fpgaOutput['layer14-conv'][bt_idx,...]
+                 softmaxOut[1][bt_idx,...] = fpgaOutput['layer21-conv'][bt_idx,...]
           
           q_bbox.put((job, softmaxOut)) 
          
@@ -406,7 +405,7 @@ class xyolo():
           anchorCnt = 3
           classes = config['classes']
           if (config['yolo_model'] =='tiny_yolo_v3') :
-              classes = 3
+              classes = 80
               #config['classes'] = 3   
           print "classes fpgaOutput len", classes, len(fpgaOutput)
           out_yolo_layers = process_all_yolo_layers(fpgaOutput, classes, anchorCnt, config['net_w'], config['net_h'])

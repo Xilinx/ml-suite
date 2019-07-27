@@ -421,9 +421,13 @@ def run(args=None):
   
    
   
-  num_shared_slots = args['numstream']  
+  num_shared_slots = max(args['batch_sz'], args['numstream'] )
+
+  if(args['numstream']  < args['batch_sz']):
+     print "\n\nNOTE : NumStreams should be higher than batch size."
+     print "     : Overwriting NumStreams with batch size value: " ,args['batch_sz'], "\n\n\n" 
   # shared memory from preprocessing to fpga forward
-  shared_trans_arrs = SharedMemoryQueue("trans",num_shared_slots, input_shapes +[(4)])
+  shared_trans_arrs = SharedMemoryQueue("trans",num_shared_slots  , input_shapes +[(4)])
   # shared memory from fpga forward to postprocessing
   shared_output_arrs = SharedMemoryQueue("output",num_shared_slots, output_shapes + [(args['batch_sz'], 4)])
     
