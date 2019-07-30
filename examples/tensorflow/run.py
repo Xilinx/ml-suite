@@ -98,8 +98,8 @@ def preprocess(image, means):
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='pyXFDNN')
   parser.add_argument('--model', default="", help='User must provide the network model file')
-  parser.add_argument('--input_name', default="", help='User must provide the network input names [comma seperated with no spacing]')
-  parser.add_argument('--output_name', default="", help='User must provide the network output names [comma seperated with no spacing]')
+  parser.add_argument('--input_nodes', default="", help='User must provide the network input names [comma seperated with no spacing]')
+  parser.add_argument('--output_nodes', default="", help='User must provide the network output names [comma seperated with no spacing]')
   parser.add_argument('--input_shapes', default="", help='User must provide the network input shapes [comma seperated with no spacing]')
   parser.add_argument('--input_means', default='104,107,123', help='User must provide the network input means [comma seperated with no spacing]')
   parser.add_argument('--output_dir', default="work", help='Optionally, save all generated outputs in specified folder')
@@ -107,8 +107,8 @@ if __name__ == "__main__":
   parser.add_argument('--q_calibIter', type=int, default=1, help='User can provide the number of iterations to run the quantization')
   parser.add_argument('--q_numBatches', type=int, default=1, help='User can provide the number of batches to run the quantization')
   parser.add_argument('--validate', action="store_true", help='If validation is enabled, the model will be partitioned, compiled, and ran on the FPGA, and the validation set examined')
-  parser.add_argument('--c_input_name', default=None, help='Compiler input node names')
-  parser.add_argument('--c_output_name', default=None, help='Compiler output node names')
+  parser.add_argument('--c_input_nodes', default=None, help='Compiler input node names')
+  parser.add_argument('--c_output_nodes', default=None, help='Compiler output node names')
   parser.add_argument('--image', default=None, help='User can provide an image to run')
   parser.add_argument('--numBatches', type=int, default=1, help='User must provide number of batches to run')
   args = dict2attr(parser.parse_args())
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     subprocess.call(['decent_q', 'inspect', '--input_frozen_graph', args.model])
     subprocess.call(['decent_q', 'quantize', '--input_frozen_graph', args.model,
-                     '--input_nodes', args.input_name, '--output_nodes', args.output_name,
+                     '--input_nodes', args.input_nodes, '--output_nodes', args.output_nodes,
                      '--input_shapes', ','.join(args.input_shapes), '--input_fn', 'default',
                      '--method', '1', '--output_dir', args.output_dir,
                      '--image_dir', IMAGEDIR, '--image_list', IMAGELIST, '--means', '{},{},{}'.format(*args.input_means),
@@ -147,8 +147,8 @@ if __name__ == "__main__":
     rt = xdnnRT(FLAGS,
                 networkfile=args.model,
                 quant_cfgfile=args.output_dir+'/fix_info.txt',
-                startnode=args.c_input_name,
-                finalnode=args.c_output_name,
+                startnode=args.c_input_nodes,
+                finalnode=args.c_output_nodes,
                 xclbin=XCLBIN,
                 device='FPGA',
                 **get_default_compiler_args()
@@ -160,8 +160,8 @@ if __name__ == "__main__":
 
     ## run the tensorflow graph as usual (additional operations can be added to the graph)
     with tf.Session(graph=graph) as sess:
-        input_tensor  = graph.get_operation_by_name(args.input_name).outputs[0]
-        output_tensor = graph.get_operation_by_name(args.output_name).outputs[0]
+        input_tensor  = graph.get_operation_by_name(args.input_nodes).outputs[0]
+        output_tensor = graph.get_operation_by_name(args.output_nodes).outputs[0]
 
         predictions = sess.run(output_tensor, feed_dict={input_tensor: [preprocess(args.image, args.input_means)]})
 

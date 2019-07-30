@@ -44,7 +44,7 @@ After the setup, run through a sample end to end tensorflow classification examp
   The above step is invoked by using the --quantize switch. If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories. By default, output_dir is ./work
 
   ```
-  $ python run.py --quantize --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_name data --output_name loss3_loss3 --input_shapes ?,224,224,3 --input_means 104,107,123
+  $ python run.py --quantize --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_nodes data --output_nodes loss3_loss3 --input_shapes ?,224,224,3 --input_means 104,107,123
   ```
 
 3. **Partition, Compile, and Run Inference**
@@ -57,7 +57,7 @@ After the setup, run through a sample end to end tensorflow classification examp
   The above two steps are invoked by using the --partition switch. If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories. By default, output_dir is ./work
 
   ```
-  $ python run.py --validate --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_name data --output_name loss3_loss3 --c_input_name data --c_output_name loss3_loss3 --image ../deployment_modes/dog.jpg --input_means 104,107,123
+  $ python run.py --validate --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_nodes data --output_nodes loss3_loss3 --c_input_nodes data --c_output_nodes loss3_loss3 --image ../deployment_modes/dog.jpg --input_means 104,107,123
   ```
 
 4. **Benchmark FPGA performance** - evaluate network throughput and/or latency in a streaming deployment scenario (FPGA only)
