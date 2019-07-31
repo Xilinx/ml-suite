@@ -19,7 +19,7 @@ def literal_eval(string):
     except:
       sstring = string.split(',')
       if len(sstring) > 1:
-        string = [o.strip() for o in sstring]
+        string = [literal_eval(o.strip()) for o in sstring]
 
   return string
 

@@ -17,7 +17,7 @@ CLASSIFY_SRC := \
 	    interface.cpp
 classify : 
 	@echo -e "\n[BUILD] Building Classification example \n\n"
-	g++ -g -std=c++11 ${CLASSIFY_SRC} -I./ -I${XDNN_CPP_PATH} -I${OPENCV_INC} -I${BOOST_PATH} -I${ZMQ_PATH}/include -I${CBLAS_PATH}/include -I${HDF5_PATH}/include ${ROOT_PATH}/ext/OpenBLAS/libopenblas.a -L${XDNN_CPP_LIB} -lxfdnn -L${ZMQ_PATH}/libs -lzmq -L${BOOST_PATH}/libs -lboost_thread -lboost_system -L${XILINX_SDACCEL}/runtime/lib/x86_64 -lxilinxopencl -L${HDF5_PATH}/lib -lhdf5_cpp -L${OPENCV_LIB} ${OPENCV_SYM} -o classify.exe
+	g++ -g -std=c++11 ${CLASSIFY_SRC} -I./ -I${XDNN_CPP_PATH} -I${OPENCV_INC} -I${BOOST_PATH} -I${ZMQ_PATH}/include -I${CBLAS_PATH}/include -I${HDF5_PATH}/include ${ROOT_PATH}/ext/OpenBLAS/libopenblas.a -L${XDNN_CPP_LIB} -lxfdnn -L${ZMQ_PATH}/libs -lzmq -L${BOOST_PATH}/libs -lboost_thread -lboost_system -L${XILINX_SDACCEL}/runtime/lib/x86_64 -L/opt/xilinx/xrt/lib -lxilinxopencl -L${HDF5_PATH}/lib -lhdf5_cpp -L${OPENCV_LIB} ${OPENCV_SYM} -o classify.exe
 	@echo -e "\n[BUILD] Done\n\n"
 
 clean :
