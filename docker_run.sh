@@ -29,6 +29,10 @@ docker run \
   -it \
   $docker_devices \
   -v $HERE/share:/opt/ml-suite/share \
+  -e DISPLAY=$DISPLAY \
   -w /opt/ml-suite \
-  xilinx-ml-suite-ubuntu-16.04-xrt-2018.2-caffe-mls-1.4:latest \
+  $1 \
   bash
+  
+  
+# xilinx-ml-suite-ubuntu-16.04-xrt-2018.2-caffe-mls-1.4:latest \

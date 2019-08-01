@@ -302,6 +302,13 @@ def load_graph(args, **kwargs):
     inputs  = startnode if startnode else discover_sourcenodes(graph_def)
     outputs = finalnode if finalnode else discover_sinknodes(graph_def)
 
+    if placeholdershape:
+      node_dict = get_node_dict(graph_def)
+      for name, shape in placeholdershape.items():
+        print('change palceholder {} shape to {}'.format(name, shape))
+        node = node_dict[name]
+        set_shape(node, shape)
+
     if startnode or finalnode:
       graph_def = extract_subgraph(graph_def, outputs, inputs,
                                    inclusive=args.get('inclusive', True),
@@ -309,13 +316,6 @@ def load_graph(args, **kwargs):
 
       inputs  = discover_sourcenodes(graph_def)
       outputs = discover_sinknodes(graph_def)
-
-    if placeholdershape:
-      node_dict = get_node_dict(graph_def)
-      for name, shape in placeholdershape.items():
-        print('change palceholder {} shape to {}'.format(name, shape))
-        node = node_dict[name]
-        set_shape(node, shape)
 
     graph_def, fValidGraph = freeze_graph(sess, graph_def,
                                           sinknodes_list=outputs,

@@ -103,7 +103,7 @@ echo ""
 if [ -d "${MLSUITE_ROOT}/overlaybins/${MLSUITE_PLATFORM}" ]; then
   export XILINX_OPENCL=${MLSUITE_ROOT}/overlaybins/${MLSUITE_PLATFORM}
   export XCLBIN_PATH=${MLSUITE_ROOT}/overlaybins/${MLSUITE_PLATFORM}
-  export LD_LIBRARY_PATH=${GOLD_LD_LIBRARY_PATH}:${MLSUITE_ROOT}/overlaybins/${MLSUITE_PLATFORM}/runtime/lib/x86_64
+  export LD_LIBRARY_PATH=${GOLD_LD_LIBRARY_PATH}
 else
   echo "Warning: platform ${MLSUITE_PLATFORM} not supported"
 fi

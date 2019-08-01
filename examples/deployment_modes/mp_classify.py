@@ -291,8 +291,6 @@ def fpga_process(fpgaRT,  args, num_img,  compJson, shared_trans_arrs,shared_out
        
         
         numProcessed = numProcessed + len(read_slot_list)
-        if numProcessed == num_img:
-            break
     qWait.put ((None, None, None))
     t.join()
     elapsedTime = ( time.time() - startTime )
@@ -421,13 +419,10 @@ def run(args=None):
   
    
   
-  num_shared_slots = max(args['batch_sz'], args['numstream'] )
+  num_shared_slots = args['numstream'] 
 
-  if(args['numstream']  < args['batch_sz']):
-     print "\n\nNOTE : NumStreams should be higher than batch size."
-     print "     : Overwriting NumStreams with batch size value: " ,args['batch_sz'], "\n\n\n" 
   # shared memory from preprocessing to fpga forward
-  shared_trans_arrs = SharedMemoryQueue("trans",num_shared_slots  , input_shapes +[(4)])
+  shared_trans_arrs = SharedMemoryQueue("trans",num_shared_slots*(args['numprepproc']*args['batch_sz'])  , input_shapes +[(4)])
   # shared memory from fpga forward to postprocessing
   shared_output_arrs = SharedMemoryQueue("output",num_shared_slots, output_shapes + [(args['batch_sz'], 4)])
     
@@ -442,6 +437,8 @@ def run(args=None):
   xdnnProc = mp.Process(target=fpga_process, args=(fpgaRT,  args, len(img_paths), compilerJSONObj,shared_trans_arrs,shared_output_arrs,))
 
   postProc = mp.Process(target=post_process, args=(args, img_paths,  fpgaOutputs,output_shapes,shared_output_arrs,))
+  xdnnProc.start()
+  postProc.start()
 
   if args['perpetual']:
     while True:
@@ -452,8 +449,6 @@ def run(args=None):
   else:
     p.map_async(run_pre_process, range(len(img_paths)))
 
-  xdnnProc.start()
-  postProc.start()
   xdnnProc.join()
   postProc.join()
 

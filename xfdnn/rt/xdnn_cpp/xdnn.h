@@ -1,11 +1,7 @@
-// Copyright (c) 2017
-// Xilinx, Inc.
-// All rights reserved.
-// 
-// No part of this document may be copied, transmitted or
-// disclosed in any form or fashion without the express
-// written consent of Xilinx, Inc.
-
+// SPDX-License-Identifier: BSD-3-CLAUSE
+//
+// (C) Copyright 2018, Xilinx, Inc.
+//
 /**
  *  @brief Xilinx DNN library for FPGA acceleration
  *

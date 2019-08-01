@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: BSD-3-CLAUSE
+//
+// (C) Copyright 2018, Xilinx, Inc.
+//
 #ifndef XDNN_UTIL_H
 #define XDNN_UTIL_H
 

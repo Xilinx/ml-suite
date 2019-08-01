@@ -1,3 +1,11 @@
+#!/usr/bin/env bash
+#
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
+#!/usr/bin/env bash
+
 ROOT_PATH=../../..
 #OPENCV_LIB=/proj/sdxapps/users/kvraju/X_PULS_ML/mlsuite_v3/opencv_x86_64/lib
 OPENCV_LIB=${ROOT_PATH}/opencv_lib

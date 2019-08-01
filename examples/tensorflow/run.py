@@ -19,7 +19,7 @@ import tensorflow as tf
 import numpy as np
 import cv2
 
-from inception_preprocessing import preprocess_image
+from tensorflow.contrib.decent_q.python.input_fn import *
 
 # Bring in ml-suite Quantizer, Compiler, and Partitioner
 from xfdnn.rt.xdnn_rt_tf import TFxdnnRT as xdnnRT
@@ -51,7 +51,7 @@ def get_default_compiler_args():
     }
 
 
-def calib_input(iter, batch_size=QUANT_BATCH_SIZE):
+def calib_input(iter, batch_size=QUANT_BATCH_SIZE, **kwarg):
   height_out, width_out = 224, 128
   means = (123, 117, 104)
   images = []
@@ -84,7 +84,7 @@ def calib_input(iter, batch_size=QUANT_BATCH_SIZE):
   return {"data": images}
 
 
-def preprocess(image, means):
+def preprocess(image, means, **kwarg):
   input_height, input_width = 224, 224
 
   ## Image preprocessing using numpy
@@ -94,9 +94,30 @@ def preprocess(image, means):
 
   return img
 
+def preprocess_default(iter, batch_size=QUANT_BATCH_SIZE, input_height=299, input_width=299, size_type=0, means=(104,107,123), scales=(1,1,1), normalize=False, **kwargs):
+  images = []
+  line = open(IMAGELIST).readlines()
+  for index in range(0, batch_size):
+    curline = line[iter * batch_size + index].strip()
+    [calib_image_name, calib_label_id] = curline.split(' ')
 
-def preprocess_inception(iter, batch_size=QUANT_BATCH_SIZE):
-  input_height, input_width = 299, 299
+    image = cv2.imread(IMAGEDIR + calib_image_name)
+    if size_type == 0:
+      image = central_crop(image, input_height, input_width)
+    elif size_type == 1:
+      image = resize(image, input_height, input_width)
+    else:
+      raise ValueError("Invalid size_type")
+    image = means_subtraction(image, means)
+    if scales != 1:
+      image = scale_image(image, scales)
+    if normalize != False:
+      image = nomalize_image(image)
+    image = convert_bgr_to_rgb(image)
+    images.append(image)
+  return {'input': images}
+
+def preprocess_inception(iter, batch_size=QUANT_BATCH_SIZE, input_height=299, input_width=299, **kwarg):
   images = []
   labels = []
   line = open(IMAGELIST).readlines()
@@ -123,6 +144,7 @@ if __name__ == "__main__":
   parser.add_argument('--output_nodes', default="", help='User must provide the network output names [comma seperated with no spacing]')
   parser.add_argument('--input_shapes', default="", help='User must provide the network input shapes [comma seperated with no spacing]')
   parser.add_argument('--input_means', default='104,107,123', help='User must provide the network input means [comma seperated with no spacing]')
+  parser.add_argument('--scales', type=str, default="1,1,1", help="The scales of images per channel, comma separated. Images will be multiplied by scale for each channel.")
   parser.add_argument('--input_fn', default="default", help='User can provide the network preprocessing function')
   parser.add_argument('--output_dir', default="work", help='Optionally, save all generated outputs in specified folder')
   parser.add_argument('--quantize', action="store_true", default=False, help='In quantize mode, model will be Quantize')
@@ -158,9 +180,15 @@ if __name__ == "__main__":
     for f in os.listdir(args["output_dir"]):
       print("  "+f)
 
-  if args.validate_cpu:
+  if args.input_fn == 'default':
+    input_fn = preprocess_default
+  else:
     module = __import__(args.input_fn.rsplit('.', 1)[0], fromlist=True)
     input_fn = getattr(module, args.input_fn.rsplit('.', 1)[1])
+
+  if args.validate_cpu:
+    eval_iters = 20
+    eval_batch = 25
 
     tf.reset_default_graph()
     with open(args.model, 'rb') as f:
@@ -172,8 +200,6 @@ if __name__ == "__main__":
       input_tensors = {node: sess.graph.get_operation_by_name(node).outputs[0] for node in make_list(args.input_nodes)}
       output_tensor = sess.graph.get_operation_by_name(args.output_nodes).outputs[0]
 
-      eval_iters = 20
-      eval_batch = 25
       top1_acc = 0
       top5_acc = 0
       progress = ProgressBar()
@@ -186,7 +212,7 @@ if __name__ == "__main__":
           correct_label.append(int(calib_label_id) + 1)
         correct_label = np.array(correct_label)
 
-        images = input_fn(iter, batch_size=eval_batch)
+        images = input_fn(iter, batch_size=eval_batch, input_height=args.input_shapes[1], input_width=args.input_shapes[2], size_type=0, means=args.input_means, scales=args.scales, normalize=False)
         predictions = sess.run(output_tensor, feed_dict={tensor: images[name] for name, tensor in input_tensors.items()})
 
         top1_prediction = np.argmax(predictions, axis=1)
@@ -201,8 +227,8 @@ if __name__ == "__main__":
       print ('top1_acc:{}, top5_acc:{}'.format(final_top1_acc,final_top5_acc))
 
   if args.validate:
-    module = __import__(args.input_fn.rsplit('.', 1)[0], fromlist=True)
-    input_fn = getattr(module, args.input_fn.rsplit('.', 1)[1])
+    eval_iters = 100
+    eval_batch = 1
 
     ### Partition and compile
     ## load default arguments
@@ -215,7 +241,7 @@ if __name__ == "__main__":
                 finalnode=args.c_output_nodes,
                 xclbin=XCLBIN,
                 device='FPGA',
-                placeholdershape="{\'%s\': [1,%d,%d,%d]}" % (args.input_nodes, args.input_shapes[1],args.input_shapes[2],args.input_shapes[3]),
+                placeholdershape="{\'%s\': [%d,%d,%d,%d]}" % (args.input_nodes, eval_batch,args.input_shapes[1],args.input_shapes[2],args.input_shapes[3]),
                 **get_default_compiler_args()
                )
 
@@ -228,8 +254,6 @@ if __name__ == "__main__":
       input_tensors = {node: sess.graph.get_operation_by_name(node).outputs[0] for node in make_list(args.input_nodes)}
       output_tensor = sess.graph.get_operation_by_name(args.output_nodes).outputs[0]
 
-      eval_iters = 500
-      eval_batch = 1
       top1_acc = 0
       top5_acc = 0
       progress = ProgressBar()
@@ -242,7 +266,7 @@ if __name__ == "__main__":
           correct_label.append(int(calib_label_id) + 1)
         correct_label = np.array(correct_label)
 
-        images = input_fn(iter, batch_size=eval_batch)
+        images = input_fn(iter, batch_size=eval_batch, input_height=args.input_shapes[1], input_width=args.input_shapes[2], size_type=0, means=args.input_means, scales=args.scales, normalize=False)
         predictions = sess.run(output_tensor, feed_dict={tensor: images[name] for name, tensor in input_tensors.items()})
 
         top1_prediction = np.argmax(predictions, axis=1)

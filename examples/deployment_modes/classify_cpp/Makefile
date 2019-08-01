@@ -1,3 +1,7 @@
+# // SPDX-License-Identifier: BSD-3-CLAUSE
+#
+# (C) Copyright 2018, Xilinx, Inc.
+#
 # Mlsuite ROOT folder
 ROOT_PATH :=${PWD}/../../..
 BOOST_PATH := ${ROOT_PATH}/ext/boost
