@@ -7,13 +7,13 @@ import flask
 import io
 
 app = flask.Flask(__name__)
- 
+
 def LoadImage(prototxt,caffemodel,labels):
   import numpy as np
   import xdnn_io
   global net
   net = caffe.Net(prototxt,caffemodel,caffe.TEST)
-  return net  
+  return net
 
 def InferImage(net,image,labels):
   import numpy as np
@@ -36,50 +36,57 @@ def InferImage(net,image,labels):
       pass
   Labels = xdnn_io.get_labels(labels)
   xdnn_io.printClassification(softmax,[image],Labels)
-  return xdnn_io.getClassification(softmax,[image],Labels) 
+  return xdnn_io.getClassification(softmax,[image],Labels)
 
-@app.route("/predict", methods=["POST"])
+#@app.route('/predict', methods=['GET','POST']) # go through link http://172.24.157.249:5000/predict for result
+
+@app.route('/') # go through link http://172.24.157.249:5000/ for result
 def predict():
   data = {"success": False}
 
   global prototxt
   global model
   global synset_words
+  global image
 
-  if flask.request.method == "POST":
-    image = flask.request.files["image"]
-    response = InferImage(net, image, synset_words)
-    data["success"] = True
-    data["response"] = response
+  response = InferImage(net, image, synset_words)
+  data["success"] = True
+  data["response"] = response
 
   return flask.jsonify(data)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='pyXFDNN')
-  parser.add_argument('--caffemodel', default="/opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel", help='path to caffemodel file eg: /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel')
-  parser.add_argument('--prototxt', default="xfdnn_auto_cut_deploy.prototxt", help='path to  prototxt file eg: xfdnn_auto_cut_deploy.prototxt')
-  parser.add_argument('--synset_words', default="$HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt", help='path to synset_words eg: $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt')
+  parser.add_argument('--caffemodel', default="/opt/ml-suite/share/quantize_results/deploy.caffemodel", help='path to caffe model file eg: /opt/models/caffe/bvlc_googlenet/bvlc_googlenet.caffemodel')
+  parser.add_argument('--prototxt', default="/opt/ml-suite/share/xfdnn_auto_cut_deploy.prototxt", help='path to  prototxt file eg: xfdnn_auto_cut_deploy.prototxt')
+  parser.add_argument('--synset_words', default="/opt/ml-suite/examples/deployment_modes/synset_words.txt", help='path to synset_words eg: $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/synset_words.txt')
   parser.add_argument('--port', default=5000)
-  
+  parser.add_argument('--image', default="/opt/ml-suite/examples/deployment_modes/dog.jpg")
+
   args = vars(parser.parse_args())
 
   if args["caffemodel"]:
     model=args["caffemodel"]
-  
+
   if args["prototxt"]:
     prototxt=args["prototxt"]
 
   if args["synset_words"]:
     synset_words=args["synset_words"]
-  
+
+  if args["image"]:
+    image=args["image"]
+
   if args["port"]:
     port=args["port"]
   else:
-    port=9000 
+    port=9000
 
   print("Loading FPGA with image...")
   net = LoadImage(prototxt, model, synset_words)
-  
-  print("Starting Flask Server...")
-  app.run(port=port)
 
+  #print("infering the image")
+  #InferImage(net,image,synset_words)
+
+  print("Starting Flask Server...")
+  app.run(port=port,host='0.0.0.0')
