@@ -316,7 +316,7 @@ void xblasDestroy(XBLASHandle *handle);
 void xblasLoadA(XBLASHandle &handle,  short *A, const char *layerMapStr, int prefCuIdx = -1);
 
 #ifdef ENABLE_HBM
-void xblasHBMLoadA(XBLASHandle &handle,  short *A, const char *layerMapStr, int prefCuIdx = -1);
+void xblasHBMLoadA(XBLASHandle &handle,  std::vector<std::vector<int> > &dataBlobsHBM, const char *layerMapStr, int prefCuIdx = -1);
 #endif
 
 void computeFC(float *weight, float *bias, float *data, int M, int N, int K,

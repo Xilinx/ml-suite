@@ -232,7 +232,7 @@ elif [ "$TEST" == "classify_cpp" ]; then
   BASEOPT_CPP+=" --image $DIRECTORY"
   OPENCV_LIB=/usr/lib/x86_64-linux-gnu
   HDF5_PATH=${MLSUITE_ROOT}/ext/hdf5
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:$MLSUITE_ROOT/ext/sdx_build/runtime/lib/x86_64:${HDF5_PATH}/lib:$OPENCV_LIB:$MLSUITE_ROOT/xfdnn/rt/libs:/opt/xilinx/xrt/lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:${HDF5_PATH}/lib:$MLSUITE_ROOT/xfdnn/rt/libs:/opt/xilinx/xrt/lib:$OPENCV_LIB
 
 ###########################
 # multi-PE multi-network (Run two different networks simultaneously)
