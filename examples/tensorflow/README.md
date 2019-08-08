@@ -57,8 +57,13 @@ After the setup, run through a sample end to end tensorflow classification examp
   The above two steps are invoked by using the --partition switch. If you plan to work on several models, you can use the `--output_dir` switch to generate and store model artifacts in seperate directories. By default, output_dir is ./work
 
   ```
-  $ python run.py --validate --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_nodes data --output_nodes loss3_loss3 --c_input_nodes data --c_output_nodes loss3_loss3 --image ../deployment_modes/dog.jpg --input_means 104,107,123
+  $ python run.py --validate --model /opt/models/tensorflow/inception_v1_baseline.pb --output_dir work --input_nodes data --output_nodes loss3_loss3 --c_input_nodes data --c_output_nodes loss3_loss3 --image ../deployment_modes/dog.jpg --input_means 104,107,123 --input_shapes ?,224,224,3
+  
+  # Note: You might need to change run.py , and adjust the key name of the returned dictionary in the calib_input, preprocess_default and preprocess_inception functions. Adjust the key name to match the name of the input tensor to your graph.
+  
   ```
+  
+  
 
 4. **Benchmark FPGA performance** - evaluate network throughput and/or latency in a streaming deployment scenario (FPGA only)
 

@@ -37,7 +37,7 @@ def correct_region_boxes(boxes_array, x_idx, y_idx, w_idx, h_idx, w, h, net_w, n
     
     new_w = 0;
     new_h = 0;
-    print "x_idx, y_idx, w_idx, h_idx, w, h, net_w, net_h", x_idx, y_idx, w_idx, h_idx, w, h, net_w, net_h
+    #print "x_idx, y_idx, w_idx, h_idx, w, h, net_w, net_h", x_idx, y_idx, w_idx, h_idx, w, h, net_w, net_h
     if ((float(net_w) / float(w)) < (float(net_h) / float(h))) :
         new_w = net_w
         new_h = (h * net_w) / w
@@ -59,7 +59,7 @@ def correct_region_boxes(boxes_array, x_idx, y_idx, w_idx, h_idx, w, h, net_w, n
 def darknet_maxpool_k2x2_s1(data_in, data_out):
     w = data_in.shape[2]
     h = data_in.shape[3]
-    print data_in.shape, w, h
+    #print data_in.shape, w, h
     
     for x in range(w):
         for y in range(h):
@@ -69,7 +69,12 @@ def darknet_maxpool_k2x2_s1(data_in, data_out):
 
 class xyolo():
   def __init__(self,batch_sz=10,in_shape=[3,608,608],quantizecfg="yolo_deploy_608.json",xclbin=None,
-               netcfg="yolo.cmds",weights="yolov2.caffemodel_data",labels="coco.names",xlnxlib="libxfdnn.so",firstfpgalayer="conv0",classes=80,verbose=False,
+               netcfg="yolo.cmds",weights="yolov2.caffemodel_data",labels="coco.names",xlnxlib="libxfdnn.so",firstfpgalayer="conv0",
+               classes=80,
+               anchor_count=5,
+               score_threshold=0.2,
+               iou_threshold=0.45,
+               verbose=False,
                yolo_model=None,
              caffe_prototxt=None,
              caffe_model=None):
@@ -137,16 +142,17 @@ class xyolo():
     import math
     self.out_w = int(math.ceil(self.net_w / 32.0))
     self.out_h = int(math.ceil(self.net_h / 32.0))
-    self.bboxplanes = 5
+    self.bboxplanes = anchor_count
+    self.anchorCnt = anchor_count
     #self.classes = 80
-    self.scorethresh = 0.24
-    self.iouthresh = 0.3
+    self.scorethresh = score_threshold  #0.24
+    self.iouthresh   = iou_threshold    #0.45
     self.groups = self.out_w*self.out_h
     self.coords = 4
     self.groupstride = 1
     self.batchstride = (self.groups)*(self.classes+self.coords+1)
     self.beginoffset = (self.coords+1)*(self.out_w*self.out_h)
-    self.outsize = (self.out_w*self.out_h*(self.bboxplanes+self.classes))*self.bboxplanes
+    self.outsize = (self.out_w*self.out_h*(self.coords + 1 +self.classes))*self.bboxplanes
     self.colors = generate_colors(self.classes) # Generate color pallette for drawing boxes
 
     config = vars(self)
@@ -214,7 +220,7 @@ class xyolo():
         continue
 
     
-      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2')) :
+      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2') or (config['yolo_model'] == 'tiny_yolo_v2_voc')) :
           pass
       else:
           
@@ -243,7 +249,7 @@ class xyolo():
               out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer100-conv'].data.shape[1:4]))
               out_data_shape.append((config['batch_sz'] ,) + tuple(net.blobs['layer112-conv'].data.shape[1:4]))
 
-          print "out_data_shape : ", out_data_shape
+          #print "out_data_shape : ", out_data_shape
           softmaxOut=[]
           for list_idx in range(len(out_data_shape)):
               softmaxOut.append(np.empty(out_data_shape[list_idx]))
@@ -264,7 +270,7 @@ class xyolo():
       # EXECUTE XDNN
       log.info("Running %s image(s)"%(config['batch_sz']))
       
-      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2')) :
+      if((config['yolo_model'] == 'xilinx_yolo_v2') or (config['yolo_model'] == 'xilinx_prelu_yolo_v2') or (config['yolo_model'] == 'tiny_yolo_v2_voc')) :
           startTime = timeit.default_timer()
           fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'] )
           elapsedTime = timeit.default_timer() - startTime
@@ -312,25 +318,33 @@ class xyolo():
          
 
       elif(config['yolo_model'] == 'standard_yolo_v3'):
-          startTime = timeit.default_timer()
-          fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
-          elapsedTime = timeit.default_timer() - startTime
+	  use_fpga = 1
+          if (use_fpga== 1) :
+	          startTime = timeit.default_timer()
+        	  fpgaRT.execute(fpgaInput, fpgaOutput, config['PE'])
+	          elapsedTime = timeit.default_timer() - startTime
 
-
-          startTime = timeit.default_timer()
-          for bt_idx in range(config['batch_sz']):
-                  softmaxOut[0][bt_idx,...] = fpgaOutput['layer81-conv'][bt_idx,...]
-                  softmaxOut[1][bt_idx,...] = fpgaOutput['layer93-conv'][bt_idx,...]
-                  softmaxOut[2][bt_idx,...] = fpgaOutput['layer105-conv'][bt_idx,...]
-
+	          startTime = timeit.default_timer()
+        	  for bt_idx in range(config['batch_sz']):
+                	  softmaxOut[0][bt_idx,...] = fpgaOutput['layer81-conv'][bt_idx,...]
+	                  softmaxOut[1][bt_idx,...] = fpgaOutput['layer93-conv'][bt_idx,...]
+        	          softmaxOut[2][bt_idx,...] = fpgaOutput['layer105-conv'][bt_idx,...]
+                  
+          	  elapsedTime_cpu = timeit.default_timer() - startTime
+                  
+                  print (elapsedTime*1000, (elapsedTime_cpu*1000) , ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+          else:
         
-
-          elapsedTime_cpu = timeit.default_timer() - startTime
+		for bt_idx in range(config['batch_sz']):
+	        	net.blobs['data'].data[...] = firstInput[bt_idx,...]
+        	        net.forward()
+                        softmaxOut[0][bt_idx,...] = net.blobs['layer81-conv'].data[...]
+                        softmaxOut[1][bt_idx,...] = net.blobs['layer93-conv'].data[...]
+                        softmaxOut[2][bt_idx,...] = net.blobs['layer105-conv'].data[...]
           # Only showing time for second run because first is loading script
-          print (elapsedTime*1000, (elapsedTime_cpu*1000) , ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
-          log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
-          log.info("\nTotal FPGA: %f ms" % (elapsedTime_cpu*1000))
-          log.info("Image Time: (%f ms/img):" % ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
+          #log.info("\nTotal FPGA: %f ms" % (elapsedTime*1000))
+          #log.info("\nTotal FPGA: %f ms" % (elapsedTime_cpu*1000))
+          #log.info("Image Time: (%f ms/img):" % ((elapsedTime+elapsedTime_cpu)*1000/config['batch_sz']))
 
           q_bbox.put((job, softmaxOut))
            
@@ -402,23 +416,24 @@ class xyolo():
       
      
       if((config['yolo_model'] =='standard_yolo_v3') or (config['yolo_model'] =='tiny_yolo_v3') or (config['yolo_model'] =='spp_yolo_v3')):
-          anchorCnt = 3
+          anchorCnt = config['anchorCnt']
           classes = config['classes']
+          
           if (config['yolo_model'] =='tiny_yolo_v3') :
               classes = 80
               #config['classes'] = 3   
-          print "classes fpgaOutput len", classes, len(fpgaOutput)
+          #print "classes fpgaOutput len", classes, len(fpgaOutput)
           out_yolo_layers = process_all_yolo_layers(fpgaOutput, classes, anchorCnt, config['net_w'], config['net_h'])
           
           num_proposals_layer=[0]
           total_proposals = 0
           for layr_idx in range (len(out_yolo_layers)):
               yolo_layer_shape = out_yolo_layers[layr_idx].shape
-              print "layr_idx , yolo_layer_shape", layr_idx , yolo_layer_shape
+              #print "layr_idx , yolo_layer_shape", layr_idx , yolo_layer_shape
               out_yolo_layers[layr_idx] = out_yolo_layers[layr_idx].reshape(yolo_layer_shape[0], anchorCnt, (5+classes), yolo_layer_shape[2]*yolo_layer_shape[3])
               out_yolo_layers[layr_idx] = out_yolo_layers[layr_idx].transpose(0,3,1,2)
               out_yolo_layers[layr_idx] = out_yolo_layers[layr_idx].reshape(yolo_layer_shape[0],yolo_layer_shape[2]*yolo_layer_shape[3] * anchorCnt, (5+classes))           
-              print "layr_idx, final in layer sape, outlayer shape", layr_idx, yolo_layer_shape, out_yolo_layers[layr_idx].shape
+              #print "layr_idx, final in layer sape, outlayer shape", layr_idx, yolo_layer_shape, out_yolo_layers[layr_idx].shape
               total_proposals += yolo_layer_shape[2]*yolo_layer_shape[3] * anchorCnt
               num_proposals_layer.append(total_proposals)
               
@@ -428,17 +443,17 @@ class xyolo():
           for layr_idx in range (len(out_yolo_layers)):
               proposal_st = num_proposals_layer[layr_idx]
               proposal_ed = num_proposals_layer[layr_idx + 1]
-              print "proposal_st proposal_ed", proposal_st, proposal_ed
+              #print "proposal_st proposal_ed", proposal_st, proposal_ed
               boxes_array[:,proposal_st:proposal_ed,:] = out_yolo_layers[layr_idx][...]
               
           
           for i in range(config['batch_sz']):
               boxes_array[i,:,:] = correct_region_boxes(boxes_array[i,:,:], 0, 1, 2, 3, float(job['shapes'][i][1]), float(job['shapes'][i][0]), float(config['net_w']), float(config['net_h']))
-              detected_boxes = apply_nms(boxes_array[i,:,:], classes, config['iouthresh'])
+              detected_boxes = apply_nms(boxes_array[i,:,:], classes, config['scorethresh'], config['iouthresh'])
               
               bboxes=[]
               for det_idx in range(len(detected_boxes)):
-                  print  detected_boxes[det_idx][0], detected_boxes[det_idx][1], detected_boxes[det_idx][2], detected_boxes[det_idx][3], config['names'][detected_boxes[det_idx][4]], detected_boxes[det_idx][5]
+                  #print  detected_boxes[det_idx][0], detected_boxes[det_idx][1], detected_boxes[det_idx][2], detected_boxes[det_idx][3], config['names'][detected_boxes[det_idx][4]], detected_boxes[det_idx][5]
                   
                   bboxes.append({'classid' : detected_boxes[det_idx][4],
                                    'prob' : detected_boxes[det_idx][5],
@@ -446,6 +461,11 @@ class xyolo():
                                            'y' : int((detected_boxes[det_idx][1] + 0.5 *detected_boxes[det_idx][3]) * job['shapes'][i][0])},
                                    'ur' : {'x' : int((detected_boxes[det_idx][0] + 0.5 *detected_boxes[det_idx][2]) * job['shapes'][i][1]),
                                            'y' : int((detected_boxes[det_idx][1] - 0.5 *detected_boxes[det_idx][3]) * job['shapes'][i][0])}})
+    
+                  log.info("Obj %d: %s" % (det_idx, config['names'][bboxes[det_idx]['classid']]))
+                  log.info("\t score = %f" % (bboxes[det_idx]['prob']))
+                  log.info("\t (xlo,ylo) = (%d,%d)" % (bboxes[det_idx]['ll']['x'], bboxes[det_idx]['ll']['y']))
+                  log.info("\t (xhi,yhi) = (%d,%d)" % (bboxes[det_idx]['ur']['x'], bboxes[det_idx]['ur']['y']))
 
                   
               if display:

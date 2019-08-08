@@ -6,25 +6,6 @@ import time
 from  yolo_utils import process_all_yolo_layers,  apply_nms 
 from xfdnn.rt import xdnn_io
 
-def set_config(config):
-    config['net_w'] = 608
-    config['net_h'] = 608
-    config['classes'] = 80
-    config['anchorCnt'] = 3
-    config['batch_sz'] = 1
-    config['iouthresh'] = 0.3
-    config['labels'] = 'coco.names'
-    config['benchmarking'] = 0
-    
-    if((config['yolo_model'] == 'tiny_yolo_v3')):
-         config['classes'] = 3
-         config['anchorCnt'] = 3
-
-    with open(config['labels']) as f:
-        names = f.readlines()
-        config['names'] = [x.strip() for x in names]
-    return config
-
 def correct_region_boxes(boxes_array, x_idx, y_idx, w_idx, h_idx, w, h, net_w, net_h):
     
     new_w = 0;
@@ -56,7 +37,7 @@ def det_preprocess(image, dest, net_h, net_w):
 # takes dict of two outputs from XDNN, pixel-conv and bb-output
 # returns bounding boxes
 def det_postprocess(fpgaOutput, config, image_shape):
-    print fpgaOutput[0].shape , fpgaOutput[1].shape,  config['classes'], config['anchorCnt'], config['net_w'], config['net_h']    
+    #print fpgaOutput[0].shape , fpgaOutput[1].shape,  config['classes'], config['anchorCnt'], config['net_w'], config['net_h']    
     out_yolo_layers = process_all_yolo_layers(fpgaOutput, config['classes'], config['anchorCnt'], config['net_w'], config['net_h'])
     anchorCnt = config['anchorCnt']
     classes =  config['classes']
@@ -81,12 +62,14 @@ def det_postprocess(fpgaOutput, config, image_shape):
         proposal_ed = num_proposals_layer[layr_idx + 1]
         #print "proposal_st proposal_ed", proposal_st, proposal_ed
         boxes_array[:,proposal_st:proposal_ed,:] = out_yolo_layers[layr_idx][...]
-        
+    
+    bboxlist_for_images = []    
     for i in range(config['batch_sz']):
         boxes_array[i,:,:] = correct_region_boxes(boxes_array[i,:,:], 0, 1, 2, 3, float(image_shape[i][1]), float(image_shape[i][0]), float(config['net_w']), float(config['net_h']))
-        detected_boxes = apply_nms(boxes_array[i,:,:], classes, config['iouthresh'])
+        detected_boxes = apply_nms(boxes_array[i,:,:], classes, config['scorethresh'], config['iouthresh'])
         
         bboxlist=[]
+        
         for det_idx in range(len(detected_boxes)):
             #print  detected_boxes[det_idx][0], detected_boxes[det_idx][1], detected_boxes[det_idx][2], detected_boxes[det_idx][3], config['names'][detected_boxes[det_idx][4]], detected_boxes[det_idx][5]
             bboxlist.append({'classid' : detected_boxes[det_idx][4],
@@ -96,7 +79,9 @@ def det_postprocess(fpgaOutput, config, image_shape):
                                'ur' : {'x' : int((detected_boxes[det_idx][0] + 0.5 *detected_boxes[det_idx][2]) * image_shape[i][1]),
                                        'y' : int((detected_boxes[det_idx][1] - 0.5 *detected_boxes[det_idx][3]) * image_shape[i][0])}})
     
+        bboxlist_for_images.append(bboxlist)
+    
               
 
-    return bboxlist 
+    return bboxlist_for_images 
 

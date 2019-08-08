@@ -80,7 +80,7 @@ echo -e $COMPILEROPT
 # Its always safer to set this manually
 #export XBLAS_EMIT_PROFILING_INFO=1
 # To be fixed
-#export XBLAS_EMIT_PROFILING_INFO=$VERBOSE
+export XBLAS_EMIT_PROFILING_INFO=$VERBOSE
 export XDNN_VERBOSE=$VERBOSE
 # Set Platform Environment Variables
 if [ -z $MLSUITE_ROOT ]; then
@@ -136,6 +136,13 @@ elif [ "$MODEL" == "yolo_v2_608" ]; then
   INSHAPE_CHANNELS=3
   INSHAPE_WIDTH=608
   INSHAPE_HEIGHT=608
+elif [ "$MODEL" == "yolo_v2_tiny_voc_224" ]; then
+  NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov2/fp32/yolo_v2_tiny_voc_224.prototxt
+  NET_DEF_FPGA=${MLSUITE_ROOT}/models/caffe/yolov2/fp32/yolo_v2_tiny_voc_224.prototxt
+  FPGAOUTSZ=2048000
+  INSHAPE_CHANNELS=3
+  INSHAPE_WIDTH=224
+  INSHAPE_HEIGHT=224
 elif [ "$MODEL" == "yolo_v2_tiny_224" ]; then
   NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov2/fp32/yolo_v2_tiny_224.prototxt
   NET_DEF_FPGA=${MLSUITE_ROOT}/models/caffe/yolov2/fp32/yolo_v2_tiny_224_fpga.prototxt
@@ -302,6 +309,7 @@ YOLO_TYPE="none"
 LABELS=./synset_words.txt
 if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yolo_v2_608" ] || 
    [ $MODEL == "yolo_v2_tiny_224" ] || [ $MODEL == "yolo_v2_tiny_416" ] || [ $MODEL == "yolo_v2_tiny_608" ] ||
+   [ $MODEL == "yolo_v2_tiny_voc_224" ] ||
    [ $MODEL == "yolo_v2_standard_224" ] || [ $MODEL == "yolo_v2_standard_416" ] || [ $MODEL == "yolo_v2_standard_608" ] ||
    [ $MODEL == "yolo_v2_prelu_224" ] || [ $MODEL == "yolo_v2_prelu_416" ] || [ $MODEL == "yolo_v2_prelu_608" ] ||
    [ $MODEL == "yolo_v3_standard_608" ] || [ $MODEL == "yolo_v3_standard_224" ] || [ $MODEL == "yolo_v3_spp_608" ] || [ $MODEL == "yolo_v3_tiny_608" ]; then
@@ -340,6 +348,9 @@ fi
  
   NUM_CLASSES=80
   LABELS='./coco.names'
+  IOU_THRESHOLD=0.45
+  SCORE_THRESHOLD=0.24
+  ANCHOR_COUNT=5 
   
   if [ $MODEL == "yolo_v2_224" ] || [ $MODEL == "yolo_v2_416" ] || [ $MODEL == "yolo_v2_608" ] ; then
     NET_WEIGHTS=../../models/caffe/yolov2/fp32/yolov2.caffemodel
@@ -348,6 +359,11 @@ fi
   elif  [ $MODEL == "yolo_v2_tiny_224" ] || [ $MODEL == "yolo_v2_tiny_416" ] || [ $MODEL == "yolo_v2_tiny_608" ] ; then
     NET_WEIGHTS=../../models/caffe/yolov2/fp32/yolo_v2_tiny.caffemodel
     YOLO_TYPE="tiny_yolo_v2"
+  elif  [ $MODEL == "yolo_v2_tiny_voc_224" ] ; then
+    NET_WEIGHTS=../../models/caffe/yolov2/fp32/yolo_v2_tiny_voc.caffemodel
+    YOLO_TYPE="tiny_yolo_v2_voc"
+    NUM_CLASSES=20
+    LABELS='./voc.names'
   elif  [ $MODEL == "yolo_v2_standard_224" ] || [ $MODEL == "yolo_v2_standard_416" ] || [ $MODEL == "yolo_v2_standard_608" ]; then
     NET_WEIGHTS=../../models/caffe/yolov2/fp32/yolo_v2_standard.caffemodel
     YOLO_TYPE="standard_yolo_v2"
@@ -358,13 +374,15 @@ fi
   elif [ $MODEL == "yolo_v3_standard_608" ] || [ $MODEL == "yolo_v3_standard_224" ]; then
     NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolo_v3_standard.caffemodel
     YOLO_TYPE="standard_yolo_v3"
+    ANCHOR_COUNT=3
   elif [ $MODEL == "yolo_v3_spp_608" ] ; then
     NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolov3_spp.caffemodel
     YOLO_TYPE="spp_yolo_v3"
-
+    ANCHOR_COUNT=3
   elif [ $MODEL == "yolo_v3_tiny_608" ] ; then
     NET_WEIGHTS=../../models/caffe/yolov3/fp32/yolo_v3_tiny_bns.caffemodel
     YOLO_TYPE="tiny_yolo_v3"
+    ANCHOR_COUNT=3
   fi
   
   if [ "$KCFG" == "v3" ] || [ "$KCFG" == "large" ] || [ "$KCFG" == "med" ] ; then
@@ -443,8 +461,7 @@ BASEOPT="--xclbin $XCLBIN_PATH/$XCLBIN
          --img_input_scale $IMG_INPUT_SCALE 
          --batch_sz $BATCHSIZE" 
 
-if [ ! -z $GOLDEN ]; 
-then
+if [ ! -z $GOLDEN ];  then
   echo -e "To check mAP score of the network please note the following"
   echo -e "   mAP score check for VOC and COCO data set is supported provided the data is in darknet style  "
   echo -e "   To get COCO data in darknet format run script https://github.com/pjreddie/darknet/blob/master/scripts/get_coco_dataset.sh  "
@@ -455,8 +472,13 @@ then
   BASEOPT+=" --golden $GOLDEN"
   #BASEOPT+=" --directory $DIRECTORY"
   echo "Image Directory : $DIRECTORY"
+  echo "for mAP score calculation class score threshold is set to low value of 0.005"
+  SCORE_THRESHOLD=0.005
   #DIRECTORY=/wrk/acceleration/shareData/COCO_Dataset/val2014_dummy/
-
+  if [ ! -d "out_labels" ]; then
+      mkdir out_labels
+  # Control will enter here if $DIRECTORY exists.
+fi
 fi
 
 # Build options for appropriate python script
@@ -468,6 +490,9 @@ if [ "$TEST" == "test_detect" ]; then
   if [ -z ${DIRECTORY+x} ]; then
   DIRECTORY=${MLSUITE_ROOT}/apps/yolo/test_image_set/
   fi
+  
+  OUT_LABELS=./out_labels
+  
   BASEOPT+=" --images $DIRECTORY"
   BASEOPT+=" --dsp $DSP_WIDTH"
   BASEOPT+=" --net_def $NET_DEF"
@@ -476,6 +501,10 @@ if [ "$TEST" == "test_detect" ]; then
   BASEOPT+=" --in_shape $INSHAPE_CHANNELS $INSHAPE_WIDTH $INSHAPE_HEIGHT"
   BASEOPT+=" --yolo_model $YOLO_TYPE"
   BASEOPT+=" --caffe_inference $NET_DEF"
+  BASEOPT+=" --detection_labels $OUT_LABELS"
+  BASEOPT+=" --scorethresh $SCORE_THRESHOLD"
+  BASEOPT+=" --iouthresh $IOU_THRESHOLD"
+  BASEOPT+=" --anchorCnt $ANCHOR_COUNT"
 
 elif  [ "$TEST" == "layer_wise" ]; then
   #TEST=layer_wise.py
@@ -571,6 +600,7 @@ elif [[ "$TEST" == "streaming_detect"* ]]; then
     DIRECTORY=../../models/data/ilsvrc12/ilsvrc12_img_val
   fi
 
+  OUT_LABELS=./out_labels
   BASEOPT+=" --images $DIRECTORY"
   BASEOPT+=" --numprepproc $NUMPREPPROC"    
   BASEOPT+=" --dsp $DSP_WIDTH"
@@ -579,6 +609,11 @@ elif [[ "$TEST" == "streaming_detect"* ]]; then
   BASEOPT+=" --outsz $NUM_CLASSES"
   BASEOPT+=" --yolo_model $YOLO_TYPE"
   BASEOPT+=" --in_shape $INSHAPE_CHANNELS $INSHAPE_WIDTH $INSHAPE_HEIGHT"
+  BASEOPT+=" --detection_labels $OUT_LABELS"
+  BASEOPT+=" --scorethresh $SCORE_THRESHOLD"
+  BASEOPT+=" --iouthresh $IOU_THRESHOLD"
+  BASEOPT+=" --anchorCnt $ANCHOR_COUNT"
+
 
   if [ "$TEST" == "streaming_detect_benchmark" ]; then
     echo -e "run in benchkmark mode"
@@ -651,7 +686,7 @@ else
   gdb --args python $TEST $BASEOPT 
 fi
 
-if [ ! -z $GOLDEN ]; then
-  python get_mAP_darknet.py --class_names_file $LABELS --ground_truth_labels  $GOLDEN  --detection_labels ./out_labels 2>&1 |tee batch_out.txt
-fi
+#if [ ! -z $GOLDEN ]; then
+#  python get_mAP_darknet.py --class_names_file $LABELS --ground_truth_labels  $GOLDEN  --detection_labels ./out_labels 2>&1 |tee batch_out.txt
+#fi
 

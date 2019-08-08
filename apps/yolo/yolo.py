@@ -23,6 +23,7 @@ from xyolo import xyolo
 
 # Select Configuration
 from configs import select_config
+from get_mAP_darknet import calc_detector_mAP
 
 def main():
   #config= xdnn_io.processCommandLine()
@@ -30,6 +31,18 @@ def main():
   parser.add_argument('--in_shape', default=[3,224,224], nargs=3, type=int, help='input dimensions')
   parser.add_argument("--yolo_model",  type=str, default='xilinx_yolo_v2')
   parser.add_argument('--caffe_inference', help='.caffe prototxt for layers on caffe', type=str, metavar="FILE")
+  
+  parser.add_argument('--detection_labels', help="direcotry path detected lable files in darknet style",
+                        default=None, type=str, metavar="FILE")
+  parser.add_argument('--prob_threshold', type=float, default=0.1, help='threshold for calculation of f1 score')
+  parser.add_argument('--scorethresh', type=float, default=0.24,
+                      help='thresohold on probability threshold')  
+  parser.add_argument('--iouthresh', type=float, default=0.45,
+                      help='thresohold on iouthresh across 2 candidate detections')
+  parser.add_argument('--anchorCnt', type=int, default=5,
+                      help='thresohold on iouthresh across 2 candidate detections')
+  
+  
  
   args = parser.parse_args()
   config = xdnn_io.make_dict_args(args)
@@ -161,7 +174,12 @@ def main():
   with xyolo(batch_sz=batch_sz,in_shape=tuple(config["dims"]),quantizecfg=config["quantizecfg"],
              xlnxlib="/wrk/acceleration/users/arun/MLsuite_yolo/xfdnn/rt/libs/libxfdnn.so.2.20182.v3",
              xclbin=config["xclbin"],netcfg=config["netcfg"]+".json", weights=config["weights"],
-             firstfpgalayer=config["firstfpgalayer"],classes=config["outsz"],verbose=True,
+             labels=config['labels'],
+             firstfpgalayer=config["firstfpgalayer"],classes=config["outsz"],
+             anchor_count=config["anchorCnt"],
+             score_threshold=config["scorethresh"],
+             iou_threshold=config["iouthresh"],
+             verbose=True,
              yolo_model=config["yolo_model"],
              caffe_prototxt=config["caffe_inference"],
              caffe_model=config["net_weights"]) as detector:
@@ -172,6 +190,15 @@ def main():
           print("Finished batch %d" % (i+1))
             
       detector.stop()
+      
+  if config['golden'] is not None:
+      print("Computing mAP score  :")
+      with open(config['labels']) as f:
+        names = f.readlines()
+    
+      class_names = [x.strip() for x in names]
+      
+      mAP = calc_detector_mAP(config['detection_labels'], config['golden'], len(class_names), class_names, config['prob_threshold'], config['iouthresh'])  
 
 if __name__ == '__main__':
     main()

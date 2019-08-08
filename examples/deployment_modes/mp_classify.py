@@ -141,7 +141,10 @@ class UserPostProcess():
       num_images = (read_slot_arrs[-1].shape)[0]
       for image_num in range(num_images):
           image_id = read_slot_arrs[-1][image_num][0]
-          #print "post prrocess image_id: ", image_id
+          
+          if image_id == -1:
+              break
+          
           imgList.append(self.img_paths[int(image_id)])
           shape_list.append(read_slot_arrs[-1][image_num][1:4])
       
@@ -266,31 +269,36 @@ def fpga_process(fpgaRT,  args, num_img,  compJson, shared_trans_arrs,shared_out
         read_slot_list =[]        
         for img_num in range(args['batch_sz']):
             read_slot = shared_trans_arrs.openReadId()
+            
             if read_slot is None:
-                break
+                break            
             read_slot_arrs = shared_trans_arrs.accessNumpyBuffer(read_slot)
             read_slot_arrs_list.append(read_slot_arrs)
             read_slot_list.append(read_slot)
             
             write_slot_arrs[-1][img_num][:] = read_slot_arrs[-1][:]            
-
+            
+            numProcessed += 1
+            if(args['perpetual'] == False):
+                if numProcessed == num_img:
+                    break
         
-
+        images_added = len(read_slot_arrs_list)
         
+        # when number of images avaiable are less than the batch size, fill the rest of the out buffer image-id  slots with -1
+        for img_num in range(images_added,args['batch_sz']):
+             write_slot_arrs[-1][img_num][:] = -1
+            
         for in_idx in range(num_inputs):            
             in_dict[InputName_list[in_idx]] = []            
-            for img_idx in range(args['batch_sz']):
+            for img_idx in range(len(read_slot_arrs_list)):
                 in_dict[InputName_list[in_idx]].append(read_slot_arrs_list[img_idx][in_idx])
-           
-
             
            
         fpgaRT.exec_async( in_dict, out_dict, write_slot)
         qWait.put((write_slot, read_slot_list, img_num))
         #shared_trans_arrs.closeReadId(read_slot)
-       
         
-        numProcessed = numProcessed + len(read_slot_list)
     qWait.put ((None, None, None))
     t.join()
     elapsedTime = ( time.time() - startTime )

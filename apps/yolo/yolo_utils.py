@@ -37,7 +37,7 @@ def cal_iou(box, truth) :
 def sortSecond(val):
     return val[1]
 
-def  apply_nms(boxes, classes, overlap_threshold):
+def  apply_nms(boxes, classes, scorethresh, overlap_threshold):
     
     result_boxes=[]
     box_len = (boxes.shape)[0]
@@ -47,9 +47,9 @@ def  apply_nms(boxes, classes, overlap_threshold):
         key_box_class=[]    
         for i in range(box_len):
             key_box_class.append((i, boxes[i,5+k]))
-            #boxes[i][4] = k        
+
         key_box_class.sort(key = sortSecond, reverse = True)
-        
+
         exist_box=np.ones(box_len)        
         for i in range(box_len):
             
@@ -58,7 +58,7 @@ def  apply_nms(boxes, classes, overlap_threshold):
             if(exist_box[box_id] == 0):
                 continue
                 
-            if(boxes[box_id,5 + k] < 0.2):
+            if(boxes[box_id,5 + k] < scorethresh):
                 exist_box[box_id] = 0;
                 continue
             

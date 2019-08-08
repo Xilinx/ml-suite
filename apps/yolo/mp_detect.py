@@ -14,7 +14,8 @@ import threading
 import time
 import logging as log
 from yolo_utils import darknet_style_xywh, cornersToxywh,sigmoid,softmax,generate_colors,draw_boxes
-from detect_api_yolov3 import set_config, det_postprocess
+from get_mAP_darknet import calc_detector_mAP
+from detect_api_yolov3 import det_postprocess
 sys.path.append('nms')
 import nms
 
@@ -23,7 +24,6 @@ from xfdnn.rt import xdnn, xdnn_io
 sys.path.insert(0, os.environ["MLSUITE_ROOT"] + '/examples/deployment_modes')
 import mp_classify as mp_classify
 sys.path.insert(0, os.environ["MLSUITE_ROOT"] + '/apps/yolo')
-#from  mp_inference_app import MP_Inference, NetworkProcess
 
 class YoloPreProcess(mp_classify.UserPreProcess):
   def run(self, inum):
@@ -57,7 +57,9 @@ class YoloPostProcess(mp_classify.UserPostProcess):
       num_images = (read_slot_arrs[-1].shape)[0]
       for image_num in range(num_images):
           image_id = read_slot_arrs[-1][image_num][0]
-          #print "post prrocess image_id: ", image_id
+          
+          if image_id == -1:
+              break
           imgList.append(self.img_paths[int(image_id)])
           shape_list.append(read_slot_arrs[-1][image_num][1:4])
       
@@ -81,10 +83,7 @@ class YoloPostProcess(mp_classify.UserPostProcess):
       if self.args['zmqpub']:
         self.zmqPub = mp_classify.ZmqResultPublisher(self.args['deviceID'])
       self.goldenMap = None
-      if self.args['golden']:
-        self.goldenMap = xdnn_io.getGoldenMap(self.args['golden'])
-        self.top5Count = 0
-        self.top1Count = 0
+
 
     self.numProcessed += len(imgList)
 
@@ -95,51 +94,74 @@ class YoloPostProcess(mp_classify.UserPostProcess):
         fpgaOutput = []
         for idx in range(num_ouptut_layers):
             fpgaOutput.append(np.frombuffer(fpgaOutput_list[idx], dtype=np.float32).reshape(tuple(fpgaOutputShape_list[idx])))
-        bboxes = det_postprocess(fpgaOutput, args, shapeArr)
+        bboxlist_for_images = det_postprocess(fpgaOutput, args, shapeArr)
         
         for i in range(min(self.args['batch_sz'], len(shapeArr))):
-            print "image: ", imgList[i], " has num boxes detected  : ", len(bboxes)
-        return
+            print "image: ", imgList[i], " has num boxes detected  : ", len(bboxlist_for_images[i])
+    
+    else:        
             
-    fpgaOutput  = fpgaOutput_list[0]
-    fpgaOutputShape  = fpgaOutputShape_list[0]
-    npout_view = np.frombuffer(fpgaOutput, dtype=np.float32)\
-      .reshape(tuple(fpgaOutputShape))
-    npout_view = npout_view.flatten() 
-    fpgaoutsz = fpgaOutputShape[1]*fpgaOutputShape[2]*fpgaOutputShape[3]
+        fpgaOutput  = fpgaOutput_list[0]
+        fpgaOutputShape  = fpgaOutputShape_list[0]
+        npout_view = np.frombuffer(fpgaOutput, dtype=np.float32)\
+          .reshape(tuple(fpgaOutputShape))
+        npout_view = npout_view.flatten() 
+        fpgaoutsz = fpgaOutputShape[1]*fpgaOutputShape[2]*fpgaOutputShape[3]
+        bboxlist_for_images = []
+        for i in range(min(self.args['batch_sz'], len(shapeArr))):
+          startidx = i*fpgaoutsz
+          softmaxout = npout_view[startidx:startidx+fpgaoutsz]
+        
+          # first activate first two channels of each bbox subgroup (n)
+          for b in range(self.args['bboxplanes']):
+            for r in range(\
+              self.args['batchstride']*b, 
+              self.args['batchstride']*b+2*self.args['groups']):
+              softmaxout[r] = sigmoid(softmaxout[r])
+    
+            for r in range(\
+              self.args['batchstride']*b\
+                +self.args['groups']*self.args['coords'], 
+              self.args['batchstride']*b\
+                +self.args['groups']*self.args['coords']+self.args['groups']):
+              softmaxout[r] = sigmoid(softmaxout[r])
+        
+          # Now softmax on all classification arrays in image
+          for b in range(self.args['bboxplanes']):
+            for g in range(self.args['groups']):
+              softmax(self.args['beginoffset'] + b*self.args['batchstride'] + g*self.args['groupstride'], softmaxout, softmaxout, self.args['outsz'], self.args['groups'])
+    
+          # NMS
+          bboxes = nms.do_baseline_nms(softmaxout, shapeArr[i][1], shapeArr[i][0], firstInputShape[2], firstInputShape[3], self.args['out_w'], self.args['out_h'], self.args['bboxplanes'], self.args['outsz'], self.args['scorethresh'], self.args['iouthresh'])
+          bboxlist_for_images.append(bboxes)
+          print "image: ", imgList[i], " has num boxes detected  : ", len(bboxes)
+          
+    if self.args['golden'] is None:
+        return
+    
     for i in range(min(self.args['batch_sz'], len(shapeArr))):
-      startidx = i*fpgaoutsz
-      softmaxout = npout_view[startidx:startidx+fpgaoutsz]
-    
-      # first activate first two channels of each bbox subgroup (n)
-      for b in range(self.args['bboxplanes']):
-        for r in range(\
-          self.args['batchstride']*b, 
-          self.args['batchstride']*b+2*self.args['groups']):
-          softmaxout[r] = sigmoid(softmaxout[r])
+        filename = imgList[i]
+        out_file_txt = ((filename.split("/")[-1]).split(".")[0])
+        out_file_txt = self.args['detection_labels']+"/"+out_file_txt+".txt"
+        out_line_list = []
+        bboxes = bboxlist_for_images[i]
+        for j in range(len(bboxes)):
+            x,y,w,h = darknet_style_xywh(shapeArr[i][1], shapeArr[i][0], bboxes[j]["ll"]["x"],bboxes[j]["ll"]["y"],bboxes[j]['ur']['x'],bboxes[j]['ur']['y'])
 
-        for r in range(\
-          self.args['batchstride']*b\
-            +self.args['groups']*self.args['coords'], 
-          self.args['batchstride']*b\
-            +self.args['groups']*self.args['coords']+self.args['groups']):
-          softmaxout[r] = sigmoid(softmaxout[r])
-    
-      # Now softmax on all classification arrays in image
-      for b in range(self.args['bboxplanes']):
-        for g in range(self.args['groups']):
-          softmax(self.args['beginoffset'] + b*self.args['batchstride'] + g*self.args['groupstride'], softmaxout, softmaxout, self.args['outsz'], self.args['groups'])
+                  
+            line_string = str(bboxes[j]["classid"])
+            line_string = line_string+" "+str(round(bboxes[j]['prob'],3))
+            line_string = line_string+" "+str(x)
+            line_string = line_string+" "+str(y)
+            line_string = line_string+" "+str(w)
+            line_string = line_string+" "+str(h)
+            out_line_list.append(line_string+"\n")
 
-      # NMS
-      bboxes = nms.do_baseline_nms(softmaxout, shapeArr[i][1], shapeArr[i][0], firstInputShape[2], firstInputShape[3], self.args['out_w'], self.args['out_h'], self.args['bboxplanes'], self.args['outsz'], self.args['scorethresh'], self.args['iouthresh'])
 
-      print "image: ", imgList[i], " has num boxes detected  : ", len(bboxes)
-
-      #for j in range(len(bboxes)):
-      #    print("Obj %d: %s" % (j, self.labels[bboxes[j]['classid']]))
-      #    print("\t score = %f" % (bboxes[j]['prob']))
-      #    print("\t (xlo,ylo) = (%d,%d)" % (bboxes[j]['ll']['x'], bboxes[j]['ll']['y']))
-      #    print("\t (xhi,yhi) = (%d,%d)" % (bboxes[j]['ur']['x'], bboxes[j]['ur']['y']))
+        log.info("writing this into prediction file at %s"%(out_file_txt))
+        with open(out_file_txt, "w") as the_file:
+            for lines in out_line_list:
+                the_file.write(lines)
 
     
 
@@ -147,6 +169,18 @@ class YoloPostProcess(mp_classify.UserPostProcess):
     print ( "[XDNN] Total time in sec: %g " % ( (timeit.default_timer() - self.startTime) ))
     print   "[XDNN] Total Images Processed : ", self.numProcessed
     print ( "[XDNN] Throughput: %g images/s" % ( float(self.numProcessed) / (timeit.default_timer() - self.startTime )  ))
+    
+    with open(self.args['labels']) as f:
+        names = f.readlines()
+    
+    class_names = [x.strip() for x in names]
+    
+    # If ground truth labels are provided as signalled by arg golden calculate mAP score
+    if self.args['golden'] is not None:
+        print("Computing mAP score  :")
+        print("Class names are  :", class_names)
+        
+        mAP = calc_detector_mAP(self.args['detection_labels'], self.args['golden'], len(class_names), class_names, self.args['prob_threshold'], self.args['iouthresh'])
 
 mp_classify.register_pre(YoloPreProcess)
 mp_classify.register_post(YoloPostProcess)
@@ -159,8 +193,6 @@ if __name__ == '__main__':
                       help='number of FPGA streams')
   parser.add_argument('--deviceID', type = int, default = 0,
         help='FPGA no. -> FPGA ID to run in case multiple FPGAs')
-  parser.add_argument('--bboxplanes', type=int, default=5,
-                      help='number of bboxplanes')
   parser.add_argument('--network_downscale_width', type=float, default=(32.0),
                       help='network_downscale_width')
   parser.add_argument('--network_downscale_height', type=float, default=(32.0),
@@ -168,7 +200,7 @@ if __name__ == '__main__':
   parser.add_argument('--num_box_cordinates', type=int, default=4,
                       help='num_box_cordinates could be box x,y,width, height')
   
-  parser.add_argument('--scorethresh', type=float, default=0.24,
+  parser.add_argument('--scorethresh', type=float, default=0.005,
                       help='thresohold on probability threshold')
   
   parser.add_argument('--iouthresh', type=float, default=0.3,
@@ -178,13 +210,23 @@ if __name__ == '__main__':
                       help='bypass pre/post processing for benchmarking')
   parser.add_argument("--yolo_model",  type=str, default='xilinx_yolo_v2')
   parser.add_argument('--in_shape', default=[3,224,224], nargs=3, type=int, help='input dimensions') 
+  
+  parser.add_argument('--anchorCnt', type=int, default=5,
+                      help='thresohold on iouthresh across 2 candidate detections')
+  parser.add_argument('--detection_labels', help="direcotry path detected lable files in darknet style",
+                        default=None, type=str, metavar="FILE")
+  parser.add_argument('--prob_threshold', type=float, default=0.1, help='threshold for calculation of f1 score')
 
   args = parser.parse_args()
   args = xdnn_io.make_dict_args(args)
   compilerJSONObj = xdnn.CompilerJsonParser(args['netcfg'])
   firstInputShape = compilerJSONObj.getInputs().itervalues().next()
-  out_w = firstInputShape[2]/args['network_downscale_width']
-  out_h = firstInputShape[3]/args['network_downscale_height']
+  firstOutputShape = compilerJSONObj.getOutputs().itervalues().next()
+  out_w = firstOutputShape[2]
+  out_h = firstOutputShape[3]
+
+  args['net_w'] = int(firstInputShape[2])
+  args['net_h'] = int(firstInputShape[3])   
   args['out_w'] = int(out_w)
   args['out_h'] = int(out_h)
   args['coords'] = 4
@@ -192,14 +234,11 @@ if __name__ == '__main__':
   args['groups'] = int(out_w * out_h)
   args['batchstride'] = args['groups']*(args['outsz']+args['coords']+1)
   args['groupstride'] = 1
-  print "yolo_model : ", args['yolo_model']
-  if((args['yolo_model'] == 'standard_yolo_v3') or (args['yolo_model'] == 'tiny_yolo_v3')):
-      args = set_config(args)
-      
+  args['classes'] = args['outsz']
+  args['bboxplanes'] = args['anchorCnt']
+  
+  print "running yolo_model : ", args['yolo_model']
       
       
 
   mp_classify.run(args)
-  #mp_inference_app.run(args)
-  #with MP_Inference(args) as mp_run:
-  #      mp_run.run()

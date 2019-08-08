@@ -381,10 +381,16 @@ def loadImageBlobFromFileScriptBase(imgFile, cmdSeq):
             # BGR->RGB = 2,1,0
             # RGB->BGR = 2,1,0
             ch = 3*[None]
-            ch[0] = img[0,:,:]
-            ch[1] = img[1,:,:]
-            ch[2] = img[2,:,:]
-            img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]))
+            if img.shape[0] == 3:
+                ch[0] = img[0,:,:]
+                ch[1] = img[1,:,:]
+                ch[2] = img[2,:,:]
+                img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]), axis=0)
+            else:
+                ch[0] = img[:,:,0]
+                ch[1] = img[:,:,1]
+                ch[2] = img[:,:,2]
+                img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]), axis=2)
         else:
             raise NotImplementedError(cmd)
 
