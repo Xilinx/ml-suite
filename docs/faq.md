@@ -37,26 +37,21 @@
 Note: Layers not supported for hardware acceleration typically are not a performance bottleneck, and therefore can be ran on the CPU as a post processing step. In example the final fully connected layer of Inception v1.
 
 ## What frameworks are supported
-
-To be clear, deploying to the FPGA does not depend on any framework.  
-There are no framework calls that will automatically deploy to the FPGA.  
-However, trained models are typically native to a specific framework.  
-The Xilinx ml-suite will need to compile the dataflow graph from that native framework.  
+  
+The Xilinx ml-suite will need to compile the dataflow graph from a framework.  
 Currently supported frameworks are:
-- [Caffe](https://caffe.berkeleyvision.org/)
-- [Tensorflow](https://www.tensorflow.org/api_docs/)
-- [Keras](https://keras.io/)
-- [MXNet](https://mxnet.incubator.apache.org/api/python/index.html)
-- [Darknet*](https://pjreddie.com/darknet/)  
-    - Note: Darknet support is achieved by automatically converting to Caffe
+- [Caffe v1.0](https://caffe.berkeleyvision.org/)
+- [Tensorflow v1.9](https://www.tensorflow.org/api_docs/)
+  
+Support for other frameworks is acheived via framework conversion utilities
 
 ## What batch sizes are supported
 
 Since FPGA hardware accelerators can be designed for EXACTLY the task at hand, there is no need to follow the GPU convention of batching or equivalently sharing weights across images and computing inference on many images in parallel.  
-The FPGA hardware acclerator from Xilinx ("XDNN") will process 1 image in 16b mode, or 2 images simultaneously in 8b mode.  
-Different FPGA configurations can have a different number of accelerators.
+The FPGA hardware acclerator from Xilinx ("XDNN") will process 1 image at a time.  
+Different FPGA configurations can have a different number of accelerators.  
 Typically, we will compute inference on 1,2,4, or 8 images simultaneously.  
-This vastly improves the application level latency incurred by waiting to accumulate a large batch of images.
+This vastly improves the application level latency incurred by waiting to accumulate a large batch of images.  
 
 ## How does FPGA compare to CPU and GPU acceleration
 
@@ -76,15 +71,13 @@ FPGA accelerated networks are far superior to GPU accelerated networks for laten
 4. Ensure your hardware environment is set up appropriately (Before you attempt to deploy on hardware)  
   a. If you are running in the cloud, you can take it for granted that this is done.  
   b. [Hardware setup](https://www.xilinx.com/cgi-bin/docs/bkdoc?k=vcu1525;d=ug1268-vcu1525-reconfig-accel-platform.pdf;a=xBoardInstallation)
-5. Compile the model  
-  a. [See compiler tutorial](../../notebooks/compiler_caffe.ipynb)
-6. Quantize the model  
-  a. [See quantizer tutorial](../../notebooks/quantizer_caffe.ipynb)
+5. Quantize the model  
+6. Compile the model  
 7. Deploy the model  
   a. This is accomplished using ml-suite python APIs.  
-  b. [See test classify](../../examples/deployment_modes/test_classify.py)  
-  c. Alternatively, see the jupyter tutorial that covers compile, quantize, deploy for image classification w/ InceptionV1  
-      aa. [image classification caffe](../../notebooks/image_classification_caffe.ipynb)
+  b. [See test classify](../examples/deployment_modes/test_classify.py)  
+  c. Alternatively, see the jupyter tutorial that covers quantize, compile, deploy for image classification w/ InceptionV1  
+      aa. [image classification caffe](../notebooks/image_classification_caffe.ipynb)
 
 Should you hit errors at step 5, it is possible that your network needs some modification to run optimally.  
 Ensure that you aren't dealing with unsupported layers.  

@@ -1,6 +1,6 @@
 <table style="width:100%">
 <tr>
-<th width="100%" colspan="6"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Xilinx ML Suite v1.4</h2>
+<th width="100%" colspan="6"><img src="https://www.xilinx.com/content/dam/xilinx/imgs/press/media-kits/corporate/xilinx-logo.png" width="30%"/><h1>Xilinx ML Suite v1.5</h2>
 </th>
 </table>
   
@@ -22,21 +22,23 @@ The ML Suite is composed of three basic parts:
 
 ## [See What's New](docs/release-notes/1.x.md)
  - [Release Notes][]
- - Integration of Deephi DECENT Quantizer for Caffe
- - xfDNN Runtime API upgraded to support multi-output networks
- - XDNNv3 fully integrated for all platforms & models
+ - Integration of Deephi DECENT Quantizer for TensorFlow
+ - TensorFlow Jupyter Notebook
+ - TensorFlow Command Line Examples
+ - New precompiled Face Detection example applied to video
  - Ease of use enhancements
-    - Docker Images
-    - Run on FPGA using Caffe's custom Python layer
-    - HDF5 format used for network weights
+    - Docker Images for both Caffe and Tensorflow
+    - Can run directly on the FPGA using Caffe or Tensorflow
  
 ## Getting Started
  - [Install XRT](docs/xrt.md) (Only necessary for On-Premise deployment)
  - [Start Docker Container](docs/container.md)
  - [Jupyter Notebook Tutorials](notebooks/README.md)
+   - [TensorFlow Image Classification](notebooks/image_classification_tensorflow.ipynb)
    - [Caffe Image Classification](notebooks/image_classification_caffe.ipynb)
    - [Caffe Object Detection w/ YOLOv2](notebooks/object_detection_yolov2.ipynb)
  - Command Line Examples
+   - [TensorFlow ImageNet Benchmark Models](examples/tensorflow/README.md)
    - [Caffe ImageNet Benchmark Models](examples/caffe/README.md)
    - [Caffe VOC SSD Example](examples/caffe/ssd-detect/README.md)
    - [Deployment Mode Examples](examples/deployment_modes/README.md)

@@ -4,21 +4,20 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
-from xdnn_env import xdnn_env
-from CaffeXFDNN_Quantize import CaffeXFDNN_Quantize
-from quantize_controls import quantize_controls
 import google.protobuf.text_format as pbtf
 import caffe.proto.caffe_pb2 as caffe_pb2
 import json
-import numpy as np
+
+from xfdnn.rt.scripts.framework.base.quantize_controls import quantize_controls
+#from xfdnn.rt.scripts.framework.caffe.CaffeXFDNN_Quantize import CaffeXFDNN_Quantize
 
 def get_subgraph_nodes(proto) :
     quantized_inputs = set()
     res = []
     for layer in proto.layer:
-        if layer.type == "Python" and layer.python_param.module == "CaffeXFDNN_UnQuantize" :
+        if layer.type == "Python" and layer.python_param.module == "xfdnn.rt.scripts.framework.caffe.CaffeXFDNN_UnQuantize":
             continue
-        if layer.type == 'Python' and layer.python_param.module == "CaffeXFDNN_Quantize" :
+        if layer.type == 'Python' and layer.python_param.module == "xfdnn.rt.scripts.framework.caffe.CaffeXFDNN_Quantize":
             for t_name in layer.top :
                 quantized_inputs.add(t_name)
         all_inps_quantized = True

@@ -14,6 +14,129 @@ import numpy as np
 import os
 from PIL import Image, ImageDraw, ImageFont
 
+
+def overlap(x1, w1,  x2, w2):
+    w1by2 = w1/2
+    w2by2 = w2/2
+    left  = max(x1 - w1by2, x2 - w2by2)
+    right = min(x1 + w1by2, x2 + w2by2)
+    return right - left
+
+
+def cal_iou(box, truth) :
+    w = overlap(box[0], box[2], truth[0], truth[2])
+    h = overlap(box[1], box[3], truth[1], truth[3])
+    if (w<0 or h<0):
+        return 0
+    inter_area = w * h
+    union_area = box[2] * box[3] + truth[2] * truth[3] - inter_area
+    
+    return inter_area * 1.0 / union_area
+
+
+def sortSecond(val):
+    return val[1]
+
+def  apply_nms(boxes, classes, scorethresh, overlap_threshold):
+    
+    result_boxes=[]
+    box_len = (boxes.shape)[0]
+    #print "apply_nms :box shape", boxes.shape
+    for k in range(classes):  
+        
+        key_box_class=[]    
+        for i in range(box_len):
+            key_box_class.append((i, boxes[i,5+k]))
+
+        key_box_class.sort(key = sortSecond, reverse = True)
+
+        exist_box=np.ones(box_len)        
+        for i in range(box_len):
+            
+            box_id = key_box_class[i][0]
+            
+            if(exist_box[box_id] == 0):
+                continue
+                
+            if(boxes[box_id,5 + k] < scorethresh):
+                exist_box[box_id] = 0;
+                continue
+            
+            result_boxes.append([boxes[box_id,0], boxes[box_id,1], boxes[box_id,2], boxes[box_id,3], k, boxes[box_id,5+k]])
+            
+            for j in range(i+1, box_len):
+                
+                box_id_compare = key_box_class[j][0]
+                if(exist_box[box_id_compare] == 0):
+                    continue
+                
+                overlap = cal_iou(boxes[box_id_compare,:], boxes[box_id,:])
+                if(overlap >= overlap_threshold):
+                    exist_box[box_id_compare] = 0
+    
+    return result_boxes
+                
+def sigmoid_ndarray(data_in):
+    data_in = -1*data_in
+    data_in = np.exp(data_in) + 1
+    data_in = np.reciprocal(data_in)
+    
+    return data_in
+                 
+def process_all_yolo_layers(yolo_layers, classes, anchorCnt, nw_in_width, nw_in_height):
+    
+    biases =[10,13,16,30,33,23, 30,61,62,45,59,119, 116,90,156,198,373,326]
+    
+    scale_feature=[]
+    out_yolo_layers=[]
+    for output_id in range(len(yolo_layers)):
+        scale_feature.append([output_id,yolo_layers[output_id].shape[3]])
+    
+    scale_feature.sort(key = sortSecond, reverse = True)
+    
+    for output_id in range(len(yolo_layers)):
+        
+        out_id_process = scale_feature[output_id][0]
+        #print "process_all_yolo_layers :layer shape", out_id_process, yolo_layers[out_id_process].shape
+        width  = yolo_layers[out_id_process].shape[3]
+        height = yolo_layers[out_id_process].shape[2]
+        w_range = np.arange(float(width))
+        h_range = np.arange(float(height)).reshape(height,1)
+        
+        
+        yolo_layers[out_id_process][:,4::(5+classes),:,:] = sigmoid_ndarray(yolo_layers[out_id_process][:,4::(5+classes),:,:])
+        
+        yolo_layers[out_id_process][:,0::(5+classes),:,:] = sigmoid_ndarray(yolo_layers[out_id_process][:,0::(5+classes),:,:])
+        yolo_layers[out_id_process][:,1::(5+classes),:,:] = sigmoid_ndarray(yolo_layers[out_id_process][:,1::(5+classes),:,:])
+        yolo_layers[out_id_process][:,0::(5+classes),:,:] = (yolo_layers[out_id_process][:,0::(5+classes),:,:] + w_range)/float(width)
+        yolo_layers[out_id_process][:,1::(5+classes),:,:] = (yolo_layers[out_id_process][:,1::(5+classes),:,:] + h_range)/float(height)
+        
+        yolo_layers[out_id_process][:,2::(5+classes),:,:] = np.exp(yolo_layers[out_id_process][:,2::(5+classes),:,:])
+        yolo_layers[out_id_process][:,3::(5+classes),:,:] = np.exp(yolo_layers[out_id_process][:,3::(5+classes),:,:])
+        
+        
+        
+        for ankr_cnt in range(anchorCnt):
+            channel_number_box_width = ankr_cnt * (5+classes) + 2
+            scale_value_width = float(biases[2*ankr_cnt + 2 * anchorCnt * output_id]) /float(nw_in_width)
+            channel_number_box_height = ankr_cnt * (5+classes) + 3
+            scale_value_height = float(biases[2*ankr_cnt + 2 * anchorCnt * output_id + 1]) /float(nw_in_height)
+            
+            yolo_layers[out_id_process][:,channel_number_box_width,:,:] = yolo_layers[out_id_process][:,channel_number_box_width,:,:] * scale_value_width
+            yolo_layers[out_id_process][:,channel_number_box_height,:,:] = yolo_layers[out_id_process][:,channel_number_box_height,:,:] * scale_value_height
+            
+            channel_number_classes = ankr_cnt * (5+classes) + 5
+            channel_number_obj_score = ankr_cnt * (5+classes) + 4
+            
+            for class_id in range(classes):                
+                cur_channel = channel_number_classes + class_id                
+                yolo_layers[out_id_process][:,cur_channel,:,:] = np.multiply(sigmoid_ndarray(yolo_layers[out_id_process][:,cur_channel,:,:]) , yolo_layers[out_id_process][:,channel_number_obj_score,:,:])
+                
+        yolo_layer_shape = yolo_layers[out_id_process].shape
+        out_yolo_layers.append(yolo_layers[out_id_process])
+        
+    return out_yolo_layers
+
 def darknet_style_xywh(image_width, image_height, llx,lly,urx,ury):
     # Assumes (llx,ury) is upper left corner, and (urx,lly always bottom right
     dw = 1./(image_width)

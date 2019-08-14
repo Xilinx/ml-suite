@@ -86,6 +86,13 @@ void yolov2_box_extract(nms_net_t *networkPtr, float *dataIn, float scoreThresh,
      9.770520210266113281250000f,
      9.168279647827148437500000f};
 
+     float biases_voc[] = {1.08,1.19 ,3.42,4.41,6.63,11.38,9.42,5.11,16.62,10.52};
+
+     float *bias_ptr = biases;
+     // NOTE : TODO Assumption is made here that if num classes is 20, the network is traind on VOC data set. Baises for the same are used
+     if(networkPtr->numClasses == 20) 
+         bias_ptr = biases_voc;
+
     // Pixel loop
     for (i = 0; i < numPixels; ++i) {
         int row = i / networkPtr->outWidth;
@@ -103,7 +110,7 @@ void yolov2_box_extract(nms_net_t *networkPtr, float *dataIn, float scoreThresh,
             int box_index  = yolov2_entry_index(networkPtr->outWidth, networkPtr->outHeight, networkPtr->numClasses, index, 0);
 
             // Get box coordinates
-            boxesOut[index] = yolov2_get_region_box(predictions, biases, n, box_index, col, row, networkPtr->outWidth, networkPtr->outHeight, numPixels);
+            boxesOut[index] = yolov2_get_region_box(predictions, bias_ptr, n, box_index, col, row, networkPtr->outWidth, networkPtr->outHeight, numPixels);
             boxesOut[index].boxScore = predictions[obj_index];
 
             float max = 0;

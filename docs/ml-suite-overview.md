@@ -69,8 +69,6 @@ Once these optimizations are completed per layer, the entire network is optimize
 
 xfDNN Quantizer enables fast, high-precision calibration to lower precision deployments to INT8 and INT16. These Python tools are simple to use.
 
-For more information on this, please see the xfDNN tool notebooks [here][].
-
 ### ML Framework and Open Source Support
 
 The ML Suite supports the following Frameworks:
@@ -82,7 +80,5 @@ The ML Suite supports the following Frameworks:
     - Note: Darknet support is achieved by automatically converting to Caffe.
 
 With xfDNN you can connect to other Open Source frameworks and software easily with our Python APIs.
-For more information on this, please take a look at the xfDNN tool notebooks [here][].
 
-[Overlay Selector Guide]: ../../overlaybins/README.md
-[here]: ../../docs/tutorials/README.md
+[Overlay Selector Guide]: ../overlaybins/README.md

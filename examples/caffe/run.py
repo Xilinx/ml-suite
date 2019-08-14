@@ -11,7 +11,7 @@ import os,sys,argparse
 
 from xfdnn.tools.compile.bin.xfdnn_compiler_caffe  import CaffeFrontend as xfdnnCompiler
 from decent import CaffeFrontend as xfdnnQuantizer
-from xfdnn_subgraph import CaffeCutter as xfdnnCutter
+from xfdnn.rt.scripts.framework.caffe.xfdnn_subgraph import CaffeCutter as xfdnnCutter
 
 import numpy as np
 import caffe

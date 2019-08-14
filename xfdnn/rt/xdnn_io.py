@@ -5,20 +5,19 @@
 #
 # (C) Copyright 2018, Xilinx, Inc.
 #
-# from . import xdnn
-import argparse
 import os
 import json
-import math
-from ast import literal_eval as l_eval
+import argparse
 from collections import OrderedDict
+import h5py
 import ntpath
 import cv2
-import PyTurboJPEG
-
 import numpy as np
 
-import xdnn
+from xfdnn.rt.xdnn_util import literal_eval
+from ext.PyTurboJPEG import imread as _imread
+
+
 
 class image_preprocessing(object):
   def __init__(self, resize=[], crop=[], pxlscale=[], meansub=[], chtranspose=None, chswap=None,
@@ -169,11 +168,11 @@ def default_xdnn_arg_parser_compiled(base='TF'):
 def default_xdnn_arg_parser(base='TF'):
   if base.lower() == 'tf':
     ## FIXME: Hack to by pass caffe and tensorflow co-existance issues
-    from xfdnn_compiler_tensorflow import default_compiler_arg_parser as default_TF_compiler_arg_parser
+    from xfdnn.tools.compile.bin.xfdnn_compiler_tensorflow import default_compiler_arg_parser as default_TF_compiler_arg_parser
     parser = default_TF_compiler_arg_parser()
   elif base.lower() == 'caffe':
     ## FIXME: Hack to by pass caffe and tensorflow co-existance issues
-    from xfdnn_compiler_caffe import default_compiler_arg_parser as default_CAFFE_compiler_arg_parser
+    from xfdnn.tools.compile.bin.xfdnn_compiler_caffe import default_compiler_arg_parser as default_CAFFE_compiler_arg_parser
     parser = default_CAFFE_compiler_arg_parser()
   else:
     raise AttributeError('unsupported paltform')
@@ -233,7 +232,7 @@ def make_dict_args(args):
     def find_all_images(input_dict):
         if 'images' in input_dict and input_dict['images'] is not None:
             inputFiles = []
-            for dir_or_image in l_eval(str(input_dict['images'])):
+            for dir_or_image in literal_eval(str(input_dict['images'])):
                 if os.path.isdir(dir_or_image):
                     inputFiles += [os.path.join(dir_or_image, f) for f in os.listdir(dir_or_image) if os.path.isfile(os.path.join(dir_or_image, f))]
                 else:
@@ -243,7 +242,7 @@ def make_dict_args(args):
     def eval_string(input_dict):
         for key, val in list(input_dict.items()):
             try:
-                input_dict[key] = l_eval(str(val))
+                input_dict[key] = literal_eval(str(val))
             except:
                 pass
             #if val and str(val).isdigit():
@@ -309,7 +308,7 @@ def processCommandLine(argv=None, base='TF'):
 # Generic list of image manipulation functions for simplifying preprocess code
 def loadImageBlobFromFileScriptBase(imgFile, cmdSeq):
     if isinstance(imgFile, str):
-        img = PyTurboJPEG.imread(imgFile)
+        img = _imread(imgFile)
     else:
         img = imgFile
 
@@ -356,7 +355,6 @@ def loadImageBlobFromFileScriptBase(imgFile, cmdSeq):
             ll_y   = size_y//2 - param[1]//2
             img    = img[ll_x:ll_x+param[0],ll_y:ll_y+param[1]]
         elif cmd == 'plot':
-            from matplotlib import pyplot as p
             toshow = img.astype(np.uint8)
             if param is not None:
                 toshow = np.transpose(toshow, (param[0], param[1], param[2]))
@@ -383,10 +381,16 @@ def loadImageBlobFromFileScriptBase(imgFile, cmdSeq):
             # BGR->RGB = 2,1,0
             # RGB->BGR = 2,1,0
             ch = 3*[None]
-            ch[0] = img[0,:,:]
-            ch[1] = img[1,:,:]
-            ch[2] = img[2,:,:]
-            img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]))
+            if img.shape[0] == 3:
+                ch[0] = img[0,:,:]
+                ch[1] = img[1,:,:]
+                ch[2] = img[2,:,:]
+                img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]), axis=0)
+            else:
+                ch[0] = img[:,:,0]
+                ch[1] = img[:,:,1]
+                ch[2] = img[:,:,2]
+                img   = np.stack((ch[param[0]],ch[param[1]],ch[param[2]]), axis=2)
         else:
             raise NotImplementedError(cmd)
 
@@ -398,7 +402,7 @@ def loadImageBlobFromFileScriptBase(imgFile, cmdSeq):
 def loadImageBlobFromFile(imgFile, raw_scale, mean, input_scale, img_h, img_w):
     # Direct resize only
     cmdseqResize = [
-        ('resize',(img_h,img_w)),
+        ('resize',(img_w,img_h)),
         ('pxlscale',float(raw_scale)/255),
         ('meansub', mean),
         ('pxlscale', input_scale),
@@ -463,7 +467,7 @@ def getFilePaths(paths_list):
         else:
             for dirpath,_,filenames in os.walk(p):
                 for f in filenames:
-		    if f.endswith(ext):
+                    if f.endswith(ext):
                         img_paths.append( os.path.abspath(os.path.join(dirpath, f)))
 
     return img_paths
@@ -547,13 +551,12 @@ def getNearFileMatchWithPrefix(path, prefix, index = 0):
 def loadFCWeightsBias(arg, index = 0):
   data_dir = arg['weights']
   if ".h5" in data_dir:
-    import h5py
     with h5py.File(data_dir,'r') as f:
       #keys = f.keys()
       #print (keys)
-      key = f.keys()[0]
+      key = list(f.keys())[0]
       weight = list(np.array(f.get(key)).flatten())
-      key = f.keys()[1]
+      key = list(f.keys())[1]
       bias = list(np.array(f.get(key)).flatten())
   else:
     fname = "%s/fc" % data_dir
