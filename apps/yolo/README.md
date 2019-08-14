@@ -10,6 +10,13 @@ This application requires more than just simple classification. The task here is
 Please refer to the papers for full algorithm details, and/or watch [this.](https://www.youtube.com/watch?v=9s_FpMpdYW8). 
 In this tutorial, the network was trained on the 80 class [COCO dataset.](http://cocodataset.org/#home)
 
+## Quick Start 
+Once you are inside of the docker container
+```
+$ ./run.sh -t test_detect -m yolo_v3_standard_608 -k v3 -b 8
+$ ./run.sh -t test_detect -m yolo_v2_prelu_608 -k v3 -b 8
+```
+
 ## Background
 The authors of the YOLO papers used their own programming framework called "Darknet" for research, and development. The framework is written in C, and was [open sourced.](https://github.com/pjreddie/darknet) Additionally, they host documentation, and pretrained weights [here.](https://pjreddie.com/darknet/yolov2/) Currently, the Darknet framework is not supported by Xilinx's ML Suite. Additionally, there are some aspects of the YOLOv2 network that are not supported by the Hardware Accelerator, such as the reorg layer. For these reasons we are sharing original and modified versions of YOLOv2 network. The inference using original YOLOv2 version is acheived by running reorg layer in software. The modified version of the YOLOv2 network was obtained by  replacing unsuppored layers with supported layers, retraining this modified network on Darknet, and converting the model to caffe. In this tutorial we will run the network accelerated on an FPGA using 8b quantized weights and a hardware kernel implementing a 96x32 systolic array with 9MB of image RAM. All convolutions/pools/leaky-ReLU are accelerated on the FPGA fabric, while the final sigmoid, softmax, and non-max suppression functions are executed on the CPU. 
 
@@ -93,12 +100,3 @@ Xilinx has provided a demo application showing how YOLOv2 can be ran "end to end
     ```sh
     $ ./run.sh -p cpu -t test_detect -m yolo_v2_tiny_608 
     ```
-
-
-Refer to the Using Anaconda on AWS instructions located [here][]. 
-
- Upon success, you will see several bounding box predictions printed for the images in the 'out' directory
-
-Note: After the first initial run, it is possible to run the demo with `python yolo.py` the run.sh script is setting up some key env variables, and building the non-max suppression binary. However, that only needs to be done once, in a shell
-
-[here]: ../../docs/tutorials/start-anaconda.md

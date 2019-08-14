@@ -171,6 +171,8 @@ elif [ "$MODEL" == "yolo_v3_standard_608" ]; then
   INSHAPE_CHANNELS=3
   INSHAPE_WIDTH=608
   INSHAPE_HEIGHT=608
+  FETCH_JIT=1                                                                             
+  URL="https://www.xilinx.com/bin/public/openDownload?filename=models.caffe.yolov3_2019-08-01.zip"
 elif [ "$MODEL" == "yolo_v3_standard_224" ]; then
   NET_DEF=${MLSUITE_ROOT}/models/caffe/yolov3/fp32/yolo_v3_standard_224.prototxt
   NET_DEF_FPGA=${MLSUITE_ROOT}/models/caffe/yolov3/fp32/yolo_v3_standard_224_fpga.prototxt
@@ -232,7 +234,19 @@ elif [ "$MODEL" == "yolo_v2_prelu_608" ]; then
   INSHAPE_CHANNELS=3
   INSHAPE_WIDTH=608
   INSHAPE_HEIGHT=608
+  FETCH_JIT=1                                                                             
+  URL="https://www.xilinx.com/bin/public/openDownload?filename=models.caffe.yolov2_2019-08-01.zip"
 fi
+
+# Make sure you have the model, try to download it just in time, else fail
+if [ -f "$NET_DEF" ]; then                                                
+  echo "$NET_DEF exists on disk!"                                         
+elif [ $FETCH_JIT -eq 1 ]; then                                           
+  cd $MLSUITE_ROOT && wget $URL -O temp.zip && unzip temp.zip && rm -rf temp.zip && cd -
+else                                                                                    
+  echo "$NET_DEF does not exist on disk! Please find a way to acquire it!"              
+  exit 1                                                                                
+fi  
 
 #FPGAOUTSZ=2048000 # default to something large enough to store any layer
 
@@ -434,7 +448,7 @@ fi
 
     #COMPILER_BASE_OPT+=" -M $DEBUG_LAYERS "
     if [ $RUN_COMPILER == "yes" ] ; then
-        python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.py $COMPILER_BASE_OPT 
+        python $MLSUITE_ROOT/xfdnn/tools/compile/bin/xfdnn_compiler_caffe.pyc $COMPILER_BASE_OPT 
         echo -e $COMPILEROPT  
         NETCFG=work/compiler.json
         WEIGHTS=work/deploy.caffemodel_data.h5
