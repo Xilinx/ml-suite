@@ -74,12 +74,12 @@ class DefaultOrderedDict(OrderedDict):
 ######################################################
 class UnionFind(object):
   def __init__(self, size):
-    self.array = [i for i in range(size)]
-    self.weight = [1 for i in range(size)]
+    self._array = [i for i in range(size)]
+    self._weight = [1 for i in range(size)]
 
   def root(self, i):
-    while (self.array[i] != i):
-      i = self.array[i]
+    while (self._array[i] != i):
+      i = self._array[i]
     return i
 
   def find(self, i, j):
@@ -90,18 +90,20 @@ class UnionFind(object):
     root_j = self.root(j)
     if root_i == root_j:
       return
-    if self.weight[root_i] < self.weight[root_j]:
-      self.array[root_i] = self.array[root_j]
-      self.weight[root_j] += self.weight[root_i]
+    if self._weight[root_i] < self._weight[root_j]:
+      self._array[root_i]   = self._array[root_j]
+      self._weight[root_j] += self._weight[root_i]
     else:
-      self.array[root_j] = self.array[root_i]
-      self.weight[root_i] += self.weight[root_j]
+      self._array[root_j]   = self._array[root_i]
+      self._weight[root_i] += self._weight[root_j]
 
   def components(self):
     comp = defaultdict(list)
-    for i, parent in enumerate(self.array):
+    for i, parent in enumerate(self._array):
       root_i = self.root(parent)
-      if i != root_i:
+      if i == root_i:
+        comp[root_i]
+      else:
         comp[root_i].append(i)
     return comp
 
@@ -113,21 +115,24 @@ class UnionFind(object):
 class TrieNode(object):
   def __init__(self, key=None):
     self.key = key
-    self.children = []
+    self.children = {}
 
-    # isEndOfList is True if node represent the end of the list
-    self.isEndOfList = False
+    # isEOL is True if node represent the end of the list
+    self.isEOL = False
 
   def __contains__(self, child_key):
-    return any([child_key==child.key for child in self.children])
+    return (child_key in self.children)
+    # return any([child_key == child.key for child in self.children])
 
   def __getitem__(self, child_key):
-    if child_key not in self:
-      return None
-    return [child for child in self.children if child_key == child.key][0]
+    return self.children.get(child_key, None)
+    # if child_key not in self:
+    #   return None
+    # return [child for child in self.children if child_key == child.key][0]
 
   def add(self, child_key):
-    self.children.append(TrieNode(child_key))
+    self.children[child_key] = TrieNode(child_key)
+    # self.children.append(TrieNode(child_key))
 
 
 class Trie(object):
@@ -138,9 +143,9 @@ class Trie(object):
       for name in name_list:
         self.insert(name)
 
-  def newNode(self):
+  def newNode(self, key=None):
     # Returns new trie node (initialized to NULLs)
-    return TrieNode()
+    return TrieNode(key)
 
   def insert(self, name):
     # If not present, inserts name scopes into trie
@@ -154,7 +159,7 @@ class Trie(object):
       root = root[scope]
 
     # mark last node as leaf
-    root.isEndOfList = True
+    root.isEOL = True
 
   def search(self, name):
     # Search name in the trie
@@ -166,7 +171,7 @@ class Trie(object):
         return False
       root = root[scope]
 
-    return (root != None and root.isEndOfList)
+    return (root != None and root.isEOL)
 
   def lcs(self):
     ## find lowest common scope
@@ -174,8 +179,8 @@ class Trie(object):
     ret = []
     while len(root.children) == 1:
       ret.append(root.key)
-      root = root.children[0]
-    if not root.isEndOfList:
+      root = root.children.values()[0]
+    if not root.isEOL:
       ## if the lcs is not one of names in Trie
       ret.append(root.key)
     return self.name_sep.join(ret[1:])

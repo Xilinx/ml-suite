@@ -98,6 +98,8 @@ class LayerPartition(object):
     return sourcenodes, sinknodes, sourcenode_map, sinknode_map, sourcenodes_cnt
 
   def update(self, layerparameter_dict, layeroutput_dict, others):
+    if not others:
+      return
     if not isinstance(others, list):
       others = [others]
     for other in others:
@@ -417,6 +419,9 @@ class xdnnRT(object):
             return levels, level2vertex
 
         def merge_partitions(graph_partitions, matchings):
+            layerparameter_dict = self.layerparameter_dict
+            layeroutput_dict    = self.layeroutput_dict
+
             for src_idx, dst_idxs in matchings:
               src_partition = graph_partitions[src_idx]
               dst_partitions = [graph_partitions[dst_idx] for dst_idx in dst_idxs]
@@ -477,9 +482,9 @@ class xdnnRT(object):
               for __, v_list in connectivity[src_v].items():
                 for dst_v in v_list:
                   dst_support = graph_partitions[dst_v].supported
-                  if src_support == dst_support:
-                    if is_contraction_valid(connectivity, reverse_connectivity, topOrder, src_v, dst_v):
-                      matching.union(src_v, dst_v)
+                  if ((src_support == dst_support) and
+                      is_contraction_valid(connectivity, reverse_connectivity, topOrder, src_v, dst_v)):
+                    matching.union(src_v, dst_v)
             merge_matches = matching.components()
 
             graph_partitions = merge_partitions(graph_partitions, list(merge_matches.items()))
