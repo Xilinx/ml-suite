@@ -40,8 +40,8 @@ Note: Layers not supported for hardware acceleration typically are not a perform
   
 The Xilinx ml-suite will need to compile the dataflow graph from a framework.  
 Currently supported frameworks are:
-- [Caffe v1.0](https://caffe.berkeleyvision.org/)
-- [Tensorflow v1.9](https://www.tensorflow.org/api_docs/)
+- [Caffe](https://caffe.berkeleyvision.org/)
+- [Tensorflow](https://www.tensorflow.org/api_docs/)
   
 Support for other frameworks is acheived via framework conversion utilities
 
