@@ -11,7 +11,7 @@ usage() {
   echo "./run.sh --platform <platform> --test <test> --model <model> --kcfg <kcfg> --bitwidth <bitwidth>"
   echo "./run.sh  -p        <platform>  -t    <test>  -m <model>  -k <kcfg>  -b <bitwidth>"
   echo "<platform> : 1525 / 1525-ml / alveo-u200 / alveo-u200-ml / alveo-u250 / aws / nimbix"
-  echo "<test>     : test_classify / streaming_classify / streaming_classify_fpgaonly"
+  echo "<test>     : gRPC"
   echo "<kcfg>     : med / large / v3"
   echo "<bitwidth> : 8 / 16"
   echo "<compilerOpt> : autoAllOpt / latency / throughput"
@@ -25,7 +25,7 @@ usage() {
 }
 
 # Default
-TEST="test_classify"
+TEST="gRPC"
 MODEL="googlenet_v1"
 KCFG="v3"
 BITWIDTH="8"
@@ -176,80 +176,17 @@ if [ ! -z $GOLDEN ]; then
 fi
 
 # Build options for appropriate python script
-####################
-# single image test
-####################
-if [ "$TEST" == "test_classify" ]; then
-  TEST=test_classify.py
-  if [ -z ${DIRECTORY+x} ]; then
-    DIRECTORY=dog.jpg
-
-  fi
-  BASEOPT+=" --images $DIRECTORY"
-####################
-# network profile
-####################
-elif [ "$TEST" == "profile" ]; then
-  TEST=profile.py
-  if [ -z ${DIRECTORY+x} ]; then
-    DIRECTORY=dog.jpg
-
-  fi
-  BASEOPT+=" --images $DIRECTORY"
 ############################
-# multi-process streaming
+# gPRC server
 ############################
-elif [[ "$TEST" == "streaming_classify"* ]]; then
+if [[ "$TEST" == "gRPC"* ]]; then
   if [ -z ${DIRECTORY+x} ]; then
     DIRECTORY=../../models/data/ilsvrc12/ilsvrc12_img_val
   fi
-
-  if [ "$TEST" == "streaming_classify_fpgaonly" ]; then
-    BASEOPT+=" --benchmarkmode 1"
-  fi 
-  BASEOPT+=" --numstream $NUMSTREAMS"
   BASEOPT+=" --images $DIRECTORY"
-  BASEOPT+=" --numprepproc $NUMPREPPROC"
-  if [ "$PERPETUAL" == 1 ]; then
-    BASEOPT+=" --zmqpub --perpetual --deviceID $DEVICEID"
-  fi
 
-  TEST=mp_classify.py
-
-###########################
-# switch to run the classification examples through c++ APIs
-# runs with 8 bit quantization for now
-###########################
-
-elif [ "$TEST" == "classify_cpp" ]; then
-  cd classify_cpp
-  make
-  cp ./classify.exe ../classify.exe
-  cd -
-  BATCHSIZE=1
-  DIRECTORY=$MLSUITE_ROOT/examples/deployment_modes/dog.jpg
-  BASEOPT_CPP="--xclbin $XCLBIN_PATH/$XCLBIN --netcfg $NETCFG --datadir $WEIGHTS --labels ./synset_words.txt --quantizecfg $QUANTCFG --img_input_scale $IMG_INPUT_SCALE --batch_sz $BATCHSIZE"
-  BASEOPT_CPP+=" --image $DIRECTORY"
-  OPENCV_LIB=/usr/lib/x86_64-linux-gnu
-  HDF5_PATH=${MLSUITE_ROOT}/ext/hdf5
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MLSUITE_ROOT/ext/zmq/libs:$MLSUITE_ROOT/ext/boost/libs:${HDF5_PATH}/lib:$MLSUITE_ROOT/xfdnn/rt/libs:/opt/xilinx/xrt/lib:$OPENCV_LIB
-
-###########################
-# multi-PE multi-network (Run two different networks simultaneously)
-# runs with 8 bit quantization for now
-###########################
-elif [ "$TEST" == "multinet" ]; then
-  TEST=test_classify_async_multinet.py
-  if [ -z ${DIRECTORY+x} ]; then
-    DIRECTORY=dog.jpg
-  fi
-  BASEOPT+=" --images $DIRECTORY"
-  BASEOPT+=" --dsp $DSP_WIDTH --jsoncfg data/multinet.json"
-else
-  echo "Test was improperly specified..."
-  exit 1
+  TEST=server.py
 fi
-
 
 if [ "$TEST" == "classify_cpp" ]; then
   ./classify.exe $BASEOPT_CPP
