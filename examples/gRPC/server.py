@@ -46,7 +46,7 @@ def main():
 
     input = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     for a, shape in zip(input, input_shapes):
-        np.frombuffer(a.get_obj())[:] = np.zeros(shape)
+        np.frombuffer(a.get_obj(), dtype=np.float32)[:] = np.zeros(shape)
     output = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     input_dict = {name: shape for name, shape in zip(input_node_names, input)}
     output_dict = {name: shape for name, shape in zip(output_node_names, output)}
