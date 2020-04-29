@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from xfdnn.rt import xdnn, xdnn_io
 import multiprocessing as mp
 import ctypes
@@ -36,6 +38,11 @@ def main():
     if ret != 0:
         raise Exception("Failed to create handle, return value: {error}".format(error=ret))
     fpgaRT = xdnn.XDNNFPGAOp(handles, args)
+
+    print("Input shapes:", input_shapes)
+    print("Input nodes:", input_node_names)
+    print("Ouput shapes:", output_shapes)
+    print("Ouput nodes:", output_node_names)
 
     input = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     for a, shape in zip(input, input_shapes):
