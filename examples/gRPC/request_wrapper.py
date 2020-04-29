@@ -17,6 +17,5 @@ def protoToDict(listOfArrays):
 def dictToProto(nodes):
     result = inference_server_pb2.ListOfArrays()
     for name, data in nodes.items():
-        arr = result.arrayList.new()
-        arr.name = name
-        arr.raw_data = data.tobytes()
+        arr = result.arrayList.add(name=name,
+                                   raw_data=data.tobytes())
