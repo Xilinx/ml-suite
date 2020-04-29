@@ -48,7 +48,7 @@ def main():
     input_arr = [np.frombuffer(arr.get_obj(), dtype=np.float32).reshape(shape)
                  for arr, shape in zip(input, input_shapes)]
     output = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
-    output_arr = [np.frombuffer(arr.get_obj(), dtype=np.float32)
+    output_arr = [np.frombuffer(arr.get_obj(), dtype=np.float32).reshape(shape)
                   for arr, shape in zip(output, output_shapes)]
     input_dict = {name: arr for name, arr in zip(input_node_names, input_arr)}
     output_dict = {name: arr for name, arr in zip(output_node_names, output_arr)}
