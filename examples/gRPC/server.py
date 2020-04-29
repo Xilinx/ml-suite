@@ -47,8 +47,8 @@ def main():
     input = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     output = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     print(len(input[0][:]))
-    print(len(np.zeros(input_shapes[0], dtype=np.float32).reshape([-1]).tobytes()))
-    input[0][:] = np.zeros(input_shapes[0], dtype=np.float32).reshape([-1]).tobytes()
+    print(len(np.zeros(input_shapes[0], dtype=np.float32).reshape([-1])))
+    input[0][:] = np.zeros(input_shapes[0], dtype=np.float32).reshape([-1])
     input_dict = {name: shape for name, shape in zip(input_node_names, input)}
     output_dict = {name: shape for name, shape in zip(output_node_names, output)}
 
