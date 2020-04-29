@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package inference_server;
+
+// Inference server
+service Inference {
+  // A simple RPC.
+  rpc Inference(stream InferenceRequest) returns (stream InferenceResponse) {}
+}
+
+// Request
+message InferenceRequest {
+  repeated Array inputs = 1;
+}
+
+// Response
+message InferenceResponse {
+  repeated Array inputs = 1;
+}
+
+// Represent an numpy array
+message Array {
+  string name = 1; // Node name in the neural network graph
+  bytes raw_data = 2; // Binary data in float32
+  // Server should use the shape defined in the graph to decode the data
+}
