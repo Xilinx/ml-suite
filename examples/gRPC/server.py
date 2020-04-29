@@ -44,8 +44,10 @@ def main():
     print("Ouput shapes:", output_shapes)
     print("Ouput nodes:", output_node_names)
 
-    input = [np.zeros(shape, dtype=np.float32) for shape in input_shapes]
+    input = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
     output = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
+    x = np.frombuffer(input[0], dtype=np.float).reshape(input_shapes[0])
+    np.copyto(dst=x, src=np.zeros(input_shapes[0]))
     input_dict = {name: shape for name, shape in zip(input_node_names, input)}
     output_dict = {name: shape for name, shape in zip(output_node_names, output)}
 
