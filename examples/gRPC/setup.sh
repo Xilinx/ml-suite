@@ -11,3 +11,6 @@ source $MLSUITE_ROOT/overlaybins/setup.sh
 
 # Quantize
 python run.py --prototxt /opt/models/caffe/resnet50_v1/resnet50_v1_train_val.prototxt --caffemodel /opt/models/caffe/resnet50_v1/resnet50_v1.caffemodel --prepare --output_dir work
+
+# Install gRPC
+python -m pip install grpcio-tools

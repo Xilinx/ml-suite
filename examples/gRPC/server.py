@@ -17,29 +17,12 @@ GRPC_PROCESS_COUNT = mp.cpu_count()
 PORT = 5000
 
 
-# Start multiple gRPC servers
+# Start a gRPC server
 def start_grpc_server(port):
-    # Start servers
-    workers = []
-    for _ in range(GRPC_PROCESS_COUNT):
-        worker = mp.Process(target=process_grpc_server,
-                            args=(port,))
-        worker.start()
-        workers.append(worker)
-
-    # Wait for servers
-    for worker in workers:
-        worker.join()
-
-
-# A process that runs a gRPC inference server
-def process_grpc_server(port):
     print("Starting a gRPC server on port {port}".format(port=port))
-    
+
     # Configure server
-    options = (('grpc.so_reuseport', 1),) # Use the same port for all processes
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT),
-                         options=options)
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT))
     inference_server_pb2_grpc.add_InferenceServicer_to_server(grpc_server.InferenceServicer(),
                                                               server)
 
