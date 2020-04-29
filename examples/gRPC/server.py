@@ -1,9 +1,54 @@
 from __future__ import print_function
 
-from xfdnn.rt import xdnn, xdnn_io
+from concurrent import futures
 import multiprocessing as mp
 import ctypes
+
+from xfdnn.rt import xdnn, xdnn_io
+import grpc
 import numpy as np
+
+import inference_server_pb2_grpc
+
+import grpc_server
+
+GRPC_WORKER_COUNT = mp.cpu_count()
+GRPC_PROCESS_COUNT = mp.cpu_count()
+PORT = 5000
+
+
+# Start multiple gRPC servers
+def start_grpc_server(port):
+    # Start servers
+    workers = []
+    for _ in range(GRPC_PROCESS_COUNT):
+        worker = mp.Process(target=process_grpc_server,
+                            args=(port,))
+        worker.start()
+        workers.append(worker)
+
+    # Wait for servers
+    for worker in workers:
+        worker.join()
+
+
+# A process that runs a gRPC inference server
+def process_grpc_server(port):
+    print("Starting a gRPC server on port {port}".format(port=port))
+    
+    # Configure server
+    options = (('grpc.so_reuseport', 1),) # Use the same port for all processes
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT),
+                         options=options)
+    inference_server_pb2_grpc.add_InferenceServicer_to_server(grpc_server.InferenceServicer(),
+                                                              server)
+
+    # Bind port
+    server.add_insecure_port('[::]:{port}'.format(port=port))
+
+    # Start
+    server.start()
+    server.wait_for_termination()
 
 
 def main():
@@ -59,4 +104,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    start_grpc_server(port=PORT)

@@ -18,21 +18,21 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='inference_server',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x16inference_server.proto\x12\x10inference_server\";\n\x10InferenceRequest\x12\'\n\x06inputs\x18\x01 \x03(\x0b\x32\x17.inference_server.Array\"<\n\x11InferenceResponse\x12\'\n\x06inputs\x18\x01 \x03(\x0b\x32\x17.inference_server.Array\"\'\n\x05\x41rray\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08raw_data\x18\x02 \x01(\x0c\x32g\n\tInference\x12Z\n\tInference\x12\".inference_server.InferenceRequest\x1a#.inference_server.InferenceResponse\"\x00(\x01\x30\x01\x62\x06proto3'
+  serialized_pb=b'\n\x16inference_server.proto\x12\x10inference_server\"7\n\x0cListOfArrays\x12\'\n\x06inputs\x18\x01 \x03(\x0b\x32\x17.inference_server.Array\"\'\n\x05\x41rray\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08raw_data\x18\x02 \x01(\x0c\x32^\n\tInference\x12Q\n\tInference\x12\x1e.inference_server.ListOfArrays\x1a\x1e.inference_server.ListOfArrays\"\x00(\x01\x30\x01\x62\x06proto3'
 )
 
 
 
 
-_INFERENCEREQUEST = _descriptor.Descriptor(
-  name='InferenceRequest',
-  full_name='inference_server.InferenceRequest',
+_LISTOFARRAYS = _descriptor.Descriptor(
+  name='ListOfArrays',
+  full_name='inference_server.ListOfArrays',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='inputs', full_name='inference_server.InferenceRequest.inputs', index=0,
+      name='inputs', full_name='inference_server.ListOfArrays.inputs', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -51,38 +51,7 @@ _INFERENCEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=103,
-)
-
-
-_INFERENCERESPONSE = _descriptor.Descriptor(
-  name='InferenceResponse',
-  full_name='inference_server.InferenceResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='inputs', full_name='inference_server.InferenceResponse.inputs', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=105,
-  serialized_end=165,
+  serialized_end=99,
 )
 
 
@@ -119,30 +88,21 @@ _ARRAY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=167,
-  serialized_end=206,
+  serialized_start=101,
+  serialized_end=140,
 )
 
-_INFERENCEREQUEST.fields_by_name['inputs'].message_type = _ARRAY
-_INFERENCERESPONSE.fields_by_name['inputs'].message_type = _ARRAY
-DESCRIPTOR.message_types_by_name['InferenceRequest'] = _INFERENCEREQUEST
-DESCRIPTOR.message_types_by_name['InferenceResponse'] = _INFERENCERESPONSE
+_LISTOFARRAYS.fields_by_name['inputs'].message_type = _ARRAY
+DESCRIPTOR.message_types_by_name['ListOfArrays'] = _LISTOFARRAYS
 DESCRIPTOR.message_types_by_name['Array'] = _ARRAY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-InferenceRequest = _reflection.GeneratedProtocolMessageType('InferenceRequest', (_message.Message,), {
-  'DESCRIPTOR' : _INFERENCEREQUEST,
+ListOfArrays = _reflection.GeneratedProtocolMessageType('ListOfArrays', (_message.Message,), {
+  'DESCRIPTOR' : _LISTOFARRAYS,
   '__module__' : 'inference_server_pb2'
-  # @@protoc_insertion_point(class_scope:inference_server.InferenceRequest)
+  # @@protoc_insertion_point(class_scope:inference_server.ListOfArrays)
   })
-_sym_db.RegisterMessage(InferenceRequest)
-
-InferenceResponse = _reflection.GeneratedProtocolMessageType('InferenceResponse', (_message.Message,), {
-  'DESCRIPTOR' : _INFERENCERESPONSE,
-  '__module__' : 'inference_server_pb2'
-  # @@protoc_insertion_point(class_scope:inference_server.InferenceResponse)
-  })
-_sym_db.RegisterMessage(InferenceResponse)
+_sym_db.RegisterMessage(ListOfArrays)
 
 Array = _reflection.GeneratedProtocolMessageType('Array', (_message.Message,), {
   'DESCRIPTOR' : _ARRAY,
@@ -159,16 +119,16 @@ _INFERENCE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=208,
-  serialized_end=311,
+  serialized_start=142,
+  serialized_end=236,
   methods=[
   _descriptor.MethodDescriptor(
     name='Inference',
     full_name='inference_server.Inference.Inference',
     index=0,
     containing_service=None,
-    input_type=_INFERENCEREQUEST,
-    output_type=_INFERENCERESPONSE,
+    input_type=_LISTOFARRAYS,
+    output_type=_LISTOFARRAYS,
     serialized_options=None,
   ),
 ])

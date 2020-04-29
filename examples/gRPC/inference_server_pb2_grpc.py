@@ -16,8 +16,8 @@ class InferenceStub(object):
         """
         self.Inference = channel.stream_stream(
                 '/inference_server.Inference/Inference',
-                request_serializer=inference__server__pb2.InferenceRequest.SerializeToString,
-                response_deserializer=inference__server__pb2.InferenceResponse.FromString,
+                request_serializer=inference__server__pb2.ListOfArrays.SerializeToString,
+                response_deserializer=inference__server__pb2.ListOfArrays.FromString,
                 )
 
 
@@ -26,7 +26,7 @@ class InferenceServicer(object):
     """
 
     def Inference(self, request_iterator, context):
-        """A simple RPC.
+        """Inference
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,8 +37,8 @@ def add_InferenceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Inference': grpc.stream_stream_rpc_method_handler(
                     servicer.Inference,
-                    request_deserializer=inference__server__pb2.InferenceRequest.FromString,
-                    response_serializer=inference__server__pb2.InferenceResponse.SerializeToString,
+                    request_deserializer=inference__server__pb2.ListOfArrays.FromString,
+                    response_serializer=inference__server__pb2.ListOfArrays.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,7 +62,7 @@ class Inference(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.stream_stream(request_iterator, target, '/inference_server.Inference/Inference',
-            inference__server__pb2.InferenceRequest.SerializeToString,
-            inference__server__pb2.InferenceResponse.FromString,
+            inference__server__pb2.ListOfArrays.SerializeToString,
+            inference__server__pb2.ListOfArrays.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)
