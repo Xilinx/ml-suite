@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='inference_server',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x16inference_server.proto\x12\x10inference_server\"7\n\x0cListOfArrays\x12\'\n\x06inputs\x18\x01 \x03(\x0b\x32\x17.inference_server.Array\"\'\n\x05\x41rray\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08raw_data\x18\x02 \x01(\x0c\x32^\n\tInference\x12Q\n\tInference\x12\x1e.inference_server.ListOfArrays\x1a\x1e.inference_server.ListOfArrays\"\x00(\x01\x30\x01\x62\x06proto3'
+  serialized_pb=b'\n\x16inference_server.proto\x12\x10inference_server\":\n\x0cListOfArrays\x12*\n\tarrayList\x18\x01 \x03(\x0b\x32\x17.inference_server.Array\"\'\n\x05\x41rray\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08raw_data\x18\x02 \x01(\x0c\x32^\n\tInference\x12Q\n\tInference\x12\x1e.inference_server.ListOfArrays\x1a\x1e.inference_server.ListOfArrays\"\x00(\x01\x30\x01\x62\x06proto3'
 )
 
 
@@ -32,7 +32,7 @@ _LISTOFARRAYS = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='inputs', full_name='inference_server.ListOfArrays.inputs', index=0,
+      name='arrayList', full_name='inference_server.ListOfArrays.arrayList', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -51,7 +51,7 @@ _LISTOFARRAYS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=99,
+  serialized_end=102,
 )
 
 
@@ -88,11 +88,11 @@ _ARRAY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=101,
-  serialized_end=140,
+  serialized_start=104,
+  serialized_end=143,
 )
 
-_LISTOFARRAYS.fields_by_name['inputs'].message_type = _ARRAY
+_LISTOFARRAYS.fields_by_name['arrayList'].message_type = _ARRAY
 DESCRIPTOR.message_types_by_name['ListOfArrays'] = _LISTOFARRAYS
 DESCRIPTOR.message_types_by_name['Array'] = _ARRAY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -119,8 +119,8 @@ _INFERENCE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=142,
-  serialized_end=236,
+  serialized_start=145,
+  serialized_end=239,
   methods=[
   _descriptor.MethodDescriptor(
     name='Inference',
