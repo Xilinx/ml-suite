@@ -12,4 +12,6 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
     def Inference(self, request_iterator, context):
         for request in request_iterator:
             print("Request", request_wrapper.protoToDict(request))
-            yield request_wrapper.dictToProto({"result": np.zeros((1024,))})
+            response = request_wrapper.dictToProto({"result": np.zeros((1024,))})
+            print("Response", response)
+            yield response
