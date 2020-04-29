@@ -19,3 +19,4 @@ def dictToProto(nodes):
     for name, data in nodes.items():
         arr = result.arrayList.add(name=name,
                                    raw_data=data.tobytes())
+    return result
