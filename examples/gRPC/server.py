@@ -47,3 +47,7 @@ def main():
     fpgaRT.exec_async(input_dict, output_dict, 0)
     fpgaRT.get_result(0)
     print(output_dict)
+
+
+if __name__ == '__main__':
+    main()
