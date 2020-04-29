@@ -8,3 +8,6 @@ head -n 500 $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-aux/val.txt > $HOME/CK-TO
 python resize.py $HOME/CK-TOOLS/dataset-imagenet-ilsvrc2012-val-min 256 256
 python getModels.py
 source $MLSUITE_ROOT/overlaybins/setup.sh
+
+# Quantize
+python run.py --prototxt /opt/models/caffe/resnet50_v1/resnet50_v1_deploy.prototxt --caffemodel /opt/models/caffe/resnet50_v1/resnet50_v1.caffemodel --prepare --output_dir work
