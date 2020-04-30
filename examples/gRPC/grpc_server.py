@@ -28,7 +28,7 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
 
     def push(self, request):
         # Convert input format
-        request = request_wrapper.protoToDict(request, self.input_shapes, stack=True)
+        request = request_wrapper.protoToDict(request, self.input_shapes, stack=False)
 
         # Send to FPGA
         in_slot = self.in_index % self.n_streams
