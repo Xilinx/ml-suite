@@ -16,7 +16,7 @@ import request_wrapper
 GRPC_WORKER_COUNT = mp.cpu_count()
 GRPC_PROCESS_COUNT = mp.cpu_count()
 PORT = 5000
-N_STREAMS = 8
+N_STREAMS = 64
 
 
 # Start a gRPC server
