@@ -22,16 +22,19 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
 
         # Send to FPGA
         in_slot = self.in_index % self.n_streams
-        print(request, self.output_buffers[in_slot])
+        print("exec_async", request, self.output_buffers[in_slot])
         self.fpgaRT.exec_async(request,
                                self.output_buffers[in_slot],
                                in_slot)
+        print("Done exec_async")
         self.in_index += 1
 
     def pop(self):
         # Wait for finish signal
         out_slot = self.out_index % self.n_streams
+        print("Getting result")
         self.fpgaRT.get_result(out_slot)
+        print("Got result")
 
         # Read output
         response = self.output_buffers[out_slot]
