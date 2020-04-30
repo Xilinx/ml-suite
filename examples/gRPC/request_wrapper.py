@@ -16,7 +16,7 @@ def protoToDict(listOfArrays, input_shapes, stack=False):
         # Data
         if stack:
             data = np.frombuffer(arr.raw_data, dtype=np.float32)
-            buffer = np.empty(input_shapes[name]).reshape((-1))
+            buffer = np.empty(input_shapes[name], dtype=np.float32).reshape((-1))
             size = buffer.size // 3
             buffer[:size] = data
             buffer[size:size*2] = data
