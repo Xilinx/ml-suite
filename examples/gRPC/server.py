@@ -87,6 +87,10 @@ def fpga_init():
                   for name, shape in zip(output_node_names, output_shapes)}
         output_buffers.append(buffer)
 
+    fpgaRT.exec_async({input_node_names[0]: np.zeros(input_shapes[0])},
+                      output_buffers[0], 0)
+    fpgaRT.get_result(0)
+
     return fpgaRT, output_buffers
 
 
