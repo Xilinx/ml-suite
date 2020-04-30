@@ -4,6 +4,7 @@ import inference_server_pb2
 
 import numpy as np
 
+STACK = True
 
 def protoToDict(listOfArrays, input_shapes):
     '''
@@ -14,7 +15,11 @@ def protoToDict(listOfArrays, input_shapes):
         # Node name
         name = arr.name
         # Data
-        data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
+        if STACK:
+            data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name][1:])
+            data = np.stack([data]*3)
+        else:
+            data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
 
         result[name] = data
     return result
