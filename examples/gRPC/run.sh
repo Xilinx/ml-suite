@@ -180,10 +180,7 @@ fi
 # gPRC server
 ############################
 if [[ "$TEST" == "gRPC"* ]]; then
-  if [ -z ${DIRECTORY+x} ]; then
-    DIRECTORY=../../models/data/ilsvrc12/ilsvrc12_img_val
-  fi
-  BASEOPT+=" --images $DIRECTORY"
+  BASEOPT+=" --images ."
 
   TEST=server.py
 fi
