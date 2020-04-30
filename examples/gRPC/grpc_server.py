@@ -22,6 +22,7 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
 
         # Send to FPGA
         in_slot = self.in_index % self.n_streams
+        print(request, self.output_buffers[in_slot])
         self.fpgaRT.exec_async(request,
                                self.output_buffers[in_slot],
                                in_slot)
