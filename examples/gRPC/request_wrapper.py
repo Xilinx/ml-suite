@@ -6,15 +6,24 @@ import numpy as np
 
 
 def protoToDict(listOfArrays, input_shapes):
+    '''
+    Convert a protobuf to a map from node name to data (numpy array)
+    '''
     result = {}
     for arr in listOfArrays.arrayList:
+        # Node name
         name = arr.name
+        # Data
         data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
+
         result[name] = data
     return result
 
 
 def dictToProto(nodes):
+    '''
+    Convert a map from node name to data (numpy array) to protobuf
+    '''
     result = inference_server_pb2.ListOfArrays()
     for name, data in nodes.items():
         arr = result.arrayList.add(name=name,

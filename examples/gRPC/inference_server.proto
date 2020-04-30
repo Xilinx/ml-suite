@@ -16,6 +16,6 @@ message ListOfArrays {
 // Represent an numpy array
 message Array {
   string name = 1; // Node name in the neural network graph
-  bytes raw_data = 2; // Binary data in float32
-  // Server should use the shape defined in the graph to decode the data
+  bytes raw_data = 2; // Binary numpy array in float32
+  // Server should use the shape defined in the graph to reshape the array
 }
