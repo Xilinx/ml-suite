@@ -19,11 +19,11 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
 
     def push(self, request):
         # Convert input format
-        print("Push")
+        # print("Push")
         request = request_wrapper.protoToDict(request, self.input_shapes)
 
         # Send to FPGA
-        print("n streams", self.n_streams)
+        # print("n streams", self.n_streams)
         in_slot = self.in_index % self.n_streams
         print("exec_async", request, self.output_buffers[in_slot])
         self.fpgaRT.exec_async(request,
@@ -48,7 +48,7 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
     def Inference(self, request_iterator, context):
         try:
             for request in request_iterator:
-                print(request)
+                # print(request)
                 # Feed to FPGA
                 self.push(request)
 
