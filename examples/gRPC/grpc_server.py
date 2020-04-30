@@ -44,12 +44,17 @@ class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
         return response
 
     def Inference(self, request_iterator, context):
-        for request in request_iterator:
-            # Feed to FPGA
-            self.push(request)
+        try:
+            for request in request_iterator:
+                # Feed to FPGA
+                self.push(request)
 
-            # Get output
-            if self.in_index - self.out_index >= self.n_streams:
+                # Get output
+                if self.in_index - self.out_index >= self.n_streams:
+                    yield self.pop()
+            while self.in_index - self.out_index > 0:
                 yield self.pop()
-        while self.in_index - self.out_index > 0:
-            yield self.pop()
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            raise e
