@@ -13,9 +13,11 @@ import inference_server_pb2_grpc
 import grpc_server
 import request_wrapper
 
-GRPC_WORKER_COUNT = mp.cpu_count()
-GRPC_PROCESS_COUNT = mp.cpu_count()
+# Port to listen on
 PORT = 5000
+# Number of workers for gRPC server
+GRPC_WORKER_COUNT = mp.cpu_count()
+# Number of concurrent async calls to FPGA
 N_STREAMS = 64
 
 
