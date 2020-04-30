@@ -9,16 +9,17 @@ import numpy as np
 
 
 class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
-    def __init__(self, fpgaRT, output_buffers, n_streams):
+    def __init__(self, fpgaRT, output_buffers, n_streams, input_shapes):
         self.fpgaRT = fpgaRT
         self.output_buffers = output_buffers
         self.n_streams = n_streams
         self.in_index = 0
         self.out_index = 0
+        self.input_shapes = input_shapes
 
     def push(self, request):
         # Convert input format
-        request = request_wrapper.protoToDict(request)
+        request = request_wrapper.protoToDict(request, self.input_shapes)
 
         # Send to FPGA
         in_slot = self.in_index % self.n_streams

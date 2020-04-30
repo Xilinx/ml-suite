@@ -5,11 +5,11 @@ import inference_server_pb2
 import numpy as np
 
 
-def protoToDict(listOfArrays):
+def protoToDict(listOfArrays, input_shapes):
     result = {}
     for arr in listOfArrays.arrayList:
         name = arr.name
-        data = np.frombuffer(arr.raw_data, dtype=np.float32)
+        data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
         result[name] = data
     return result
 

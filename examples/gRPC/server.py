@@ -20,14 +20,15 @@ N_STREAMS = 8
 
 
 # Start a gRPC server
-def start_grpc_server(port, fpgaRT, output_buffers):
+def start_grpc_server(port, fpgaRT, output_buffers, input_shapes):
     print("Starting a gRPC server on port {port}".format(port=port))
 
     # Configure server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT))
     servicer = grpc_server.InferenceServicer(fpgaRT=fpgaRT,
                                              output_buffers=output_buffers,
-                                             n_streams=N_STREAMS)
+                                             n_streams=N_STREAMS,
+                                             input_shapes=input_shapes)
     inference_server_pb2_grpc.add_InferenceServicer_to_server(servicer,
                                                               server)
 
@@ -91,9 +92,9 @@ def fpga_init():
                       output_buffers[0], 0)
     fpgaRT.get_result(0)
 
-    return fpgaRT, output_buffers
+    return fpgaRT, output_buffers, {name: shape for name, shape in zip(input_node_names, input_shapes)}
 
 
 if __name__ == '__main__':
-    fpgaRT, output_buffers = fpga_init()
-    start_grpc_server(port=PORT, fpgaRT=fpgaRT, output_buffers=output_buffers)
+    fpgaRT, output_buffers, input_shapes = fpga_init()
+    start_grpc_server(port=PORT, fpgaRT=fpgaRT, output_buffers=output_buffers, input_shapes=input_shapes)
