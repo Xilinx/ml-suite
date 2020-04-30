@@ -4,9 +4,8 @@ import inference_server_pb2
 
 import numpy as np
 
-STACK = True
 
-def protoToDict(listOfArrays, input_shapes):
+def protoToDict(listOfArrays, input_shapes, stack=False):
     '''
     Convert a protobuf to a map from node name to data (numpy array)
     '''
@@ -15,7 +14,7 @@ def protoToDict(listOfArrays, input_shapes):
         # Node name
         name = arr.name
         # Data
-        if STACK:
+        if stack:
             data = np.frombuffer(arr.raw_data*3, dtype=np.float32)
             data.reshape(input_shapes[name])
         else:
