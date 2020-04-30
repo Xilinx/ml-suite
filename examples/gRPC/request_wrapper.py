@@ -16,8 +16,7 @@ def protoToDict(listOfArrays, input_shapes):
         name = arr.name
         # Data
         if STACK:
-            data = np.frombuffer(arr.raw_data, dtype=np.float32)
-            data = np.stack([data]*3)
+            data = np.frombuffer(arr.raw_data*3, dtype=np.float32)
             data.reshape(input_shapes[name])
         else:
             data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
