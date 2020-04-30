@@ -11,19 +11,24 @@ import numpy as np
 import inference_server_pb2_grpc
 
 import grpc_server
+import request_wrapper
 
 GRPC_WORKER_COUNT = mp.cpu_count()
 GRPC_PROCESS_COUNT = mp.cpu_count()
 PORT = 5000
+N_STREAMS = 8
 
 
 # Start a gRPC server
-def start_grpc_server(port):
+def start_grpc_server(port, fpgaRT, output_buffers):
     print("Starting a gRPC server on port {port}".format(port=port))
 
     # Configure server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT))
-    inference_server_pb2_grpc.add_InferenceServicer_to_server(grpc_server.InferenceServicer(),
+    servicer = grpc_server.InferenceServicer(fpgaRT=fpgaRT,
+                                             output_buffers=output_buffers,
+                                             n_streams=N_STREAMS)
+    inference_server_pb2_grpc.add_InferenceServicer_to_server(servicer,
                                                               server)
 
     # Bind port
@@ -34,7 +39,11 @@ def start_grpc_server(port):
     server.wait_for_termination()
 
 
-def main():
+def process_inference(request):
+    input_dict = request_wrapper.protoToDict(request)
+
+
+def fpga_init():
     # Parse arguments
     parser = xdnn_io.default_parser_args()
     parser.add_argument('--deviceID', type=int, default=0,
@@ -72,19 +81,15 @@ def main():
     print("Ouput shapes:", output_shapes)
     print("Ouput nodes:", output_node_names)
 
-    input = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in input_shapes]
-    input_arr = [np.frombuffer(arr.get_obj(), dtype=np.float32).reshape(shape)
-                 for arr, shape in zip(input, input_shapes)]
-    output = [mp.Array(ctypes.c_float, np.prod(shape)) for shape in output_shapes]
-    output_arr = [np.frombuffer(arr.get_obj(), dtype=np.float32).reshape(shape)
-                  for arr, shape in zip(output, output_shapes)]
-    input_dict = {name: arr for name, arr in zip(input_node_names, input_arr)}
-    output_dict = {name: arr for name, arr in zip(output_node_names, output_arr)}
+    output_buffers = []
+    for _ in range(N_STREAMS):
+        buffer = {name: np.empty(shape=shape, dtype=np.float32)
+                  for name, shape in zip(output_node_names, output_shapes)}
+        output_buffers.append(buffer)
 
-    fpgaRT.exec_async(input_dict, output_dict, 0)
-    fpgaRT.get_result(0)
-    print(output_dict)
+    return fpgaRT, output_buffers
 
 
 if __name__ == '__main__':
-    start_grpc_server(port=PORT)
+    fpgaRT, output_buffers = fpga_init()
+    start_grpc_server(port=PORT, fpgaRT=fpgaRT, output_buffers=output_buffers)
