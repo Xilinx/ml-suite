@@ -16,6 +16,7 @@ SERVER_PORT = 5000
 N_DUMMY_IMAGES = 1000
 
 STACK = True
+BATCH_SIZE = 4
 
 
 def empty_image_generator(n):
@@ -24,11 +25,11 @@ def empty_image_generator(n):
 
     n: number of images
     '''
-    for _ in range(n):
+    for _ in range(n // BATCH_SIZE):
         if STACK:
-            request = {"data": np.zeros((224, 224), dtype=np.float32)}
+            request = {"data": np.zeros((BATCH_SIZE, 224, 224), dtype=np.float32)}
         else:
-            request = {"data": np.zeros((3, 224, 224), dtype=np.float32)}
+            request = {"data": np.zeros((BATCH_SIZE, 3, 224, 224), dtype=np.float32)}
         request = request_wrapper.dictToProto(request)
         yield request
 

@@ -15,7 +15,13 @@ def protoToDict(listOfArrays, input_shapes, stack=False):
         name = arr.name
         # Data
         if stack:
-            data = np.frombuffer(arr.raw_data + arr.raw_data + arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
+            data = bytes()
+            batch_size = input_shapes[name][0]
+            channel_size = np.prod(input_shapes[name][1:]) * 4
+            for i in range(batch_size):
+                for channel in range(3):
+                    data += arr.raw_data[i*channel_size:(i+1)*channel_size]
+            data = np.frombuffer(data, dtype=np.float32).reshape(input_shapes[name])
         else:
             data = np.frombuffer(arr.raw_data, dtype=np.float32).reshape(input_shapes[name])
 

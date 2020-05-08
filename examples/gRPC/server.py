@@ -24,6 +24,7 @@ N_STREAMS = 64
 # Start a gRPC server
 def start_grpc_server(port, fpgaRT, output_buffers, input_shapes):
     print("Starting a gRPC server on port {port}".format(port=port))
+    print("Using {n_stream} streams".format(n_stream=N_STREAMS))
 
     # Configure server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=GRPC_WORKER_COUNT))
@@ -64,6 +65,8 @@ def fpga_init():
     input_shapes = list(map(lambda x: (x), compilerJSONObj.getInputs().itervalues()))
     output_shapes = list(map(lambda x: (x), compilerJSONObj.getOutputs().itervalues()))
 
+    for in_idx in range(len(input_shapes)):
+        output_shapes[in_idx][0] = args['batch_sz']
     for out_idx in range(len(output_shapes)):
         output_shapes[out_idx][0] = args['batch_sz']
 
@@ -79,6 +82,7 @@ def fpga_init():
         raise Exception("Failed to create handle, return value: {error}".format(error=ret))
     fpgaRT = xdnn.XDNNFPGAOp(handles, args)
 
+    print("Batch size:", args['batch_sz'])
     print("Input shapes:", input_shapes)
     print("Input nodes:", input_node_names)
     print("Ouput shapes:", output_shapes)
