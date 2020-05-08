@@ -65,8 +65,8 @@ def fpga_init():
     input_shapes = list(map(lambda x: (x), compilerJSONObj.getInputs().itervalues()))
     output_shapes = list(map(lambda x: (x), compilerJSONObj.getOutputs().itervalues()))
 
-    # for in_idx in range(len(input_shapes)):
-    #     input_shapes[in_idx][0] = args['batch_sz']
+    for in_idx in range(len(input_shapes)):
+        input_shapes[in_idx][0] = args['batch_sz']
     for out_idx in range(len(output_shapes)):
         output_shapes[out_idx][0] = args['batch_sz']
 
