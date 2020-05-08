@@ -4,7 +4,7 @@ import inference_server_pb2_grpc
 
 import request_wrapper
 
-STACK_CHANNELS = False
+STACK_CHANNELS = True
 
 
 class InferenceServicer(inference_server_pb2_grpc.InferenceServicer):
